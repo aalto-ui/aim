@@ -1,0 +1,41 @@
+"""
+   MoinMoin - Daltonize ImageCorrection - Effect
+
+   Daltonize image correction algorithm implemented according to
+   http://scien.stanford.edu/class/psych221/projects/05/ofidaner/colorblindness_project.htm
+
+   Many thanks to Onur Fidaner, Poliang Lin and Nevran Ozguven for their work
+   on this topic and for releasing their complete research results to the public
+   (unlike the guys from http://www.vischeck.com/). This is of great help for a
+   lot of people!
+
+   Please note:
+   Daltonize ImageCorrection needs
+   * Python Image Library (PIL) from http://www.pythonware.com/products/pil/
+   * NumPy from http://numpy.scipy.org/
+
+   You can call Daltonize from the command-line with
+   "daltonize.py C:\image.png"
+
+   Explanations:
+       * Normally this module is called from Moin.AttachFile.get_file
+       * @param filename, filepath is the filename/fullpath to an image in the attachment
+         dir of a page.
+       * @param color_deficit can either be
+           - 'd' for Deuteranope image correction
+           - 'p' for Protanope image correction
+           - 't' for Tritanope image correct
+   Idea:
+       * Since daltonizing an image takes quite some time and we don't want visually
+         impaired users to wait so long until the page is loaded, this module has a
+         command-line option built-in which could be called as a separate process
+         after a file upload of a non visually impaired user in "AttachFile", e.g
+         "spawnlp(os.NO_WAIT...)"
+       * "AttachFile": If an image attachment is deleted or overwritten by a new version
+         please make sure to delete the daltonized images and redaltonize them.
+       * But all in all: Concrete implementation of ImageCorrection needs further
+         thinking and discussion. This is only a first prototype as proof of concept.
+
+   @copyright: 2007 by Oliver Siemoneit
+   @license: GNU GPL, see COPYING for details.
+"""
