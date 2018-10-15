@@ -2,12 +2,12 @@
 # Color Range - Number of Colours #
 ###################################
 #
-#   V1.0
-#   29/05/2017
+#   V1.1
+#   15/10/2018
 #
 #   Implemented by:
-#   Yuxi Zhu (matlab) & Thomas Langerak (converted to python)
-#   (zhuyuxi1990@gmail.com) & (hello@thomaslangerak.nl)
+#   Kseniia Palin & Markku Laine
+#   (kseniia.palin@aalto.fi) & (markku.laine@aalto.fi)
 #
 #   Supervisor:
 #   Antti Oulasvirta
@@ -51,50 +51,28 @@
 # Bugs/Issues #
 ###############
 #
-#   Once segmentation is ready exclude images from the count.
-#
 from skimage import util
 import collections
 import numpy as np
 import base64
 from PIL import Image
 from io import BytesIO
+import matplotlib.image as mpimg
 
 
 def execute(b64, type):
-    try:
-        b64 = base64.b64decode(b64)
-        b64 = BytesIO(b64)
-        img = Image.open(b64)
-        img = np.array(img)
-        img = util.img_as_ubyte(img)
-        img = img.reshape(-1, 3) # FIX: breaks with some images
-        img = [tuple(l) for l in img]
+    b64 = base64.b64decode(b64)
+    b64 = BytesIO(b64)
+    img = mpimg.imread(b64, format='PNG')
+    img = img[:,:,:3]
+    img = img.reshape(-1, 3)
+    img = [tuple(l) for l in img]
 
-        # Create histogram
-        hist = collections.Counter(img)
-        hist = hist.items()
+    # Create histogram
+    hist = collections.Counter(img)
 
-        rgb_unique = []
-        count = []
-
-        # Add rgb and frequency to list
-        for x in range(len(hist)):
-            add = [hist[x][0][0], hist[x][0][1], hist[x][0][2]]
-            rgb_unique.append(add)
-            count.append(hist[x][1])
-
-        # The number of colors after color reduction: only values that occurred more than 5 (for web) or 2 (for mobile) times per image were counted
-        occurence = [5, 2]
-
-        # Count only the colours that occur often enough
-        counter = 0
-        for x in range(len(rgb_unique)):
-            if count[x] >= occurence[type]:
-                counter += 1
-
-        count_rgb = [counter]
-    except ValueError:
-        count_rgb = [0]
+    # Count the number of colors: only values that occur more than 5 (for web, type=0) or 2 (for mobile, type=1) times per image are counted
+    min_threshold = 5 if type == 0 else 2 if type == 1 else 0
+    count_rgb = [len({x : hist[x] for x in hist if hist[x] >= min_threshold })]
 
     return count_rgb
