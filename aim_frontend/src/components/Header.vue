@@ -1,5 +1,5 @@
 <template>
-    <header class="mt-2">
+    <header class="mt-3">
         <b-row class="align-items-end">
             <b-col class="col-auto text-left">
                 <a href="http://www.aalto.fi">
@@ -20,45 +20,60 @@
                         <b-btn class="btn-nav btn-lg" v-b-modal.modal-publication variant="link font-weight-bold">Publication</b-btn>
                         <b-modal class="text-left" id="modal-publication" size="lg" title="Publication" ok-only ok-title="Close">
                             <b-row>
-                                <b-col class="col-auto">
-                                    <a href="/static/publications/oulasvirta_et_al_2018.pdf" target="_blank">
-                                        <img class="paper-thumbnail" src="../assets/oulasvirta_et_al_2018_thumbnail.png" alt="Paper">
-                                    </a>
-                                </b-col>
-                                <b-col class="pl-5">
-                                    <p>
+                                <b-col class="col-xs-12">
+                                    <div class="float-left">
                                         <a href="/static/publications/oulasvirta_et_al_2018.pdf" target="_blank">
-                                            <icon class="icon-pdf" name="file-pdf-o"></icon> PDF (1 MB)
+                                            <img class="paper-thumbnail mr-5 mb-4" src="../assets/oulasvirta_et_al_2018_thumbnail.png" alt="Paper">
                                         </a>
-                                        <br>
-                                        <span class="authors-citation">Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, Tino Weinkauf</span>
-                                        <span class="title-citation">Aalto Interface Metrics (AIM): A Service and Codebase for Computational GUI Evaluation</span>
-                                        <span class="release-citation">In Proceedings of the 31st Annual ACM Symposium on User Interface Software and Technology (UIST '18). ACM, New York, NY, USA, 2018. DOI: <a href="https://doi.org/10.1145/3266037.3266087" target="_blank">10.1145/3266037.3266087</a></span>
-                                    </p>
+                                    </div>
+                                    <a href="/static/publications/oulasvirta_et_al_2018.pdf" target="_blank">
+                                        <icon class="icon-pdf" name="file-pdf-o"></icon> PDF (1 MB)
+                                    </a>
+                                    <br>
+                                    <span class="authors-citation">Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, and Tino Weinkauf. 2018.</span>
+                                    <span class="title-citation">Aalto Interface Metrics (AIM): A Service and Codebase for Computational GUI Evaluation.</span>
+                                    <span class="release-citation">In <em>Proceedings of the 31st Annual ACM Symposium on User Interface Software and Technology Adjunct Proceedings (UIST '18 Adjunct)</em>. ACM, New York, NY, USA, 16-19. DOI: <a href="https://doi.org/10.1145/3266037.3266087" target="_blank">10.1145/3266037.3266087</a></span>
                                 </b-col>
-        <!--                         <b-col class="mt-4 col-xs-12">
+                                <b-col class="col-xs-12">
                                     <pre>
                                         <code>
-@inproceedings{,
-  author = {},
-  title = {},
-  booktitle = {},
-  series = {},
-  year = {},
-  isbn = {},
-  location = {},
-  pages = {},
-  numpages = {},
-  url = {},
+@inproceedings{Oulasvirta:2018:AIM:3266037.3266087,
+  author = {Oulasvirta, Antti and De Pascale, Samuli and Koch, Janin and Langerak, Thomas and Jokinen, Jussi and Todi, Kashyap and Laine, Markku and Kristhombuge, Manoj and Zhu, Yuxi and Miniukovich, Aliaksei and Palmas, Gregorio and Weinkauf, Tino},
+  title = {Aalto Interface Metrics (AIM): A Service and Codebase for Computational GUI Evaluation},
+  booktitle = {The 31st Annual ACM Symposium on User Interface Software and Technology Adjunct Proceedings},
+  series = {UIST '18 Adjunct},
+  year = {2018},
+  isbn = {978-1-4503-5949-8},
+  location = {Berlin, Germany},
+  pages = {16--19},
+  numpages = {4},
+  url = {http://doi.acm.org/10.1145/3266037.3266087},
   doi = {10.1145/3266037.3266087},
-  acmid = {},
-  publisher = {},
-  address = {},
-  keywords = {},
-} 
+  acmid = {3266087},
+  publisher = {ACM},
+  address = {New York, NY, USA},
+  keywords = {computational evaluation, metrics, ui layouts, user interfaces},
+}
                                         </code>
                                     </pre>
-                                </b-col> -->
+                                </b-col>
+                            </b-row>
+                        </b-modal> 
+                    </b-col>
+                    <b-col cols="12" class="col-lg-auto text-right">
+                        <b-btn class="btn-nav btn-lg" v-b-modal.modal-project variant="link font-weight-bold">Project</b-btn>
+                        <b-modal class="text-left" id="modal-project" size="lg" title="Project" ok-only ok-title="Close">
+                            <b-row>
+                                <b-col class="col-xs-12">
+                                    <h6>Funding</h6>
+                                    <p>
+                                        This research has been funded by the Technology Industries of Finland Future Makers project SOWP (2017-2019) and the European Research Council starting grant (COMPUTED 2015-2020).
+                                    </p>
+                                    <h6>Contributors</h6>
+                                    <p>
+                                        Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, and Tino Weinkauf.
+                                    </p>
+                                </b-col>
                             </b-row>
                         </b-modal> 
                     </b-col>
@@ -88,18 +103,14 @@
     }
     header .authors-citation {
         padding-top: 5px;
-        font-style: italic;
-        float: left;
     }
     header .title-citation {
         font-weight: 700;
-        float: left;
     }
     header .release-citation {
-        float: left;
     }
     header code {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-family: monospace;
     }
     header .icon-pdf {
