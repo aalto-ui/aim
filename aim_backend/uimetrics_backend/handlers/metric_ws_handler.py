@@ -35,6 +35,7 @@ class MetricWebSocket(tornado.websocket.WebSocketHandler):
             # print("Generating screenshot...")
             if filename is not None:
                 pngb64 = data.split(",")[1]
+                pngb64 = metrics_util.resize_uploaded_image(pngb64)
             else:
                 pngb64 = metrics_util.generate_screenshot(url)
             jpgb64 = metrics_util.convert_png_to_jpg_b64(pngb64)

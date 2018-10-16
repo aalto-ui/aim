@@ -27,7 +27,7 @@
       <b-col>
         <b-form id="aim-url-form" class="needs-validation" novalidate @submit="onSubmitURL">
           <b-input-group prepend="URL">
-            <b-form-input id="url-input" type="url" v-model.trim="form.url" aria-describedby="urlHelp" required placeholder="https://www.example.com"></b-form-input>
+            <b-form-input id="url-input" type="url" v-model.trim="form.url" required placeholder="https://www.example.com"></b-form-input>
             <b-input-group-append>
               <b-btn id="btn-url-proceed" type="submit" variant="primary">Proceed</b-btn>
             </b-input-group-append>
@@ -35,9 +35,6 @@
               Please provide a valid URL.
             </div>
           </b-input-group>
-          <small id="urlHelp" class="text-muted">
-            
-          </small>
         </b-form>
       </b-col>
       <b-col cols="12" class="col-lg-auto text-center or">
@@ -46,7 +43,7 @@
       <b-col>
         <b-form id="aim-screenshot-form" class="needs-validation" novalidate @submit="onSubmitScreenshot">
           <b-input-group id="screenshot-input-group" prepend="Screenshot">
-            <b-form-file id="screenshot-input" aria-describedby="screenshotHelp" required placeholder="Choose a PNG file..." accept="image/png" @change="onFileSelected"></b-form-file>
+            <b-form-file id="screenshot-input" required placeholder="Choose a PNG file..." accept="image/png" @change="onFileSelected"></b-form-file>
             <b-input-group-append>
               <b-btn id="btn-screenshot-proceed" type="submit" variant="primary">Proceed</b-btn>
             </b-input-group-append>
@@ -57,9 +54,6 @@
           <div v-if="fileTooLarge" class="invalid-feedback">
             File is too large (max 3 MB).
           </div>
-          <small id="screenshotHelp" class="text-muted">
-            Recommendation: 1280x720 pixels at 72 dpi (experimental)
-          </small>
         </b-form>
       </b-col>
     </b-row>
