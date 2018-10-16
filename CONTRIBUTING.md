@@ -55,6 +55,7 @@ Every metric also must be added under a proper `category` at the start of the sa
 | name    | Category name |
 | color   | Name of the CSS class in `AIMForm.vue` specifying the category color |
 | metrics | List of metric IDs belonging to this category |
+
 After adding a new metric, the frontend must be restarted with `npm run dev` for development or recompiled with `npm run build` for production (executed in the [aim_frontend](./aim_frontend/) directory). For the backend, the AIM metrics package must be reinstalled with `pip install ../aim_metrics` and the server must be relaunched with `python uimetrics_backend/main.py` (executed in the [aim_backend](./aim_backend/) directory).
 
 
