@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <h2>Preview</h2>
-    <p>1280x720 pixels at 72 dpi (URL) or original size and resolution (screenshot)</p>
+    <p>1280 x 720 pixels at 72 dpi (URL) or original image resized to 1280 pixels width at 72 dpi (screenshot)</p>
     <img class="preview-img" :src="'data:image/png;base64, ' + b64" />
   </div>
 </template>
