@@ -9,7 +9,7 @@ import os
 
 
 def generate_screenshot(url):
-    call([options.chrome_path, "--headless", "--force-device-scale-factor", "--disable-gpu", "--screenshot=screenshots/" + options.name + ".png", "--window-size=1280,720", url])
+    call([options.chrome_path, "--headless", "--force-device-scale-factor", "--hide-scrollbars", "--disable-gpu", "--screenshot=screenshots/" + options.name + ".png", "--window-size=1280,800", url])
     im = Image.open("screenshots/" + options.name + ".png")
     buffer = cStringIO.StringIO()
     im.save(buffer, format="PNG")

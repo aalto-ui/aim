@@ -27,7 +27,7 @@ def create_vg2_input_file(name):
         "layout1 configs/vg2_" + name + ".json",
         "layout2 configs/vg2_" + name + ".json",
         "screen-x 1280",
-        "screen-y 720",
+        "screen-y 800",
         "learning-time 6000",
         "swap-time 600",
         "n-runs 1",
