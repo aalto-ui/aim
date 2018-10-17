@@ -14,6 +14,7 @@ const initialState = () => {
     fetchingCount: 0,
     fetchedCount: 0,
     wsError: false,
+    validationError: false,
     display: {
       input: true,
       metrics: false,
@@ -78,6 +79,10 @@ const actions = {
   pushPreview (context, data) {
     context.commit('pushPreview', data.preview)
     context.commit('updateProgressBarVisibility')
+  },
+  pushValidationError (context, data) {
+    console.error(data.message)
+    context.commit('pushValidationError')
   }
 }
 
@@ -129,6 +134,10 @@ const mutations = {
     Vue.set(state.display, 'preview', true)
     state.preview = payload
   },
+  pushValidationError (state, payload) {
+    this.commit('resetState')
+    state.validationError = true
+  },
   fetchResults (state, metrics) {
     state.fetching = metrics
     state.fetchingCount = _.size(_.pickBy(metrics, function (value, key) { return value }))
@@ -146,6 +155,9 @@ const mutations = {
   },
   hideMetrics (state) {
     Vue.set(state.display, 'metrics', false)
+  },
+  hideValidationError (state) {
+    Vue.set(state, 'validationError', false)
   },
   resetState (state) {
     const reset = initialState()

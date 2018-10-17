@@ -23,6 +23,17 @@
         </div>
       </b-col>
     </b-row>
+    <b-row v-if="validationError">
+      <b-col>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <h4 class="alert-heading">Validation Error</h4>
+          <hr>
+          <p>
+            <strong>Whoops!</strong> We are having some problems with your input, please try again with a different URL or screenshot.
+          </p>
+        </div>
+      </b-col>
+    </b-row>
     <b-row v-if="display.input">
       <b-col>
         <b-form id="aim-url-form" class="needs-validation" novalidate @submit="onSubmitURL">
@@ -52,7 +63,7 @@
             Please provide a valid screenshot image.
           </div>
           <div v-if="fileTooLarge" class="invalid-feedback">
-            File is too large (max 3 MB).
+            File is too large (max 5 MB).
           </div>
         </b-form>
       </b-col>
@@ -377,6 +388,9 @@ export default {
       event.preventDefault()
       event.stopPropagation()
 
+      // Hide validation error
+      this.$store.commit('hideValidationError')
+
       // Fix URL, if needed
       this.fixURL()
 
@@ -394,6 +408,9 @@ export default {
       // Prevent the event
       event.preventDefault()
       event.stopPropagation()
+
+      // Hide validation error
+      this.$store.commit('hideValidationError')
 
       // Reset URL form
       this.resetForm(true, false, false)
@@ -461,7 +478,7 @@ export default {
       document.querySelector('#aim-screenshot-form').classList.add('was-validated')
     },
     isFileTooLarge (file) {
-      const MAX_FILE_SIZE = 3145728 // 3 MB
+      const MAX_FILE_SIZE = 5242880 // 5 MB
 
       // Validate file size
       return (file.size > MAX_FILE_SIZE)
@@ -509,7 +526,8 @@ export default {
   },
   computed: mapState({
     display: state => state.display,
-    wsError: state => state.wsError
+    wsError: state => state.wsError,
+    validationError: state => state.validationError
   })
 }
 </script>

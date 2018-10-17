@@ -6,6 +6,7 @@ from tornado.options import define, options, parse_command_line, parse_config_fi
 import motor
 
 
+define("environment", default=None, help="Runtime environment", type=str)
 define("port", default=None, help="Port to listen on", type=int)
 define("name", default=None, help="Instance name", type=str)
 define("chrome_path", default=None, help="Path to Chrome executable", type=str)
@@ -19,7 +20,7 @@ def make_app():
     db = client.get_database()
     return tornado.web.Application([
         (r"/metric", handlers.metric_ws_handler.MetricWebSocket),
-    ], db=db)
+    ], db=db, websocket_max_message_size=5767168) # 5.5 MB
 
 def create_vg2_input_file(name):
     content = "\n".join([
@@ -54,14 +55,13 @@ def main():
     elif environment == "test":
         config_file = "configs/test.conf"
     else:
-        environment = "development"
         config_file = "configs/development.conf"
     parse_config_file(config_file)
     parse_command_line()
 
     app = make_app()
     app.listen(options.port)
-    print("Execution environment: {}".format(environment))
+    print("Execution environment: {}".format(options.environment))
     print("Server is listening on http://127.0.0.1:{}".format(options.port))
     print("Instance name: {}".format(options.name))
     print("Current working directory: {}".format(os.getcwd()))
