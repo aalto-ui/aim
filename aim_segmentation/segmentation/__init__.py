@@ -82,7 +82,8 @@ def segment(img_bgr, h_blur=13, v_blur=9):
 
     contours = contours_0 + contours_1 + contours_2 + contours_denoised + contours_sobel + contours_canny
 
-    bbox = utils.remove_overlaps(contours)
+    # bbox = utils.remove_overlaps(contours)
+    bbox = 0 # No big bounding box
 
     temp = np.zeros_like(BW)
 

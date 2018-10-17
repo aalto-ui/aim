@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='aim_segmentation',
-      version='1.0',
+      version='1.0.1',
       description='Tool for segmentation of images',
       author='Khushhall Chandra Mahajan, Janin Koch, Samuli De Pascale',
       author_email='',
