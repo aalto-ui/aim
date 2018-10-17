@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='aim_metrics',
-    version='1.0.1',
+    version='1.0.2',
     description='A collection of various pixel and segmentation based metrics for evaluating properties of user interface.',
     url='',
     author='Thomas Langerak, Yuxi Zhu, Akisato Kimura, Samuli De Pascale, Markku Laine, Kseniia Palin',
