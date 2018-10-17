@@ -119,7 +119,7 @@ def execute(b64, elements):
 
             cv2.addWeighted(img_overlay, 0.5, img_out, 0.5, 0, img_out)
 
-            cv2.rectangle(img_out, (0, 0), (1279, 719), (0, 0, 0), 1)
+            cv2.rectangle(img_out, (0, 0), (1279, 799), (0, 0, 0), 1)
 
             img_scale = np.zeros((120, 1280, 3), np.uint8)
             img_scale[:, :] = (255, 255, 255)
@@ -153,7 +153,7 @@ def execute(b64, elements):
             img_overlay = img.copy()
             img_out = img.copy()
             cv2.addWeighted(img_overlay, 0.5, img_out, 0.5, 0, img_out)
-            cv2.rectangle(img_out, (0, 0), (1279, 719), (0, 0, 0), 1)
+            cv2.rectangle(img_out, (0, 0), (1279, 799), (0, 0, 0), 1)
             img_scale = np.zeros((120, 1280, 3), np.uint8)
             img_scale[:, :] = (255, 255, 255)
             cv2.rectangle(img_scale, (99, 49), (580, 91), (0, 0, 0), 1)
