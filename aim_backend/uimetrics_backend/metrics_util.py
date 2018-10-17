@@ -5,6 +5,7 @@ import cStringIO
 from subprocess32 import call
 from tornado.options import options
 from resizeimage import resizeimage, imageexceptions
+import os
 
 
 def generate_screenshot(url):
@@ -18,6 +19,9 @@ def generate_screenshot(url):
 def resize_uploaded_image(pngb64):
     # Open image
     img = Image.open(BytesIO(base64.b64decode(pngb64)))
+
+    # Save image
+    img.save("screenshots/" + options.name + ".png")
 
     # Resize image
     try:
@@ -40,3 +44,7 @@ def convert_png_to_jpg_b64(pngb64):
     buffer = cStringIO.StringIO()
     im.save(buffer, format="JPEG")
     return base64.b64encode(buffer.getvalue())
+
+
+def get_screenshot_size():
+    return os.path.getsize("screenshots/" + options.name + ".png")
