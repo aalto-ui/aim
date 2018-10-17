@@ -1,5 +1,5 @@
 aim-metrics==1.0.1
-aim-segmentation==1.0
+aim-segmentation==1.0.1
 autopep8==1.3.3
 backports-abc==0.5
 backports.functools-lru-cache==1.4
