@@ -29,12 +29,14 @@ Start by creating the `aim` database in MongoDB with the following two collectio
 
 ### Backend
 
-Configure backend environment variables for [development](./aim_backend/configs/development.conf), [test](./aim_backend/configs/test.conf), and [production](./aim_backend/configs/productions.conf). Next, go to the [aim_backend](./aim_backend/) directory, and create and activate a new Python *virtual environment* (if needed). The final step involves running the following commands:
+Configure backend environment variables for [development](./aim_backend/configs/development.conf), [test](./aim_backend/configs/test.conf), and [production](./aim_backend/configs/production.conf). Next, go to the [aim_backend](./aim_backend/) directory, and create and activate a new Python *virtual environment* (if needed). The final step involves running the following commands:
 
 ```bash
 # Install required packages
-pip install ../aim_metricspip install ../aim_segmentation
-pip install -r requirements.txtpip install opencv-python
+pip install ../aim_metrics
+pip install ../aim_segmentation
+pip install -r requirements.txt
+pip install opencv-python
 ```
 
 ### Frontend
@@ -54,7 +56,8 @@ npm install
 To run the backend server, go the [aim_backend](./aim_backend/) directory and execute:
 
 ```bash
-# Start the serverpython uimetrics_backend/main.py
+# Start the server
+python uimetrics_backend/main.py
 ```
 
 ### Frontend
