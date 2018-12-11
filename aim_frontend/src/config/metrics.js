@@ -13,7 +13,8 @@ export default {
         'cp6',
         'cp7',
         'cp8',
-        'cp9'
+        'cp9',
+        'cp10'
       ]
     },
     {
@@ -416,6 +417,31 @@ export default {
           index: 0,
           type: 'float',
           name: 'Standard Deviation in Luminance',
+          description: false
+        }
+      ]
+    },
+    cp10: {
+      id: 'cp10',
+      name: 'WAVE (Weighted Affective Valence Estimates)',
+      category: 'cp',
+      description: 'This takes the mean color preference score of each pixel, based on empirically-obtained color preference scores. These color preference scores were retrieved by asking participants to rate their preferences for objects of these colors, with the theory that the preferences for these objects translate directly to preferences for the colors of these objects.',
+      evidence: 3,
+      relevance: 2,
+      speed: 1,
+      visualizationType: 'table',
+      references: [
+        {
+          title: 'Palmer, S.E. and Schloss, K.B. An Ecological Valence Theory of Human Color Preference.',
+          fileName: 'palmer_and_schloss_2010.pdf'
+        }
+      ],
+      results: [
+        {
+          id: 'cp10_0',
+          index: 0,
+          type: 'float',
+          name: 'Average WAVE Score Across Pixels',
           description: false
         }
       ]
