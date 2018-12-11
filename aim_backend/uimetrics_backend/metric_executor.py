@@ -7,6 +7,7 @@ from aim_metrics.colour_perception import cp6_hassler_susstrunk as cp6
 from aim_metrics.colour_perception import cp7_static_clusters as cp7
 from aim_metrics.colour_perception import cp8_dynamic_clusters as cp8
 from aim_metrics.colour_perception import cp9_luminance_sd as cp9
+from aim_metrics.colour_perception import cp10_wave as cp10
 
 from aim_metrics.perceptual_fluency import pf1_edge_density as pf1
 from aim_metrics.perceptual_fluency import pf2_edge_congestion as pf2
@@ -59,6 +60,10 @@ metrics_mapping = {
     'cp9': {
         'executor': cp9,
         'format': 'jpg',
+    },
+    'cp10': {
+        'executor': cp10,
+        'format': 'png',
     },
     'pf1': {
         'executor': pf1,
