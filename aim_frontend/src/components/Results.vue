@@ -34,8 +34,8 @@
                     </template>
                   </template>
                   <template slot="show_details" slot-scope="row">
-                    <b-btn v-if="metric !== 'pf8'" v-b-modal="`${row.item.id}-modal`" variant="link">Show Details</b-btn>
-                    <b-modal v-if="metric !== 'pf8'" size="lg" :title="row.item.result.name" :id="`${row.item.id}-modal`" ok-only ok-title="Close">
+                    <b-btn v-if="metric !== 'pf8' && metric !== 'cp10'" v-b-modal="`${row.item.id}-modal`" variant="link">Show Details</b-btn>
+                    <b-modal v-if="metric !== 'pf8' && metric !== 'cp10'" size="lg" :title="row.item.result.name" :id="`${row.item.id}-modal`" ok-only ok-title="Close">
                       <template v-if="row.item.result.description">
                         <p>{{ row.item.result.description }}</p>
                       </template>
