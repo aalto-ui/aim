@@ -16,6 +16,19 @@ def generate_screenshot(url):
     return base64.b64encode(buffer.getvalue())
 
 
+def open_png(filename):
+    """
+    Open image.
+
+    :param filename: Input filename (PNG image).
+    :return: Base64 encoded representation of the PNG image.
+    """
+    im = Image.open(filename)
+    buffer = cStringIO.StringIO()
+    im.save(buffer, format="PNG")
+    return base64.b64encode(buffer.getvalue())
+
+
 def resize_uploaded_image(pngb64):
     # Open image
     img = Image.open(BytesIO(base64.b64decode(pngb64)))

@@ -391,7 +391,7 @@ export default {
           id: 'cp8_1',
           index: 1,
           type: 'int',
-          name: 'Average number of colours per Cluster',
+          name: 'Average Number of Colours per Cluster',
           description: false
         }
       ]
@@ -428,7 +428,7 @@ export default {
       description: 'This takes the mean color preference score of each pixel, based on empirically-obtained color preference scores. These color preference scores were retrieved by asking participants to rate their preferences for objects of these colors, with the theory that the preferences for these objects translate directly to preferences for the colors of these objects.',
       evidence: 3,
       relevance: 2,
-      speed: 1,
+      speed: 2,
       visualizationType: 'table',
       references: [
         {
@@ -482,7 +482,7 @@ export default {
       description: 'Edge congestion indicates the ease with which main edges can he perceived. A crowded image is hard to follow. The edge congestion indicator is important for complex interfaces and graph visualizations.',
       evidence: 3,
       relevance: 3,
-      speed: 0,
+      speed: 1,
       visualizationType: 'table',
       references: [
         {
@@ -660,7 +660,7 @@ export default {
       description: 'The proportion of white space indicates, on one hand, effective use of space and, on the other, ability of the interface to guide attention to regions on the user interface. This metric is a heuristic and not based on a theory of human visual system',
       evidence: 2,
       relevance: 4,
-      speed: 1,
+      speed: 2,
       visualizationType: 'table',
       references: [
         {
@@ -685,7 +685,7 @@ export default {
       description: 'Grid quality indicates the internal alignment of the various components or identifiable regions of the UI with respect to each other. Several studies have established that the grid quality has a strong impact on the aesthetic impression induced by the overall layout. Specifically, the measures "G2 and G5" (pp. 1166,Table 3) have been adapted for the evaluation of grid layouts within web pages.',
       evidence: 4,
       relevance: 4,
-      speed: 1,
+      speed: 2,
       visualizationType: 'table',
       references: [
         {
@@ -735,7 +735,7 @@ export default {
       description: 'Visual search performance indicates the ease with which different elements can be found from the image after some experience with the layout. ',
       evidence: 4,
       relevance: 5,
-      speed: 1,
+      speed: 0,
       visualizationType: 'b64',
       references: [
         {
@@ -760,7 +760,7 @@ export default {
       description: 'These metrics indicate information loss for users with color vision deficiencies. The metrics are physiologically motivated and currently handle anomalous trichromacy and dichromacy. Evidence for the metric come from controlled experiments.',
       evidence: 4,
       relevance: 5,
-      speed: 0,
+      speed: 1,
       visualizationType: 'b64',
       references: [
         {
