@@ -72,7 +72,24 @@ export default {
           index: 0,
           type: 'int',
           name: 'PNG File Size (in bytes)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 500000],
+              description: 'Suitable'
+            },
+            {
+              id: 'r2',
+              range: [500001, 1200000],
+              description: 'Fair'
+            },
+            {
+              id: 'r3',
+              range: [1200001, null],
+              description: 'Huge'
+            }
+          ]
         }
       ]
     },
@@ -101,7 +118,24 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Colours',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 5000],
+              description: 'Less colorful'
+            },
+            {
+              id: 'r2',
+              range: [5001, 15000],
+              description: 'Fair'
+            },
+            {
+              id: 'r3',
+              range: [15001, null],
+              description: 'Colourful'
+            }
+          ]
         }
       ]
     },
@@ -126,35 +160,110 @@ export default {
           index: 0,
           type: 'float',
           name: 'Average Hue',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp3_1',
           index: 1,
           type: 'float',
           name: 'Average Saturation',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.10],
+              description: 'Low'
+            },
+            {
+              id: 'r2',
+              range: [0.11, 0.60],
+              description: 'Medium'
+            },
+            {
+              id: 'r3',
+              range: [0.61, null],
+              description: 'High'
+            }
+          ]
         },
         {
           id: 'cp3_2',
           index: 2,
           type: 'float',
           name: 'Standard Deviation of Saturation',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.20],
+              description: 'Low'
+            },
+            {
+              id: 'r2',
+              range: [0.21, 0.40],
+              description: 'Medium'
+            },
+            {
+              id: 'r3',
+              range: [0.41, null],
+              description: 'High'
+            }
+          ]
         },
         {
           id: 'cp3_3',
           index: 3,
           type: 'float',
           name: 'Average Value',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.40],
+              description: 'Dark'
+            },
+            {
+              id: 'r2',
+              range: [0.41, 0.80],
+              description: 'Medium'
+            },
+            {
+              id: 'r3',
+              range: [0.81, 1.00],
+              description: 'Light'
+            }
+          ]
         },
         {
           id: 'cp3_4',
           index: 4,
           type: 'float',
           name: 'Standard Deviation of Value',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.15],
+              description: 'Low'
+            },
+            {
+              id: 'r2',
+              range: [0.16, 0.35],
+              description: 'Medium'
+            },
+            {
+              id: 'r3',
+              range: [0.36, null],
+              description: 'High'
+            }
+          ]
         }
       ]
     },
@@ -179,28 +288,61 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Unique HSV',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 20000],
+              description: 'Good'
+            },
+            {
+              id: 'r2',
+              range: [20001, null],
+              description: 'Potential varied'
+            }
+          ]
         },
         {
           id: 'cp4_1',
           index: 1,
           type: 'int',
           name: 'Number of Unique Hue',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp4_2',
           index: 2,
           type: 'int',
           name: 'Number of Unique Saturation',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp4_3',
           index: 3,
           type: 'int',
           name: 'Number of Unique Value',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         }
       ]
     },
@@ -225,42 +367,104 @@ export default {
           index: 0,
           type: 'float',
           name: 'Mean Lightness',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 40.00],
+              description: 'Dark'
+            },
+            {
+              id: 'r2',
+              range: [40.01, 75.00],
+              description: 'Medium'
+            },
+            {
+              id: 'r3',
+              range: [75.01, 100.00],
+              description: 'Light'
+            }
+          ]
         },
         {
           id: 'cp5_1',
           index: 1,
           type: 'float',
           name: 'Standard Deviation Lightness',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 15.00],
+              description: 'Low'
+            },
+            {
+              id: 'r2',
+              range: [15.01, 35.00],
+              description: 'Medium'
+            },
+            {
+              id: 'r3',
+              range: [35.01, null],
+              description: 'High'
+            }
+          ]
         },
         {
           id: 'cp5_2',
           index: 2,
           type: 'float',
           name: 'Mean A (Green-Red Space)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp5_3',
           index: 3,
           type: 'float',
           name: 'Standard Deviation A',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp5_4',
           index: 4,
           type: 'float',
           name: 'Mean B (Yellow-Blue Space)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp5_5',
           index: 5,
           type: 'float',
           name: 'Standard Deviation B',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         }
       ]
     },
@@ -285,49 +489,108 @@ export default {
           index: 0,
           type: 'float',
           name: 'Mean Distribution (Red-Green)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp6_1',
           index: 1,
           type: 'float',
           name: 'Standard Deviation Distribution (Red-Green)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp6_2',
           index: 2,
           type: 'float',
           name: 'Mean Distribution (Yellow-Blue)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp6_3',
           index: 3,
           type: 'float',
           name: 'Standard Deviation Distribution (Yellow-Blue)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp6_4',
           index: 4,
           type: 'float',
           name: 'Mean Distribution (RGYB)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp6_5',
           index: 5,
           type: 'float',
           name: 'Standard Deviation Distribution (RGYB)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         },
         {
           id: 'cp6_6',
           index: 6,
           type: 'float',
           name: 'Colorfulness',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 50.00],
+              description: 'Less colorful'
+            },
+            {
+              id: 'r2',
+              range: [50.01, 100.00],
+              description: 'Fair'
+            },
+            {
+              id: 'r3',
+              range: [100.01, null],
+              description: 'Colorful'
+            }
+          ]
         }
       ]
     },
@@ -356,7 +619,24 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Clusters',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 4000],
+              description: 'Less colorful'
+            },
+            {
+              id: 'r2',
+              range: [4001, 8000],
+              description: 'Fair'
+            },
+            {
+              id: 'r3',
+              range: [8001, null],
+              description: 'Colorful'
+            }
+          ]
         }
       ]
     },
@@ -385,14 +665,38 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Clusters',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 500],
+              description: 'Less colorful'
+            },
+            {
+              id: 'r2',
+              range: [501, 1000],
+              description: 'Fair'
+            },
+            {
+              id: 'r3',
+              range: [1001, null],
+              description: 'Colorful'
+            }
+          ]
         },
         {
           id: 'cp8_1',
           index: 1,
           type: 'int',
           name: 'Average Number of Colours per Cluster',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless'
+            }
+          ]
         }
       ]
     },
@@ -417,7 +721,24 @@ export default {
           index: 0,
           type: 'float',
           name: 'Standard Deviation in Luminance',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 60.00],
+              description: 'Good'
+            },
+            {
+              id: 'r2',
+              range: [60.01, 90.00],
+              description: 'Acceptable'
+            },
+            {
+              id: 'r3',
+              range: [90.01, null],
+              description: 'Potential varied'
+            }
+          ]
         }
       ]
     },
@@ -442,7 +763,19 @@ export default {
           index: 0,
           type: 'float',
           name: 'Average WAVE Score Across Pixels',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.54],
+              description: 'Low'
+            },
+            {
+              id: 'r2',
+              range: [0.55, 1.00],
+              description: 'Good'
+            }
+          ]
         }
       ]
     },
@@ -471,7 +804,24 @@ export default {
           index: 0,
           type: 'float',
           name: 'Edge Density',
-          description: 'Ratio between number of edge pixels and total number of pixels.'
+          description: 'Ratio between number of edge pixels and total number of pixels.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.12],
+              description: 'Good'
+            },
+            {
+              id: 'r2',
+              range: [0.13, 0.22],
+              description: 'Fair'
+            },
+            {
+              id: 'r3',
+              range: [0.23, null],
+              description: 'Poor'
+            }
+          ]
         }
       ]
     },
@@ -508,7 +858,24 @@ export default {
           index: 0,
           type: 'float',
           name: 'Edge Congestion',
-          description: 'Number of congested pixels divided by number of edge pixels.'
+          description: 'Number of congested pixels divided by number of edge pixels.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.25],
+              description: 'Good'
+            },
+            {
+              id: 'r2',
+              range: [0.26, 0.50],
+              description: 'Fair'
+            },
+            {
+              id: 'r3',
+              range: [0.51, null],
+              description: 'Poor'
+            }
+          ]
         }
       ]
     },
@@ -533,7 +900,24 @@ export default {
           index: 0,
           type: 'int',
           name: 'JPEG File Size (in bytes)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 100000],
+              description: 'Suitable'
+            },
+            {
+              id: 'r2',
+              range: [100001, 200000],
+              description: 'Fair'
+            },
+            {
+              id: 'r3',
+              range: [200001, null],
+              description: 'Huge'
+            }
+          ]
         }
       ]
     },
@@ -570,7 +954,14 @@ export default {
           index: 0,
           type: 'float',
           name: 'Figure-Ground Contrast',
-          description: 'Weighted sum of edge pixels divided by sum of edge pixels.'
+          description: 'Weighted sum of edge pixels divided by sum of edge pixels.',
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'TODO'
+            }
+          ]
         }
       ]
     },
@@ -595,7 +986,19 @@ export default {
           index: 0,
           type: 'float',
           name: 'Normalized Symmetry',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 1.00],
+              description: 'Good'
+            },
+            {
+              id: 'r2',
+              range: [1.01, null],
+              description: 'Poor'
+            }
+          ]
         }
       ]
     },
@@ -628,28 +1031,81 @@ export default {
           index: 0,
           type: 'float',
           name: 'Balance',
-          description: 'Balance can be defined as the distribution of optical weight in a picture. Optical weight refers to the perception that some objects appear heavier than others. Larger objects are heavier, whereas small objects are lighter. Balance in screen design is achieved by providing an equal weight of screen elements, left and right, top and bottom.'
+          description: 'Balance can be defined as the distribution of optical weight in a picture. Optical weight refers to the perception that some objects appear heavier than others. Larger objects are heavier, whereas small objects are lighter. Balance in screen design is achieved by providing an equal weight of screen elements, left and right, top and bottom.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.65],
+              description: 'Potential unbalanced'
+            },
+            {
+              id: 'r2',
+              range: [0.66, 1.00],
+              description: 'Balanced'
+            }
+          ]
         },
         {
           id: 'pf6_1',
           index: 1,
           type: 'float',
           name: 'Symmetry',
-          description: 'Symmetry is axial duplication: a unit on one side of the centre line is exactly replicated on the other side. Vertical symmetry refers to the balanced arrangement of equivalent elements about a vertical axis, and horizontal symmetry about a horizontal axis. Radial symmetry consists of equivalent elements balanced about two or more axes that intersect at a central point.'
+          description: 'Symmetry is axial duplication: a unit on one side of the centre line is exactly replicated on the other side. Vertical symmetry refers to the balanced arrangement of equivalent elements about a vertical axis, and horizontal symmetry about a horizontal axis. Radial symmetry consists of equivalent elements balanced about two or more axes that intersect at a central point.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.50],
+              description: 'Poor'
+            },
+            {
+              id: 'r2',
+              range: [0.51, 1.00],
+              description: 'Acceptable'
+            }
+          ]
         },
         {
           id: 'pf6_2',
           index: 2,
           type: 'float',
           name: 'Equilibrium',
-          description: 'Equilibrium is a stabilisation, a midway centre of suspension. Equilibrium on a screen is accomplished through centring the layout itself. The centre of the layout coincides with that of the frame.'
+          description: 'Equilibrium is a stabilisation, a midway centre of suspension. Equilibrium on a screen is accomplished through centring the layout itself. The centre of the layout coincides with that of the frame.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.65],
+              description: 'Not centralized'
+            },
+            {
+              id: 'r2',
+              range: [0.66, 1.00],
+              description: 'Centralized'
+            }
+          ]
         },
         {
           id: 'pf6_3',
           index: 3,
           type: 'int',
           name: 'Number of Leaves',
-          description: 'Number of leaves is the total amount of leaves at the end of the recursion. The higher this number, the higher the complexity.'
+          description: 'Number of leaves is the total amount of leaves at the end of the recursion. The higher this number, the higher the complexity.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 1500],
+              description: 'Good'
+            },
+            {
+              id: 'r2',
+              range: [1501, 3200],
+              description: 'Fair'
+            },
+            {
+              id: 'r3',
+              range: [3201, null],
+              description: 'Poor'
+            }
+          ]
         }
       ]
     },
@@ -674,7 +1130,24 @@ export default {
           index: 0,
           type: 'float',
           name: 'White Space',
-          description: 'Proportion of white space.'
+          description: 'Proportion of white space.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.30],
+              description: 'Low'
+            },
+            {
+              id: 'r2',
+              range: [0.31, 0.80],
+              description: 'Good'
+            },
+            {
+              id: 'r3',
+              range: [0.81, 1.00],
+              description: 'High'
+            }
+          ]
         }
       ]
     },
@@ -699,7 +1172,24 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Alignment Lines',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [4, 100],
+              description: 'Low'
+            },
+            {
+              id: 'r2',
+              range: [101, 220],
+              description: 'Medium'
+            },
+            {
+              id: 'r3',
+              range: [221, null],
+              description: 'High'
+            }
+          ]
         }
       ]
     },
