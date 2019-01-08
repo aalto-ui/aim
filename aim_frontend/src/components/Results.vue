@@ -34,14 +34,14 @@
                     </template>
                   </template>
                   <template slot="show_details" slot-scope="row">
-                    <b-btn v-if="metric !== 'pf8' && metric !== 'cp10'" v-b-modal="`${row.item.id}-modal`" variant="link">Show Details</b-btn>
-                    <b-modal v-if="metric !== 'pf8' && metric !== 'cp10'" size="lg" :title="row.item.result.name" :id="`${row.item.id}-modal`" ok-only ok-title="Close">
+                    <b-btn v-b-modal="`${row.item.id}-modal`" variant="link">Show Details</b-btn>
+                    <b-modal size="lg" :title="row.item.result.name" :id="`${row.item.id}-modal`" ok-only ok-title="Close">
                       <template v-if="row.item.result.description">
                         <p>{{ row.item.result.description }}</p>
                       </template>
                       <h4>Your score: {{ row.item.value }}</h4>
                       <hr />
-                      <p>The histogram below shows the results of this metric for <em>Alexa top 500 global sites</em>. The list of sites was retrieved from <a href="https://www.alexa.com/topsites" target="_blank">https://www.alexa.com/topsites</a> on July 2, 2018 and their respective GUI designs were evaluated on July 6-8, 2018<sup>*</sup>.</p>
+                      <p>The histogram below shows the results of this metric for <em>Alexa top 500 global sites</em>. The list of sites was retrieved from <a href="https://www.alexa.com/topsites" target="_blank">https://www.alexa.com/topsites</a> on July 2, 2018 and their respective GUI designs were evaluated on December 18-19, 2018<sup>*</sup>.</p>
                       <img class="histogram" :src="'/static/histograms/' + row.item.id + '.png'" />
                       <p style="font-size: 11px;"><sup>*</sup>Country-specific, non-representative, and non-relevant sites were excluded from the list.</p>
                     </b-modal>
