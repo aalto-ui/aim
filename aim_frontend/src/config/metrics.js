@@ -95,7 +95,7 @@ export default {
     },
     cp2: {
       id: 'cp2',
-      name: 'Unique RGB colours',
+      name: 'Unique RGB Colours',
       category: 'cp',
       description: 'The number of unique colours in RGB spectrum is an indication of colour variance. Colours that occur more than a threshold value are counted. Note that this is confounded by image size',
       evidence: 2,
@@ -123,7 +123,7 @@ export default {
             {
               id: 'r1',
               range: [0, 5000],
-              description: 'Less colorful'
+              description: 'Less colourful'
             },
             {
               id: 'r2',
@@ -141,7 +141,7 @@ export default {
     },
     cp3: {
       id: 'cp3',
-      name: 'HSV colours: Average and std',
+      name: 'HSV Colours: Average and STD',
       category: 'cp',
       description: 'The HSV (Hue, Saturation, Value) colour space aligns more closely with the human visual system. These metrics report average and standard deviation for each channel in HSV. Empirical research has shown hue and saturation channels to correlated with aesthetic impression.',
       evidence: 3,
@@ -269,7 +269,7 @@ export default {
     },
     cp4: {
       id: 'cp4',
-      name: 'Number of unique colours in the HSV spectrum',
+      name: 'Number of Unique Colours in the HSV Spectrum',
       category: 'cp',
       description: 'The HSV (Hue, Saturation, Value) colour space aligns more closely with the human visual system.  This metric reports the number of unique colours per channel in HSV. Unlike the other HSV metric, no direct empirical evidence exists for this metric. Note that the metric correlates highly with the number of colours in the RGB space.',
       evidence: 2,
@@ -348,7 +348,7 @@ export default {
     },
     cp5: {
       id: 'cp5',
-      name: 'LAB colours',
+      name: 'LAB Colours',
       category: 'cp',
       description: 'The LAB colour space approximates human vision for uniformity of colour perception. Results sre similar to the HSV metric. Empirical work has provided support for correlation between SD in luminance and aesthetic impression.',
       evidence: 3,
@@ -470,7 +470,7 @@ export default {
     },
     cp6: {
       id: 'cp6',
-      name: 'Hassler-Susstrunk colourfulness',
+      name: 'Hassler-Susstrunk Colourfulness',
       category: 'cp',
       description: 'The Hassler-Susstrunk metric is computed based on the RGYB colour spectrum and mainly comprises standard deviations. The higher the deviation, the more colourful the image is perceived. This has a high correlation with aesthetic impression, but has been mainly tested with photography not user interfaces. The metric is, however, computationally expensive. Note that this metric does not take hue into account.',
       evidence: 4,
@@ -572,13 +572,13 @@ export default {
           id: 'cp6_6',
           index: 6,
           type: 'float',
-          name: 'Colorfulness',
+          name: 'Colourfulness',
           description: false,
           scores: [
             {
               id: 'r1',
               range: [0.00, 50.00],
-              description: 'Less colorful'
+              description: 'Less colourful'
             },
             {
               id: 'r2',
@@ -588,7 +588,7 @@ export default {
             {
               id: 'r3',
               range: [100.01, null],
-              description: 'Colorful'
+              description: 'Colourful'
             }
           ]
         }
@@ -596,7 +596,7 @@ export default {
     },
     cp7: {
       id: 'cp7',
-      name: 'Static colour clustering',
+      name: 'Static Colour Clustering',
       category: 'cp',
       description: 'Static colour clusters refers to the number of pre-determined colour clusters in the image. Clustering is based on slicing of RGB channels. It indicates the number of dominant colours but is confounded by colour variance.  Dynamic colour clusters has higher correlation with aesthetic impression, but it is also more complex to compute.',
       evidence: 2,
@@ -624,7 +624,7 @@ export default {
             {
               id: 'r1',
               range: [0, 4000],
-              description: 'Less colorful'
+              description: 'Less colourful'
             },
             {
               id: 'r2',
@@ -634,7 +634,7 @@ export default {
             {
               id: 'r3',
               range: [8001, null],
-              description: 'Colorful'
+              description: 'Colourful'
             }
           ]
         }
@@ -642,9 +642,9 @@ export default {
     },
     cp8: {
       id: 'cp8',
-      name: 'Dynamic colour clusters',
+      name: 'Dynamic Colour Clusters',
       category: 'cp',
-      description: 'Indicates the number of color clusters in an image and the average number of colours within each cluster. Colours are clustered recursively, using as criteria their distance in a colour cube. Only clusters with more than 5 values are included in the final count. The number of colours per cluster is shown to correlate with aesthetic perception. Indicates the number of color clusters in an image and the average number of colours within each cluster. Colours are clustered recursively, using as criteria their distance in a colour cube. Only clusters with more than 5 values are included in the final count. The number of colours per cluster is shown to correlate with aesthetic perception.',
+      description: 'Indicates the number of colour clusters in an image and the average number of colours within each cluster. Colours are clustered recursively, using as criteria their distance in a colour cube. Only clusters with more than 5 values are included in the final count. The number of colours per cluster is shown to correlate with aesthetic perception. Indicates the number of colour clusters in an image and the average number of colours within each cluster. Colours are clustered recursively, using as criteria their distance in a colour cube. Only clusters with more than 5 values are included in the final count. The number of colours per cluster is shown to correlate with aesthetic perception.',
       evidence: 3,
       relevance: 3,
       speed: 0,
@@ -670,7 +670,7 @@ export default {
             {
               id: 'r1',
               range: [0, 500],
-              description: 'Less colorful'
+              description: 'Less colourful'
             },
             {
               id: 'r2',
@@ -680,7 +680,7 @@ export default {
             {
               id: 'r3',
               range: [1001, null],
-              description: 'Colorful'
+              description: 'Colourful'
             }
           ]
         },
@@ -702,7 +702,7 @@ export default {
     },
     cp9: {
       id: 'cp9',
-      name: 'Luminance: Standard deviation',
+      name: 'Luminance: Standard Deviation',
       category: 'cp',
       description: 'Standard deviation of luminance indicates how much luminance varies across the image. It has no or low correlation with perceived colour variability, but some correlation with aesthetic impression. Note that this implementation does not account for display-dependent gamma corrections (rec. 709 standard).',
       evidence: 3,
@@ -746,7 +746,7 @@ export default {
       id: 'cp10',
       name: 'WAVE (Weighted Affective Valence Estimates)',
       category: 'cp',
-      description: 'This takes the mean color preference score of each pixel, based on empirically-obtained color preference scores. These color preference scores were retrieved by asking participants to rate their preferences for objects of these colors, with the theory that the preferences for these objects translate directly to preferences for the colors of these objects.',
+      description: 'This takes the mean colour preference score of each pixel, based on empirically-obtained colour preference scores. These colour preference scores were retrieved by asking participants to rate their preferences for objects of these colours, with the theory that the preferences for these objects translate directly to preferences for the colours of these objects.',
       evidence: 3,
       relevance: 2,
       speed: 2,
@@ -899,7 +899,7 @@ export default {
           id: 'pf3_0',
           index: 0,
           type: 'int',
-          name: 'JPEG File Size (in bytes)',
+          name: 'JPG File Size (in bytes)',
           description: false,
           scores: [
             {
@@ -1004,7 +1004,7 @@ export default {
     },
     pf6: {
       id: 'pf6',
-      name: 'Quadtree decomposition',
+      name: 'Quadtree Decomposition',
       category: 'pf',
       description: 'Quadtree decomposition indicates visual complexity of a scene. It recursively breaks down the image into regions based on entropy in colour and luminance channels.',
       evidence: 3,
@@ -1153,7 +1153,7 @@ export default {
     },
     pf8: {
       id: 'pf8',
-      name: 'Grid quality',
+      name: 'Grid Quality',
       category: 'pf8',
       description: 'Grid quality indicates the internal alignment of the various components or identifiable regions of the UI with respect to each other. Several studies have established that the grid quality has a strong impact on the aesthetic impression induced by the overall layout. Specifically, the measures "G2 and G5" (pp. 1166,Table 3) have been adapted for the evaluation of grid layouts within web pages.',
       evidence: 4,
@@ -1220,7 +1220,7 @@ export default {
     },
     vg2: {
       id: 'vg2',
-      name: 'Visual search performance (experimental)',
+      name: 'Visual Search Performance (experimental)',
       category: 'vg',
       description: 'Visual search performance indicates the ease with which different elements can be found from the image after some experience with the layout. ',
       evidence: 4,
@@ -1245,9 +1245,9 @@ export default {
     },
     ac1: {
       id: 'ac1',
-      name: 'Colour blindness',
+      name: 'Colour Blindness',
       category: 'ac',
-      description: 'These metrics indicate information loss for users with color vision deficiencies. The metrics are physiologically motivated and currently handle anomalous trichromacy and dichromacy. Evidence for the metric come from controlled experiments.',
+      description: 'These metrics indicate information loss for users with colour vision deficiencies. The metrics are physiologically motivated and currently handle anomalous trichromacy and dichromacy. Evidence for the metric come from controlled experiments.',
       evidence: 4,
       relevance: 5,
       speed: 1,
@@ -1264,21 +1264,21 @@ export default {
           index: 0,
           type: 'b64',
           name: 'Deuteranopia',
-          description: 'Red-green color blindness, lacking red cones.'
+          description: 'Red-green colour blindness, lacking red cones.'
         },
         {
           id: 'ac1_1',
           index: 1,
           type: 'b64',
           name: 'Protanopia',
-          description: 'Red-green color blindness, lacking green cones.'
+          description: 'Red-green colour blindness, lacking green cones.'
         },
         {
           id: 'ac1_2',
           index: 2,
           type: 'b64',
           name: 'Tritanopia',
-          description: 'Blue-yellow color blindness.'
+          description: 'Blue-yellow colour blindness.'
         }
       ]
     }
