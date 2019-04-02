@@ -19,6 +19,7 @@ const initialState = () => {
       input: true,
       metrics: false,
       progressBar: false,
+      summary: true,
       preview: false,
       results: false
     }
@@ -124,6 +125,7 @@ const mutations = {
         input: state.display.input,
         // results: state.display.results,
         metrics: false,
+        summary: true,
         results: true,
         preview: state.display.preview,
         progressBar: false
@@ -147,6 +149,7 @@ const mutations = {
       metrics: false,
       progressBar: true,
       preview: false,
+      summary: false,
       results: false
     }
   },

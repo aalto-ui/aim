@@ -6,7 +6,7 @@
               <img src="../assets/workflow.png" width="100%" alt="Workflow">
           </b-col>
       </b-row>
-      <h1 class="display-4">AIM - Aalto Interface Metrics service</h1>
+      <h1 class="display-4">AIME - Aalto Interface Metrics service</h1>
       <h2 class="text-muted">Compute how good your design is!</h2>
     </template>
     <template slot="lead">
@@ -352,6 +352,9 @@
     <div class="mt-2" v-if="display.progressBar">
       <ProgressBar />
     </div>
+    <div class="mt-2" v-if="display.summary">
+      <Summary />
+    </div>
     <div class="mt-2" v-if="display.preview">
       <Preview />
     </div>
@@ -365,6 +368,7 @@
 import metricConfig from '../config/metrics'
 import Results from './Results'
 import ProgressBar from './ProgressBar'
+import Summary from './Summary'
 import Preview from './Preview'
 
 import { mapState } from 'vuex'
@@ -522,7 +526,8 @@ export default {
   components: {
     Results,
     ProgressBar,
-    Preview
+    Preview,
+    Summary
   },
   computed: mapState({
     display: state => state.display,
@@ -558,25 +563,26 @@ h2.text-muted {
 .fa-icon.question-circle {
   color: #555555;
 }
-.btn-cat-one {
+/* .btn-cat-one {
   color: #000;
   background-color: #eef0e9;
-}
+} */
 
-.btn-cat-two {
+/* .btn-cat-two {
   color: #000;
   background-color: #fceac6;
-}
+} */
 
-.btn-cat-three {
+/* .btn-cat-three {
   color: #000;
   background-color: #e6b790;
-}
+} */
 
-.btn-cat-four {
+/* .btn-cat-four {
   color: #000;
   background-color: #a55f41;
-}
+} */
+
 .metric-checkbox.custom-control-inline {
   margin-right: 0;
 }
