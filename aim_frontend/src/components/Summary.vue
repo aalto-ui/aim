@@ -1,138 +1,43 @@
 <template lang="html">
 <div>
-  <template v-for="category in categories">
-    <div v-if="categoryVisible(category.id) !== -1">
-      <div class="row">
+<template v-for="category in categories" lang="html">
+  <div v-if="categoryVisible(category.id) !== -1">
+    <div class="topic-title bg-primary rounded">
+      <font-awesome-icon icon="palette" />
+      <h4 class="title">{{category.name}}</h4>
+      <div class="info">
+        <!-- <span class="score"></span> -->
+        <p class="evalation up">GOOD</p>
+      </div>
+    </div><!-- topic Title -->
 
-      <div class="col-md-4">
-          <div class="topic-title bg-primary rounded">
-            <font-awesome-icon icon="palette" />
-            <h4 class="title">{{category.name}}</h4>
-            <div class="info">
-              <!-- <span class="score"></span> -->
-              <p class="evalation up">GOOD</p>
-            </div>
+    <template v-for="metric in category.metrics" v-if="metricVisible(metric)">
+      <div class="metric">
+        <div class="title text-primary">
+          <div class="inner">
+            <!-- 結果のマトリック名 -->
+            <!-- <b-card-header header-tag="header" class="p-0"> -->
+              <b-btn :variant="category.color" block href="#" v-b-toggle="`${category}-${metric}-collapse`">{{metrics[metric].name}}</b-btn>
+            <!-- </b-card-header> -->
           </div>
-      </div> 
-      <!-- col-md-4 -->
-
-      
-      <template v-for="metric in category.metrics" v-if="metricVisible(metric)">
-        <div class="col-md-4">
-        <div class="metric">
-          <div class="title text-primary">
-            <div class="inner">
-              <!-- 結果のマトリック名 -->
-              <!-- <b-card-header header-tag="header" class="p-0"> -->
-                <b-btn :variant="category.color" block href="#" v-b-toggle="`${category}-${metric}-collapse`">{{metrics[metric].name}}</b-btn>
-              <!-- </b-card-header> -->
-            </div>
-          </div>
-          
-          <b-collapse visible :id="`${category}-${metric}-collapse`">
+        </div>
+    
+        <b-collapse visible :id="`${category}-${metric}-collapse`">
           <!-- <b-card-body> -->
-            <template v-if="metrics[metric].visualizationType === 'table'">
-                <b-table :items="results[metric]" :fields="resultTableFields"  class="mt-4">
-                  <template slot="result" slot-scope="data">
-                    {{data.value.name}}
-                    <!-- マトリックの少トピックの名前 -->
-                  </template>
-                </b-table>
-            </template>
-            <!-- <template slot="result" slot-scope="data"> -->
-              <!-- <div>
-                {{data.value.name}} test
-              </div> -->
-            <!-- </template> -->
-            
-            <!-- <div class="row">
-              <div class="info-l col-6">
-                <div class="result"><em>396090</em> byte</div>
-              </div>
-              <div class="info-r col-6">
-                <div class="graf">
-                  <div class="result-arrow" style="left:20px;">▼</div>
-                  <div class="progress" style="height: 2px;">
-
-                    <div class="progress-bar" role="progressbar"
-                      style="width: 60%; position: relative; left: 10%;" aria-valuenow="25" aria-valuemin="0"
-                      aria-valuemax="100"></div>
-                  </div>
-                  <div class="optimum">opt</div>
-                  <div class="optimum">100000 - 900000</div>
-                </div>
-              </div>
-            </div>
-            <div class="spacer-1"></div> -->
-            <!-- </b-card-body> -->
-          </b-collapse>
-        </div><!-- metric -->
-
-        <!-- <b-card no-body class="mb-1"> -->
-          <!-- <b-card-header header-tag="header" class="p-0">
-            <b-btn :variant="category.color" block href="#" v-b-toggle="`${category}-${metric}-collapse`">{{metrics[metric].name}}</b-btn>
-          </b-card-header> -->
-          <!-- <b-collapse visible :id="`${category}-${metric}-collapse`"> -->
-            <!-- <b-card-body> -->
-              <!-- <p>{{metrics[metric].description}}</p> -->
-              <!-- <p>
-                References: [
-                <template v-for="(reference, index) in metrics[metric].references">
-                  <template v-if="index > 0">, </template>
-                  <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank">{{ index + 1 }}</a>
+          <template v-if="metrics[metric].visualizationType === 'table'">
+              <b-table :items="results[metric]" :fields="resultTableFields"  class="mt-4">
+                <template slot="result" slot-scope="data">
+                  {{data.value.name}}
+                  <!-- マトリックの少トピックの名前 -->
                 </template>
-                ]
-              </p> -->
-              <!-- <p>
-                Evidence: <icon name="star" v-for="i in metrics[metric].evidence" :key="'res-evidence-star-' + metric + '-' + i"></icon><icon name="star-o" v-for="i in 5 - metrics[metric].evidence" :key="'res-evidence-star-o-' + metric + '-' + i"></icon>
-                <br />
-                Relevance: <icon name="star" v-for="i in metrics[metric].relevance" :key="'res-relevance-star-' + metric + '-' + i"></icon><icon name="star-o" v-for="i in 5 - metrics[metric].relevance" :key="'res-relevance-star-o-' + metric + '-' + i"></icon>
-              </p> -->
-              <!-- <template v-if="metrics[metric].visualizationType === 'table'"> -->
-                <!-- <b-table hover :items="results[metric]" :fields="resultTableFields"> -->
-                  <!-- <template slot="result" slot-scope="data"> -->
-                    <!-- {{data.value.name}} -->
-                    <!-- <template v-if="data.value.description">
-                      <icon name="question-circle" v-b-tooltip.hover :title="data.value.description"></icon>
-                    </template> -->
-                  <!-- </template> -->
-                  <!-- <template slot="show_details" slot-scope="row">
-                    <b-btn v-b-modal="`${row.item.id}-modal`" variant="link">Show Details</b-btn>
-                    <b-modal size="lg" :title="row.item.result.name" :id="`${row.item.id}-modal`" ok-only ok-title="Close">
-                      <template v-if="row.item.result.description">
-                        <p>{{ row.item.result.description }}</p>
-                      </template>
-                      <h4>Your score: {{ row.item.value }}</h4>
-                      <hr />
-                      <p>The histogram below shows the results of this metric for <em>Alexa top 500 global sites</em>. The list of sites was retrieved from <a href="https://www.alexa.com/topsites" target="_blank">https://www.alexa.com/topsites</a> on July 2, 2018 and their respective GUI designs were evaluated on December 18-19, 2018<sup>*</sup>.</p>
-                      <img class="histogram" :src="'/static/histograms/' + row.item.id + '.png'" />
-                      <p style="font-size: 11px;"><sup>*</sup>Country-specific, non-representative, and non-relevant sites were excluded from the list.</p>
-                    </b-modal>
-                  </template> -->
-                <!-- </b-table> -->
-              <!-- </template> -->
-
-              <!-- <template v-else-if="metrics[metric].visualizationType === 'b64'"> -->
-                <!-- <template v-for="result in results[metric]"> -->
-                  <!-- <h3 class="mt-2">{{ result.result.name }}</h3>
-                  <p v-if="result.result.description">{{ result.result.description }}</p>
-                  <img v-if="result.value !== ''" class="result-img" :src="'data:image/png;base64, ' + result.value" />
-                  <p v-else class="alert alert-danger" role="alert">
-                    <strong>Whoops!</strong> Our experimental visual search performance metric failed to evaluate your image, please try again with a different one.
-                  </p> -->
-                  <!-- <hr /> -->
-                <!-- </template> -->
-              <!-- </template> -->
-            <!-- </b-card-body> -->
-          <!-- </b-collapse> -->
-        <!-- </b-card> -->
-        </div><!-- col-mb-4 each result-->
-      </template>
-      <!-- //// template metricVisible -->
-      </div><!-- ////row -->
-    </div>
-  </template><!-- //// categories -->
- </div>
+              </b-table>
+          </template>
+        </b-collapse>
+      </div><!-- metric -->        
+    </template>
+  </div>
+</template><!-- //// categories -->
+</div>
 </template>
 
 <script>
@@ -240,9 +145,17 @@ h4.title {
 .btn-cat-three,
 .btn-cat-four {
     background: #fff !important;
-    color: #555 !important;
+    font-size: 0.8rem;
+    /* color: #555 !important; */
+    color: #7553a0 !important;
+    border-bottom: 1px solid #ccc;
     /* padding: 5px 10px; */
     text-align: left;
+}
+
+.metric .title .btn{
+    border-radius: 0.25rem;
+    border: none;
 }
 
 .metric .title::after{
