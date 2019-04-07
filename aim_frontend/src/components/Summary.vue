@@ -1,43 +1,34 @@
 <template lang="html">
-<div>
-<template v-for="category in categories" lang="html">
-  <div v-if="categoryVisible(category.id) !== -1">
-    <div class="topic-title bg-primary rounded">
-      <font-awesome-icon icon="palette" />
-      <h4 class="title">{{category.name}}</h4>
-      <div class="info">
-        <!-- <span class="score"></span> -->
-        <p class="evalation up">GOOD</p>
-      </div>
-    </div><!-- topic Title -->
+  <!-- <div>
+    <h2>Summary</h2>
+  </div> -->
 
-    <template v-for="metric in category.metrics" v-if="metricVisible(metric)">
-      <div class="metric">
-        <div class="title text-primary">
-          <div class="inner">
-            <!-- 結果のマトリック名 -->
-            <!-- <b-card-header header-tag="header" class="p-0"> -->
-              <b-btn :variant="category.color" block href="#" v-b-toggle="`${category}-${metric}-collapse`">{{metrics[metric].name}}</b-btn>
-            <!-- </b-card-header> -->
+  <b-row class="summary-section">
+    <template v-for="category in categories" lang="html">
+      <b-col v-if="categoryVisible(category.id) !== -1" cols="3">
+
+        <div class="topic-title bg-primary rounded">
+          <font-awesome-icon :icon="category.icon" />
+          <h4 class="title">{{category.name}}</h4>
+          <div class="info">
+            <!-- <span class="score"></span> -->
+            <p class="evalation up">{{category.evaluation}}</p>
           </div>
-        </div>
-    
-        <b-collapse visible :id="`${category}-${metric}-collapse`">
-          <!-- <b-card-body> -->
-          <template v-if="metrics[metric].visualizationType === 'table'">
-              <b-table :items="results[metric]" :fields="resultTableFields"  class="mt-4">
-                <template slot="result" slot-scope="data">
-                  {{data.value.name}}
-                  <!-- マトリックの少トピックの名前 -->
-                </template>
-              </b-table>
-          </template>
-        </b-collapse>
-      </div><!-- metric -->        
-    </template>
-  </div>
-</template><!-- //// categories -->
-</div>
+        </div><!-- topic Title -->
+
+        <template v-for="metric in category.metrics" v-if="metricVisible(metric)">
+          <div class="metric">
+            <div class="title text-primary" href="#">
+              <div class="inner fas">
+                {{metrics[metric].name}}
+              </div>
+            </div>
+          </div><!-- metric -->        
+        </template>
+
+      </b-col>
+    </template><!-- //// categories -->
+  </b-row>
 </template>
 
 <script>
@@ -75,7 +66,11 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+
+.summary-section{
+  margin: 100px 0px;
+}
 .topic-title {
     position: relative;
     height: 125px;
@@ -86,7 +81,7 @@ export default {
     line-height: normal;
 }
 
-h4.title {
+.topic-title .title {
     letter-spacing: 0.02rem;
     font-size: 1.1rem;
     font-weight: normal;
@@ -95,48 +90,74 @@ h4.title {
     margin-bottom: 0;
 }
 
+.topic-title svg{
+    font-size: 150px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: rgba(255, 255, 255, 0.1);
+}
+
 .topic-title .info {
     position: relative;
     height: 80px;
 }
 
-.topic-title .info .score {
-    position: relative;
-    font-size: 72px;
-    margin-right: 10px;
-}
-
 .topic-title .info .evalation {
     position: absolute;
-    bottom: 20px;
-    right: 60px;
+    bottom: 0px;
+    /* left: 60px; */
+    font-size: 3rem; 
+    text-transform: capitalize;
+    /* text-transform: uppercase; */
+    /* font-weight: bolder; */
 }
 
 .topic-title .info .evalation.up::after {
     color: greenyellow;
     content: "▲";
     font-size: 1.2rem;
+    margin-left: 15px;
+}
+
+.topic-title .info .evalation.down::after {
+    content: '▼';
+    color: red;
+    font-size: 1.2rem;
+    margin-left: 15px;
+}
+
+/* .metric .evalation.down::after{
+    content: '▼';
+    color: red;
+    font-size: .7rem;
     margin-left: 5px;
 }
 
-.topic-title .far, .topic-title .fas, .topic-title .font-awesome-icon {
-    font-size: 150px;
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    color: rgba(255, 255, 255, 0.2);
-}
+.metric .evalation.up::after{
+    color: Lime;
+    content: '▲';
+    font-size: .7rem;
+    margin-left: 5px;
+} */
+
+/* .topic-title .info .score {
+    position: relative;
+    font-size: 72px;
+    margin-right: 10px;
+} */
 
 .metric{
     position: relative;
     width: 100%;
-    background: #fff;
+    background: none;
     min-height: 60px;
-    border-bottom: #bbb 1px solid;
-    border-right: #ccc 1px solid;
+    /* border-bottom: #bbb 1px solid; */
+    /* border-right: #ccc 1px solid; */
     /* margin-top: 5px; */
-    /* padding-bottom: 16px; */
-    background: #E8E8F8;
+    padding: 10px 5px;
+    /* background: #E8E8F8; */
+    background: none;
 }
 
 .metric .title,
@@ -144,28 +165,46 @@ h4.title {
 .btn-cat-two,
 .btn-cat-three,
 .btn-cat-four {
-    background: #fff !important;
-    font-size: 0.8rem;
-    /* color: #555 !important; */
-    color: #7553a0 !important;
-    border-bottom: 1px solid #ccc;
-    /* padding: 5px 10px; */
-    text-align: left;
+  position: relative;
+  background: none;
+  font-size: 0.8rem;
+  color: #555 !important;
+  color: #7553a0 !important;
+  border-bottom: 2px solid #7553a0;
+  text-align: left;
+}
+
+.metric .title .inner{
+  padding: 10px 0px 2px 30px;
+  position: relative;
 }
 
 .metric .title .btn{
-    border-radius: 0.25rem;
+    border-radius: 0;
     border: none;
+    background: none;
 }
 
-.metric .title::after{
+.metric .title .inner::before{
+    font-family: "Font Awesome 5 Free";
+    content: "\f058";
+    font-size: 1rem;
+    position: absolute;
+    left: 5px;
+    bottom: 0px;
+    cursor: pointer;
+    color: #7553a0 !important;
+}
+
+.metric .title .inner::after{
     font-family: "Font Awesome 5 Free";
     content: "\f150";
     font-size: 1rem;
     position: absolute;
     right: 10px;
-    top: 2px;
+    bottom: 0px;
     cursor: pointer;
+    color: #7553a0 !important;
 }
 
 .metric .title i{
@@ -214,19 +253,6 @@ h4.title {
     width: 70px;
 }
 
-.metric .evalation.down::after{
-    content: '▼';
-    color: red;
-    font-size: .7rem;
-    margin-left: 5px;
-}
-
-.metric .evalation.up::after{
-    color: Lime;
-    content: '▲';
-    font-size: .7rem;
-    margin-left: 5px;
-}
 
 
 

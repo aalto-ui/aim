@@ -4,7 +4,9 @@ export default {
       name: 'Colour Perception',
       id: 'cp',
       color: 'cat-one',
-      icon: 'fa-palette',
+      icon: 'palette',
+      evaluation: 'good',
+      score: '30',
       metrics: [
         'cp1',
         'cp2',
@@ -22,7 +24,9 @@ export default {
       name: 'Perceptual Fluency',
       id: 'pf',
       color: 'cat-two',
-      icon: 'fa-brain',
+      icon: 'brain',
+      evaluation: 'okay',
+      score: '30',
       metrics: [
         'pf1',
         'pf2',
@@ -38,7 +42,9 @@ export default {
       name: 'Visual Guidance',
       id: 'vg',
       color: 'cat-three',
-      icon: 'fa-compass',
+      icon: 'compass',
+      evaluation: 'bad',
+      score: '30',
       metrics: [
         'vg1',
         'vg2'
@@ -48,7 +54,9 @@ export default {
       name: 'Accessibility',
       id: 'ac',
       color: 'cat-four',
-      icon: 'fa-universal-access',
+      icon: 'universal-access',
+      evaluation: 'bad',
+      score: '30',
       metrics: [
         'ac1'
       ]
