@@ -71,6 +71,7 @@ export default {
       evidence: 1,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -96,6 +97,7 @@ export default {
       evidence: 2,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -125,6 +127,7 @@ export default {
       evidence: 3,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -178,6 +181,7 @@ export default {
       evidence: 2,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -224,6 +228,7 @@ export default {
       evidence: 3,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -284,6 +289,7 @@ export default {
       evidence: 4,
       relevance: 3,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -351,6 +357,7 @@ export default {
       evidence: 2,
       relevance: 3,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -380,6 +387,7 @@ export default {
       evidence: 3,
       relevance: 3,
       speed: 0,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -416,6 +424,7 @@ export default {
       evidence: 3,
       relevance: 3,
       speed: 1,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -441,6 +450,7 @@ export default {
       evidence: 3,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -466,6 +476,7 @@ export default {
       evidence: 4,
       relevance: 3,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -495,6 +506,7 @@ export default {
       evidence: 3,
       relevance: 3,
       speed: 1,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -532,6 +544,7 @@ export default {
       evidence: 2,
       relevance: 3,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -557,6 +570,7 @@ export default {
       evidence: 3,
       relevance: 4,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -594,6 +608,7 @@ export default {
       evidence: 4,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -619,6 +634,7 @@ export default {
       evidence: 3,
       relevance: 3,
       speed: 0,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -673,6 +689,7 @@ export default {
       evidence: 2,
       relevance: 4,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -698,6 +715,7 @@ export default {
       evidence: 4,
       relevance: 4,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -723,6 +741,7 @@ export default {
       evidence: 5,
       relevance: 4,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'b64',
       references: [
         {
@@ -748,6 +767,7 @@ export default {
       evidence: 4,
       relevance: 5,
       speed: 0,
+      evaluation: 'good',
       visualizationType: 'b64',
       references: [
         {
@@ -773,6 +793,7 @@ export default {
       evidence: 4,
       relevance: 5,
       speed: 1,
+      evaluation: 'good',
       visualizationType: 'b64',
       references: [
         {

@@ -1,4 +1,5 @@
 <template>
+<div>
   <b-jumbotron bg-variant="light">
     <template slot="header">
       <b-row>
@@ -6,7 +7,7 @@
               <img src="../assets/workflow.png" width="100%" alt="Workflow">
           </b-col>
       </b-row>
-      <h1 class="display-4">AIME - Aalto Interface Metrics service</h1>
+      <h1 class="display-4">AIM - Aalto Interface Metrics service</h1>
       <h2 class="text-muted">Compute how good your design is!</h2>
     </template>
     <template slot="lead">
@@ -69,12 +70,15 @@
       </b-col>
     </b-row>
     <b-form id="aim-form" @submit="onSubmit" v-if="display.metrics">
-      <div role="tablist">
+      <div class="tablist" role="tablist">
         <b-card no-body active class="mb-1">
           <b-card-header header-tag="header" role="tab" class="p-0">
-            <b-btn variant="cat-one" block v-b-toggle.cat-one-accordion href="#">
-              Select metrics: {{ metricConfig.categories[0].name }}
-            </b-btn>
+            <div variant="cat-one" class="rounded" block v-b-toggle.cat-one-accordion href="#">
+              <span class="fa">
+                <font-awesome-icon :icon="metricConfig.categories[0].icon" />
+              </span>
+              <span class="title">{{ metricConfig.categories[0].name }}</span>
+            </div>
           </b-card-header>
           <b-collapse id="cat-one-accordion" visible role="tabpanel">
             <b-card-body>
@@ -140,9 +144,12 @@
         </b-card>
         <b-card no-body class="mb-1">
           <b-card-header header-tag="header" role="tab" class="p-0">
-            <b-btn variant="cat-two" block v-b-toggle.cat-two-accordion href="#">
-              Select metrics: {{ metricConfig.categories[1].name }}
-            </b-btn>
+            <div variant="cat-two" class="rounded" block v-b-toggle.cat-two-accordion href="#">
+              <span class="fa">
+              <font-awesome-icon :icon="metricConfig.categories[1].icon" />
+              </span>
+              <span class="title">{{ metricConfig.categories[1].name }}</span>
+            </div>
           </b-card-header>
           <b-collapse id="cat-two-accordion" visible role="tabpanel">
             <b-card-body>
@@ -208,9 +215,14 @@
         </b-card>
         <b-card no-body class="mb-1">
           <b-card-header header-tag="header" role="tab" class="p-0">
-            <b-btn variant="cat-three" block v-b-toggle.cat-three-accordion href="#">
-              Select metrics: {{ metricConfig.categories[2].name }}
-            </b-btn>
+            <div variant="cat-three" class="rounded" block v-b-toggle.cat-three-accordion href="#">
+              <span class="fa">
+              <font-awesome-icon :icon="metricConfig.categories[2].icon" />
+              </span>
+              Select metrics: 
+              <span class="title">{{ metricConfig.categories[2].name }}</span>
+              
+            </div>
           </b-card-header>
           <b-collapse id="cat-three-accordion" visible role="tabpanel">
             <b-card-body>
@@ -276,9 +288,13 @@
         </b-card>
         <b-card no-body class="mb-1">
           <b-card-header header-tag="header" role="tab" class="p-0">
-            <b-btn variant="cat-four" block v-b-toggle.cat-four-accordion href="#">
-              Select metrics: {{ metricConfig.categories[3].name }}
-            </b-btn>
+            <div variant="cat-four" class="rounded" block v-b-toggle.cat-four-accordion href="#">
+              <span class="fa">
+              <font-awesome-icon :icon="metricConfig.categories[3].icon" />
+              </span>
+              Select metrics: 
+              <span class="title">{{ metricConfig.categories[3].name }}</span>
+            </div>
           </b-card-header>
           <b-collapse id="cat-four-accordion" visible role="tabpanel">
             <b-card-body>
@@ -349,6 +365,8 @@
       </div>
       <b-btn class="mt-2" size="lg" type="submit" variant="primary">Submit</b-btn>
     </b-form>
+   </b-jumbotron>
+   
     <div class="mt-2" v-if="display.progressBar">
       <ProgressBar />
     </div>
@@ -361,7 +379,9 @@
     <div class="mt-2" v-if="display.results">
       <Results />
     </div>
-  </b-jumbotron>
+    
+ 
+  </div>
 </template>
 
 <script>
@@ -550,9 +570,11 @@ export default {
 h1 {
   margin-bottom: 0px;
 }
+
 .lead {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
+
 h2.text-muted {
   color: #aea697 !important;
   font-size: 1.5rem;
@@ -563,25 +585,44 @@ h2.text-muted {
 .fa-icon.question-circle {
   color: #555555;
 }
-/* .btn-cat-one {
-  color: #000;
-  background-color: #eef0e9;
-} */
 
-/* .btn-cat-two {
-  color: #000;
-  background-color: #fceac6;
-} */
+.tablist .card-header div{
+  position: relative;
+  color: #fff;
+  background-color: #7553a0;
+  padding: 0px 10px 0px 10px;
+  text-align: left;
+}
 
-/* .btn-cat-three {
-  color: #000;
-  background-color: #e6b790;
-} */
+.tablist .card-header .title{
+  font-size: 1.8rem;
+  font-weight: normal;
+}
 
-/* .btn-cat-four {
-  color: #000;
-  background-color: #a55f41;
-} */
+.tablist .card-header .fa{
+  font-size: 3rem;
+  margin-right: 5px;
+  /* position: absolute; */
+  /* top: 5px; */
+  /* right: 10px; */
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-cat-one {
+  /* border-bottom: 5px solid #3891A6; */
+} 
+
+.btn-cat-two {
+  /* border-bottom: 5px solid #E83151;*/
+} 
+
+.btn-cat-three {
+  /* border-bottom: 5px solid #519E8A;  */
+} 
+
+.btn-cat-four {
+  /* border-bottom: 5px solid #FFBF00; */
+}
 
 .metric-checkbox.custom-control-inline {
   margin-right: 0;
@@ -626,4 +667,16 @@ h2.text-muted {
 .input-group.is-invalid ~ .invalid-feedback {
   display: block;
 }
+
+h2.components-title{
+  font-size: 1.8rem;
+  color: #222;
+  margin-bottom: 30px;
+  /* border-bottom: 2px #222 solid; */
+}
+
+.bg-secondary {
+    background-color: #aaa !important;
+}
+
 </style>
