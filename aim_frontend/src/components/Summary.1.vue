@@ -1,56 +1,47 @@
 <template lang="html">
 
   <div>
-    <div class="component-section">
+    <div class="summary-section">
       <b-row>
         <b-col cols="12">
-          <h2 class="component-title">Summary</h2>
-              
+          <h2 class="components-title">Summary</h2>
         </b-col>
       </b-row>
       <b-row>
 
         <template v-for="category in categories" lang="html">
-          <b-col cols="3">
-            <div class="category-title rounded" :class="{ 'bg-primary' : categoryVisible(category.id) !== -1, 'bg-secondary' : categoryVisible(category.id) == -1, }">
+          <b-col v-if="categoryVisible(category.id) !== -1" cols="3">
 
-              <div class="loader-bg" :class="{done: fetching}" v-if="!metricLoading()" >
-                <div class="loader">Loading...</div>
-              </div>
-
+            <div class="topic-title bg-primary rounded">
               <font-awesome-icon :icon="category.icon" />
-              <!-- if any metrics are selected -->
-              <div class="category-title-inner" v-if="categoryVisible(category.id) !== -1" >
-                <a :href="'#'+category.id">
-                  <h4 class="title">{{category.name}}</h4>
-                </a>
-                <div class="info">
-                  <div class ="evalation" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}" >{{category.evaluation}}</div>
-                </div>
+              <h4 class="title">{{category.name}}</h4>
+              <div class="info">
+                <!-- <span class="score"></span> -->
+                <div class ="evalation" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}" >{{category.evaluation}}</div>
               </div>
-              <!-- if no metrics is selected -->
-              <div v-else class="category-title-inner" >
-                  <h4 class="title">{{category.name}}</h4>
-                  <div class="info" v-if="metricLoading()">
-                    <div class="msg">not selected</div>
-                  </div>
-              </div>
-            </div><!-- category Title -->
+            </div><!-- topic Title -->
 
             <div class="metrics">
-              <template v-for="(metric, index) in category.metrics" v-if="metricVisible(metric)" >  
+              <template v-for="metric in category.metrics" v-if="metricVisible(metric)">
                 <div class="metric">
-                  <div class="title text-primary">
-                    <a :href="'#'+ metrics[metric].id" >
-                      <div class="inner" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}" >
-                        {{metrics[metric].name}}
-                      </div>
-                    </a>
+                  <div class="title text-primary" href="#">
+                    <div class="inner" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}">
+                      {{metrics[metric].name}}
+                    </div>
                   </div>
                 </div><!-- metric -->        
               </template>
             </div><!-- metrics -->
 
+          </b-col> 
+          <b-col v-else cols="3">
+            <div class="topic-title bg-secondary rounded">
+              <font-awesome-icon :icon="category.icon" />
+              <h4 class="title">{{category.name}}</h4>
+              <div class="info">
+                <div class="msg">not selected</div>
+              </div>
+            </div><!-- topic Title -->
           </b-col>
         </template><!-- //// categories -->
 
@@ -83,13 +74,6 @@ export default {
         _.findIndex(_.keys(this.results), (key) => key.match(new RegExp(category + '[0-9]+')))
       )
     },
-    metricLoading () {
-      console.log(this.$store.state.fetchingCount)
-      if (this.$store.state.fetchingCount === this.$store.state.fetchedCount) {
-        return true
-      }
-      return false
-    },
     metricVisible (metric) {
       return this.results[metric]
     },
@@ -100,16 +84,15 @@ export default {
   components: {
   }
 }
-
 </script>
 
 <style lang="css" scoped>
 
-.component-section{
-  margin: 60px 0px 20px;
+.summary-section{
+  margin: 100px 0px;
 }
 
-.category-title {
+.topic-title {
     position: relative;
     height: 125px;
     color: #fff;
@@ -119,9 +102,8 @@ export default {
     line-height: normal;
 }
 
-.category-title .title{
+.topic-title .title {
     letter-spacing: 0.02rem;
-    color: #fff;
     font-size: 1.1rem;
     font-weight: normal;
     height: 25px;
@@ -129,13 +111,7 @@ export default {
     margin-bottom: 0;
 }
 
-.category-title .title a {
-    color: #fff;
-    text-decoration: none;
-    background-color: none;
-}
-
-.category-title svg{
+.topic-title svg{
     font-size: 150px;
     position: absolute;
     top: 5px;
@@ -143,12 +119,12 @@ export default {
     color: rgba(255, 255, 255, 0.1);
 }
 
-.category-title .info {
+.topic-title .info {
     position: relative;
     height: 80px;
 }
 
-.category-title .info .evalation {
+.topic-title .info .evalation {
     position: absolute;
     bottom: 10px;
     /* left: 60px; */
@@ -158,7 +134,7 @@ export default {
     /* font-weight: bolder; */
 }
 
-.category-title .info .msg {
+.topic-title .info .msg {
     position: absolute;
     /* right: 0px; */
     bottom: 15px;
@@ -166,14 +142,14 @@ export default {
     text-transform: capitalize;
 }
 
-.category-title .info .evalation.up::after {
+.topic-title .info .evalation.up::after {
     color: greenyellow;
     content: "▲";
     font-size: 1.2rem;
     margin-left: 15px;
 }
 
-.category-title .info .evalation.down::after {
+.topic-title .info .evalation.down::after {
     content: '▼';
     color: #E83151;
     font-size: 1.2rem;
@@ -194,7 +170,7 @@ export default {
     margin-left: 5px;
 } */
 
-/* .category-title .info .score {
+/* .topic-title .info .score {
     position: relative;
     font-size: 72px;
     margin-right: 10px;
@@ -232,7 +208,7 @@ export default {
 }
 
 .metric .title .inner{
-  padding: 10px 25px 2px 25px;
+  padding: 10px 0px 2px 30px;
   position: relative;
 }
 
@@ -247,8 +223,8 @@ export default {
     content: "\f058";
     font-size: 1rem;
     position: absolute;
-    left: 0px;
-    top: 8px;
+    left: 5px;
+    bottom: 0px;
     cursor: pointer;
     color: #7553a0 !important;
 }
@@ -258,8 +234,8 @@ export default {
     content: "\f150";
     font-size: 1rem;
     position: absolute;
-    right: 0px;
-    top: 8px;
+    right: 10px;
+    bottom: 0px;
     cursor: pointer;
     color: #7553a0 !important;
 }
@@ -332,80 +308,4 @@ export default {
     color: #555555;
     font-size: .75rem;
 }
-
-/* ---- loader ---- */
-
-.loader-bg{
-  background: #999;
-    position: absolute;
-    width: 100%;
-    height: 125px;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    opacity: 0.6;
-}
-
-.loader,
-.loader:before,
-.loader:after {
-  background: #ffffff;
-  -webkit-animation: load1 1s infinite ease-in-out;
-  animation: load1 1s infinite ease-in-out;
-  width: 1em;
-  height: 4em;
-}
-.loader {
-  color: #ffffff;
-  text-indent: -9999em;
-  margin: 40px auto;
-  position: relative;
-  font-size: 11px;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
-}
-.loader:before,
-.loader:after {
-  position: absolute;
-  top: 0;
-  content: '';
-}
-.loader:before {
-  left: -1.5em;
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
-}
-.loader:after {
-  left: 1.5em;
-}
-
-@-webkit-keyframes load1 {
-  0%,
-  80%,
-  100% {
-    box-shadow: 0 0;
-    height: 4em;
-  }
-  40% {
-    box-shadow: 0 -2em;
-    height: 5em;
-  }
-}
-@keyframes load1 {
-  0%,
-  80%,
-  100% {
-    box-shadow: 0 0;
-    height: 4em;
-  }
-  40% {
-    box-shadow: 0 -2em;
-    height: 5em;
-  }
-}
-
-
 </style>
