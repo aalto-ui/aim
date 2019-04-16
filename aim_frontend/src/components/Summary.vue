@@ -13,20 +13,16 @@
         <template v-for="category in categories" lang="html">
           <b-col cols="3">
             <div class="category-title rounded" :class="{ 'bg-primary' : categoryVisible(category.id) !== -1, 'bg-secondary' : categoryVisible(category.id) == -1, }">
-
               <div class="loader-bg" :class="{done: fetching}" v-if="!metricLoading()" >
                 <div class="loader">Loading...</div>
               </div>
-
               <font-awesome-icon :icon="category.icon" />
+              
               <!-- if any metrics are selected -->
               <div class="category-title-inner" v-if="categoryVisible(category.id) !== -1" >
                 <a :href="'#'+category.id">
                   <h4 class="title">{{category.name}}</h4>
                 </a>
-                <div class="info">
-                  <div class ="evalation" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}" >{{category.evaluation}}</div>
-                </div>
               </div>
               <!-- if no metrics is selected -->
               <div v-else class="category-title-inner" >
@@ -38,7 +34,7 @@
             </div><!-- category Title -->
 
             <div class="metrics">
-              <template v-for="(metric, index) in category.metrics" v-if="metricVisible(metric)" >  
+              <template v-for="(metric) in category.metrics" v-if="metricVisible(metric)" >  
                 <div class="metric">
                   <div class="title text-primary">
                     <a :href="'#'+ metrics[metric].id" >
@@ -47,6 +43,41 @@
                       </div>
                     </a>
                   </div>
+
+                  <template v-if="metrics[metric].visualizationType==='table'">
+                    
+                    <b-list-group class="results" v-for="(result,i) in metrics[metric].results">
+                      <div class="info">
+                        <div class="result-name">{{result.name}}</div>
+                        <div class="value">{{results[metric][i].value}}</div>
+                      </div>
+
+                      <div class="scores" v-if="result.scores.length>1">
+                        <div v-for="(score, index) in result.scores" class="score">
+                          <div class="bar"></div>
+                          <div class="arrow" v-show="(score.range[0] < results[metric][0].value)&&(results[metric][0].value < score.range[1] || score.range[1]===null)">
+                            <div class="description">
+                              {{score.description}}
+                            </div>
+                          </div>
+                          <div class="scale min-line" v-if="index===0">{{score.range[1]}}</div>
+                          <div class="scale max-line" v-if="index===result.scores.length-1">{{score.range[0]}}</div>
+                        </div> 
+                      </div>
+                    </b-list-group>
+                    
+                  </template>
+                  <div v-if="metrics[metric].visualizationType==='b64'" class="results">
+                      <div v-for="result in results[metric]" class="result">
+                      <div class="info">
+                        <span>{{result.result.name}}</span>
+                      </div>
+                      <img v-if="result.value !== ''" 
+                      class="result-img" 
+                      :src="'data:image/png;base64, ' + result.value" />
+                    </div>
+                  </div>
+
                 </div><!-- metric -->        
               </template>
             </div><!-- metrics -->
@@ -109,9 +140,16 @@ export default {
   margin: 60px 0px 20px;
 }
 
+.component-title{
+  font-weight: 400;
+}
+
+
+/* ------------ category-title ------------  */
+
 .category-title {
     position: relative;
-    height: 125px;
+    height: 100px;
     color: #fff;
     font-weight: 200;
     padding: 15px 20px 5px;
@@ -120,11 +158,12 @@ export default {
 }
 
 .category-title .title{
-    letter-spacing: 0.02rem;
+    position: relative;
+    /* letter-spacing: 0.02rem; */
     color: #fff;
-    font-size: 1.1rem;
-    font-weight: normal;
-    height: 25px;
+    font-size: 1.6rem;
+    font-weight: 200;
+    /* height: 25px; */
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -136,7 +175,7 @@ export default {
 }
 
 .category-title svg{
-    font-size: 150px;
+    font-size: 120px;
     position: absolute;
     top: 5px;
     right: 10px;
@@ -145,7 +184,7 @@ export default {
 
 .category-title .info {
     position: relative;
-    height: 80px;
+    /* height: 80px; */
 }
 
 .category-title .info .evalation {
@@ -159,10 +198,11 @@ export default {
 }
 
 .category-title .info .msg {
-    position: absolute;
+    /* position: absolute; */
     /* right: 0px; */
-    bottom: 15px;
-    font-size: 1.5rem; 
+    /* bottom: 15px; */
+    margin-top: 25px;
+    font-size: 1rem; 
     text-transform: capitalize;
 }
 
@@ -180,25 +220,13 @@ export default {
     margin-left: 15px;
 }
 
-/* .metric .evalation.down::after{
-    content: '▼';
-    color: red;
-    font-size: .7rem;
-    margin-left: 5px;
-}
-
-.metric .evalation.up::after{
-    color: Lime;
-    content: '▲';
-    font-size: .7rem;
-    margin-left: 5px;
-} */
-
 /* .category-title .info .score {
     position: relative;
     font-size: 72px;
     margin-right: 10px;
 } */
+
+/* ------------ metric ------------  */
 
 .metrics{
     position: relative;
@@ -217,22 +245,18 @@ export default {
     background: none;
 }
 
-.metric .title,
-.btn-cat-one,
-.btn-cat-two,
-.btn-cat-three,
-.btn-cat-four {
+.metric .title{
   position: relative;
   background: none;
-  font-size: 0.8rem;
-  color: #555 !important;
+  font-size: 0.9rem;
+  /* color: #555 !important; */
   color: #7553a0 !important;
   border-bottom: 2px solid #7553a0;
   text-align: left;
 }
 
 .metric .title .inner{
-  padding: 10px 25px 2px 25px;
+  padding: 10px 25px 2px 0px;
   position: relative;
 }
 
@@ -242,7 +266,7 @@ export default {
     background: none;
 }
 
-.metric .title .inner::before{
+/* .metric .title .inner::before{
     font-family: "Font Awesome 5 Free";
     content: "\f058";
     font-size: 1rem;
@@ -251,7 +275,7 @@ export default {
     top: 8px;
     cursor: pointer;
     color: #7553a0 !important;
-}
+} */
 
 .metric .title .inner::after{
     font-family: "Font Awesome 5 Free";
@@ -272,68 +296,105 @@ export default {
     cursor: pointer;
 }
 
-.metric .info{
+.metric .results{
+  position: relative;
+  padding: 10px 0px 0px 10px;
+  background: none;
+  font-size: 0.8rem;
+  color: #555 !important;
+  margin-left:10px;
+  border-left: 2px solid #7553a0;
+  border-bottom: 2px solid #7553a0;
+  text-align: left; 
+}
+
+.metric .results .scores{
+  display: flex;
+  margin: 30px 0 0 0;
+  flex-direction: row;
+}
+
+.metric .results .score{
+  position: relative;
+  width: 100%;
+  height: 20px;
+}
+
+.metric .results .score .bar{
+  width: 100%;
+  height: 4px;
+}
+
+.metric .results .scale{
+  position: absolute;
+  color: #555;
+  font-size: 0.5rem;
+  top: 4px;
+}
+
+.metric .results .scale.min-line{
+  right: -1rem;
+}
+
+.metric .results .scale.max-line{
+  left: -1rem;
+}
+
+.metric .results .score:nth-of-type(1) .bar{
+  background: #739ea3;
+}
+
+.metric .results .score:nth-of-type(2) .bar{
+  background: rgb(160, 218, 0) ;
+}
+
+.metric .results .score:nth-of-type(3) .bar{
+  background: #7553A0;
+}
+
+.metric .results .arrow{
+  position: relative;
+  top: -120%;
+  z-index: 1000;
+  text-align: center;
+  border-radius: 50%;
+}
+.metric .results .arrow .description{
+  font-size: 0.6rem;
+  white-space: nowrap;
+}
+
+.metric .results .arrow:after {
+  position: relative;
+  content: '▼';
+  color: #555;
+  font-size: 0.5rem;
+  top: -0.5rem;
+}
+
+.metric .results .info{
     color: #555;
-    /* font-size: 0.6rem; */
-    /* width: 50%; */
-    /* margin-bottom: 6px; */
-    position: relative;
-    padding: 10px 10px 0px 10px;
-    /* float: left; */
 }
 
-.metric .info-l{
-    color: #555;
-    font-size: 0.6rem;
-    padding-right: 0px;
-    position: relative;
-    float: left;
-}
-
-.metric .info-l .evalation{
-    color: #fff;
-    position: relative;
-    left: 0px;
-    margin-top: 5px;
-    padding: 3px 10px;
-    width: 70px;
-}
-
-.metric .info-r .evalation{
-    color: #fff;
+.metric .results .info .value{
     position: absolute;
     right: 0px;
-    text-align: right;
-    /* margin-top: 5px; */
-    /* margin-right: 0px; */
-    padding: 3px 10px;
-    width: 70px;
+    top: 6px;
+    font-size: 1rem;
 }
 
-.metric .info-r{
-    color: #555;
-    font-size: 0.6rem;
+.metric .results .info .result-name{
     position: relative;
-    float: left;
+    margin-right: 50px;
+    font-size: .7rem;
+    height: 30px;
 }
 
-.metric .info-l .result{
-    padding: 10px 20px;
+.metric .result img{
+  width: 100%;
 }
 
-.metric .info-l .result>em{
-    font-size: 1.2rem;
-    font-style: normal;
-    margin-right: 5px;
-}
-
-.metric .graf{
-    padding: 10px 10px 0px 0px;
-    color: #555555;
-    font-size: .75rem;
-}
-
-/* ---- loader ---- */
+/* ------------ loader ------------ */
 
 .loader-bg{
   background: #999;

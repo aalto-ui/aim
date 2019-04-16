@@ -16,11 +16,14 @@
               </span>
               <span class="title mb-3" :id="category.id">{{category.name}}</span>
             </div>
+
           <template v-for="metric in category.metrics" v-if="metricVisible(metric)">
             <b-card no-body class="mb-1">
+
               <b-card-header header-tag="header" class="p-0" :id="metrics[metric].id">
                 <b-btn :variant="category.color" block v-b-toggle="`${category}-${metric}-collapse`">{{metrics[metric].name}}</b-btn>
               </b-card-header>
+
               <b-collapse visible :id="`${category}-${metric}-collapse`">
                 <b-card-body>
                   <p>{{metrics[metric].description}}</p>
@@ -37,6 +40,7 @@
                     <br />
                     Relevance: <icon name="star" v-for="i in metrics[metric].relevance" :key="'res-relevance-star-' + metric + '-' + i"></icon><icon name="star-o" v-for="i in 5 - metrics[metric].relevance" :key="'res-relevance-star-o-' + metric + '-' + i"></icon>
                   </p>
+
                   <template v-if="metrics[metric].visualizationType === 'table'">
                     <b-table striped hover :items="results[metric]" :fields="resultTableFields"  class="mt-4">
                       <template slot="result" slot-scope="data">
@@ -60,16 +64,20 @@
                       </template>
                     </b-table>
                   </template>
-                  <template v-else-if="metrics[metric].visualizationType === 'b64'">
+
+                  <template v-else-if="metrics[metric].visualizationType==='b64'" >
+
                     <template v-for="result in results[metric]">
-                      <h3 class="mt-2">{{ result.result.name }}</h3>
-                      <p v-if="result.result.description">{{ result.result.description }}</p>
-                      <img v-if="result.value !== ''" class="result-img" :src="'data:image/png;base64, ' + result.value" />
-                      <p v-else class="alert alert-danger" role="alert">
-                        <strong>Whoops!</strong> Our experimental visual search performance metric failed to evaluate your image, please try again with a different one.
-                      </p>
-                      <hr />
+                      <div class="b64">
+                        <h3 class="mt-2">{{ result.result.name }}</h3>
+                        <p v-if="result.result.description">{{ result.result.description }}</p>
+                        <img v-if="result.value !== ''" class="result-img" :src="'data:image/png;base64, ' + result.value" />
+                        <p v-else class="alert alert-danger" role="alert">
+                          <strong>Whoops!</strong> Our experimental visual search performance metric failed to evaluate your image, please try again with a different one.
+                        </p>
+                      </div>
                     </template>
+
                   </template>
                 </b-card-body>
               </b-collapse>
