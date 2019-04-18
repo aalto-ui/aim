@@ -49,23 +49,20 @@
                     <b-list-group class="results" v-for="(result,i) in metrics[metric].results">
                       <div class="info">
                         <div class="result-name">{{result.name}}</div>
-                        <!-- <div class="value">{{results[metric][i].value}}</div> -->
+                        <div class="value">{{results[metric][i].value}}</div>
                       </div>
 
-                      <div class="scores" v-if="result.scores.length > 1">
-                        <template v-for="(score, index) in result.scores">
-                          <div class="score" v-show="(score.range[0] < results[metric][0].value)&&(results[metric][0].value < score.range[1] || score.range[1]===null)">
-                            <div v-if="['Good','Fair','Suitable'].indexOf(score.description)>=0" class="description up">
-                              {{score.description}}
-                            </div>
-                            <div v-else class="description down">
+                      <div class="scores" v-if="result.scores.length>1">
+                        <div v-for="(score, index) in result.scores" class="score">
+                          <div class="bar"></div>
+                          <div class="arrow" v-show="(score.range[0] < results[metric][0].value)&&(results[metric][0].value < score.range[1] || score.range[1]===null)">
+                            <div class="description">
                               {{score.description}}
                             </div>
                           </div>
-                          
-                          <!-- <div class="scale min-line" v-if="index===0">{{score.range[1]}}</div> -->
-                          <!-- <div class="scale max-line" v-if="index===result.scores.length-1">{{score.range[0]}}</div> -->
-                        </template> 
+                          <div class="scale min-line" v-if="index===0">{{score.range[1]}}</div>
+                          <div class="scale max-line" v-if="index===result.scores.length-1">{{score.range[0]}}</div>
+                        </div> 
                       </div>
                     </b-list-group>
                     
@@ -314,43 +311,16 @@ export default {
 }
 
 .metric .results .scores{
-  /* display: flex; */
-  position: absolute;
-  /* float: right; */
-  top: 5px;
-  right: 0px;
-  width: 70px;
-  text-align: right;
-  font-size: .7rem;
-  /* margin: 25px 0 0 0; */
-  /* flex-direction: row; */
+  display: flex;
+  margin: 25px 0 0 0;
+  flex-direction: row;
 }
 
 .metric .results .score{
   position: relative;
   width: 100%;
-  /* height: 20px; */
+  height: 20px;
 }
-
-.metric .results .score .description.up {
-    color: #1e7e56;
-}
-
-.metric .results .score .description.down{
-    color: #E83151;
-}
-
-.metric .results .score .description.up::after {
-    font-family: "Font Awesome 5 Free";
-    content: "\f058";
-    font-size: 1.2rem;
-}
-
-/* .metric .results .score .description.down::after {
-    font-family: "Font Awesome 5 Free";
-    content: "\f0e7";
-    font-size: 1.2rem;
-} */
 
 .metric .results .score .bar{
   width: 100%;
@@ -406,23 +376,20 @@ export default {
 
 .metric .results .info{
     color: #555;
-    margin: 0 60px 10px 0;
-    /* float: left; */
 }
 
 .metric .results .info .value{
-    /* position: absolute; */
-    /* right: 0px; */
-    /* top: 6px; */
-    /* margin: 0 50px 10px 0px; */
-    /* width: 50px; */
+    position: absolute;
+    right: 0px;
+    top: 6px;
+    width: 50px;
     font-size: .8rem;
-    /* text-align: right; */
+    text-align: right;
 }
 
 .metric .results .info .result-name{
-    /* position: relative; */
-    /* margin: 0 40px 10px 0px; */
+    position: relative;
+    margin: 0 50px 10px 0px;
     font-size: .7rem;
     /* height: 30px; */
 }
@@ -431,10 +398,6 @@ export default {
   width: 100%;
 }
 
-.spacer{
-  width: 100%;
-  height: 1px;
-}
 /* ------------ loader ------------ */
 
 .loader-bg{
