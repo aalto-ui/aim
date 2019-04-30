@@ -1,97 +1,88 @@
 <template lang="html">
-
   <div>
     <div class="component-section">
       <b-row>
         <b-col cols="12">
           <h2 class="component-title">Summary</h2>
-              
         </b-col>
       </b-row>
-      <b-row>
-
-        <template v-for="category in categories" lang="html">
-          <b-col cols="3">
-            <div class="category-title rounded" :class="{ 'bg-primary' : categoryVisible(category.id) !== -1, 'bg-secondary' : categoryVisible(category.id) == -1, }">
-              <div class="loader-bg" :class="{done: fetching}" v-if="!metricLoading()" >
-                <div class="loader">Loading...</div>
+    <b-row>
+    <template v-for="category in categories" lang="html">
+      <b-col cols="3">
+        <div class="category-title rounded" :class="{ 'bg-primary' : categoryVisible(category.id) !== -1, 'bg-secondary' : categoryVisible(category.id) == -1, }">
+          <div class="loader-bg" :class="{done: fetching}" v-if="!metricLoading()" >
+            <div class="loader">Loading...</div>
+          </div>
+          
+          <font-awesome-icon :icon="category.icon" />
+          <!-- if any metrics are selected -->
+          <div class="category-title-inner" v-if="categoryVisible(category.id) !== -1" >
+            <a :href="'#'+category.id">
+              <h4 class="title">{{category.name}}</h4>
+            </a>
+          </div>
+          <!-- if no metrics is selected -->
+          <div v-else class="category-title-inner" >
+              <h4 class="title">{{category.name}}</h4>
+              <div class="info" v-if="metricLoading()">
+                <div class="msg">not selected</div>
               </div>
-              <font-awesome-icon :icon="category.icon" />
-              
-              <!-- if any metrics are selected -->
-              <div class="category-title-inner" v-if="categoryVisible(category.id) !== -1" >
-                <a :href="'#'+category.id">
-                  <h4 class="title">{{category.name}}</h4>
+          </div>
+        </div><!-- category-title -->
+
+        <div class="metrics">
+          <template v-for="metric in category.metrics" v-if="metricVisible(metric)" > 
+            <div class="metric">
+              <div class="title text-primary">
+                <a :href="'#'+ metrics[metric].id" >
+                  <div class="inner" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}" >
+                    {{metrics[metric].name}}
+                    <!-- <font-awesome-icon :icon="['fas', 'angle-double-down']" /> -->
+                    <font-awesome-icon :icon="['fas', 'angle-down']" />
+                  </div>
                 </a>
               </div>
-              <!-- if no metrics is selected -->
-              <div v-else class="category-title-inner" >
-                  <h4 class="title">{{category.name}}</h4>
-                  <div class="info" v-if="metricLoading()">
-                    <div class="msg">not selected</div>
-                  </div>
-              </div>
-            </div><!-- category Title -->
-
-            <div class="metrics">
-              <template v-for="(metric) in category.metrics" v-if="metricVisible(metric)" >  
-                <div class="metric">
-                  <div class="title text-primary">
-                    <a :href="'#'+ metrics[metric].id" >
-                      <div class="inner" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}" >
-                        {{metrics[metric].name}}
-                      </div>
+              <template v-if="metrics[metric].visualizationType==='table'">
+                <b-list-group class="results" v-for="result in metrics[metric].results">
+                  <div class="info">
+                    <a :href="'#'+ result.id" >
+                      <div class="result-name">{{result.name}}</div>
                     </a>
                   </div>
-
-                  <template v-if="metrics[metric].visualizationType==='table'">
-                    
-                    <b-list-group class="results" v-for="(result,i) in metrics[metric].results">
-                      <div class="info">
-                        <div class="result-name">{{result.name}}</div>
-                        <!-- <div class="value">{{results[metric][i].value}}</div> -->
+                  <div class="scores" v-if="result.scores.length > 1">
+                    <template v-for="score in result.scores">
+                      <div class="score" v-show="getJoudgement(score, results[metric][0].value)"> 
+                        <div class="description" :class="score.judgment" >
+                           {{score.description}} 
+                          <font-awesome-icon v-show="score.icon" :icon="score.icon" />
+                        </div> 
                       </div>
-
-                      <div class="scores" v-if="result.scores.length > 1">
-                        <template v-for="(score, index) in result.scores">
-                          <div class="score" v-show="(score.range[0] < results[metric][0].value)&&(results[metric][0].value < score.range[1] || score.range[1]===null)">
-                            <div v-if="['Good','Fair','Suitable'].indexOf(score.description)>=0" class="description up">
-                              {{score.description}}
-                            </div>
-                            <div v-else class="description down">
-                              {{score.description}}
-                            </div>
-                          </div>
-                          
-                          <!-- <div class="scale min-line" v-if="index===0">{{score.range[1]}}</div> -->
-                          <!-- <div class="scale max-line" v-if="index===result.scores.length-1">{{score.range[0]}}</div> -->
-                        </template> 
-                      </div>
-                    </b-list-group>
-                    
-                  </template>
-                  <div v-if="metrics[metric].visualizationType==='b64'" class="results">
-                      <div v-for="result in results[metric]" class="result">
-                      <div class="info">
-                        <span>{{result.result.name}}</span>
-                      </div>
-                      <img v-if="result.value !== ''" 
-                      class="result-img" 
-                      :src="'data:image/png;base64, ' + result.value" />
-                    </div>
+                    </template> 
                   </div>
+                </b-list-group>
+              </template>
 
+                <div v-if="metrics[metric].visualizationType==='b64'" class="results">
+                  <div v-for="result in results[metric]" class="result">
+                    <div class="info">
+                      <a :href="'#'+ result.id" >
+                        <span>{{result.result.name}}</span>
+                      </a>
+                    </div>
+                    <img v-if="(result.value !== '')" 
+                          class="result-img" 
+                          :src="'data:image/png;base64, ' + result.value" />
+                  </div>
+                </div>
                 </div><!-- metric -->        
               </template>
             </div><!-- metrics -->
 
           </b-col>
         </template><!-- //// categories -->
-
       </b-row>
     </div><!-- //// summary-section -->
   </div>
-  
 </template>
 
 <script>
@@ -113,6 +104,7 @@ export default {
   }),
   methods: {
     categoryVisible (category) {
+      console.log(_.keys(this.results))
       return (
         _.findIndex(_.keys(this.results), (key) => key.match(new RegExp(category + '[0-9]+')))
       )
@@ -129,6 +121,15 @@ export default {
     },
     resetForm () {
       this.$store.commit('resetState')
+    },
+    getJoudgement (score, value) {
+      // console.log(`---- getJoudgement ----`)
+      const min = score.range[0]
+      const max = score.range[1]
+      // console.log(value)
+      return (
+        min < value && (max > value || max === null)
+      )
     }
   },
   components: {
@@ -195,41 +196,15 @@ export default {
 .category-title .info .evalation {
     position: absolute;
     bottom: 10px;
-    /* left: 60px; */
     font-size: 3rem; 
     text-transform: capitalize;
-    /* text-transform: uppercase; */
-    /* font-weight: bolder; */
 }
 
 .category-title .info .msg {
-    /* position: absolute; */
-    /* right: 0px; */
-    /* bottom: 15px; */
     margin-top: 25px;
     font-size: 1rem; 
     text-transform: capitalize;
 }
-
-.category-title .info .evalation.up::after {
-    color: greenyellow;
-    content: "▲";
-    font-size: 1.2rem;
-    margin-left: 15px;
-}
-
-.category-title .info .evalation.down::after {
-    content: '▼';
-    color: #E83151;
-    font-size: 1.2rem;
-    margin-left: 15px;
-}
-
-/* .category-title .info .score {
-    position: relative;
-    font-size: 72px;
-    margin-right: 10px;
-} */
 
 /* ------------ metric ------------  */
 
@@ -237,11 +212,7 @@ export default {
     position: relative;
     width: 100%;
     background: none;
-    /* border-bottom: #bbb 1px solid; */
-    /* border-right: #ccc 1px solid; */
-    /* margin-top: 5px; */
     padding: 10px 5px;
-    /* background: #E8E8F8; */
 }
 
 .metric{
@@ -254,9 +225,10 @@ export default {
   position: relative;
   background: none;
   font-size: 0.9rem;
-  /* color: #555 !important; */
-  color: #7553a0 !important;
-  border-bottom: 2px solid #7553a0;
+  color: #555 !important;
+  /* color: #7553a0 !important; */
+  border-bottom: 2px solid #998bac;
+  /* border-bottom: 2px solid #999; */
   text-align: left;
 }
 
@@ -271,26 +243,14 @@ export default {
     background: none;
 }
 
-/* .metric .title .inner::before{
-    font-family: "Font Awesome 5 Free";
-    content: "\f058";
-    font-size: 1rem;
-    position: absolute;
-    left: 0px;
-    top: 8px;
-    cursor: pointer;
-    color: #7553a0 !important;
-} */
-
-.metric .title .inner::after{
-    font-family: "Font Awesome 5 Free";
-    content: "\f150";
+.metric .title .inner svg{
     font-size: 1rem;
     position: absolute;
     right: 0px;
-    top: 8px;
+    top: 14px;
     cursor: pointer;
-    color: #7553a0 !important;
+    /* color: #7553a0 !important; */
+    color: #555 !important;
 }
 
 .metric .title i{
@@ -308,49 +268,37 @@ export default {
   font-size: 0.8rem;
   color: #555 !important;
   margin-left:10px;
-  border-left: 2px solid #7553a0;
-  border-bottom: 2px solid #7553a0;
+  /* border-left: 2px solid #7553a0; */
+  /* border-bottom: 2px solid #7553a0; */
+  border-left: 2px solid #9d94a8;
+  border-bottom: 2px solid #9d94a8;
   text-align: left; 
 }
 
 .metric .results .scores{
-  /* display: flex; */
   position: absolute;
-  /* float: right; */
-  top: 5px;
   right: 0px;
-  width: 70px;
+  width: 100px;
   text-align: right;
   font-size: .7rem;
-  /* margin: 25px 0 0 0; */
-  /* flex-direction: row; */
 }
 
 .metric .results .score{
   position: relative;
   width: 100%;
-  /* height: 20px; */
 }
 
-.metric .results .score .description.up {
+.metric .results .score .description.good {
     color: #1e7e56;
 }
 
-.metric .results .score .description.down{
+.metric .results .score .description.bad{
     color: #E83151;
 }
 
-.metric .results .score .description.up::after {
-    font-family: "Font Awesome 5 Free";
-    content: "\f058";
-    font-size: 1.2rem;
+.metric .results .score .description svg{
+    font-size: 1rem;
 }
-
-/* .metric .results .score .description.down::after {
-    font-family: "Font Awesome 5 Free";
-    content: "\f0e7";
-    font-size: 1.2rem;
-} */
 
 .metric .results .score .bar{
   width: 100%;
@@ -406,25 +354,15 @@ export default {
 
 .metric .results .info{
     color: #555;
-    margin: 0 60px 10px 0;
-    /* float: left; */
+    margin: 0 90px 10px 0;
 }
 
 .metric .results .info .value{
-    /* position: absolute; */
-    /* right: 0px; */
-    /* top: 6px; */
-    /* margin: 0 50px 10px 0px; */
-    /* width: 50px; */
     font-size: .8rem;
-    /* text-align: right; */
 }
 
 .metric .results .info .result-name{
-    /* position: relative; */
-    /* margin: 0 40px 10px 0px; */
     font-size: .7rem;
-    /* height: 30px; */
 }
 
 .metric .result img{
