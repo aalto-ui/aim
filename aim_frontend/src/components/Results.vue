@@ -41,14 +41,27 @@
                     Relevance: <icon name="star" v-for="i in metrics[metric].relevance" :key="'res-relevance-star-' + metric + '-' + i"></icon><icon name="star-o" v-for="i in 5 - metrics[metric].relevance" :key="'res-relevance-star-o-' + metric + '-' + i"></icon>
                   </p>
 
-                  <template v-if="metrics[metric].visualizationType === 'table'">
-                    <b-table striped hover :items="results[metric]" :fields="resultTableFields"  class="mt-4">
+                  <template v-if="metrics[metric].visualizationType==='table'">
+                    <b-table striped hover :items="results[metric]" :fields="resultTableFields" class="mt-4">
                       <template slot="result" slot-scope="data">
                         {{data.value.name}}
                         <template v-if="data.value.description">
                           <icon name="question-circle" v-b-tooltip.hover :title="data.value.description"></icon>
                         </template>
                       </template>
+                      <template slot="evaluation" slot-scope="data">
+                        <div class="scores" :id="data.item.id" v-if="metrics[metric].results[data.index].scores.length > 1" >
+                          <div v-for="score in metrics[metric].results[data.index].scores" :key="score.description">
+                           <div class="score" v-show="getJoudgement(score, data.item.value)" :class="score.judgment">
+                              {{score.description}}
+                              <font-awesome-icon  :icon="score.icon" />
+                           </div> 
+                          </div>  
+                        </div>
+                        <div v-else >
+                          <p>-</p>
+                        </div>
+                      </template> 
                       <template slot="show_details" slot-scope="row">
                         <b-btn v-b-modal="`${row.item.id}-modal`" variant="link">Show Details</b-btn>
                         <b-modal size="lg" :title="row.item.result.name" :id="`${row.item.id}-modal`" ok-only ok-title="Close">
@@ -68,7 +81,7 @@
                   <template v-else-if="metrics[metric].visualizationType==='b64'" >
 
                     <template v-for="result in results[metric]">
-                      <div class="b64">
+                      <div class="b64" :id="result.id">
                         <h3 class="mt-2">{{ result.result.name }}</h3>
                         <p v-if="result.result.description">{{ result.result.description }}</p>
                         <img v-if="result.value !== ''" class="result-img" :src="'data:image/png;base64, ' + result.value" />
@@ -104,7 +117,7 @@ export default {
     return {
       categories: metricConfig.categories,
       metrics: metricConfig.metrics,
-      resultTableFields: ['result', 'value', 'show_details']
+      resultTableFields: ['result', 'value', 'evaluation', 'show_details']
     }
   },
   computed: mapGetters({
@@ -122,6 +135,15 @@ export default {
     },
     resetForm () {
       this.$store.commit('resetState')
+    },
+    getJoudgement (score, value) {
+      // console.log(`---- getJoudgement ----`)
+      const min = score.range[0]
+      const max = score.range[1]
+      // console.log(value)
+      return (
+        min < value && (max > value || max === null)
+      )
     }
   },
   components: {
@@ -152,13 +174,16 @@ export default {
 .category-title .fa{
   font-size: 3rem;
   margin-right: 5px;
-  /* position: absolute; */
-  /* top: 5px; */
-  /* right: 10px; */
   color: rgba(255, 255, 255, 0.3);
 }
 
+.score.good{
+  color: #1e7e56;
+}
 
+.score.bad{
+  color: #E83151;
+}
 
 .result-img {
   width: 100%;
