@@ -53,8 +53,10 @@
                     <template v-for="score in result.scores">
                       <div class="score" v-show="getJoudgement(score, results[metric][0].value)"> 
                         <div class="description" :class="score.judgment" >
-                           {{score.description}} 
-                          <font-awesome-icon v-show="score.icon" :icon="score.icon" />
+                           {{score.description}}
+                           <template v-if="(score.icon[0]!='null')">
+                            <font-awesome-icon :icon="score.icon" />
+                          </template>
                         </div> 
                       </div>
                     </template> 
@@ -69,7 +71,7 @@
                         <span>{{result.result.name}}</span>
                       </a>
                     </div>
-                    <img v-if="(result.value !== '')" 
+                    <img v-if="result.value !== ''" 
                           class="result-img" 
                           :src="'data:image/png;base64, ' + result.value" />
                   </div>
@@ -104,13 +106,13 @@ export default {
   }),
   methods: {
     categoryVisible (category) {
-      console.log(_.keys(this.results))
+      // console.log(_.keys(this.results))
       return (
         _.findIndex(_.keys(this.results), (key) => key.match(new RegExp(category + '[0-9]+')))
       )
     },
     metricLoading () {
-      console.log(this.$store.state.fetchingCount)
+      // console.log(this.$store.state.fetchingCount)
       if (this.$store.state.fetchingCount === this.$store.state.fetchedCount) {
         return true
       }
@@ -228,7 +230,6 @@ export default {
   color: #555 !important;
   /* color: #7553a0 !important; */
   border-bottom: 2px solid #998bac;
-  /* border-bottom: 2px solid #999; */
   text-align: left;
 }
 
@@ -446,6 +447,4 @@ export default {
     height: 5em;
   }
 }
-
-
 </style>

@@ -103,7 +103,7 @@ export default {
               id: 'r2',
               range: [500001, 1200000],
               description: 'Fair',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
@@ -149,7 +149,7 @@ export default {
               id: 'r1',
               range: [0, 5000],
               description: 'Less colourful',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
@@ -162,8 +162,8 @@ export default {
             {
               id: 'r3',
               range: [15001, null],
-              description: 'Less colourful',
-              icon: 'null',
+              description: 'colourful',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -198,7 +198,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -274,7 +274,7 @@ export default {
               id: 'r1',
               range: [0.00, 0.40],
               description: 'Dark',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
@@ -288,7 +288,7 @@ export default {
               id: 'r3',
               range: [0.81, 1.00],
               description: 'Light',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -360,7 +360,7 @@ export default {
               id: 'r2',
               range: [20001, null],
               description: 'Potential varied',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -376,7 +376,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -392,7 +392,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -408,7 +408,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -443,7 +443,7 @@ export default {
               id: 'r1',
               range: [0.00, 40.00],
               description: 'Dark',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
@@ -457,7 +457,7 @@ export default {
               id: 'r3',
               range: [75.01, 100.00],
               description: 'Light',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -503,7 +503,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -519,7 +519,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -535,7 +535,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -551,7 +551,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -586,7 +586,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -602,7 +602,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -618,7 +618,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -634,7 +634,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -650,7 +650,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -666,7 +666,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -682,21 +682,21 @@ export default {
               id: 'r1',
               range: [0.00, 50.00],
               description: 'Less colourful',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
               id: 'r2',
               range: [50.01, 100.00],
               description: 'Fair',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
               id: 'r3',
               range: [100.01, null],
               description: 'Colourful',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -735,21 +735,21 @@ export default {
               id: 'r1',
               range: [0, 4000],
               description: 'Less colourful',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
               id: 'r2',
               range: [4001, 8000],
               description: 'Fair',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
               id: 'r3',
               range: [8001, null],
               description: 'Colourful',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -788,21 +788,21 @@ export default {
               id: 'r1',
               range: [0, 500],
               description: 'Less colourful',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
               id: 'r2',
               range: [501, 1000],
               description: 'Fair',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
               id: 'r3',
               range: [1001, null],
               description: 'Colourful',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -818,7 +818,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'Meaningless',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -860,7 +860,7 @@ export default {
               id: 'r2',
               range: [60.01, 90.00],
               description: 'Acceptable',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
@@ -955,7 +955,7 @@ export default {
               id: 'r2',
               range: [0.13, 0.22],
               description: 'Fair',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
@@ -1016,7 +1016,7 @@ export default {
               id: 'r2',
               range: [0.26, 0.50],
               description: 'Fair',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
@@ -1065,7 +1065,7 @@ export default {
               id: 'r2',
               range: [100001, 200000],
               description: 'Fair',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
@@ -1119,7 +1119,7 @@ export default {
               id: 'r1',
               range: [null, null],
               description: 'TODO',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             }
           ]
@@ -1280,7 +1280,7 @@ export default {
               id: 'r2',
               range: [1501, 3200],
               description: 'Fair',
-              icon: 'null',
+              icon: ['null', 'null'],
               judgment: 'normal'
             },
             {
