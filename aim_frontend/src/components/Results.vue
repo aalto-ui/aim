@@ -23,7 +23,6 @@
               <b-card-header header-tag="header" class="p-0" :id="metrics[metric].id">
                 <b-btn :variant="category.color" block v-b-toggle="`${category}-${metric}-collapse`">{{metrics[metric].name}}</b-btn>
               </b-card-header>
-
               <b-collapse visible :id="`${category}-${metric}-collapse`">
                 <b-card-body>
                   <p>{{metrics[metric].description}}</p>
@@ -36,9 +35,23 @@
                     ]
                   </p>
                   <p>
-                    Evidence: <icon name="star" v-for="i in metrics[metric].evidence" :key="'res-evidence-star-' + metric + '-' + i"></icon><icon name="star-o" v-for="i in 5 - metrics[metric].evidence" :key="'res-evidence-star-o-' + metric + '-' + i"></icon>
+                    Evidence: 
+                    <span name="star" v-for="i in metrics[metric].evidence" :key="'res-evidence-star-' + metric + '-' + i">
+                      <font-awesome-icon :icon="['fas', 'star']" />
+                    </span><span name="star-o" v-for="i in 5 - metrics[metric].evidence" :key="'res-evidence-star-o-' + metric + '-' + i">
+                      <font-awesome-icon :icon="['far', 'star']" />
+                    </span>
+                    <!-- <icon name="star" v-for="i in metrics[metric].evidence" :key="'res-evidence-star-' + metric + '-' + i"></icon> -->
+                    <!-- <icon name="star-o" v-for="i in 5 - metrics[metric].evidence" :key="'res-evidence-star-o-' + metric + '-' + i"></icon> -->
                     <br />
-                    Relevance: <icon name="star" v-for="i in metrics[metric].relevance" :key="'res-relevance-star-' + metric + '-' + i"></icon><icon name="star-o" v-for="i in 5 - metrics[metric].relevance" :key="'res-relevance-star-o-' + metric + '-' + i"></icon>
+                    Relevance: 
+                    <span name="star" v-for="i in metrics[metric].relevance" :key="'res-relevance-star-' + metric + '-' + i">
+                      <font-awesome-icon :icon="['fas', 'star']" />
+                    </span><span name="star-o" v-for="i in 5 - metrics[metric].relevance" :key="'res-relevance-star-o-' + metric + '-' + i">
+                      <font-awesome-icon :icon="['far', 'star']" />
+                    </span>
+                    <!-- <icon name="star" v-for="i in metrics[metric].relevance" :key="'res-relevance-star-' + metric + '-' + i">
+                      </icon><icon name="star-o" v-for="i in 5 - metrics[metric].relevance" :key="'res-relevance-star-o-' + metric + '-' + i"></icon> -->
                   </p>
 
                   <template v-if="metrics[metric].visualizationType==='table'">
@@ -46,7 +59,10 @@
                       <template slot="result" slot-scope="data">
                         {{data.value.name}}
                         <template v-if="data.value.description">
-                          <icon name="question-circle" v-b-tooltip.hover :title="data.value.description"></icon>
+                          <span v-b-tooltip.hover :title="data.value.description">
+                          <font-awesome-icon :icon="['fas', 'question-circle']" />
+                          <!-- <icon name="question-circle" v-b-tooltip.hover :title="data.value.description"></icon> -->
+                          </span>
                         </template>
                       </template>
                       <template slot="evaluation" slot-scope="data">
@@ -54,7 +70,9 @@
                           <div v-for="score in metrics[metric].results[data.index].scores" :key="score.description">
                            <div class="score" v-show="getJoudgement(score, data.item.value)" :class="score.judgment">
                               {{score.description}}
-                              <font-awesome-icon  :icon="score.icon" />
+                              <template v-if="(score.icon[0]!='null')">
+                                <font-awesome-icon :icon="score.icon" />
+                              </template>
                            </div> 
                           </div>  
                         </div>
