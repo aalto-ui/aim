@@ -37,32 +37,27 @@
                 <a :href="'#'+ metrics[metric].id" >
                   <div class="inner" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}" >
                     {{metrics[metric].name}}
-                    <!-- <font-awesome-icon :icon="['fas', 'angle-double-down']" /> -->
                     <font-awesome-icon :icon="['fas', 'angle-double-down']" />
                   </div>
                 </a>
               </div>
               <div v-if="metrics[metric].visualizationType==='table'">
                 <div class="result" v-for="(result, i) in metrics[metric].results">
-                  
+                    <template v-for="(score) in result.scores" v-if="result.scores.length > 1">                        
+                      <div class="score" v-show="getJoudgement(score, results[metric][i].value)"> 
+                        <div class="description" :class="score.judgment" >
+                          {{score.description}}
+                          <template v-if="(score.icon[0]!=null)">
+                            <font-awesome-icon :icon="score.icon" />
+                          </template>
+                        </div> 
+                      </div>
+                    </template>  
                     <div class="info">
                       <a :href="'#'+ result.id" >
                         <div class="result-name">{{result.name}}</div>
                       </a>
                     </div>
-
-                      <template v-for="(score) in result.scores" v-if="result.scores.length > 1">                        
-                        <div class="score" v-show="getJoudgement(score, results[metric][i].value)"> 
-                          <div class="description" :class="score.judgment" >
-                            {{score.description}}
-                            <template v-if="(score.icon[0]!=null)">
-                              <font-awesome-icon :icon="score.icon" />
-                            </template>
-                          </div> 
-                        </div>
-                      </template> 
-                    
-        
                 </div>
               </div>
 
@@ -284,32 +279,41 @@ export default {
 }
 
 .metric .result .info{
-  padding: 0px 0px 0px 0px; 
+  padding: 0px 60px 0px 0px;
+  font-size: .7rem; 
 }
 
-.metric .result .scores{
+/* .metric .result .score{
+  width: 100%;
+  height: 20px;
+} */
+
+.metric .result .score .description {
+  /* color: #fff; */
   position: absolute;
   right: 0px;
   width: 80px;
   text-align: right;
   font-size: .7rem;
+  border-radius: 0.2rem;
+  padding: 2px 0px 3px 2px;
 }
 
-.metric .result .score{
-  position: relative;
-  width: 100%;
+.metric .result .score .description {
+  color: #aea697;
 }
 
 .metric .result .score .description.good {
-    color: #1e7e56;
+  color: #1e7e56; 
 }
 
 .metric .result .score .description.bad{
-    color: #E83151;
+  color: #E83151;
 }
 
 .metric .result .score .description svg{
-    font-size: 1rem;
+    font-size: .9rem;
+    padding-top: 3px;
 }
 
 .metric .result .score .bar{
