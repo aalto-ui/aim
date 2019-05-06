@@ -70,7 +70,7 @@
                           <div v-for="score in metrics[metric].results[data.index].scores" :key="score.description">
                            <div class="score" v-show="getJoudgement(score, data.item.value)" :class="score.judgment">
                               {{score.description}}
-                              <template v-if="(score.icon[0]!='null')">
+                              <template v-if="(score.icon[0]!=null)">
                                 <font-awesome-icon :icon="score.icon" />
                               </template>
                            </div> 
@@ -155,12 +155,16 @@ export default {
       this.$store.commit('resetState')
     },
     getJoudgement (score, value) {
-      // console.log(`---- getJoudgement ----`)
+      console.log(`---- getJoudgement Res ----`)
+      console.log(score, value)
+      if (score.range[0] === null) {
+        return false
+      }
       const min = score.range[0]
       const max = score.range[1]
       // console.log(value)
       return (
-        min < value && (max > value || max === null)
+        min <= value && (max >= value || max === null)
       )
     }
   },

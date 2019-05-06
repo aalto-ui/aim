@@ -38,31 +38,33 @@
                   <div class="inner" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}" >
                     {{metrics[metric].name}}
                     <!-- <font-awesome-icon :icon="['fas', 'angle-double-down']" /> -->
-                    <font-awesome-icon :icon="['fas', 'angle-down']" />
+                    <font-awesome-icon :icon="['fas', 'angle-double-down']" />
                   </div>
                 </a>
               </div>
-              <template v-if="metrics[metric].visualizationType==='table'">
-                <b-list-group class="results" v-for="result in metrics[metric].results">
-                  <div class="info">
-                    <a :href="'#'+ result.id" >
-                      <div class="result-name">{{result.name}}</div>
-                    </a>
-                  </div>
-                  <div class="scores" v-if="result.scores.length > 1">
-                    <template v-for="score in result.scores">
-                      <div class="score" v-show="getJoudgement(score, results[metric][0].value)"> 
-                        <div class="description" :class="score.judgment" >
-                           {{score.description}}
-                           <template v-if="(score.icon[0]!='null')">
-                            <font-awesome-icon :icon="score.icon" />
-                          </template>
-                        </div> 
-                      </div>
-                    </template> 
-                  </div>
-                </b-list-group>
-              </template>
+              <div v-if="metrics[metric].visualizationType==='table'">
+                <div class="result" v-for="(result, i) in metrics[metric].results">
+                  
+                    <div class="info">
+                      <a :href="'#'+ result.id" >
+                        <div class="result-name">{{result.name}}</div>
+                      </a>
+                    </div>
+
+                      <template v-for="(score) in result.scores" v-if="result.scores.length > 1">                        
+                        <div class="score" v-show="getJoudgement(score, results[metric][i].value)"> 
+                          <div class="description" :class="score.judgment" >
+                            {{score.description}}
+                            <template v-if="(score.icon[0]!=null)">
+                              <font-awesome-icon :icon="score.icon" />
+                            </template>
+                          </div> 
+                        </div>
+                      </template> 
+                    
+        
+                </div>
+              </div>
 
                 <div v-if="metrics[metric].visualizationType==='b64'" class="results">
                   <div v-for="result in results[metric]" class="result">
@@ -125,12 +127,16 @@ export default {
       this.$store.commit('resetState')
     },
     getJoudgement (score, value) {
-      // console.log(`---- getJoudgement ----`)
+      console.log(`---- getJoudgement Sum ----`)
+      console.log(score, value)
+      if (score.range[0] === null) {
+        return false
+      }
       const min = score.range[0]
       const max = score.range[1]
       // console.log(value)
       return (
-        min < value && (max > value || max === null)
+        min <= value && (max >= value || max === null)
       )
     }
   },
@@ -230,11 +236,12 @@ export default {
   color: #555 !important;
   /* color: #7553a0 !important; */
   border-bottom: 2px solid #998bac;
+  /* border-bottom: 2px solid #999; */
   text-align: left;
 }
 
 .metric .title .inner{
-  padding: 10px 25px 2px 0px;
+  padding: 10px 10px 2px 0px;
   position: relative;
 }
 
@@ -262,9 +269,9 @@ export default {
     cursor: pointer;
 }
 
-.metric .results{
+.metric .result{
   position: relative;
-  padding: 10px 0px 0px 10px;
+  padding: 8px 0px 4px 10px;
   background: none;
   font-size: 0.8rem;
   color: #555 !important;
@@ -276,76 +283,80 @@ export default {
   text-align: left; 
 }
 
-.metric .results .scores{
+.metric .result .info{
+  padding: 0px 0px 0px 0px; 
+}
+
+.metric .result .scores{
   position: absolute;
   right: 0px;
-  width: 100px;
+  width: 80px;
   text-align: right;
   font-size: .7rem;
 }
 
-.metric .results .score{
+.metric .result .score{
   position: relative;
   width: 100%;
 }
 
-.metric .results .score .description.good {
+.metric .result .score .description.good {
     color: #1e7e56;
 }
 
-.metric .results .score .description.bad{
+.metric .result .score .description.bad{
     color: #E83151;
 }
 
-.metric .results .score .description svg{
+.metric .result .score .description svg{
     font-size: 1rem;
 }
 
-.metric .results .score .bar{
+.metric .result .score .bar{
   width: 100%;
   height: 4px;
 }
 
-.metric .results .scale{
+.metric .result .scale{
   position: absolute;
   color: #555;
   font-size: 0.5rem;
   top: 4px;
 }
 
-.metric .results .scale.min-line{
+.metric .result .scale.min-line{
   right: -1rem;
 }
 
-.metric .results .scale.max-line{
+.metric .result .scale.max-line{
   left: -1rem;
 }
 
-.metric .results .score:nth-of-type(1) .bar{
+.metric .result .score:nth-of-type(1) .bar{
   background: #739ea3;
 }
 
-.metric .results .score:nth-of-type(2) .bar{
+.metric .result .score:nth-of-type(2) .bar{
   background: rgb(160, 218, 0) ;
 }
 
-.metric .results .score:nth-of-type(3) .bar{
+.metric .result .score:nth-of-type(3) .bar{
   background: #7553A0;
 }
 
-.metric .results .arrow{
+.metric .result .arrow{
   position: relative;
   top: -120%;
   z-index: 1000;
   text-align: center;
   border-radius: 50%;
 }
-.metric .results .arrow .description{
+.metric .result .arrow .description{
   font-size: 0.6rem;
   white-space: nowrap;
 }
 
-.metric .results .arrow:after {
+.metric .result .arrow:after {
   position: relative;
   content: '▼';
   color: #555;
@@ -353,17 +364,12 @@ export default {
   top: -0.5rem;
 }
 
-.metric .results .info{
-    color: #555;
-    margin: 0 90px 10px 0;
-}
-
-.metric .results .info .value{
+.metric .result .info .value{
     font-size: .8rem;
 }
 
-.metric .results .info .result-name{
-    font-size: .7rem;
+.metric .result .info .result-name{
+    font-size: .8rem;
 }
 
 .metric .result img{
