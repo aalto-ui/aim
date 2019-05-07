@@ -235,4 +235,7 @@ venv.bak/
 package-lock.json
 package.json
 
+aim_frontend/package.json
+aim_frontend/package-lock.json
+aim_backend/uimetrics_backend/metrics_util.py
                      
