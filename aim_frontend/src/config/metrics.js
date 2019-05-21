@@ -4,6 +4,9 @@ export default {
       name: 'Colour Perception',
       id: 'cp',
       color: 'cat-one',
+      icon: 'palette',
+      evaluation: 'good',
+      score: '30',
       metrics: [
         'cp1',
         'cp2',
@@ -21,6 +24,9 @@ export default {
       name: 'Perceptual Fluency',
       id: 'pf',
       color: 'cat-two',
+      icon: 'brain',
+      evaluation: 'okay',
+      score: '30',
       metrics: [
         'pf1',
         'pf2',
@@ -36,6 +42,9 @@ export default {
       name: 'Visual Guidance',
       id: 'vg',
       color: 'cat-three',
+      icon: 'compass',
+      evaluation: 'bad',
+      score: '30',
       metrics: [
         'vg1',
         'vg2'
@@ -45,6 +54,9 @@ export default {
       name: 'Accessibility',
       id: 'ac',
       color: 'cat-four',
+      icon: 'universal-access',
+      evaluation: 'bad',
+      score: '30',
       metrics: [
         'ac1'
       ]
@@ -59,6 +71,7 @@ export default {
       evidence: 1,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -72,18 +85,42 @@ export default {
           index: 0,
           type: 'int',
           name: 'PNG File Size (in bytes)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 500000],
+              description: 'Suitable',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r2',
+              range: [500001, 1200000],
+              description: 'Fair',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [1200001, null],
+              description: 'Huge',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
     cp2: {
       id: 'cp2',
-      name: 'Unique RGB colours',
+      name: 'Unique RGB Colours',
       category: 'cp',
       description: 'The number of unique colours in RGB spectrum is an indication of colour variance. Colours that occur more than a threshold value are counted. Note that this is confounded by image size',
       evidence: 2,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -101,18 +138,42 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Colours',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 5000],
+              description: 'Less colourful',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r2',
+              range: [5001, 15000],
+              description: 'Fair',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r3',
+              range: [15001, null],
+              description: 'colourful',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         }
       ]
     },
     cp3: {
       id: 'cp3',
-      name: 'HSV colours: Average and std',
+      name: 'HSV Colours: Average and STD',
       category: 'cp',
       description: 'The HSV (Hue, Saturation, Value) colour space aligns more closely with the human visual system. These metrics report average and standard deviation for each channel in HSV. Empirical research has shown hue and saturation channels to correlated with aesthetic impression.',
       evidence: 3,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -126,46 +187,148 @@ export default {
           index: 0,
           type: 'float',
           name: 'Average Hue',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp3_1',
           index: 1,
           type: 'float',
           name: 'Average Saturation',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.10],
+              description: 'Low',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [0.11, 0.60],
+              description: 'Medium',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r3',
+              range: [0.61, null],
+              description: 'High',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         },
         {
           id: 'cp3_2',
           index: 2,
           type: 'float',
           name: 'Standard Deviation of Saturation',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.20],
+              description: 'Low',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [0.21, 0.40],
+              description: 'Medium',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r3',
+              range: [0.41, null],
+              description: 'High',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         },
         {
           id: 'cp3_3',
           index: 3,
           type: 'float',
           name: 'Average Value',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.40],
+              description: 'Dark',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r2',
+              range: [0.41, 0.80],
+              description: 'Medium',
+              icon: ['far', 'check-circle'],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [0.81, 1.00],
+              description: 'Light',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp3_4',
           index: 4,
           type: 'float',
           name: 'Standard Deviation of Value',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.15],
+              description: 'Low',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [0.16, 0.35],
+              description: 'Medium',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r3',
+              range: [0.36, null],
+              description: 'High',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
     cp4: {
       id: 'cp4',
-      name: 'Number of unique colours in the HSV spectrum',
+      name: 'Number of Unique Colours in the HSV Spectrum',
       category: 'cp',
       description: 'The HSV (Hue, Saturation, Value) colour space aligns more closely with the human visual system.  This metric reports the number of unique colours per channel in HSV. Unlike the other HSV metric, no direct empirical evidence exists for this metric. Note that the metric correlates highly with the number of colours in the RGB space.',
       evidence: 2,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -179,39 +342,83 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Unique HSV',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 20000],
+              description: 'Good',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r2',
+              range: [20001, null],
+              description: 'Potential varied',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp4_1',
           index: 1,
           type: 'int',
           name: 'Number of Unique Hue',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp4_2',
           index: 2,
           type: 'int',
           name: 'Number of Unique Saturation',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp4_3',
           index: 3,
           type: 'int',
           name: 'Number of Unique Value',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         }
       ]
     },
     cp5: {
       id: 'cp5',
-      name: 'LAB colours',
+      name: 'LAB Colours',
       category: 'cp',
       description: 'The LAB colour space approximates human vision for uniformity of colour perception. Results sre similar to the HSV metric. Empirical work has provided support for correlation between SD in luminance and aesthetic impression.',
       evidence: 3,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -225,53 +432,136 @@ export default {
           index: 0,
           type: 'float',
           name: 'Mean Lightness',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 40.00],
+              description: 'Dark',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r2',
+              range: [40.01, 75.00],
+              description: 'Medium',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r3',
+              range: [75.01, 100.00],
+              description: 'Light',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp5_1',
           index: 1,
           type: 'float',
           name: 'Standard Deviation Lightness',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 15.00],
+              description: 'Low',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [15.01, 35.00],
+              description: 'Medium',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r3',
+              range: [35.01, null],
+              description: 'High',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         },
         {
           id: 'cp5_2',
           index: 2,
           type: 'float',
           name: 'Mean A (Green-Red Space)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp5_3',
           index: 3,
           type: 'float',
           name: 'Standard Deviation A',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp5_4',
           index: 4,
           type: 'float',
           name: 'Mean B (Yellow-Blue Space)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp5_5',
           index: 5,
           type: 'float',
           name: 'Standard Deviation B',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         }
       ]
     },
     cp6: {
       id: 'cp6',
-      name: 'Hassler-Susstrunk colourfulness',
+      name: 'Hassler-Susstrunk Colourfulness',
       category: 'cp',
       description: 'The Hassler-Susstrunk metric is computed based on the RGYB colour spectrum and mainly comprises standard deviations. The higher the deviation, the more colourful the image is perceived. This has a high correlation with aesthetic impression, but has been mainly tested with photography not user interfaces. The metric is, however, computationally expensive. Note that this metric does not take hue into account.',
       evidence: 4,
       relevance: 3,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -285,60 +575,138 @@ export default {
           index: 0,
           type: 'float',
           name: 'Mean Distribution (Red-Green)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp6_1',
           index: 1,
           type: 'float',
           name: 'Standard Deviation Distribution (Red-Green)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp6_2',
           index: 2,
           type: 'float',
           name: 'Mean Distribution (Yellow-Blue)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp6_3',
           index: 3,
           type: 'float',
           name: 'Standard Deviation Distribution (Yellow-Blue)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp6_4',
           index: 4,
           type: 'float',
           name: 'Mean Distribution (RGYB)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp6_5',
           index: 5,
           type: 'float',
           name: 'Standard Deviation Distribution (RGYB)',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp6_6',
           index: 6,
           type: 'float',
-          name: 'Colorfulness',
-          description: false
+          name: 'Colourfulness',
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 50.00],
+              description: 'Less colourful',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r2',
+              range: [50.01, 100.00],
+              description: 'Fair',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [100.01, null],
+              description: 'Colourful',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         }
       ]
     },
     cp7: {
       id: 'cp7',
-      name: 'Static colour clustering',
+      name: 'Static Colour Clustering',
       category: 'cp',
       description: 'Static colour clusters refers to the number of pre-determined colour clusters in the image. Clustering is based on slicing of RGB channels. It indicates the number of dominant colours but is confounded by colour variance.  Dynamic colour clusters has higher correlation with aesthetic impression, but it is also more complex to compute.',
       evidence: 2,
       relevance: 3,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -356,18 +724,42 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Clusters',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 4000],
+              description: 'Less colourful',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r2',
+              range: [4001, 8000],
+              description: 'Fair',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [8001, null],
+              description: 'Colourful',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         }
       ]
     },
     cp8: {
       id: 'cp8',
-      name: 'Dynamic colour clusters',
+      name: 'Dynamic Colour Clusters',
       category: 'cp',
-      description: 'Indicates the number of color clusters in an image and the average number of colours within each cluster. Colours are clustered recursively, using as criteria their distance in a colour cube. Only clusters with more than 5 values are included in the final count. The number of colours per cluster is shown to correlate with aesthetic perception. Indicates the number of color clusters in an image and the average number of colours within each cluster. Colours are clustered recursively, using as criteria their distance in a colour cube. Only clusters with more than 5 values are included in the final count. The number of colours per cluster is shown to correlate with aesthetic perception.',
+      description: 'Indicates the number of colour clusters in an image and the average number of colours within each cluster. Colours are clustered recursively, using as criteria their distance in a colour cube. Only clusters with more than 5 values are included in the final count. The number of colours per cluster is shown to correlate with aesthetic perception. Indicates the number of colour clusters in an image and the average number of colours within each cluster. Colours are clustered recursively, using as criteria their distance in a colour cube. Only clusters with more than 5 values are included in the final count. The number of colours per cluster is shown to correlate with aesthetic perception.',
       evidence: 3,
       relevance: 3,
       speed: 0,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -385,25 +777,58 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Clusters',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 500],
+              description: 'Less colourful',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r2',
+              range: [501, 1000],
+              description: 'Fair',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [1001, null],
+              description: 'Colourful',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         },
         {
           id: 'cp8_1',
           index: 1,
           type: 'int',
           name: 'Average Number of Colours per Cluster',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'Meaningless',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         }
       ]
     },
     cp9: {
       id: 'cp9',
-      name: 'Luminance: Standard deviation',
+      name: 'Luminance: Standard Deviation',
       category: 'cp',
       description: 'Standard deviation of luminance indicates how much luminance varies across the image. It has no or low correlation with perceived colour variability, but some correlation with aesthetic impression. Note that this implementation does not account for display-dependent gamma corrections (rec. 709 standard).',
       evidence: 3,
       relevance: 3,
       speed: 1,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -417,7 +842,30 @@ export default {
           index: 0,
           type: 'float',
           name: 'Standard Deviation in Luminance',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 60.00],
+              description: 'Good',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r2',
+              range: [60.01, 90.00],
+              description: 'Acceptable',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [90.01, null],
+              description: 'Potential varied',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
@@ -425,10 +873,11 @@ export default {
       id: 'cp10',
       name: 'WAVE (Weighted Affective Valence Estimates)',
       category: 'cp',
-      description: 'This takes the mean color preference score of each pixel, based on empirically-obtained color preference scores. These color preference scores were retrieved by asking participants to rate their preferences for objects of these colors, with the theory that the preferences for these objects translate directly to preferences for the colors of these objects.',
+      description: 'This takes the mean colour preference score of each pixel, based on empirically-obtained colour preference scores. These colour preference scores were retrieved by asking participants to rate their preferences for objects of these colours, with the theory that the preferences for these objects translate directly to preferences for the colours of these objects.',
       evidence: 3,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -442,7 +891,23 @@ export default {
           index: 0,
           type: 'float',
           name: 'Average WAVE Score Across Pixels',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.54],
+              description: 'Low',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [0.55, 1.00],
+              description: 'Good',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            }
+          ]
         }
       ]
     },
@@ -454,6 +919,7 @@ export default {
       evidence: 4,
       relevance: 3,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -471,7 +937,30 @@ export default {
           index: 0,
           type: 'float',
           name: 'Edge Density',
-          description: 'Ratio between number of edge pixels and total number of pixels.'
+          description: 'Ratio between number of edge pixels and total number of pixels.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.12],
+              description: 'Good',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r2',
+              range: [0.13, 0.22],
+              description: 'Fair',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [0.23, null],
+              description: 'Poor',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
@@ -483,6 +972,7 @@ export default {
       evidence: 3,
       relevance: 3,
       speed: 1,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -508,7 +998,30 @@ export default {
           index: 0,
           type: 'float',
           name: 'Edge Congestion',
-          description: 'Number of congested pixels divided by number of edge pixels.'
+          description: 'Number of congested pixels divided by number of edge pixels.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.25],
+              description: 'Good',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r2',
+              range: [0.26, 0.50],
+              description: 'Fair',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [0.51, null],
+              description: 'Poor',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
@@ -520,6 +1033,7 @@ export default {
       evidence: 2,
       relevance: 3,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -532,8 +1046,31 @@ export default {
           id: 'pf3_0',
           index: 0,
           type: 'int',
-          name: 'JPEG File Size (in bytes)',
-          description: false
+          name: 'JPG File Size (in bytes)',
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 100000],
+              description: 'Suitable',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r2',
+              range: [100001, 200000],
+              description: 'Fair',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [200001, null],
+              description: 'Huge',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
@@ -545,6 +1082,7 @@ export default {
       evidence: 3,
       relevance: 4,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -570,7 +1108,16 @@ export default {
           index: 0,
           type: 'float',
           name: 'Figure-Ground Contrast',
-          description: 'Weighted sum of edge pixels divided by sum of edge pixels.'
+          description: 'Weighted sum of edge pixels divided by sum of edge pixels.',
+          scores: [
+            {
+              id: 'r1',
+              range: [null, null],
+              description: 'TODO',
+              icon: [null, null],
+              judgment: 'normal'
+            }
+          ]
         }
       ]
     },
@@ -582,6 +1129,7 @@ export default {
       evidence: 4,
       relevance: 2,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -595,18 +1143,35 @@ export default {
           index: 0,
           type: 'float',
           name: 'Normalized Symmetry',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 1.00],
+              description: 'Good',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r2',
+              range: [1.01, null],
+              description: 'Poor',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
     pf6: {
       id: 'pf6',
-      name: 'Quadtree decomposition',
+      name: 'Quadtree Decomposition',
       category: 'pf',
       description: 'Quadtree decomposition indicates visual complexity of a scene. It recursively breaks down the image into regions based on entropy in colour and luminance channels.',
       evidence: 3,
       relevance: 3,
       speed: 0,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -628,28 +1193,99 @@ export default {
           index: 0,
           type: 'float',
           name: 'Balance',
-          description: 'Balance can be defined as the distribution of optical weight in a picture. Optical weight refers to the perception that some objects appear heavier than others. Larger objects are heavier, whereas small objects are lighter. Balance in screen design is achieved by providing an equal weight of screen elements, left and right, top and bottom.'
+          description: 'Balance can be defined as the distribution of optical weight in a picture. Optical weight refers to the perception that some objects appear heavier than others. Larger objects are heavier, whereas small objects are lighter. Balance in screen design is achieved by providing an equal weight of screen elements, left and right, top and bottom.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.65],
+              description: 'Potential unbalanced',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [0.66, 1.00],
+              description: 'Balanced',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            }
+          ]
         },
         {
           id: 'pf6_1',
           index: 1,
           type: 'float',
           name: 'Symmetry',
-          description: 'Symmetry is axial duplication: a unit on one side of the centre line is exactly replicated on the other side. Vertical symmetry refers to the balanced arrangement of equivalent elements about a vertical axis, and horizontal symmetry about a horizontal axis. Radial symmetry consists of equivalent elements balanced about two or more axes that intersect at a central point.'
+          description: 'Symmetry is axial duplication: a unit on one side of the centre line is exactly replicated on the other side. Vertical symmetry refers to the balanced arrangement of equivalent elements about a vertical axis, and horizontal symmetry about a horizontal axis. Radial symmetry consists of equivalent elements balanced about two or more axes that intersect at a central point.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.50],
+              description: 'Poor',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [0.51, 1.00],
+              description: 'Acceptable',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            }
+          ]
         },
         {
           id: 'pf6_2',
           index: 2,
           type: 'float',
           name: 'Equilibrium',
-          description: 'Equilibrium is a stabilisation, a midway centre of suspension. Equilibrium on a screen is accomplished through centring the layout itself. The centre of the layout coincides with that of the frame.'
+          description: 'Equilibrium is a stabilisation, a midway centre of suspension. Equilibrium on a screen is accomplished through centring the layout itself. The centre of the layout coincides with that of the frame.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.65],
+              description: 'Not centralized',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [0.66, 1.00],
+              description: 'Centralized',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            }
+          ]
         },
         {
           id: 'pf6_3',
           index: 3,
           type: 'int',
           name: 'Number of Leaves',
-          description: 'Number of leaves is the total amount of leaves at the end of the recursion. The higher this number, the higher the complexity.'
+          description: 'Number of leaves is the total amount of leaves at the end of the recursion. The higher this number, the higher the complexity.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0, 1500],
+              description: 'Good',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r2',
+              range: [1501, 3200],
+              description: 'Fair',
+              icon: [null, null],
+              judgment: 'normal'
+            },
+            {
+              id: 'r3',
+              range: [3201, null],
+              description: 'Poor',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
@@ -661,6 +1297,7 @@ export default {
       evidence: 2,
       relevance: 4,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -674,18 +1311,42 @@ export default {
           index: 0,
           type: 'float',
           name: 'White Space',
-          description: 'Proportion of white space.'
+          description: 'Proportion of white space.',
+          scores: [
+            {
+              id: 'r1',
+              range: [0.00, 0.30],
+              description: 'Low',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [0.31, 0.80],
+              description: 'Good',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r3',
+              range: [0.81, 1.00],
+              description: 'High',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
     pf8: {
       id: 'pf8',
-      name: 'Grid quality',
+      name: 'Grid Quality',
       category: 'pf8',
       description: 'Grid quality indicates the internal alignment of the various components or identifiable regions of the UI with respect to each other. Several studies have established that the grid quality has a strong impact on the aesthetic impression induced by the overall layout. Specifically, the measures "G2 and G5" (pp. 1166,Table 3) have been adapted for the evaluation of grid layouts within web pages.',
       evidence: 4,
       relevance: 4,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'table',
       references: [
         {
@@ -699,7 +1360,30 @@ export default {
           index: 0,
           type: 'int',
           name: 'Number of Alignment Lines',
-          description: false
+          description: false,
+          scores: [
+            {
+              id: 'r1',
+              range: [4, 100],
+              description: 'Low',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            },
+            {
+              id: 'r2',
+              range: [101, 220],
+              description: 'Medium',
+              icon: ['far', 'check-circle'],
+              judgment: 'good'
+            },
+            {
+              id: 'r3',
+              range: [221, null],
+              description: 'High',
+              icon: ['fas', 'exclamation-triangle'],
+              judgment: 'bad'
+            }
+          ]
         }
       ]
     },
@@ -711,6 +1395,7 @@ export default {
       evidence: 5,
       relevance: 4,
       speed: 2,
+      evaluation: 'good',
       visualizationType: 'b64',
       references: [
         {
@@ -730,12 +1415,13 @@ export default {
     },
     vg2: {
       id: 'vg2',
-      name: 'Visual search performance (experimental)',
+      name: 'Visual Search Performance (experimental)',
       category: 'vg',
       description: 'Visual search performance indicates the ease with which different elements can be found from the image after some experience with the layout. ',
       evidence: 4,
       relevance: 5,
       speed: 0,
+      evaluation: 'good',
       visualizationType: 'b64',
       references: [
         {
@@ -755,12 +1441,13 @@ export default {
     },
     ac1: {
       id: 'ac1',
-      name: 'Colour blindness',
+      name: 'Colour Blindness',
       category: 'ac',
-      description: 'These metrics indicate information loss for users with color vision deficiencies. The metrics are physiologically motivated and currently handle anomalous trichromacy and dichromacy. Evidence for the metric come from controlled experiments.',
+      description: 'These metrics indicate information loss for users with colour vision deficiencies. The metrics are physiologically motivated and currently handle anomalous trichromacy and dichromacy. Evidence for the metric come from controlled experiments.',
       evidence: 4,
       relevance: 5,
       speed: 1,
+      evaluation: 'good',
       visualizationType: 'b64',
       references: [
         {
@@ -774,21 +1461,21 @@ export default {
           index: 0,
           type: 'b64',
           name: 'Deuteranopia',
-          description: 'Red-green color blindness, lacking red cones.'
+          description: 'Red-green colour blindness, lacking red cones.'
         },
         {
           id: 'ac1_1',
           index: 1,
           type: 'b64',
           name: 'Protanopia',
-          description: 'Red-green color blindness, lacking green cones.'
+          description: 'Red-green colour blindness, lacking green cones.'
         },
         {
           id: 'ac1_2',
           index: 2,
           type: 'b64',
           name: 'Tritanopia',
-          description: 'Blue-yellow color blindness.'
+          description: 'Blue-yellow colour blindness.'
         }
       ]
     }

@@ -19,6 +19,7 @@ const initialState = () => {
       input: true,
       metrics: false,
       progressBar: false,
+      summary: false,
       preview: false,
       results: false
     }
@@ -52,7 +53,7 @@ const getters = {
     return results
   },
   fetchingMetrics (state) {
-    // console.dir(_.keys(state.fetching))
+    console.dir(_.keys(state.fetching))
     return _.keys(state.fetching)
   },
   progress (state) {
@@ -75,6 +76,7 @@ const actions = {
     })
     context.commit('increaseFetchedCount')
     context.commit('updateProgressBarVisibility')
+    context.commit('updateSummary')
   },
   pushPreview (context, data) {
     context.commit('pushPreview', data.preview)
@@ -118,12 +120,21 @@ const mutations = {
   increaseFetchedCount (state) {
     state.fetchedCount++
   },
+  updateSummary (state) {
+    console.log(state.fetchedCount)
+    console.log(state.fetchingCount)
+    document.getElementById('service_title').scrollIntoView()
+    if (state.fetchedCount === state.fetchingCount) {
+      console.log('finish loading :)')
+    }
+  },
   updateProgressBarVisibility (state) {
     if (state.fetchedCount === state.fetchingCount) {
       state.display = {
         input: state.display.input,
         // results: state.display.results,
         metrics: false,
+        summary: true,
         results: true,
         preview: state.display.preview,
         progressBar: false
@@ -133,6 +144,7 @@ const mutations = {
   pushPreview (state, payload) {
     Vue.set(state.display, 'preview', true)
     state.preview = payload
+    document.getElementById('service_title').scrollIntoView()
   },
   pushValidationError (state, payload) {
     this.commit('resetState')
@@ -140,6 +152,8 @@ const mutations = {
   },
   fetchResults (state, metrics) {
     state.fetching = metrics
+    console.log('---- metrics')
+    console.log(metrics)
     state.fetchingCount = _.size(_.pickBy(metrics, function (value, key) { return value }))
     state.fetchedCount = 0
     state.display = {
@@ -147,6 +161,7 @@ const mutations = {
       metrics: false,
       progressBar: true,
       preview: false,
+      summary: true,
       results: false
     }
   },
