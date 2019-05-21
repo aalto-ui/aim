@@ -626,26 +626,6 @@ header{
   color: rgba(255, 255, 255, 0.3);
 }
 
-.btn-cat-one {
-  /* border-bottom: 5px solid #3891A6; */
-} 
-
-.btn-cat-two {
-  /* border-bottom: 5px solid #E83151;*/
-} 
-
-.btn-cat-three {
-  /* border-bottom: 5px solid #519E8A;  */
-} 
-
-.btn-cat-four {
-  /* border-bottom: 5px solid #FFBF00; */
-}
-
-.metric-checkbox.custom-control-inline {
-  margin-right: 0;
-}
-
 .metric-checkbox.custom-control {
   padding-left: 1rem;
 }
@@ -688,8 +668,8 @@ header{
   display: block;
 }
 
-.custom-control-input {
-    position: relative;
+.custom-control {
+  display: inline;
 }
 
 h2.components-title{
