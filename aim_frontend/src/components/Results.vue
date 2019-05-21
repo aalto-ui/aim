@@ -172,9 +172,14 @@ export default {
 
 <style lang="scss" scoped>
 
+.component-section{
+  margin-bottom: 40px;
+}
+
 table thead th{
   word-break: break-word;
 }
+
 .category-outer{
   margin-bottom: 20px;
 }

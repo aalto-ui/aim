@@ -559,6 +559,10 @@ export default {
   position: relative;
 }
 
+table thead th{
+  word-break: break-word;
+}
+
 #aim-url-form input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px white inset;
 }
@@ -592,10 +596,18 @@ h2.text-muted {
     padding: 1rem;
 }
 
+header{
+  border-bottom: none;
+}
+.card-header{
+  border-bottom: none;
+}
+
 .tablist .card-header div{
   position: relative;
   color: #fff;
   background-color: #7553a0;
+  border: 1px solid #7553a0; 
   padding: 0px 10px 0px 10px;
   text-align: left;
 }
@@ -630,12 +642,14 @@ h2.text-muted {
   /* border-bottom: 5px solid #FFBF00; */
 }
 
-/* .metric-checkbox.custom-control-inline {
+.metric-checkbox.custom-control-inline {
   margin-right: 0;
-} */
-/* .metric-checkbox.custom-control {
+}
+
+.metric-checkbox.custom-control {
   padding-left: 1rem;
-} */
+}
+
 .jumbotron {
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -674,6 +688,10 @@ h2.text-muted {
   display: block;
 }
 
+.custom-control-input {
+    position: relative;
+}
+
 h2.components-title{
   font-size: 1.8rem;
   color: #222;
@@ -706,23 +724,8 @@ hr {
 
 th{
     font-weight: normal;
-    /* text-align: center; */
     font-size: 0.9rem;
     color: #333;
-}
-
-.custom-control {
-  padding-left: 0;
-}
-
-.custom-control-label::before {
-    position: absolute;
-    left: auto;
-}
-
-.custom-control-label::after {
-    position: absolute;
-    left: auto;
 }
 
 </style>
