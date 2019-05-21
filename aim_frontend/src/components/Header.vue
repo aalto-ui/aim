@@ -83,6 +83,9 @@
                 </b-row>
             </b-col>
         </b-row>
+        <a class="link_to_top" href="#top">
+            <font-awesome-icon :icon="['fas','chevron-up']" />
+        </a>
     </header>
 </template>
 
@@ -119,4 +122,31 @@
     header .btn-nav {
         padding: 0;
     }
+
+    .link_to_top {
+        position: fixed;
+        bottom: 40px;
+        right: 0px;
+        width: 40px;
+        height: 40px;
+        background-color: #7553a0;
+        color: #fff;
+        border-radius: 3px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        display: table-cell;
+        text-align: center;
+        padding-top: 5px;
+        z-index: 1000;
+    }
+
+    .link_to_top:hover {
+        background-color: #634687;
+        color: #fff;
+    }
+
+    .link_to_top svg {
+        vertical-align: middle;
+    }
+
 </style>

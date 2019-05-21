@@ -1,5 +1,5 @@
 <template lang="html">
-  <b-progress height="2rem" :max="max">
+  <b-progress id="progress_bar" height="2rem" :max="max">
     <b-progress-bar :value="progress" show-progress animated>
       <strong>{{ label() }}</strong>
     </b-progress-bar>
