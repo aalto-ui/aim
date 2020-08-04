@@ -127,7 +127,7 @@ def balance(leaves, width, height):
         score = distance * area
         w_right += score
 
-    IB_left_right = (w_left - w_right) / max(abs(w_right), abs(w_right))
+    IB_left_right = (w_left - w_right) / max(abs(w_left), abs(w_right))
     IB_top_bottom = (w_top - w_bottom) / max(abs(w_top), abs(w_bottom))
     BM = 1 - float(abs(IB_top_bottom) + abs(IB_left_right)) / 2
 
