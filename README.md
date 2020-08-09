@@ -53,7 +53,7 @@ npm install
 
 ### Backend
 
-To run the backend server, go the [aim_backend](./aim_backend/) directory and execute:
+To run the backend server, go to the [aim_backend](./aim_backend/) directory and execute:
 
 ```bash
 # Start the server
@@ -78,6 +78,11 @@ npm run build
 After the build is complete, the files (for production) can be found under the newly created `dist` directory. These files are meant to be served over an HTTP server, such as [Apache HTTP Server](https://httpd.apache.org/).
 
 It is highly recommended to use a *load balancer* (e.g., Apache HTTP Server) in a production environment, as certain metrics are extremely CPU intensive. This means that the backend needs to be launched with multiple instances, each listening to a different port. A process manager (e.g., [pm2](http://pm2.keymetrics.io/)) will come in handy at that point. Also, define the `AIM_ENV` environment variable on the production server and set its value to "production" (defaults to "development").
+
+
+## AIM 2 Metrics
+
+Go to the [aim2_metrics](./aim2_metrics/) directory and read [README.md](./aim2_metrics/README.md) for details.
 
 
 ## Contributing
