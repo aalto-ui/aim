@@ -117,6 +117,6 @@ pytest [PATH]
 
 ## License
 
-Copyright (c) 2020-present, [User Interfaces group](https://userinterfaces.aalto.fi/), [Aalto University](https://www.aalto.fi/), Finland
+Copyright (c) 2018-present, [User Interfaces group](https://userinterfaces.aalto.fi/), [Aalto University](https://www.aalto.fi/), Finland
 
-This software is distributed under the terms of the [MIT License](https://opensource.org/licenses/MIT). See [LICENSE](./LICENSE.txt) for details.
+This software is distributed under the terms of the [MIT License](https://opensource.org/licenses/MIT). See [LICENSE.txt](../LICENSE.txt) for details.
