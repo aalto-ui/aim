@@ -13,13 +13,18 @@ AIM constants and utility functions.
 # Standard library modules
 import base64
 import pathlib
+from io import BytesIO
+from typing import Tuple
+
+# Third-party modules
+from PIL import Image
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-09"
+__date__ = "2020-08-10"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -28,9 +33,9 @@ __version__ = "1.0"
 # Constants
 # ----------------------------------------------------------------------------
 
-IMAGE_WIDTH = 1280
-IMAGE_HEIGHT = 800
-IMAGE_BACKGROUND_COLOR = (255, 255, 255)
+IMAGE_WIDTH: int = 1280
+IMAGE_HEIGHT: int = 800
+IMAGE_BACKGROUND_COLOR: Tuple[int, int, int] = (255, 255, 255)
 
 
 # ----------------------------------------------------------------------------
@@ -49,6 +54,46 @@ def read_image(filepath: pathlib.Path) -> str:
         Image encoded in Base64
     """
     with open(filepath, "rb") as f:
-        image_base64 = base64.b64encode(f.read()).decode("utf-8")
+        image_base64: str = base64.b64encode(f.read()).decode("utf-8")
 
     return image_base64
+
+
+def write_image(image_base64: str, filepath: pathlib.Path):
+    """
+    Write an image to a file.
+
+    Args:
+        image_base64: Image encoded in Base64
+        filepath: Output image file path
+    """
+    with open(filepath, "wb") as f:
+        f.write(base64.b64decode(image_base64))
+
+
+def convert_image(png_image: str, jpeg_image_quality: int = 70) -> str:
+    """
+    Convert an image from PNG to JPEG, encoded in Base64.
+
+    (Semi-)transparent pixels are replaced with (semi-)white pixels in
+    the output JPEG image.
+
+    Args:
+        png_image: PNG image encoded in Base64
+
+    Kwargs:
+        jpeg_image_quality: JPEG image quality (defaults to 70)
+
+    Returns:
+        JPEG image encoded in Base64
+    """
+    img_rgb: Image.Image = Image.open(
+        BytesIO(base64.b64decode(png_image))
+    ).convert("RGB")
+    buffered: BytesIO = BytesIO()
+    img_rgb.save(buffered, format="JPEG", quality=jpeg_image_quality)
+    jpeg_image_base64: str = base64.b64encode(buffered.getvalue()).decode(
+        "utf-8"
+    )
+
+    return jpeg_image_base64

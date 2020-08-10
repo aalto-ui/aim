@@ -3,15 +3,15 @@
 
 """
 Metric:
-    PNG file size
+    JPEG file size
 
 
 Description:
-    The file size (in bytes) of an image, saved in the PNG format
-    (24-bit per pixel).
+    The file size (in bytes) of an image, saved in the JPEG format
+    (image quality 70).
 
-    Category: Visual complexity > Information amount > Color variability >
-    Color range. For details, see CV1 [1], A4 [2], and C5 [3].
+    Category: Visual complexity > Information amount > Visual clutter.
+    For details, see CL4 [1], A12 [2], and CL4 [3].
 
 
 Funding information and contact:
@@ -36,9 +36,19 @@ References:
         Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
         doi: https://doi.org/10.1145/2598153.2598173
 
+    4.  Tuch, A.N., Bargas-Avila, J.A., Opwis, K., and Wilhelm, F.H. (2009).
+        Visual Complexity of Websites: Effects on Users' Experience,
+        Physiology, Performance, and Memory. International Journal of
+        Human-Computer Studies, 67(9), 703-715.
+        doi: https://doi.org/10.1016/j.ijhcs.2009.04.002
+
+    5.  Rosenholtz, R., Li, Y., and Nakano, L. (2007). Measuring Visual
+        Clutter. Journal of Vision, 7(2), 1-22.
+        doi: https://doi.org/10.1167/7.2.17
+
 
 Change log:
-    v2.0 (2020-08-08)
+    v2.0 (2020-08-10)
       * Revised implementation
 
     v1.0 (2017-05-29)
@@ -54,13 +64,14 @@ Change log:
 from typing import Any, List, Optional
 
 # First-party modules
+import aim.core.utils as aim_utils
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
-__author__ = "Markku Laine, Thomas Langerak, Yuxi Zhu"
+__author__ = "Markku Laine, Thomas Langerak"
 __date__ = "2020-08-10"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
@@ -71,15 +82,18 @@ __version__ = "2.0"
 # ----------------------------------------------------------------------------
 
 
-class Metric1(AIMMetricInterface):
+class Metric2(AIMMetricInterface):
     """
-    Metric 1: PNG file size.
+    Metric 2: JPEG file size.
     """
 
+    # Constants
+    IMAGE_QUALITY: int = 70  # see page 156 in [2]
+
     # Public methods
-    @staticmethod
+    @classmethod
     def execute_metric(
-        gui_image: str, gui_type: int = 0
+        cls, gui_image: str, gui_type: int = 0
     ) -> Optional[List[Any]]:
         """
         Execute the metric.
@@ -92,14 +106,19 @@ class Metric1(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - PNG file size in bytes (int, [0, +inf))
+            - JPEG file size in bytes (int, [0, +inf))
         """
-        # Calculate PNG file size in bytes according to:
+        # Convert GUI image from PNG to JPEG, encoded in Base64
+        jpeg_gui_image: str = aim_utils.convert_image(
+            gui_image, jpeg_image_quality=cls.IMAGE_QUALITY
+        )
+
+        # Calculate JPEG file size in bytes according to:
         # https://blog.aaronlenoir.com/2017/11/10/get-original-length-from-base-64-string/
-        png_file_size_in_bytes: int = int(
-            (3 * (len(gui_image) / 4)) - (gui_image.count("=", -2))
+        jpeg_file_size_in_bytes: int = int(
+            (3 * (len(jpeg_gui_image) / 4)) - (jpeg_gui_image.count("=", -2))
         )
 
         return [
-            png_file_size_in_bytes,
+            jpeg_file_size_in_bytes,
         ]
