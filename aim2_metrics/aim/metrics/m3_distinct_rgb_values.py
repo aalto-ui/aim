@@ -3,15 +3,16 @@
 
 """
 Metric:
-    PNG file size
+    Distinct RGB values
 
 
 Description:
-    The file size (in bytes) of an image, saved in the PNG format
-    (24-bit per pixel).
+    The number of distinct values in the RGB color space after color
+    reduction; only values covering more than five pixels (for desktop)
+    or two pixels (for mobile) are counted.
 
     Category: Visual complexity > Information amount > Color variability >
-    Color range. For details, see CV1 [1], A4 [2], and C5 [3].
+    Color range. For details, see CV2 [1], A3 [2], and C4 [3].
 
 
 Funding information and contact:
@@ -51,17 +52,27 @@ Change log:
 # ----------------------------------------------------------------------------
 
 # Standard library modules
-from typing import Any, List, Optional
+import base64
+from io import BytesIO
+from typing import Any, List, Optional, Tuple
+
+# Third-party modules
+from PIL import Image
 
 # First-party modules
-from aim.core.constants import GUI_TYPE_DESKTOP
+from aim.core.constants import (
+    COLOR_REDUCTION_THRESHOLD_DESKTOP,
+    COLOR_REDUCTION_THRESHOLD_MOBILE,
+    GUI_TYPE_DESKTOP,
+    GUI_TYPE_MOBILE,
+)
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
-__author__ = "Markku Laine, Thomas Langerak, Yuxi Zhu"
+__author__ = "Markku Laine, Kseniia Palin, Thomas Langerak, Yuxi Zhu"
 __date__ = "2020-08-21"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
@@ -72,9 +83,9 @@ __version__ = "2.0"
 # ----------------------------------------------------------------------------
 
 
-class Metric1(AIMMetricInterface):
+class Metric3(AIMMetricInterface):
     """
-    Metric 1: PNG file size.
+    Metric 3: Distinct RGB values.
     """
 
     # Public methods
@@ -93,14 +104,41 @@ class Metric1(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - PNG file size in bytes (int, [0, +inf))
+            - Number of distinct RGB values (int, [0, +inf))
         """
-        # Calculate PNG file size in bytes according to:
-        # https://blog.aaronlenoir.com/2017/11/10/get-original-length-from-base-64-string/
-        png_file_size_in_bytes: int = int(
-            (3 * (len(gui_image) / 4)) - (gui_image.count("=", -2))
+        # Create PIL image
+        img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
+
+        # Convert image from ??? (should be RGBA) to RGB color space
+        img_rgb: Image.Image = img.convert("RGB")
+
+        # Calculate total number of image pixels
+        total_pixels: int = img_rgb.width * img_rgb.height
+
+        # Get RGB color histogram
+        rgb_color_histogram: List[Tuple[int, Tuple]] = img_rgb.getcolors(
+            maxcolors=total_pixels
+        )
+
+        # Set color reduction threshold; five (pixels) for desktop GUIs and
+        # two (pixels) for mobile GUIs
+        color_reduction_threshold: int = (
+            COLOR_REDUCTION_THRESHOLD_MOBILE
+            if gui_type == GUI_TYPE_MOBILE
+            else COLOR_REDUCTION_THRESHOLD_DESKTOP
+        )
+
+        # Calculate number of distinct RGB values after color reduction
+        n_distinct_rgb_values: int = len(
+            set(
+                [
+                    t
+                    for t in rgb_color_histogram
+                    if t[0] > color_reduction_threshold
+                ]
+            )
         )
 
         return [
-            png_file_size_in_bytes,
+            n_distinct_rgb_values,
         ]

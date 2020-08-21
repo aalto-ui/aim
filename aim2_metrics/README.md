@@ -74,7 +74,7 @@ nano pytest.ini
 
 Sort imports:
 ```
-isort
+isort .
 ```
 
 

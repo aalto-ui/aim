@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-AIM constants and utility functions.
+AIM utility functions.
 """
 
 
@@ -14,28 +14,21 @@ AIM constants and utility functions.
 import base64
 import pathlib
 from io import BytesIO
-from typing import Tuple
 
 # Third-party modules
 from PIL import Image
+
+# First-party modules
+from aim.core.constants import IMAGE_QUALITY_JPEG
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-10"
+__date__ = "2020-08-21"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
-
-
-# ----------------------------------------------------------------------------
-# Constants
-# ----------------------------------------------------------------------------
-
-IMAGE_WIDTH: int = 1280
-IMAGE_HEIGHT: int = 800
-IMAGE_BACKGROUND_COLOR: Tuple[int, int, int] = (255, 255, 255)
 
 
 # ----------------------------------------------------------------------------
@@ -71,7 +64,9 @@ def write_image(image_base64: str, filepath: pathlib.Path):
         f.write(base64.b64decode(image_base64))
 
 
-def convert_image(png_image: str, jpeg_image_quality: int = 70) -> str:
+def convert_image(
+    png_image: str, jpeg_image_quality: int = IMAGE_QUALITY_JPEG
+) -> str:
     """
     Convert an image from PNG to JPEG, encoded in Base64.
 

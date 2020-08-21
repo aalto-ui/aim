@@ -48,7 +48,7 @@ References:
 
 
 Change log:
-    v2.0 (2020-08-10)
+    v2.0 (2020-08-21)
       * Revised implementation
 
     v1.0 (2017-05-29)
@@ -65,6 +65,7 @@ from typing import Any, List, Optional
 
 # First-party modules
 import aim.core.utils as aim_utils
+from aim.core.constants import GUI_TYPE_DESKTOP, IMAGE_QUALITY_JPEG
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
@@ -72,7 +73,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak"
-__date__ = "2020-08-10"
+__date__ = "2020-08-21"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -87,13 +88,10 @@ class Metric2(AIMMetricInterface):
     Metric 2: JPEG file size.
     """
 
-    # Constants
-    IMAGE_QUALITY: int = 70  # see page 156 in [2]
-
     # Public methods
-    @classmethod
+    @staticmethod
     def execute_metric(
-        cls, gui_image: str, gui_type: int = 0
+        gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
     ) -> Optional[List[Any]]:
         """
         Execute the metric.
@@ -110,7 +108,7 @@ class Metric2(AIMMetricInterface):
         """
         # Convert GUI image from PNG to JPEG, encoded in Base64
         jpeg_gui_image: str = aim_utils.convert_image(
-            gui_image, jpeg_image_quality=cls.IMAGE_QUALITY
+            gui_image, jpeg_image_quality=IMAGE_QUALITY_JPEG
         )
 
         # Calculate JPEG file size in bytes according to:

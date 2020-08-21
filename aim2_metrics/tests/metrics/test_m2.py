@@ -11,7 +11,6 @@ Tests for the 'JPEG file size' metric (m2).
 # ----------------------------------------------------------------------------
 
 # Standard library modules
-import os
 import pathlib
 from typing import Any, List, Optional
 
@@ -21,14 +20,14 @@ import pytest
 # First-party modules
 import aim.core.utils as aim_utils
 from aim.metrics.m2_jpeg_file_size import Metric2
-from tests.core.constants import DATA_TEMP_DIR, DATA_TESTS_DIR
+from tests.core.constants import DATA_TESTS_DIR
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-10"
+__date__ = "2020-08-21"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -38,65 +37,33 @@ __version__ = "1.0"
 # ----------------------------------------------------------------------------
 
 
-@pytest.mark.usefixtures("clean_up")
-class TestM2:
+@pytest.mark.parametrize(
+    ["input_value", "expected_result"],
+    [
+        ("aalto.fi_website.png", [97782]),
+        ("myhelsinki.fi_website.png", [133876]),
+        ("wikipedia.org_website.png", [168254]),
+    ],
+)
+def test_jpeg_file_size(input_value: str, expected_result: List[Any]) -> None:
     """
-    A test class for the 'JPEG file size' metric (m2).
+    Test JPEG file size.
+
+    Args:
+        input_value: GUI image file name
+        expected_result: Expected result (list of measures)
     """
+    # Build GUI image file path
+    gui_image_filepath: pathlib.Path = pathlib.Path(
+        DATA_TESTS_DIR
+    ) / input_value
 
-    # Private methods
-    def _test(self, gui_image_filepaths: List[pathlib.Path]) -> None:
-        """
-        A helper method for executing and testing the metric.
+    # Read GUI image (PNG)
+    gui_image_png_base64: str = aim_utils.read_image(gui_image_filepath)
 
-        Args:
-            gui_image_filepaths: GUI image file paths
-        """
-        # Iterate over GUI image filepaths
-        for gui_image_filepath in gui_image_filepaths:
-            # Read GUI image (PNG)
-            gui_image_png_base64: str = aim_utils.read_image(
-                gui_image_filepath
-            )
+    # Execute metric
+    result: Optional[List[Any]] = Metric2.execute_metric(gui_image_png_base64)
 
-            # Convert GUI image from PNG to JPEG
-            gui_image_jpeg_base64: str = aim_utils.convert_image(
-                gui_image_png_base64, jpeg_image_quality=Metric2.IMAGE_QUALITY
-            )
-
-            # Create filepath for JPEG GUI image
-            gui_image_jpeg_filepath: pathlib.Path = pathlib.Path(
-                DATA_TEMP_DIR
-            ) / (gui_image_filepath.stem + ".jpg")
-
-            # Write GUI image (JPEG)
-            aim_utils.write_image(
-                gui_image_jpeg_base64, gui_image_jpeg_filepath,
-            )
-
-            # Execute metric
-            results: Optional[List[Any]] = Metric2.execute_metric(
-                gui_image_png_base64
-            )
-
-            # Test results
-            if results is not None:
-                assert results[0] == os.stat(gui_image_jpeg_filepath).st_size
-
-    # Public methods
-    def test_jpeg_file_sizes(self) -> None:
-        """
-        Test JPEG file sizes.
-        """
-        gui_image_filenames: List[str] = [
-            "aalto.fi_website.png",
-            "myhelsinki.fi_website.png",
-            "wikipedia.org_website.png",
-        ]
-        gui_image_filepaths: List[pathlib.Path] = [
-            pathlib.Path(DATA_TESTS_DIR) / gui_image_name
-            for gui_image_name in gui_image_filenames
-        ]
-
-        # Run tests
-        self._test(gui_image_filepaths)
+    # Test result
+    if result is not None:
+        assert result[0] == expected_result[0]

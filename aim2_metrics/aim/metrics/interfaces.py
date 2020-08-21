@@ -14,12 +14,15 @@ AIM metric interfaces.
 import abc
 from typing import Any, List, Optional
 
+# First-party modules
+from aim.core.constants import GUI_TYPE_DESKTOP
+
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-10"
+__date__ = "2020-08-21"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -42,7 +45,7 @@ class AIMMetricInterface(metaclass=abc.ABCMeta):
     # Abstract methods
     @abc.abstractmethod
     def execute_metric(
-        self, gui_image: str, gui_type: int = 0
+        self, gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
     ) -> Optional[List[Any]]:
         """
         Execute the metric.
