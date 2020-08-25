@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Distinct RGB values' metric (m3).
+Tests for the 'Contour density' metric (m4).
 """
 
 
@@ -19,7 +19,7 @@ import pytest
 
 # First-party modules
 import aim.core.utils as aim_utils
-from aim.metrics.m3_distinct_rgb_values import Metric3
+from aim.metrics.m4_contour_density import Metric4
 from tests.core.constants import DATA_TESTS_DIR
 
 # ----------------------------------------------------------------------------
@@ -40,32 +40,32 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_result"],
     [
-        ("transparent.png", [1]),  # transparent -> white pixels
-        ("white.png", [1]),
-        ("black.png", [1]),
-        ("red.png", [1]),
-        ("green.png", [1]),
-        ("blue.png", [1]),
-        ("white_50_transparent_50.png", [1]),  # transparent -> white pixels
-        ("black_50_transparent_50.png", [2]),  # transparent -> white pixels
-        ("white_50_black_50.png", [2]),
-        ("red_50_green_50.png", [2]),
-        ("green_50_blue_50.png", [2]),
-        ("blue_50_red_50.png", [2]),
-        ("red_33_green_33_blue_34.png", [3]),
-        ("white_25_black_25_gray_25_white_25.png", [3]),
-        ("4_high-contrast_shades_of_gray.png", [4]),
-        ("4_low-contrast_shades_of_gray.png", [4]),
-        ("red_with_4_yellow_pixels.png", [1]),  # color reduction
-        ("red_with_5_yellow_pixels.png", [1]),  # color reduction
-        ("red_with_6_yellow_pixels.png", [2]),  # color reduction
+        ("aalto.fi_website.png", [0.036322265625]),
+        ("transparent.png", [0.0]),  # transparent -> white pixels
+        ("white.png", [0.0]),
+        ("black.png", [0.0]),
+        ("gray.png", [0.0]),
+        ("red.png", [0.0]),
+        ("green.png", [0.0]),
+        ("blue.png", [0.0]),
+        ("white_50_transparent_50.png", [0.0],),  # transparent -> white pixels
+        (
+            "black_50_transparent_50.png",
+            [0.00078125],
+        ),  # transparent -> white pixels
+        ("white_50_black_50.png", [0.00078125]),
+        ("red_50_green_50.png", [0.00078125]),
+        ("green_50_blue_50.png", [0.00078125]),
+        ("blue_50_red_50.png", [0.00078125]),
+        ("4_high-contrast_shades_of_gray.png", [0.00234375]),
+        ("4_low-contrast_shades_of_gray.png", [0.0]),
     ],
 )
-def test_distinct_rgb_values_desktop(
+def test_contour_density_desktop(
     input_value: str, expected_result: List[Any]
 ) -> None:
     """
-    Test distinct RGB values (desktop GUIs).
+    Test contour density (desktop GUIs).
 
     Args:
         input_value: GUI image file name
@@ -80,7 +80,7 @@ def test_distinct_rgb_values_desktop(
     gui_image_png_base64: str = aim_utils.read_image(gui_image_filepath)
 
     # Execute metric
-    result: Optional[List[Any]] = Metric3.execute_metric(gui_image_png_base64)
+    result: Optional[List[Any]] = Metric4.execute_metric(gui_image_png_base64)
 
     # Test result
     if result is not None:

@@ -27,7 +27,7 @@ from tests.core.constants import DATA_TESTS_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-21"
+__date__ = "2020-08-25"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -45,9 +45,11 @@ __version__ = "1.0"
         ("wikipedia.org_website.png", [168254]),
     ],
 )
-def test_jpeg_file_size(input_value: str, expected_result: List[Any]) -> None:
+def test_jpeg_file_size_desktop(
+    input_value: str, expected_result: List[Any]
+) -> None:
     """
-    Test JPEG file size.
+    Test JPEG file size (desktop GUIs).
 
     Args:
         input_value: GUI image file name
