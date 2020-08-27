@@ -16,6 +16,7 @@ Main technologies and Python packages used in this subproject.
 - **Mypy.** Static type checker for Python. http://mypy-lang.org/
 - **Flake8.** Python tool for style guide enforcement. https://flake8.pycqa.org/en/latest/
 - **pytest.** Python testing framework. https://pytest.org/
+- **pre-commit.** Package manager for pre-commit hooks. https://pre-commit.com/ 
 
 
 ## Installation
@@ -39,6 +40,12 @@ pipenv shell
 Deactivate the virtual environment (if needed):
 ```
 exit
+```
+
+Install pre-commit into your git hooks:
+```
+pre-commit install --install-hooks --overwrite
+
 ```
 
 
@@ -69,49 +76,55 @@ Configure pytest, if needed:
 nano pytest.ini
 ```
 
+Configure pre-commit, if needed:
+```
+nano .pre-commit-config.yaml
+```
 
-## Sort Imports
+
+## Utilities
 
 Sort imports:
 ```
 isort .
 ```
 
-
-## Code Formatting
-
 Format the code:
 ```
 black .
 ```
 
-
-## Type Checking
-
 Type check the code:
 ```
-mypy
+mypy .
 ``` 
-
-
-## Code Linting
 
 Lint the code:
 ```
-flake8
+flake8 .
+```
+
+Run pre-commit hooks against currently staged files:
+```
+pre-commit run
+```
+
+Run an individual pre-commit hook against currently staged files:
+```
+pre-commit run <hook_id>
+```
+
+Run pre-commit hooks against all files:
+```
+pre-commit run --all-files
 ```
 
 
 ## Tests
 
-Run all tests:
+Run the tests:
 ```
-pytest
-```
-
-Run a subset of tests:
-```
-pytest [PATH]
+pytest .
 ```
 
 

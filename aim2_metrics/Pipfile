@@ -15,6 +15,7 @@ isort = "*"
 pillow = "*"
 numpy = "*"
 opencv-python = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.7"

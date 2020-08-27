@@ -27,7 +27,7 @@ from tests.core.constants import DATA_TESTS_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-25"
+__date__ = "2020-08-27"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -48,7 +48,10 @@ __version__ = "1.0"
         ("red.png", [0.0]),
         ("green.png", [0.0]),
         ("blue.png", [0.0]),
-        ("white_50_transparent_50.png", [0.0],),  # transparent -> white pixels
+        (
+            "white_50_transparent_50.png",
+            [0.0],
+        ),  # transparent -> white pixels
         (
             "black_50_transparent_50.png",
             [0.00078125],
@@ -72,9 +75,9 @@ def test_contour_density_desktop(
         expected_result: Expected result (list of measures)
     """
     # Build GUI image file path
-    gui_image_filepath: pathlib.Path = pathlib.Path(
-        DATA_TESTS_DIR
-    ) / input_value
+    gui_image_filepath: pathlib.Path = (
+        pathlib.Path(DATA_TESTS_DIR) / input_value
+    )
 
     # Read GUI image (PNG)
     gui_image_png_base64: str = aim_utils.read_image(gui_image_filepath)

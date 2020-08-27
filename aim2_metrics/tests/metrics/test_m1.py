@@ -27,7 +27,7 @@ from tests.core.constants import DATA_TESTS_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-25"
+__date__ = "2020-08-27"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -56,9 +56,9 @@ def test_png_file_size_desktop(
         expected_result: Expected result (list of measures)
     """
     # Build GUI image file path
-    gui_image_filepath: pathlib.Path = pathlib.Path(
-        DATA_TESTS_DIR
-    ) / input_value
+    gui_image_filepath: pathlib.Path = (
+        pathlib.Path(DATA_TESTS_DIR) / input_value
+    )
 
     # Read GUI image (PNG)
     gui_image_png_base64: str = aim_utils.read_image(gui_image_filepath)
