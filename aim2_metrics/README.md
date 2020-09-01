@@ -29,7 +29,6 @@ git clone git@github.com:aalto-ui/aim.git && cd aim/aim2_metrics
 Install the dependencies with development packages:
 ```
 pipenv install --dev
-
 ```
 
 Activate the virtual environment:
@@ -45,7 +44,11 @@ exit
 Install pre-commit into your git hooks:
 ```
 pre-commit install --install-hooks --overwrite
+```
 
+Uninstall pre-commit from your git hooks (if needed):
+```
+pre-commit uninstall
 ```
 
 

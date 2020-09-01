@@ -10,12 +10,12 @@ flake8 = "*"
 devtools = "*"
 black = "*"
 isort = "*"
+pre-commit = "*"
 
 [packages]
 pillow = "*"
 numpy = "*"
 opencv-python = "*"
-pre-commit = "*"
 
 [requires]
 python_version = "3.7"
