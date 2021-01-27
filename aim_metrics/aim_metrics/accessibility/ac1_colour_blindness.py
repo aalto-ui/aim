@@ -58,7 +58,6 @@
 # Bugs/Issues #
 ###############
 #
-#   Need to update the conversion matrixs (strength for deut and prot is 0.7 and trit is 1.0
 #   Can make it a nested loop instead of doing three times the same things in the loop
 #
 import StringIO
@@ -78,15 +77,15 @@ def execute(b64):
 
     # Transformation matrix for Deuteranope (a form of red/green color deficit)
     deut_matrix = numpy.array(
-        [[0.457771, 0.731899, -0.189670],
-         [0.226409, 0.731012, 0.042579],
-         [-0.011595, 0.034333, 0.977261]]
+        [[0.367322, 0.860646, -0.227968],
+        [0.280085, 0.672501,  0.047413],
+        [-0.011820, 0.042940,  0.968881]]
     )
     # Transformation matrix for Protanope (another form of red/green color deficit)
     prot_matrix = numpy.array(
-        [[0.319627, 0.849633, -0.169261],
-         [0.106241, 0.815969, 0.077790],
-         [-0.007025, -0.028051, 1.035076]]
+        [[0.152286, 1.052583, -0.204868],
+        [0.114503, 0.786281, 0.099216],
+        [-0.003882, -0.048116, 1.051998]]
     )
     # Transformation matrix for Tritanope (a blue/yellow deficit - very rare)
     trit_matrix = numpy.array(
