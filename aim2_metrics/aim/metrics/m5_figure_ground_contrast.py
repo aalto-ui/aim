@@ -52,7 +52,7 @@ References:
 
 
 Change log:
-    v2.0 (2020-10-24)
+    v2.0 (2021-01-27)
       * Revised implementation
 
     v1.0 (2017-05-29)
@@ -89,7 +89,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2020-10-24"
+__date__ = "2021-01-27"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -99,9 +99,9 @@ __version__ = "2.0"
 # ----------------------------------------------------------------------------
 
 
-class Metric5(AIMMetricInterface):
+class Metric(AIMMetricInterface):
     """
-    Metric 5: Figure-ground contrast.
+    Metric: Figure-ground contrast.
     """
 
     # Public methods

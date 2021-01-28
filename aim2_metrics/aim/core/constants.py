@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-AIM constants.
+Constants.
 """
 
 
@@ -18,7 +18,7 @@ from typing import Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-10-24"
+__date__ = "2021-01-27"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -45,3 +45,6 @@ GAUSSIAN_KERNEL_STANDARD_DEVIATION: int = 2
 
 CANNY_EDGE_DETECTION_PYTHON_MIN_THRESHOLD: int = 0
 CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD: int = 255
+
+EVALUATOR_INPUT_DIR: str = "data/inputs/alexa_top_50_global_sites/"
+EVALUATOR_OUTPUT_DIR: str = "data/outputs/"

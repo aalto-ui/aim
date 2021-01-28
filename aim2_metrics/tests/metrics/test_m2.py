@@ -19,7 +19,7 @@ import pytest
 
 # First-party modules
 import aim.core.utils as aim_utils
-from aim.metrics.m2_jpeg_file_size import Metric2
+from aim.metrics.m2_jpeg_file_size import Metric
 from tests.core.constants import DATA_TESTS_DIR
 
 # ----------------------------------------------------------------------------
@@ -27,7 +27,7 @@ from tests.core.constants import DATA_TESTS_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-27"
+__date__ = "2021-01-27"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -64,7 +64,7 @@ def test_jpeg_file_size_desktop(
     gui_image_png_base64: str = aim_utils.read_image(gui_image_filepath)
 
     # Execute metric
-    result: Optional[List[Any]] = Metric2.execute_metric(gui_image_png_base64)
+    result: Optional[List[Any]] = Metric.execute_metric(gui_image_png_base64)
 
     # Test result
     if result is not None:
