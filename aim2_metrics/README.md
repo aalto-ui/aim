@@ -86,7 +86,7 @@ nano .pre-commit-config.yaml
 
 Configure Loguru, if needed:
 ```
-nano configs/loguru.ini
+nano loguru.ini
 ```
 
 

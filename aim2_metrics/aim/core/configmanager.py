@@ -87,10 +87,10 @@ parser.add(
     help="path to configuration file",
     dest="configuration",
     type=str,
-    choices=["configs/loguru.ini"],
+    choices=["loguru.ini"],
     required=False,
     is_config_file=True,
-    default="configs/loguru.ini",
+    default="loguru.ini",
 )
 parser.add(
     "--loguru_level",
