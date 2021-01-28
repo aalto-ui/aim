@@ -18,7 +18,10 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 # Third-party modules
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import pandas as pd
+import seaborn as sns
 from loguru import logger
 
 # First-party modules
@@ -50,13 +53,21 @@ class GUIDesignsEvaluator:
         "m5_figure_ground_contrast",  # Figure-ground contrast
         "m6_contour_congestion",  # Contour congestion
     ]
+    _METRIC_RESULTS = {
+        "m1_result_1": {"name": "PNG file size in bytes"},
+        "m2_result_1": {"name": "JPEG file size in bytes"},
+        "m3_result_1": {"name": "Number of distinct RGB values"},
+        "m4_result_1": {"name": "Contour density"},
+        "m5_result_1": {"name": "Figure-ground contrast"},
+        "m6_result_1": {"name": "Contour congestion"},
+    }
 
     # Public constants
     NAME: str = "GUI Designs Evaluator"
     VERSION: str = "1.0"
 
     # Initializer
-    def __init__(self, input_dir: str, output_dir: str):
+    def __init__(self, input_dir: str, output_dir: str, plot_results: bool):
         self.input_dir: Path = Path(input_dir)
         self.input_csv_file: Optional[Path] = None
         self.input_gui_design_files: List[Path] = []
@@ -65,6 +76,7 @@ class GUIDesignsEvaluator:
         self.output_csv_file: Path = self.output_dir / "{}.csv".format(
             self.output_dir.name
         )
+        self.plot_results: bool = plot_results
 
     # Private methods
     def _set_input_csv_file(self):
@@ -196,9 +208,99 @@ class GUIDesignsEvaluator:
         # Save results
         results_df.to_csv(self.output_csv_file, index=False)
 
+    def _reformat_large_tick_values(self, tick_val, pos):
+        """
+        Turns large tick values (in the billions, millions and thousands) such as 4500 into 4.5K and also appropriately turns 4000 into 4K (no zero after the decimal).
+
+        Source: https://dfrieds.com/data-visualizations/how-format-large-tick-values.html
+        """
+        if tick_val >= 1000000000:
+            val = round(tick_val / 1000000000, 1)
+            new_tick_format = "{:}B".format(val)
+        elif tick_val >= 1000000:
+            val = round(tick_val / 1000000, 1)
+            new_tick_format = "{:}M".format(val)
+        elif tick_val >= 1000:
+            val = round(tick_val / 1000, 1)
+            new_tick_format = "{:}K".format(val)
+        else:
+            new_tick_format = round(tick_val, 4)
+
+        # Make new_tick_format into a string value
+        new_tick_format = str(new_tick_format)
+
+        # Code below will keep 4.5M as is but change values such as 4.0M to 4M since that zero after the decimal isn't needed
+        index_of_decimal = new_tick_format.find(".")
+
+        if index_of_decimal != -1 and (tick_val >= 1000 or tick_val == 0):
+            value_after_decimal = new_tick_format[index_of_decimal + 1]
+            if value_after_decimal == "0":
+                # Remove the 0 after the decimal point since it's not needed
+                new_tick_format = (
+                    new_tick_format[0:index_of_decimal]
+                    + new_tick_format[index_of_decimal + 2 :]
+                )
+
+        return new_tick_format
+
+    def _plot_results(self):
+        # Plot results
+        if self.plot_results:
+            # Get output CSV file (evaluation results)
+            evaluation_results_df = pd.read_csv(
+                self.output_csv_file,
+                header=0,
+                dtype={"filename": "str"},
+                parse_dates=[1],
+            )
+
+            # Plot metric evaluation results
+            width: int = 700  # in pixels
+            height: int = 500  # in pixels
+            dpi: int = 72
+            for key, value in self._METRIC_RESULTS.items():
+                # Create a new figure and configure it
+                sns.set(rc={"figure.figsize": (width / dpi, height / dpi)})
+                sns.set_style("ticks")
+                sns.set_context("paper", font_scale=1.5)
+                plt.figure()
+
+                # Plot data on a histogram and configure it
+                ax = sns.histplot(
+                    list(evaluation_results_df[key]),
+                    kde=False,
+                    color="#7553A0",
+                    bins=30,
+                )
+                ax.set_xlabel(
+                    value["name"],
+                    fontstyle="normal",
+                    fontweight="normal",
+                    labelpad=10,
+                )
+                ax.set_ylabel(
+                    "Frequency",
+                    fontstyle="normal",
+                    fontweight="normal",
+                    labelpad=10,
+                )
+                ax.xaxis.grid(False)
+                ax.yaxis.grid(False)
+                ax.xaxis.set_major_formatter(
+                    ticker.FuncFormatter(self._reformat_large_tick_values)
+                )
+                sns.despine(ax=ax, left=False, bottom=False)
+
+                # Save plot
+                output_plot_file: Path = (
+                    self.output_dir / "{}_evaluator.png".format(key)
+                )
+                plt.savefig(output_plot_file, dpi=dpi, transparent=False)
+
     # Public methods
     def evaluate(self):
         self._set_input_csv_file()
         self._set_input_gui_design_files()
         self._set_results()
         self._execute_metrics()
+        self._plot_results()

@@ -5,9 +5,9 @@
 GUI designs evaluator utility application.
 
 
-Usage: gui_designs_evaluator.py [-h] [-c <path>] [-v] -i <path> -o <path>
+Usage: gui_designs_evaluator.py [-h] [-c <path>] [-v] [-i <path>] [-o <path>] [-p]
 
-Example usage: python gui_designs_evaluator.py -i data/alexa_top_50_global_sites/ -o data/outputs/
+Example usage: python gui_designs_evaluator.py -i data/alexa_top_50_global_sites/ -o data/outputs/ -p
 """
 
 
@@ -68,6 +68,14 @@ def init():
         required=False,
         default=constants.EVALUATOR_OUTPUT_DIR,
     )
+    configmanager.parser.add(
+        "-p",
+        help="whether to plot evaluation results",
+        dest="plot",
+        required=False,
+        action="store_true",
+        default=False,
+    )
     configmanager.options = configmanager.parser.parse_known_args()[
         0
     ]  # Get known options, i.e., Namespace from the tuple
@@ -91,6 +99,7 @@ def main():
         evaluator = GUIDesignsEvaluator(
             input_dir=configmanager.options.input,
             output_dir=configmanager.options.output,
+            plot_results=configmanager.options.plot,
         )
         evaluator.evaluate()
         logger.info(

@@ -129,7 +129,7 @@ pre-commit run --all-files
 
 Evaluate GUI designs:
 ```
-python gui_designs_evaluator.py -i data/alexa_top_50_global_sites/ -o data/outputs/
+python gui_designs_evaluator.py -i data/alexa_top_50_global_sites/ -o data/outputs/ -p
 ```
 
 
