@@ -84,6 +84,11 @@ Configure pre-commit, if needed:
 nano .pre-commit-config.yaml
 ```
 
+Configure Loguru, if needed:
+```
+nano configs/loguru.ini
+```
+
 
 ## Utilities
 
@@ -120,6 +125,11 @@ pre-commit run <hook_id>
 Run pre-commit hooks against all files:
 ```
 pre-commit run --all-files
+```
+
+Evaluate GUI designs:
+```
+python gui_designs_evaluator.py -i data/alexa_top_50_global_sites/ -o data/outputs/
 ```
 
 
