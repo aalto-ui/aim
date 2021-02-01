@@ -16,6 +16,11 @@ pre-commit = "*"
 pillow = "*"
 numpy = "*"
 opencv-python = "*"
+arrow = "*"
+loguru = "*"
+configargparse = "*"
+matplotlib = "*"
+seaborn = "*"
 
 [requires]
 python_version = "3.7"
