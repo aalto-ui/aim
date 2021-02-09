@@ -81,7 +81,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak"
-__date__ = "2021-01-27"
+__date__ = "2021-02-09"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -205,7 +205,7 @@ class Metric(AIMMetricInterface):
         """
         # Create empty image data for contour pixels to be added
         img_contours_nparray: np.ndarray = np.zeros(
-            (img_height, img_width), dtype=np.int
+            (img_height, img_width), dtype=int
         )
 
         # Iterate over image width pixels (X-axis)
@@ -381,7 +381,7 @@ class Metric(AIMMetricInterface):
         """
         # Create empty image data for congested contour pixels to be added
         img_congested_contours_nparray: np.ndarray = np.zeros(
-            (img_height, img_width), dtype=np.int
+            (img_height, img_width), dtype=int
         )
 
         # Extract contour pixels

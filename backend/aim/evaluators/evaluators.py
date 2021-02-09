@@ -25,14 +25,14 @@ import seaborn as sns
 from loguru import logger
 
 # First-party modules
-from aim.core import utils
+from aim.core import image_utils
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-01-28"
+__date__ = "2021-02-09"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -133,7 +133,7 @@ class GUIDesignsEvaluator:
 
             # Read GUI design image (PNG)
             start_time: float = time.time()
-            gui_image_png_base64: str = utils.read_image(input_gui_design_file)
+            gui_image_png_base64: str = image_utils.read_image(input_gui_design_file)
             end_time: float = time.time()
             results_row["read_image_time"] = round(end_time - start_time, 4)
 

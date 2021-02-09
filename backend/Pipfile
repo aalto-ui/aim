@@ -21,6 +21,8 @@ loguru = "*"
 configargparse = "*"
 matplotlib = "*"
 seaborn = "*"
+tornado = "*"
+motor = "*"
 
 [requires]
 python_version = "3.7"

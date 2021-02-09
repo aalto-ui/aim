@@ -11,14 +11,14 @@ Constants.
 # ----------------------------------------------------------------------------
 
 # Standard library modules
-from typing import Tuple
+from typing import List, Tuple
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-01-27"
+__date__ = "2021-02-03"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -27,6 +27,7 @@ __version__ = "1.0"
 # Constants
 # ----------------------------------------------------------------------------
 
+# Metrics
 COLOR_REDUCTION_THRESHOLD_DESKTOP: int = 5
 COLOR_REDUCTION_THRESHOLD_MOBILE: int = 2
 
@@ -46,5 +47,11 @@ GAUSSIAN_KERNEL_STANDARD_DEVIATION: int = 2
 CANNY_EDGE_DETECTION_PYTHON_MIN_THRESHOLD: int = 0
 CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD: int = 255
 
+# Utility applications
 EVALUATOR_INPUT_DIR: str = "data/inputs/alexa_top_50_global_sites/"
 EVALUATOR_OUTPUT_DIR: str = "data/outputs/"
+
+# Main application
+ALLOWED_HOSTS: List[str] = ["localhost", "127.0.0.1", "interfacemetrics.aalto.fi"]
+
+SERVER_CONFIG_FILE: str = "server.conf"
