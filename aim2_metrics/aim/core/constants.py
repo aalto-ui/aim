@@ -11,14 +11,14 @@ Constants.
 # ----------------------------------------------------------------------------
 
 # Standard library modules
-from typing import List, Tuple
+from typing import Tuple
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-10"
+__date__ = "2021-02-11"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -49,5 +49,5 @@ CANNY_EDGE_DETECTION_PYTHON_MIN_THRESHOLD: int = 0
 CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD: int = 255
 
 # Utility applications
-EVALUATOR_INPUT_DIR: str = "data/inputs/alexa_top_50_global_sites/"
+EVALUATOR_INPUT_DIR: str = "data/inputs/ALEXA_TOP_50/"
 EVALUATOR_OUTPUT_DIR: str = "data/outputs/"

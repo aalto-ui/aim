@@ -188,7 +188,7 @@ nano loguru.ini
 
 Evaluate GUI designs:
 ```
-python gui_designs_evaluator.py -i data/inputs/alexa_top_50_global_sites/ -o data/outputs/ -p
+python gui_designs_evaluator.py -i data/inputs/ALEXA_TOP_50/ -o data/outputs/ -p
 ```
 
 
