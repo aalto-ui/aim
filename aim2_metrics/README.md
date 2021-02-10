@@ -7,12 +7,12 @@ AIM 2 Metrics is a subproject of Aalto Interface Metrics (AIM). The subproject c
 
 You need [Python 3.7](https://www.python.org/) (or later), [pip](https://pypi.org/project/pip/), and [git](https://git-scm.com/) to work on this subproject.
 
-In addition, it is highly recommended to install [virtualenv](https://virtualenv.pypa.io/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment. You can find more information on this below.
+In addition, it is highly recommended to install [virtualenv](https://pypi.org/project/virtualenv/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment. You can find more information on this below.
 
 
 ## Installation
 
-Clone the AIM git repository and head over to the [aim2_metrics](./aim2_metrics/) directory (this subproject):
+Clone the AIM git repository and head over to the [aim2_metrics](./) directory (this subproject):
 ```
 git clone https://github.com/aalto-ui/aim.git && cd aim/aim2_metrics
 ```
@@ -59,7 +59,7 @@ exit
 
 ## Tests
 
-This subproject uses [pytest](https://pytest.org/), a Python testing framework to run tests on source code, including metrics.
+This subproject uses [pytest](https://pypi.org/project/pytest/), a Python testing framework to run tests on source code, including metrics.
 
 ### Configuration
 
@@ -85,11 +85,11 @@ pytest [FILEPATH]
 
 This subproject supports the following utility tools to ease development. Their installation and use is optional, but highly recommended.
 
-- **isort.** Python utility to automatically sort imports. https://timothycrosley.github.io/isort/
-- **Black.** Python code formatter. https://github.com/psf/black
-- **Mypy.** Static type checker for Python. http://mypy-lang.org/
-- **Flake8.** Python tool for style guide enforcement. https://flake8.pycqa.org/en/latest/
-- **pre-commit.** Package manager for pre-commit hooks. https://pre-commit.com/ 
+- **isort.** Python utility to automatically sort imports. https://pypi.org/project/isort/
+- **Black.** Python code formatter. https://pypi.org/project/black/
+- **Mypy.** Static type checker for Python. https://pypi.org/project/mypy/
+- **Flake8.** Python tool for style guide enforcement. https://pypi.org/project/flake8/
+- **pre-commit.** Package manager for pre-commit hooks. https://pypi.org/project/pre-commit/
 
 ### Installation
 
@@ -179,7 +179,7 @@ We provide a utility application to evaluate GUI designs (web page screenshots) 
 
 ### Configuration
 
-Configure [Loguru](https://github.com/Delgan/loguru), if needed:
+Configure [Loguru](https://pypi.org/project/loguru/), if needed:
 ```
 nano loguru.ini
 ```
