@@ -1,58 +1,109 @@
 # AIM 2 Metrics
 
-A subproject for AIM 2 metrics. The metrics are Python 3 compatible, revised, and rigorously tested.
+AIM 2 Metrics is a subproject of Aalto Interface Metrics (AIM). The subproject contains old and new metrics that are compatible with Python 3 and have been rigorously tested. The metrics will be incorporated into the next major release of AIM (version 2), to be published in 2021.
 
 
-## Technologies
+## Requirements
 
-Main technologies and Python packages used in this subproject.
+You need [Python 3.7](https://www.python.org/) (or later), [pip](https://pypi.org/project/pip/), and [git](https://git-scm.com/) to work on this subproject.
 
-### Backend
-
-- **Python 3.7.** Programming language. https://www.python.org/
-- **Pipenv.** Packaging tool for Python. https://github.com/pypa/pipenv
-- **isort.** Python utility to automatically sort imports. https://timothycrosley.github.io/isort/
-- **Black.** Python code formatter. https://github.com/psf/black
-- **Mypy.** Static type checker for Python. http://mypy-lang.org/
-- **Flake8.** Python tool for style guide enforcement. https://flake8.pycqa.org/en/latest/
-- **pytest.** Python testing framework. https://pytest.org/
-- **pre-commit.** Package manager for pre-commit hooks. https://pre-commit.com/ 
+In addition, it is highly recommended to install [virtualenv](https://virtualenv.pypa.io/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment. You can find more information on this below.
 
 
 ## Installation
 
-Clone the git repository:
+Clone the AIM git repository and head over to the [aim2_metrics](./aim2_metrics/) directory (this subproject):
 ```
-git clone git@github.com:aalto-ui/aim.git && cd aim/aim2_metrics
+git clone https://github.com/aalto-ui/aim.git && cd aim/aim2_metrics
 ```
 
-Install the dependencies with development packages:
+### Working with `virtualenv`
+
+Create a new virtual environment:
 ```
-pipenv install --dev
+virtualenv venv
 ```
 
 Activate the virtual environment:
 ```
+source venv/bin/activate
+```
+
+Install all dependencies, including development packages:
+```
+pip install -r requirements.txt
+```
+
+To deactivate the virtual environment, run:
+```
+deactivate
+```
+
+### Working with `Pipenv`
+
+Install all dependencies, including development packages:
+```
+pipenv install --dev
+```
+
+Activate your Pipenv environment:
+```
 pipenv shell
 ```
 
-Deactivate the virtual environment (if needed):
+To deactivate your Pipenv environment, run:
 ```
 exit
 ```
+
+
+## Tests
+
+This subproject uses [pytest](https://pytest.org/), a Python testing framework to run tests on source code, including metrics.
+
+### Configuration
+
+Configure pytest, if needed:
+```
+nano pytest.ini
+```
+
+### Usage
+
+Run all tests:
+```
+pytest .
+```
+
+Run a specific test file:
+```
+pytest [FILEPATH]
+```
+
+
+## Utility Tools
+
+This subproject supports the following utility tools to ease development. Their installation and use is optional, but highly recommended.
+
+- **isort.** Python utility to automatically sort imports. https://timothycrosley.github.io/isort/
+- **Black.** Python code formatter. https://github.com/psf/black
+- **Mypy.** Static type checker for Python. http://mypy-lang.org/
+- **Flake8.** Python tool for style guide enforcement. https://flake8.pycqa.org/en/latest/
+- **pre-commit.** Package manager for pre-commit hooks. https://pre-commit.com/ 
+
+### Installation
 
 Install pre-commit into your git hooks:
 ```
 pre-commit install --install-hooks --overwrite
 ```
 
-Uninstall pre-commit from your git hooks (if needed):
+To uninstall pre-commit from your git hooks, run:
 ```
 pre-commit uninstall
 ```
 
-
-## Configuration
+### Configuration
 
 Configure isort, if needed:
 ```
@@ -74,70 +125,70 @@ Configure flake8, if needed:
 nano .flake8
 ```
 
-Configure pytest, if needed:
-```
-nano pytest.ini
-```
-
 Configure pre-commit, if needed:
 ```
 nano .pre-commit-config.yaml
 ```
 
-Configure Loguru, if needed:
-```
-nano loguru.ini
-```
-
-
-## Utilities
+### Usage
 
 Sort imports:
 ```
 isort .
 ```
 
-Format the code:
+Format code:
 ```
 black .
 ```
 
-Type check the code:
+Type check code:
 ```
 mypy .
 ``` 
 
-Lint the code:
+Lint code:
 ```
 flake8 .
 ```
 
-Run pre-commit hooks against currently staged files:
+Run all pre-commit hooks against currently staged files:
 ```
 pre-commit run
 ```
 
-Run an individual pre-commit hook against currently staged files:
+Run a single pre-commit hook against currently staged files:
 ```
-pre-commit run <hook_id>
+pre-commit run [HOOK ID]
 ```
 
-Run pre-commit hooks against all files:
+Run all pre-commit hooks against all files:
 ```
 pre-commit run --all-files
 ```
 
+Run all pre-commit hooks against specific files:
+```
+pre-commit run --files [FILES [FILES ...]]
+```
+
+
+## Evaluation
+
+We provide a utility application to evaluate GUI designs (web page screenshots) against all metrics. The application generates a CSV file with evaluation results as well as plot figures for each metric.
+
+### Configuration
+
+Configure [Loguru](https://github.com/Delgan/loguru), if needed:
+```
+nano loguru.ini
+```
+
+### Usage
+
 Evaluate GUI designs:
 ```
-python gui_designs_evaluator.py -i data/alexa_top_50_global_sites/ -o data/outputs/ -p
-```
-
-
-## Tests
-
-Run the tests:
-```
-pytest .
+python gui_designs_evaluator.py -i data/inputs/alexa_top_50_global_sites/ -o data/outputs/ -p
 ```
 
 

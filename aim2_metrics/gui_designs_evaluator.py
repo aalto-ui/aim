@@ -7,7 +7,7 @@ GUI designs evaluator utility application.
 
 Usage: gui_designs_evaluator.py [-h] [-c <path>] [-v] [-i <path>] [-o <path>] [-p]
 
-Example usage: python gui_designs_evaluator.py -i data/alexa_top_50_global_sites/ -o data/outputs/ -p
+Example usage: python gui_designs_evaluator.py -i data/inputs/alexa_top_50_global_sites/ -o data/outputs/ -p
 """
 
 
@@ -18,7 +18,6 @@ Example usage: python gui_designs_evaluator.py -i data/alexa_top_50_global_sites
 # Standard library modules
 
 # Third-party modules
-import configargparse
 from loguru import logger
 
 # First-party modules
@@ -30,7 +29,7 @@ from aim.evaluators.evaluators import GUIDesignsEvaluator
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-01-28"
+__date__ = "2021-02-10"
 __email__ = "markku.laine@aalto.fi"
 __title__ = "GUI Designs Evaluator"
 __version__ = "1.0"

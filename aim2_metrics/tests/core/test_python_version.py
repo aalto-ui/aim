@@ -18,7 +18,7 @@ import sys
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-21"
+__date__ = "2021-02-10"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -48,4 +48,4 @@ class TestPythonVersion:
         """
         Test Python minor version.
         """
-        assert sys.version_info.minor == self.PYTHON_VERSION_MINOR
+        assert sys.version_info.minor >= self.PYTHON_VERSION_MINOR
