@@ -21,12 +21,12 @@ git clone https://github.com/aalto-ui/aim.git && cd aim/aim2_metrics
 
 Create a new virtual environment:
 ```
-virtualenv venv
+virtualenv ../venv
 ```
 
 Activate the virtual environment:
 ```
-source venv/bin/activate
+source ../venv/bin/activate
 ```
 
 Install all dependencies, including development packages:
@@ -190,6 +190,11 @@ Evaluate GUI designs:
 ```
 python gui_designs_evaluator.py -i data/inputs/alexa_top_50_global_sites/ -o data/outputs/ -p
 ```
+
+
+## Troubleshooting
+
+1. **PROBLEM:** Running `mypy` fails and the following error message is shown "./venv/lib/python3.7/site-packages is in the PYTHONPATH. Please change directory so it is not." **SOLUTION:** Create the virtual environment outside of the current subproject directory. For example, `virtualenv ../venv` Mypy 0.810 will include the `--exclude` argument to address this issue (see [pull request #9992](https://github.com/python/mypy/pull/9992)).
 
 
 ## License
