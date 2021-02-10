@@ -2,3 +2,4 @@
 line-length = 79
 target-version = ['py37']
 verbose = false
+exclude = 'venv'
