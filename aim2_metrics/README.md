@@ -175,7 +175,7 @@ pre-commit run --files [FILES [FILES ...]]
 
 ## Evaluation
 
-We provide a utility application to evaluate GUI designs (web page screenshots) against all metrics. The application generates a CSV file with evaluation results as well as plot figures for each metric.
+We provide a utility application to evaluate GUI designs (web page screenshots) against metrics. The application generates a CSV file with evaluation results, and optionally plot figures for each metric.
 
 ### Configuration
 
@@ -184,7 +184,22 @@ Configure [Loguru](https://pypi.org/project/loguru/), if needed:
 nano loguru.ini
 ```
 
+Edit [evaluators.py](./aim/evaluators/evaluators.py) (see private constants) to control which metrics are used in GUI design evaluation:
+```
+nano aim/evaluators/evaluators.py
+```
+
+
+### Datasets
+
+[Alexa Top Global Sites](https://www.alexa.com/topsites) (ALEXA_50) currently serves as our default input dataset. Additional datasets can be downloaded, for instance, from https://doi.org/10.7910/DVN/XEYNYW.
+
 ### Usage
+
+Show the help message:
+```
+python gui_designs_evaluator.py -h
+```
 
 Evaluate GUI designs:
 ```
