@@ -18,7 +18,7 @@ from typing import Any, List, Optional
 import pytest
 
 # First-party modules
-import aim.core.utils as aim_utils
+from aim.core import image_utils
 from aim.metrics.m4_contour_density import Metric
 from tests.core.constants import DATA_TESTS_DIR
 
@@ -27,7 +27,7 @@ from tests.core.constants import DATA_TESTS_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-01-27"
+__date__ = "2021-02-09"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -80,7 +80,7 @@ def test_contour_density_desktop(
     )
 
     # Read GUI image (PNG)
-    gui_image_png_base64: str = aim_utils.read_image(gui_image_filepath)
+    gui_image_png_base64: str = image_utils.read_image(gui_image_filepath)
 
     # Execute metric
     result: Optional[List[Any]] = Metric.execute_metric(gui_image_png_base64)

@@ -41,7 +41,7 @@ References:
 
 
 Change log:
-    v2.0 (2021-01-27)
+    v2.0 (2021-02-10)
       * Revised implementation
 
     v1.0 (2017-05-29)
@@ -78,7 +78,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2021-01-27"
+__date__ = "2021-02-10"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -187,7 +187,7 @@ class Metric(AIMMetricInterface):
         )
 
         # Calculate contour density
-        img_shape: Tuple[int, int] = img_contours_nparray.shape
+        img_shape: Tuple[int, ...] = img_contours_nparray.shape
         n_all_pixels: int = img_shape[0] * img_shape[1]  # height * width
         n_contour_pixels: int = np.count_nonzero(img_contours_nparray)
         contour_density: float = n_contour_pixels / n_all_pixels

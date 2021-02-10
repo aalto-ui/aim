@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Constants for tests.
+Exceptions.
 """
 
 
@@ -22,7 +22,9 @@ __version__ = "1.0"
 
 
 # ----------------------------------------------------------------------------
-# Constants
+# Errors
 # ----------------------------------------------------------------------------
 
-DATA_TESTS_DIR: str = "data/tests/"
+
+class ValidationError(Exception):
+    pass
