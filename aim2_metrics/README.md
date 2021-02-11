@@ -62,6 +62,11 @@ Install all dependencies, including development packages:
 pip install -r requirements.txt
 ```
 
+Re-activate the virtual environment to update paths (see [Stack Overflow](https://stackoverflow.com/questions/35045038/how-do-i-use-pytest-with-virtualenv) for details):
+```
+deactivate && source ../venv/bin/activate
+```
+
 To deactivate the virtual environment, run:
 ```
 deactivate
