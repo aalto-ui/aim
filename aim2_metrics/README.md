@@ -109,7 +109,7 @@ pytest [FILEPATH]
 ```
 
 
-## Evaluation of GUI Designs <a name="evaluation"></a>
+## Evaluating GUI Designs <a name="evaluation"></a>
 
 We provide a utility application to evaluate GUI designs (web page screenshots) against metrics. The application generates a CSV file with evaluation results, and optionally plot figures for each metric.
 
@@ -150,7 +150,7 @@ python gui_designs_evaluator.py -i data/inputs/ALEXA_TOP_50/ -o data/outputs/ -p
 4. Implement a unit test within the file. Again, the easiest way to get started is to copy paste the code from an existing unit test file (e.g., `test_m1.py`) and modify it for your needs.
 5. Run the test file (see [Tests](#tests)).
 6. Edit [evaluators.py](./aim/evaluators/evaluators.py) (see private constants) to include your metric and its results as part of the GUI designs evaluation.
-7. Run the GUI designs evaluator application (see [Evaluation of GUI Designs](#evaluation)).
+7. Run the GUI designs evaluator application (see [Evaluating GUI Designs](#evaluation)).
 
 
 ## Utility Tools
