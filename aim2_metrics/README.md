@@ -85,7 +85,7 @@ exit
 ```
 
 
-## Tests
+## Tests <a name="tests"></a>
 
 This subproject uses [pytest](https://pypi.org/project/pytest/), a Python testing framework to run tests on source code, including metrics.
 
@@ -109,7 +109,7 @@ pytest [FILEPATH]
 ```
 
 
-## Evaluation of GUI Designs
+## Evaluation of GUI Designs <a name="evaluation"></a>
 
 We provide a utility application to evaluate GUI designs (web page screenshots) against metrics. The application generates a CSV file with evaluation results, and optionally plot figures for each metric.
 
@@ -142,9 +142,20 @@ python gui_designs_evaluator.py -i data/inputs/ALEXA_TOP_50/ -o data/outputs/ -p
 ```
 
 
+## Adding New Metrics
+
+1. For your metric, create a new Python file within the [AIM metrics](./aim/metrics/) directory. For example, `m7_your_metric_name.py`.
+2. Implement a metric class within the file. The class must implement the `AIMMetricInterface`, specified in the [interfaces.py](./aim/metrics/interfaces.py) file. The easiest way to get started is to copy paste the code from an existing metric file (e.g., `m1_png_file_size.py`) and modify it for your needs.
+3. For testing your metric, create a new Python file within the [unit tests](./tests/metrics/) directory. For example, `test_m7.py`.
+4. Implement a unit test within the file. Again, the easiest way to get started is to copy paste the code from an existing unit test file (e.g., `test_m1.py`) and modify it for your needs.
+5. Run the test file (see [Tests](#tests)).
+6. Edit [evaluators.py](./aim/evaluators/evaluators.py) (see private constants) to include your metric and its results as part of the GUI designs evaluation.
+7. Run the GUI designs evaluator application (see [Evaluation of GUI Designs](#evaluation)).
+
+
 ## Utility Tools
 
-This subproject supports the following utility tools to ease development. Their installation and use is optional, but highly recommended.
+This subproject supports the following utility tools to (i) ease development and (ii) improve code quality. Their installation and use is optional, but highly recommended.
 
 - **isort.** Python utility to automatically sort imports. https://pypi.org/project/isort/
 - **Black.** Python code formatter. https://pypi.org/project/black/
