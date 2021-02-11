@@ -12,7 +12,7 @@ Tests for the 'Contour density' metric (m4).
 
 # Standard library modules
 import pathlib
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Union
 
 # Third-party modules
 import pytest
@@ -27,7 +27,7 @@ from tests.core.constants import DATA_TESTS_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-09"
+__date__ = "2021-02-11"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -83,7 +83,9 @@ def test_contour_density_desktop(
     gui_image_png_base64: str = image_utils.read_image(gui_image_filepath)
 
     # Execute metric
-    result: Optional[List[Any]] = Metric.execute_metric(gui_image_png_base64)
+    result: Optional[List[Union[int, float, str]]] = Metric.execute_metric(
+        gui_image_png_base64
+    )
 
     # Test result
     if result is not None:
