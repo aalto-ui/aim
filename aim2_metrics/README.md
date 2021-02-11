@@ -3,6 +3,34 @@
 AIM 2 Metrics is a subproject of Aalto Interface Metrics (AIM). The subproject contains old and new metrics that are compatible with Python 3 and have been rigorously tested. The metrics will be incorporated into the next major release of AIM (version 2), to be published in 2021.
 
 
+## Structure
+
+The structure of this subproject is as follows:
+```
+.
+├── aim                          : AIM source codes
+│   ├── core                     : Core functions
+│   ├── evaluators               : GUI design evaluators
+│   ├── exceptions               : Custom exceptions and errors
+│   ├── metrics                  : AIM metrics
+│   │   ├── interfaces.py        : AIM metric interfaces
+│   │   ├── m1_png_file_size.py  : AIM metric 1
+│   │   └── ...
+├── data                         : Data directory
+│   ├── inputs                   : Input datasets
+│   ├── outputs                  : Evaluation results
+│   └── tests                    : Test files
+├── tests                        : Unit tests
+│   ├── core                     : Tests for core functions
+│   └── metrics                  : Tests for AIM metrics
+│   │   ├── test_m1.py           : Tests for AIM metric 1
+│   │   └── ...
+├── gui_designs_evaluator.py     : GUI design evaluator application
+├── ...
+.
+```
+
+
 ## Requirements
 
 You need [Python 3.7](https://www.python.org/) (or later), [pip](https://pypi.org/project/pip/), and [git](https://git-scm.com/) to work on this subproject.
@@ -78,6 +106,39 @@ pytest .
 Run a specific test file:
 ```
 pytest [FILEPATH]
+```
+
+
+## Evaluation of GUI Designs
+
+We provide a utility application to evaluate GUI designs (web page screenshots) against metrics. The application generates a CSV file with evaluation results, and optionally plot figures for each metric.
+
+### Configuration
+
+Configure [Loguru](https://pypi.org/project/loguru/), if needed:
+```
+nano loguru.ini
+```
+
+Edit [evaluators.py](./aim/evaluators/evaluators.py) (see private constants) to control which metrics are used in GUI design evaluation:
+```
+nano aim/evaluators/evaluators.py
+```
+
+### Datasets
+
+[Alexa Top Global Sites](https://www.alexa.com/topsites) (ALEXA_50) currently serves as our default input dataset. Additional datasets can be downloaded, for instance, from https://doi.org/10.7910/DVN/XEYNYW.
+
+### Usage
+
+Show the help message:
+```
+python gui_designs_evaluator.py -h
+```
+
+Evaluate GUI designs:
+```
+python gui_designs_evaluator.py -i data/inputs/ALEXA_TOP_50/ -o data/outputs/ -p
 ```
 
 
@@ -170,40 +231,6 @@ pre-commit run --all-files
 Run all pre-commit hooks against specific files:
 ```
 pre-commit run --files [FILES [FILES ...]]
-```
-
-
-## Evaluation
-
-We provide a utility application to evaluate GUI designs (web page screenshots) against metrics. The application generates a CSV file with evaluation results, and optionally plot figures for each metric.
-
-### Configuration
-
-Configure [Loguru](https://pypi.org/project/loguru/), if needed:
-```
-nano loguru.ini
-```
-
-Edit [evaluators.py](./aim/evaluators/evaluators.py) (see private constants) to control which metrics are used in GUI design evaluation:
-```
-nano aim/evaluators/evaluators.py
-```
-
-
-### Datasets
-
-[Alexa Top Global Sites](https://www.alexa.com/topsites) (ALEXA_50) currently serves as our default input dataset. Additional datasets can be downloaded, for instance, from https://doi.org/10.7910/DVN/XEYNYW.
-
-### Usage
-
-Show the help message:
-```
-python gui_designs_evaluator.py -h
-```
-
-Evaluate GUI designs:
-```
-python gui_designs_evaluator.py -i data/inputs/ALEXA_TOP_50/ -o data/outputs/ -p
 ```
 
 
