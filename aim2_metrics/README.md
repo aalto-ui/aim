@@ -145,9 +145,9 @@ python gui_designs_evaluator.py -i data/inputs/ALEXA_TOP_50/ -o data/outputs/ -p
 ## Adding New Metrics
 
 1. For your metric, create a new Python file within the [AIM metrics](./aim/metrics/) directory. For example, `m7_your_metric_name.py`.
-2. Implement a metric class within the file. The class must implement the `AIMMetricInterface`, specified in the [interfaces.py](./aim/metrics/interfaces.py) file. The easiest way to get started is to copy paste the code from an existing metric file (e.g., `m1_png_file_size.py`) and modify it for your needs.
+2. Implement a metric class within the file. The class must implement the `AIMMetricInterface`, specified in the [interfaces.py](./aim/metrics/interfaces.py) file. The easiest way to get started is to copy paste the code from an existing metric file (e.g., `m1_png_file_size.py`) and modify it for your needs. **Note:** Remember to include extensive documentation to your metric.
 3. For testing your metric, create a new Python file within the [unit tests](./tests/metrics/) directory. For example, `test_m7.py`.
-4. Implement a unit test within the file. Again, the easiest way to get started is to copy paste the code from an existing unit test file (e.g., `test_m1.py`) and modify it for your needs.
+4. Implement a unit test within the file. Again, the easiest way to get started is to copy paste the code from an existing unit test file (e.g., `test_m1.py`) and modify it for your needs. **Note:** You might need to include metric-specific test files within the [test files](./data/tests/) directory.
 5. Run the test file (see [Tests](#tests)).
 6. Edit [evaluators.py](./aim/evaluators/evaluators.py) (see private constants) to include your metric and its results as part of the GUI designs evaluation.
 7. Run the GUI designs evaluator application (see [Evaluating GUI Designs](#evaluation)).
