@@ -17,16 +17,23 @@ from io import BytesIO
 
 # Third-party modules
 from PIL import Image
+from resizeimage import resizeimage
 
 # First-party modules
-from aim.core.constants import IMAGE_QUALITY_JPEG
+from aim.core.constants import (
+    IMAGE_HEIGHT_DESKTOP,
+    IMAGE_QUALITY_JPEG,
+    IMAGE_QUALITY_PNG,
+    IMAGE_WIDTH_DESKTOP,
+)
+from aim.exceptions.exceptions import ValidationError
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-09"
+__date__ = "2021-02-10"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -52,7 +59,7 @@ def read_image(filepath: pathlib.Path) -> str:
     return image_base64
 
 
-def write_image(image_base64: str, filepath: pathlib.Path):
+def write_image(image_base64: str, filepath: pathlib.Path) -> None:
     """
     Write an image to a file.
 
@@ -65,7 +72,7 @@ def write_image(image_base64: str, filepath: pathlib.Path):
 
 
 def convert_image(
-    png_image: str, jpeg_image_quality: int = IMAGE_QUALITY_JPEG
+    png_image_base64: str, jpeg_image_quality: int = IMAGE_QUALITY_JPEG
 ) -> str:
     """
     Convert an image from PNG to JPEG, encoded in Base64.
@@ -74,7 +81,7 @@ def convert_image(
     the output JPEG image.
 
     Args:
-        png_image: PNG image encoded in Base64
+        png_image_base64: PNG image encoded in Base64
 
     Kwargs:
         jpeg_image_quality: JPEG image quality (defaults to 70)
@@ -83,7 +90,7 @@ def convert_image(
         JPEG image encoded in Base64
     """
     img_rgb: Image.Image = Image.open(
-        BytesIO(base64.b64decode(png_image))
+        BytesIO(base64.b64decode(png_image_base64))
     ).convert("RGB")
     buffered: BytesIO = BytesIO()
     img_rgb.save(buffered, format="JPEG", quality=jpeg_image_quality)
@@ -92,3 +99,60 @@ def convert_image(
     )
 
     return jpeg_image_base64
+
+
+def crop_image(
+    image_base64: str, png_image_quality: int = IMAGE_QUALITY_PNG
+) -> str:
+    """
+    Crop an image, encoded in Base64.
+
+    Args:
+        image_base64: Image encoded in Base64
+
+    Kwargs:
+        png_image_quality: PNG image quality (defaults to 6)
+
+    Returns:
+        PNG image (possibly cropped) encoded in Base64
+    """
+    img: Image.Image = Image.open(BytesIO(base64.b64decode(image_base64)))
+    img_width: int
+    img_height: int
+    img_width, img_height = img.size
+    cropped_image_base64: str
+
+    # Image is too small
+    if img_width < IMAGE_WIDTH_DESKTOP or img_height < IMAGE_HEIGHT_DESKTOP:
+        raise ValidationError(
+            "Image is too small (min {} x {} pixels): {} x {} pixels".format(
+                IMAGE_WIDTH_DESKTOP,
+                IMAGE_HEIGHT_DESKTOP,
+                img_width,
+                img_height,
+            )
+        )
+    # Image is too big
+    elif img_width > IMAGE_WIDTH_DESKTOP or img_height > IMAGE_HEIGHT_DESKTOP:
+        # Image is too wide
+        if (img_width / img_height) > (
+            IMAGE_WIDTH_DESKTOP / IMAGE_HEIGHT_DESKTOP
+        ):
+            img = resizeimage.resize_height(img, IMAGE_HEIGHT_DESKTOP)
+        # Image is too high (and wide)
+        else:
+            img = resizeimage.resize_width(img, IMAGE_WIDTH_DESKTOP)
+
+        img = img.crop((0, 0, IMAGE_WIDTH_DESKTOP, IMAGE_HEIGHT_DESKTOP))
+        buffered = BytesIO()
+        img.save(
+            buffered, format="PNG", compress_level=png_image_quality
+        )  # [0, 9], where 0 = no compression and 9 = best compression, defaults to 6
+        cropped_image_base64 = base64.b64encode(buffered.getvalue()).decode(
+            "utf-8"
+        )
+    # Image dimensions are correct (use the original image)
+    else:
+        cropped_image_base64 = image_base64
+
+    return cropped_image_base64
