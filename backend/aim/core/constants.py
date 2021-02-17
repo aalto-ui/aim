@@ -53,5 +53,9 @@ EVALUATOR_INPUT_DIR: str = "data/inputs/ALEXA_TOP_50/"
 EVALUATOR_OUTPUT_DIR: str = "data/outputs/"
 
 # Main application
-ALLOWED_HOSTS: List[str] = ["localhost", "127.0.0.1", "interfacemetrics.aalto.fi"]
+ALLOWED_HOSTS: List[str] = [
+    "localhost",
+    "127.0.0.1",
+    "interfacemetrics.aalto.fi",
+]
 SERVER_CONFIG_FILE: str = "server.conf"

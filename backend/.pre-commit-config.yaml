@@ -1,4 +1,4 @@
-files: ^aim2_metrics/
+files: ^backend/
 fail_fast: false
 default_language_version:
   python: python3.7
@@ -7,21 +7,21 @@ repos:
   rev: 5.4.2
   hooks:
   - id: isort
-    args: [--settings-path=aim2_metrics/.isort.cfg, aim2_metrics/]
+    args: [--settings-path=backend/.isort.cfg, backend/]
 - repo: https://github.com/psf/black
   rev: 20.8b1
   hooks:
   - id: black
-    args: [--config=aim2_metrics/pyproject.toml, aim2_metrics/]
+    args: [--config=backend/pyproject.toml, backend/]
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v0.782
   hooks:
   - id: mypy
     language: system
     pass_filenames: false
-    args: ['--config-file=aim2_metrics/mypy.ini', 'aim2_metrics/']
+    args: ['--config-file=backend/mypy.ini', 'backend/']
 - repo: https://github.com/PyCQA/flake8
   rev: 3.8.3
   hooks:
   - id: flake8
-    args: ['--config=aim2_metrics/.flake8', 'aim2_metrics/']
+    args: ['--config=backend/.flake8', 'backend/']
