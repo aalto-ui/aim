@@ -133,7 +133,9 @@ class GUIDesignsEvaluator:
 
             # Read GUI design image (PNG)
             start_time: float = time.time()
-            gui_image_png_base64: str = image_utils.read_image(input_gui_design_file)
+            gui_image_png_base64: str = image_utils.read_image(
+                input_gui_design_file
+            )
             end_time: float = time.time()
             results_row["read_image_time"] = round(end_time - start_time, 4)
 

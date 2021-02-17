@@ -38,7 +38,7 @@ References:
 
 
 Change log:
-    v2.0 (2021-01-27)
+    v2.0 (2021-02-11)
       * Revised implementation
 
     v1.0 (2017-05-29)
@@ -51,7 +51,7 @@ Change log:
 # ----------------------------------------------------------------------------
 
 # Standard library modules
-from typing import Any, List, Optional
+from typing import List, Optional, Union
 
 # First-party modules
 from aim.core.constants import GUI_TYPE_DESKTOP
@@ -62,7 +62,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2021-01-27"
+__date__ = "2021-02-11"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -81,7 +81,7 @@ class Metric(AIMMetricInterface):
     @staticmethod
     def execute_metric(
         gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
-    ) -> Optional[List[Any]]:
+    ) -> Optional[List[Union[int, float, str]]]:
         """
         Execute the metric.
 

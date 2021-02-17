@@ -6,3 +6,4 @@ max-line-length = 79
 select = B, C, E, F, W, T4, B9, C90
 statistics = true
 verbose = false
+exclude = venv

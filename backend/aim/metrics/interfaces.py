@@ -12,7 +12,7 @@ AIM metric interfaces.
 
 # Standard library modules
 import abc
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Union
 
 # First-party modules
 from aim.core.constants import GUI_TYPE_DESKTOP
@@ -22,7 +22,7 @@ from aim.core.constants import GUI_TYPE_DESKTOP
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2020-08-21"
+__date__ = "2021-02-11"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -46,7 +46,7 @@ class AIMMetricInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def execute_metric(
         self, gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
-    ) -> Optional[List[Any]]:
+    ) -> Optional[List[Union[int, float, str]]]:
         """
         Execute the metric.
 
