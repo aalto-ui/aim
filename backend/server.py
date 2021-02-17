@@ -32,7 +32,7 @@ from aim.handlers.handlers import AIMWebSocketHandler
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-03"
+__date__ = "2021-02-09"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -44,6 +44,7 @@ __version__ = "1.0"
 define("port", default=8888, help="Port to listen on", type=int)
 define("environment", default="development", help="Runtime environment", type=str)
 define("name", default="aim-dev", help="Instance name", type=str)
+define("runtime_data_dir", default="data/temp", help="Directory to store runtime data", type=str)
 
 
 # ----------------------------------------------------------------------------
@@ -59,7 +60,10 @@ def parse_options() -> None:
 
 
 def make_app() -> tornado.web.Application:
-    settings: Dict[str, Any] = dict(debug=True)
+    settings: Dict[str, Any] = {
+        "debug": True if options.environment == "development" else False,
+        "websocket_max_message_size": 5242880  # 5 MB
+    }
     return tornado.web.Application(handlers=[
         (r"/", AIMWebSocketHandler),
     ], **settings)
