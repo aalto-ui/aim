@@ -11,6 +11,7 @@ devtools = "*"
 black = "*"
 isort = "*"
 pre-commit = "*"
+fastapi = "*"
 
 [packages]
 pillow = "*"
@@ -24,6 +25,7 @@ seaborn = "*"
 tornado = "*"
 motor = "*"
 python-resize-image = "*"
+pydantic = "*"
 
 [requires]
 python_version = "3.7"
