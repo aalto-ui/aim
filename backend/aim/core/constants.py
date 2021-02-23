@@ -18,7 +18,7 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-17"
+__date__ = "2021-02-23"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -59,3 +59,5 @@ ALLOWED_HOSTS: List[str] = [
     "interfacemetrics.aalto.fi",
 ]
 SERVER_CONFIG_FILE: str = "server.conf"
+METRICS_DIR: str = "aim/metrics/"
+METRICS_FILE_PATTERN: str = "_*.py"
