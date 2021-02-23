@@ -123,8 +123,8 @@ export default {
       this.$store.commit('resetState')
     },
     getJoudgement (score, value) {
-      console.log(`---- getJoudgement Sum ----`)
-      console.log(score, value)
+      // console.log(`---- getJoudgement Sum ----`)
+      // console.log(score, value)
       if (score.range[0] === null) {
         return false
       }

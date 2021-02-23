@@ -9,7 +9,7 @@
       <b-row>
         <b-col cols="12">
         <template v-for="category in categories">
-          <div class="category-outer" v-if="categoryVisible(category.id) !== -1">
+          <div class="category-outer" v-if="categoryVisible(category.id, category.metrics) !== -1">
             <div class="category-title rounded">
               <span class="fa">
                   <font-awesome-icon :icon="category.icon" />
@@ -140,9 +140,9 @@ export default {
     fetching: 'fetchingMetrics'
   }),
   methods: {
-    categoryVisible (category) {
+    categoryVisible (category, metrics) {
       return (
-        _.findIndex(_.keys(this.results), (key) => key.match(new RegExp(category + '[0-9]+')))
+        _.findIndex(_.keys(this.results), (key) => metrics.includes(key))
       )
     },
     metricVisible (metric) {
@@ -152,8 +152,8 @@ export default {
       this.$store.commit('resetState')
     },
     getJoudgement (score, value) {
-      console.log(`---- getJoudgement Res ----`)
-      console.log(score, value)
+      // console.log(`---- getJoudgement Res ----`)
+      // console.log(score, value)
       if (score.range[0] === null) {
         return false
       }

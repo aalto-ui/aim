@@ -53,7 +53,7 @@ const getters = {
     return results
   },
   fetchingMetrics (state) {
-    console.dir(_.keys(state.fetching))
+    // console.dir(_.keys(state.fetching))
     return _.keys(state.fetching)
   },
   progress (state) {
@@ -121,11 +121,11 @@ const mutations = {
     state.fetchedCount++
   },
   updateSummary (state) {
-    console.log(state.fetchedCount)
-    console.log(state.fetchingCount)
+    // console.log(state.fetchedCount)
+    // console.log(state.fetchingCount)
     document.getElementById('service_title').scrollIntoView()
     if (state.fetchedCount === state.fetchingCount) {
-      console.log('finish loading :)')
+      // console.log('finish loading :)')
     }
   },
   updateProgressBarVisibility (state) {
@@ -152,9 +152,13 @@ const mutations = {
   },
   fetchResults (state, metrics) {
     state.fetching = metrics
-    console.log('---- metrics')
-    console.log(metrics)
-    state.fetchingCount = _.size(_.pickBy(metrics, function (value, key) { return value }))
+    // console.log('---- metrics')
+    // console.log(metrics)
+    state.fetchingCount = _.size(
+      _.pickBy(metrics, function (value, key) {
+        return value
+      })
+    )
     state.fetchedCount = 0
     state.display = {
       input: false,
