@@ -12,10 +12,12 @@ Evaluators.
 
 # Standard library modules
 import importlib
+import json
+import re
 import time
 from datetime import date
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 # Third-party modules
 import matplotlib.pyplot as plt
@@ -26,13 +28,18 @@ from loguru import logger
 
 # First-party modules
 from aim.core import image_utils
+from aim.core.constants import (
+    METRICS_CONFIG_FILE,
+    METRICS_DIR,
+    METRICS_FILE_PATTERN,
+)
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-09"
+__date__ = "2021-02-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -44,33 +51,22 @@ __version__ = "1.0"
 
 class GUIDesignsEvaluator:
 
-    # Private constants
-    _METRICS: List[str] = [
-        "m1_png_file_size",  # PNG file size
-        "m2_jpeg_file_size",  # JPEG file size
-        "m3_distinct_rgb_values",  # Distinct RGB values
-        "m4_contour_density",  # Contour density
-        "m5_figure_ground_contrast",  # Figure-ground contrast
-        "m6_contour_congestion",  # Contour congestion
-    ]
-    _METRIC_RESULTS = {
-        "m1_result_1": {"name": "PNG file size in bytes"},
-        "m2_result_1": {"name": "JPEG file size in bytes"},
-        "m3_result_1": {"name": "Number of distinct RGB values"},
-        "m4_result_1": {"name": "Contour density"},
-        "m5_result_1": {"name": "Figure-ground contrast"},
-        "m6_result_1": {"name": "Contour congestion"},
-    }
-
     # Public constants
     NAME: str = "GUI Designs Evaluator"
     VERSION: str = "1.0"
 
     # Initializer
-    def __init__(self, input_dir: str, output_dir: str, plot_results: bool):
+    def __init__(
+        self,
+        input_dir: str,
+        metrics: List[str],
+        output_dir: str,
+        plot_results: bool,
+    ):
         self.input_dir: Path = Path(input_dir)
         self.input_csv_file: Optional[Path] = None
         self.input_gui_design_files: List[Path] = []
+        self.metrics: List[str] = metrics
         self.results: Optional[List[Dict[str, Any]]] = None
         self.output_dir: Path = Path(output_dir) / self.input_dir.name
         self.output_csv_file: Path = self.output_dir / "{}.csv".format(
@@ -117,6 +113,10 @@ class GUIDesignsEvaluator:
             self.results = []
 
     def _execute_metrics(self):
+        # Load metric configurations
+        with open(METRICS_CONFIG_FILE) as f:
+            metrics_configs = json.load(f)
+
         # Iterate over input GUI design files
         for input_gui_design_file in self.input_gui_design_files[
             len(self.results) :
@@ -139,37 +139,52 @@ class GUIDesignsEvaluator:
             end_time: float = time.time()
             results_row["read_image_time"] = round(end_time - start_time, 4)
 
-            # Iterate over AIM metrics
-            for metric in self._METRICS:
-                # Import metric module
-                metric_module = importlib.import_module(
-                    "aim.metrics." + metric
-                )
+            # Iterate over selected metrics
+            for metric in self.metrics:
+                # Locate metric implementation
+                metric_files = [
+                    metric_file
+                    for metric_file in list(
+                        Path(METRICS_DIR).glob(METRICS_FILE_PATTERN)
+                    )
+                    if metric_file.name.startswith(metric + "_")
+                ]
 
-                # Execute metric
-                start_time: float = time.time()
-                metric_results: Optional[
-                    List[Any]
-                ] = metric_module.Metric.execute_metric(gui_image_png_base64)
-                end_time: float = time.time()
-                results_row[metric.partition("_")[0] + "_time"] = round(
-                    end_time - start_time, 4
-                )
+                # Metric implementation is available
+                if len(metric_files) > 0:
+                    # Import metric module
+                    metric_module = importlib.import_module(
+                        "{}{}".format(
+                            re.sub("/", ".", METRICS_DIR), metric_files[0].stem
+                        )
+                    )
 
-                # Iterate over metrics results
-                for index, metric_result in enumerate(metric_results):
-                    if type(metric_result) is float:
-                        results_row[
-                            metric.partition("_")[0]
-                            + "_result_"
-                            + str(index + 1)
-                        ] = round(metric_result, 4)
-                    else:
-                        results_row[
-                            metric.partition("_")[0]
-                            + "_result_"
-                            + str(index + 1)
-                        ] = metric_result
+                    # Execute metric
+                    start_time: float = time.time()
+                    metric_results: Optional[
+                        List[Union[int, float, str]]
+                    ] = metric_module.Metric.execute_metric(
+                        gui_image_png_base64
+                    )
+                    end_time: float = time.time()
+                    results_row[metric + "_time"] = round(
+                        end_time - start_time, 4
+                    )
+
+                    # Iterate over metrics results
+                    for index, metric_result in enumerate(metric_results):
+                        if type(metric_result) is float:
+                            results_row[
+                                metrics_configs["metrics"][metric]["results"][
+                                    index
+                                ]["id"]
+                            ] = round(metric_result, 4)
+                        else:
+                            results_row[
+                                metrics_configs["metrics"][metric]["results"][
+                                    index
+                                ]["id"]
+                            ] = metric_result
 
             # End total timer
             end_time_total: float = time.time()
@@ -248,6 +263,10 @@ class GUIDesignsEvaluator:
     def _plot_results(self):
         # Plot results
         if self.plot_results:
+            # Load metric configurations
+            with open(METRICS_CONFIG_FILE) as f:
+                metrics_configs = json.load(f)
+
             # Get output CSV file (evaluation results)
             evaluation_results_df = pd.read_csv(
                 self.output_csv_file,
@@ -260,44 +279,49 @@ class GUIDesignsEvaluator:
             width: int = 700  # in pixels
             height: int = 500  # in pixels
             dpi: int = 72
-            for key, value in self._METRIC_RESULTS.items():
-                # Create a new figure and configure it
-                sns.set(rc={"figure.figsize": (width / dpi, height / dpi)})
-                sns.set_style("ticks")
-                sns.set_context("paper", font_scale=1.5)
-                plt.figure()
 
-                # Plot data on a histogram and configure it
-                ax = sns.histplot(
-                    list(evaluation_results_df[key]),
-                    kde=False,
-                    color="#7553A0",
-                    bins=30,
-                )
-                ax.set_xlabel(
-                    value["name"],
-                    fontstyle="normal",
-                    fontweight="normal",
-                    labelpad=10,
-                )
-                ax.set_ylabel(
-                    "Frequency",
-                    fontstyle="normal",
-                    fontweight="normal",
-                    labelpad=10,
-                )
-                ax.xaxis.grid(False)
-                ax.yaxis.grid(False)
-                ax.xaxis.set_major_formatter(
-                    ticker.FuncFormatter(self._reformat_large_tick_values)
-                )
-                sns.despine(ax=ax, left=False, bottom=False)
+            # Iterate over selected metrics
+            for metric in self.metrics:
+                # Iterate over metric results
+                for result in metrics_configs["metrics"][metric]["results"]:
+                    # Create a new figure and configure it
+                    sns.set(rc={"figure.figsize": (width / dpi, height / dpi)})
+                    sns.set_style("ticks")
+                    sns.set_context("paper", font_scale=1.5)
+                    plt.figure()
 
-                # Save plot
-                output_plot_file: Path = (
-                    self.output_dir / "{}_evaluator.png".format(key)
-                )
-                plt.savefig(output_plot_file, dpi=dpi, transparent=False)
+                    # Plot data on a histogram and configure it
+                    ax = sns.histplot(
+                        list(evaluation_results_df[result["id"]]),
+                        kde=False,
+                        color="#7553A0",
+                        bins=30,
+                    )
+                    ax.set_xlabel(
+                        result["name"],
+                        fontstyle="normal",
+                        fontweight="normal",
+                        labelpad=10,
+                    )
+                    ax.set_ylabel(
+                        "Frequency",
+                        fontstyle="normal",
+                        fontweight="normal",
+                        labelpad=10,
+                    )
+                    ax.xaxis.grid(False)
+                    ax.yaxis.grid(False)
+                    ax.xaxis.set_major_formatter(
+                        ticker.FuncFormatter(self._reformat_large_tick_values)
+                    )
+                    sns.despine(ax=ax, left=False, bottom=False)
+
+                    # Save plot
+                    output_plot_file: Path = (
+                        self.output_dir
+                        / "{}_histogram.png".format(result["id"])
+                    )
+                    plt.savefig(output_plot_file, dpi=dpi, transparent=False)
 
     # Public methods
     def evaluate(self):

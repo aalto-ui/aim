@@ -14,8 +14,8 @@ Handlers.
 import importlib
 import json
 import logging
-import pathlib
 import re
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 from urllib.parse import urlparse
 
@@ -35,7 +35,7 @@ from aim.models.models import MessageBase, MessageImage
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-23"
+__date__ = "2021-02-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -59,7 +59,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
             return False
 
     def on_message(self, message: Union[str, bytes]):
-        logging.info("A message received: {!r}".format(message))
+        # logging.info("A message received: {!r}".format(message))
 
         try:
             # Load message
@@ -84,7 +84,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 png_image_base64: str = image_utils.crop_image(msg.raw_data)
                 image_utils.write_image(
                     png_image_base64,
-                    pathlib.Path(options.runtime_data_dir)
+                    Path(options.runtime_data_dir)
                     / "{}.png".format(options.name),
                 )
 
@@ -93,11 +93,13 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 print("Executing metric {}...".format(metric))
 
                 # Locate metric implementation
-                metric_files = list(
-                    pathlib.Path(METRICS_DIR).glob(
-                        metric + METRICS_FILE_PATTERN
+                metric_files = [
+                    metric_file
+                    for metric_file in list(
+                        Path(METRICS_DIR).glob(METRICS_FILE_PATTERN)
                     )
-                )
+                    if metric_file.name.startswith(metric + "_")
+                ]
 
                 # Metric implementation is available
                 if len(metric_files) > 0:

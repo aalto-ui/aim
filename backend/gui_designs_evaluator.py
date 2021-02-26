@@ -5,9 +5,9 @@
 GUI designs evaluator utility application.
 
 
-Usage: gui_designs_evaluator.py [-h] [-c <path>] [-v] [-i <path>] [-o <path>] [-p]
+Usage: gui_designs_evaluator.py [-h] [-c <path>] [-v] [-i <path>] [-m <str>] [-o <path>] [-p]
 
-Example usage: python gui_designs_evaluator.py -i data/inputs/ALEXA_TOP_50/ -o data/outputs/ -p
+Example usage: python gui_designs_evaluator.py -i data/inputs/alexa_top_50_global_sites/ -m m1,m2,m3 -o data/outputs/ -p
 """
 
 
@@ -29,7 +29,7 @@ from aim.evaluators.evaluators import GUIDesignsEvaluator
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-11"
+__date__ = "2021-02-26"
 __email__ = "markku.laine@aalto.fi"
 __title__ = "GUI Designs Evaluator"
 __version__ = "1.0"
@@ -57,6 +57,15 @@ def init():
         type=configmanager.readable_dir,
         required=False,
         default=constants.EVALUATOR_INPUT_DIR,
+    )
+    configmanager.parser.add(
+        "-m",
+        metavar="<list>",
+        help="comma-separated list of metrics to be executed",
+        dest="metrics",
+        type=str,
+        required=False,
+        default=constants.EVALUATOR_METRICS,
     )
     configmanager.parser.add(
         "-o",
@@ -97,6 +106,10 @@ def main():
         # Evaluate GUI designs
         evaluator = GUIDesignsEvaluator(
             input_dir=configmanager.options.input,
+            metrics=[
+                metric.strip()
+                for metric in configmanager.options.metrics.split(",")
+            ],
             output_dir=configmanager.options.output,
             plot_results=configmanager.options.plot,
         )

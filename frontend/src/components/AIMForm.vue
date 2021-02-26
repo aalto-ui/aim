@@ -382,7 +382,7 @@
 </template>
 
 <script>
-import metricConfig from '../config/metrics'
+import metricConfig from '../config/metrics.json'
 import Results from './Results'
 import ProgressBar from './ProgressBar'
 import Summary from './Summary'

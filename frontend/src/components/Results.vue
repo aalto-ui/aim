@@ -123,7 +123,7 @@
 <script>
 // import { mapState } from 'vuex'
 import _ from 'lodash'
-import metricConfig from '../config/metrics'
+import metricConfig from '../config/metrics.json'
 
 import { mapGetters } from 'vuex'
 

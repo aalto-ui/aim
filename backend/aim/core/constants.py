@@ -18,7 +18,7 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-23"
+__date__ = "2021-02-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -49,7 +49,8 @@ CANNY_EDGE_DETECTION_PYTHON_MIN_THRESHOLD: int = 0
 CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD: int = 255
 
 # Utility applications
-EVALUATOR_INPUT_DIR: str = "data/inputs/ALEXA_TOP_50/"
+EVALUATOR_INPUT_DIR: str = "data/inputs/alexa_top_50_global_sites/"
+EVALUATOR_METRICS: str = "m1,m2,m3,m4,m5,m6"
 EVALUATOR_OUTPUT_DIR: str = "data/outputs/"
 
 # Main application
@@ -59,5 +60,6 @@ ALLOWED_HOSTS: List[str] = [
     "interfacemetrics.aalto.fi",
 ]
 SERVER_CONFIG_FILE: str = "server.conf"
+METRICS_CONFIG_FILE: str = "../frontend/src/config/metrics.json"
 METRICS_DIR: str = "aim/metrics/"
-METRICS_FILE_PATTERN: str = "_*.py"
+METRICS_FILE_PATTERN: str = "m*_*.py"
