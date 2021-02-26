@@ -9,14 +9,14 @@
     <b-row>
     <template v-for="category in categories" lang="html">
       <div class="col-12 col-sm-6 col-md-3 category">
-        <div class="category-title rounded" :class="{ 'bg-primary' : categoryVisible(category.id) !== -1, 'bg-secondary' : categoryVisible(category.id) == -1, }">
+        <div class="category-title rounded" :class="{ 'bg-primary' : categoryVisible(category.id, category.metrics) !== -1, 'bg-secondary' : categoryVisible(category.id, category.metrics) === -1, }">
           <div class="loader-bg" :class="{done: fetching}" v-if="!metricLoading()" >
             <div class="loader">Loading...</div>
           </div>
           
           <font-awesome-icon :icon="category.icon" />
           <!-- if any metrics are selected -->
-          <div class="category-title-inner" v-if="categoryVisible(category.id) !== -1" >
+          <div class="category-title-inner" v-if="categoryVisible(category.id, category.metrics) !== -1" >
             <a :href="'#'+category.id">
               <h4 class="title">{{category.name}}</h4>
             </a>
@@ -103,10 +103,9 @@ export default {
     fetching: 'fetchingMetrics'
   }),
   methods: {
-    categoryVisible (category) {
-      // console.log(_.keys(this.results))
+    categoryVisible (category, metrics) {
       return (
-        _.findIndex(_.keys(this.results), (key) => key.match(new RegExp(category + '[0-9]+')))
+        _.findIndex(_.keys(this.results), (key) => metrics.includes(key))
       )
     },
     metricLoading () {
