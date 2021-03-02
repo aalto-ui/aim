@@ -35,7 +35,7 @@ from aim.models.models import MessageBase, MessageImage
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-26"
+__date__ = "2021-03-02"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -58,8 +58,11 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
         else:
             return False
 
+    # def open(self):
+    #     logging.info("Connection opened")
+
     def on_message(self, message: Union[str, bytes]):
-        # logging.info("A message received: {!r}".format(message))
+        # logging.info("Message received: {!r}".format(message))
 
         try:
             # Load message
@@ -74,7 +77,12 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
 
             # Input: URL
             if msg_base.data is None:
-                pass
+                logging.error(
+                    "Error: URL input implementation is not available."
+                )
+                raise NotImplementedError(
+                    "URL input implementation is not available."
+                )
             # Input: image
             else:
                 # Create message image model
@@ -90,7 +98,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
 
             # Iterate over selected metrics and execute them one by one
             for metric in {k: v for k, v in msg.metrics.items()}:
-                print("Executing metric {}...".format(metric))
+                logging.info("Executing metric {}...".format(metric))
 
                 # Locate metric implementation
                 metric_files = [
@@ -116,7 +124,9 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     )
                 # Metric implementation is not available
                 else:
-                    print("Error: Metric implementation is not available.")
+                    logging.error(
+                        "Error: Metric implementation is not available."
+                    )
                     raise NotImplementedError(
                         "Metric '{}' implementation is not available.".format(
                             metric
@@ -143,10 +153,21 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
             self.write_message(
                 {
                     "type": "error",
-                    "action": "pushValidationError",  # TODO: Support and use a new generic error type
+                    "action": "pushGeneralError",
+                    "message": str(e),
+                }
+            )
+        except Exception as e:
+            self.write_message(
+                {
+                    "type": "error",
+                    "action": "pushGeneralError",
                     "message": str(e),
                 }
             )
 
         # Close WebSocket
         self.close()
+
+    # def on_close(self):
+    #     logging.info("Connection closed")

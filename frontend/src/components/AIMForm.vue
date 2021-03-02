@@ -13,7 +13,7 @@
     <template slot="lead">
       Welcome to AIM! Send your design and choose metrics: AIM computes numerous metrics and models that predict how users perceive, search, and experience your design. Download & contribute to the project at <a href="https://github.com/aalto-ui/aim" target="_blank">GitHub</a>.
     </template>
-    <b-row v-if="wsError">
+    <b-row v-if="generalError">
       <b-col>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <h4 class="alert-heading">Technical Difficulties</h4>
@@ -420,7 +420,7 @@ export default {
 
       // Validate URL form
       let form = event.target
-      if ((this.$store.state.wsError === false) && (form.checkValidity() === true)) {
+      if ((this.$store.state.generalError === false) && (form.checkValidity() === true)) {
         this.$store.commit('showMetrics')
       }
       form.classList.add('was-validated')
@@ -438,7 +438,7 @@ export default {
 
       // Validate screenshot form
       let form = event.target
-      if ((this.$store.state.wsError === false) && (form.checkValidity() === true && this.form.data !== null && this.form.filename !== null)) {
+      if ((this.$store.state.generalError === false) && (form.checkValidity() === true && this.form.data !== null && this.form.filename !== null)) {
         document.querySelector('#screenshot-input-group').classList.remove('is-invalid') // Hack due to the use of Bootstrap's custom image upload
         this.$store.commit('showMetrics')
       } else {
@@ -457,7 +457,7 @@ export default {
       // Validate URL and screenshot forms
       let urlForm = document.querySelector('#aim-url-form')
       let screenshotForm = document.querySelector('#aim-screenshot-form')
-      if ((this.$store.state.wsError === false) && (urlForm.checkValidity() === true) || (screenshotForm.checkValidity() === true && this.form.data !== null && this.form.filename !== null)) {
+      if ((this.$store.state.generalError === false) && (urlForm.checkValidity() === true) || (screenshotForm.checkValidity() === true && this.form.data !== null && this.form.filename !== null)) {
         // Submit data
         this.$socket.sendObj({
           type: 'execute',
@@ -548,7 +548,7 @@ export default {
   },
   computed: mapState({
     display: state => state.display,
-    wsError: state => state.wsError,
+    generalError: state => state.generalError,
     validationError: state => state.validationError
   })
 }

@@ -13,8 +13,8 @@ const initialState = () => {
     fetching: {},
     fetchingCount: 0,
     fetchedCount: 0,
-    wsError: false,
     validationError: false,
+    generalError: false,
     display: {
       input: true,
       metrics: false,
@@ -85,6 +85,10 @@ const actions = {
   pushValidationError (context, data) {
     console.error(data.message)
     context.commit('pushValidationError')
+  },
+  pushGeneralError (context, data) {
+    console.error(data.message)
+    context.commit('pushGeneralError')
   }
 }
 
@@ -107,7 +111,8 @@ const mutations = {
   SOCKET_RECONNECT_ERROR (state) {
     // console.error('Reconnection error')
     this.commit('resetState')
-    state.wsError = true
+    state.display.input = false
+    state.generalError = true
   },
   pushResult (state, payload) {
     Vue.set(state.display, 'results', true)
@@ -149,6 +154,11 @@ const mutations = {
   pushValidationError (state, payload) {
     this.commit('resetState')
     state.validationError = true
+  },
+  pushGeneralError (state, payload) {
+    this.commit('resetState')
+    state.display.input = false
+    state.generalError = true
   },
   fetchResults (state, metrics) {
     state.fetching = metrics
