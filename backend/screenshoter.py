@@ -7,7 +7,7 @@ Screenshoter utility application.
 
 Usage: screenshoter.py [-h] [-c <path>] [-v] [-i <path>] [-w <int>] [-h <int>] [-o <path>]
 
-Example usage: python screenshoter.py -i data/alexa_top_50_global_sites.txt -w 1280 -h 800 -o data/screenshots/ALEXA_50/
+Example usage: python screenshoter.py -i data/alexa_top_50_global_sites.txt -w 1280 -h 800 -f -o data/screenshots/ALEXA_50/
 """
 
 
@@ -77,7 +77,7 @@ def init():
     configmanager.parser.add(
         "-h",
         metavar="<int>",
-        help="height of screenshots (0 = full page screenshot)",
+        help="height of screenshots (minimum height with full page screenshots)",
         dest="height",
         type=int,
         required=False,
@@ -91,6 +91,14 @@ def init():
         type=configmanager.writable_dir,
         required=False,
         default=constants.SCREENSHOTER_OUTPUT_DIR,
+    )
+    configmanager.parser.add(
+        "-f",
+        help="whether to take full page screenshots",
+        dest="full_page",
+        required=False,
+        action="store_true",
+        default=False,
     )
     configmanager.options = configmanager.parser.parse_known_args()[
         0
@@ -116,6 +124,7 @@ def main():
             input_file=Path(configmanager.options.input),
             width=configmanager.options.width,
             height=configmanager.options.height,
+            full_page=configmanager.options.full_page,
             output_dir=Path(configmanager.options.output),
         )
         screenshots.take()

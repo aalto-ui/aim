@@ -55,13 +55,15 @@ class Screenshots:
         input_file: Path,
         width: int,
         height: int,
+        full_page: bool,
         output_dir: Path,
     ):
         self.input_file: Path = input_file
         self.input_urls: List[str] = []
-        self.output_dir: Path = output_dir
         self.width: int = width
         self.height: int = height
+        self.full_page: bool = full_page
+        self.output_dir: Path = output_dir
         self.driver: ChromeWebDriver = None
 
     # Private methods
@@ -115,25 +117,22 @@ class Screenshots:
         for input_url in self.input_urls:
             logger.info("Taking a screenshot of {}".format(input_url))
 
-            # Take fixed size screenshot
-            if self.height > 0:
-                self.driver.set_window_size(self.width, self.height)
-                self.driver.get(input_url)
-                self.driver.save_screenshot(
+            self.driver.set_window_size(self.width, self.height)
+            self.driver.get(input_url)
+
+            # Take full page screenshot
+            if self.full_page:
+                document_size: Tuple[int, int] = self._get_document_size()
+                self.driver.set_window_size(document_size[0], document_size[1])
+                self.driver.find_element_by_tag_name("body").screenshot(
                     str(
                         self.output_dir
                         / "{}.png".format(urlparse(input_url).hostname)
                     )
                 )
-            # Take full page screenshot
+            # Take fixed size screenshot
             else:
-                self.driver.set_window_size(
-                    self.width, SCREENSHOTER_MIN_HEIGHT_DESKTOP
-                )
-                self.driver.get(input_url)
-                document_size: Tuple[int, int] = self._get_document_size()
-                self.driver.set_window_size(document_size[0], document_size[1])
-                self.driver.find_element_by_tag_name("body").screenshot(
+                self.driver.save_screenshot(
                     str(
                         self.output_dir
                         / "{}.png".format(urlparse(input_url).hostname)
