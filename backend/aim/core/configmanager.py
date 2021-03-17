@@ -12,6 +12,7 @@ Configuration manager.
 
 # Standard library modules
 import os
+from pathlib import Path
 
 # Third-party modules
 import configargparse
@@ -21,7 +22,7 @@ import configargparse
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-01-26"
+__date__ = "2021-03-17"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -29,6 +30,27 @@ __version__ = "1.0"
 # ----------------------------------------------------------------------------
 # Functions
 # ----------------------------------------------------------------------------
+
+
+def readable_file(path):
+    """
+    A custom type for readable file.
+
+
+    Raises:
+        ArgumentTypeError: If the 'path' argument is not a valid or readable file
+    """
+    input_path: Path = Path(path)
+    if not input_path.is_file():
+        raise configargparse.ArgumentTypeError(
+            "The path '{}' is not a valid file.".format(path)
+        )
+    if os.access(path, os.R_OK):
+        return path
+    else:
+        raise configargparse.ArgumentTypeError(
+            "The path '{}' is not a readable file.".format(path)
+        )
 
 
 def readable_dir(path):
@@ -39,10 +61,14 @@ def readable_dir(path):
     Raises:
         ArgumentTypeError: If the 'path' argument is not a valid or readable directory
     """
-    if not os.path.isdir(path):
+    input_path: Path = Path(path)
+    if input_path.is_file():
         raise configargparse.ArgumentTypeError(
             "The path '{}' is not a valid directory.".format(path)
         )
+    else:
+        input_path.mkdir(parents=True, exist_ok=True)
+
     if os.access(path, os.R_OK):
         return path
     else:
@@ -59,10 +85,14 @@ def writable_dir(path):
     Raises:
         ArgumentTypeError: If the 'path' argument is not a valid or writable directory
     """
-    if not os.path.isdir(path):
+    input_path: Path = Path(path)
+    if input_path.is_file():
         raise configargparse.ArgumentTypeError(
             "The path '{}' is not a valid directory.".format(path)
         )
+    else:
+        input_path.mkdir(parents=True, exist_ok=True)
+
     if os.access(path, os.W_OK):
         return path
     else:

@@ -18,7 +18,7 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-26"
+__date__ = "2021-03-17"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -48,12 +48,15 @@ GAUSSIAN_KERNEL_STANDARD_DEVIATION: int = 2
 CANNY_EDGE_DETECTION_PYTHON_MIN_THRESHOLD: int = 0
 CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD: int = 255
 
-# Utility applications
+# Tools
 EVALUATOR_INPUT_DIR: str = "data/inputs/alexa_top_50_global_sites/"
 EVALUATOR_METRICS: str = "m1,m2,m3,m4,m5,m6"
 EVALUATOR_OUTPUT_DIR: str = "data/outputs/"
+SCREENSHOTER_MIN_HEIGHT_DESKTOP: int = IMAGE_HEIGHT_DESKTOP
+SCREENSHOTER_INPUT_FILE: str = "data/alexa_top_50_global_sites.txt"
+SCREENSHOTER_OUTPUT_DIR: str = "data/screenshots/ALEXA_50/"
 
-# Main application
+# Web application
 ALLOWED_HOSTS: List[str] = [
     "localhost",
     "127.0.0.1",
@@ -63,3 +66,4 @@ SERVER_CONFIG_FILE: str = "server.conf"
 METRICS_CONFIG_FILE: str = "../frontend/src/config/metrics.json"
 METRICS_DIR: str = "aim/metrics/"
 METRICS_FILE_PATTERN: str = "m*_*.py"
+CHROME_DRIVER_BASE_FILE_PATH = "webdrivers/chromedriver"
