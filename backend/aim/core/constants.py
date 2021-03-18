@@ -18,7 +18,7 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-17"
+__date__ = "2021-03-18"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -53,7 +53,7 @@ EVALUATOR_INPUT_DIR: str = "data/inputs/alexa_top_50_global_sites/"
 EVALUATOR_METRICS: str = "m1,m2,m3,m4,m5,m6"
 EVALUATOR_OUTPUT_DIR: str = "data/outputs/"
 SCREENSHOTER_MIN_HEIGHT_DESKTOP: int = IMAGE_HEIGHT_DESKTOP
-SCREENSHOTER_INPUT_FILE: str = "data/alexa_top_50_global_sites.txt"
+SCREENSHOTER_INPUT_FILE: str = "data/alexa_top_50_global_sites_2021-01-25.txt"
 SCREENSHOTER_OUTPUT_DIR: str = "data/screenshots/ALEXA_50/"
 
 # Web application

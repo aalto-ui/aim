@@ -141,7 +141,7 @@ class Screenshots:
                             / "{}.png".format(urlparse(input_url).hostname)
                         )
                     )
-            except InvalidArgumentException as err:
+            except Exception as err:
                 logger.error(
                     "Failed to take a screenshot of {}".format(input_url)
                 )

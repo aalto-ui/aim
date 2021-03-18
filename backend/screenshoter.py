@@ -7,7 +7,7 @@ Screenshoter utility application.
 
 Usage: screenshoter.py [-h] [-c <path>] [-v] [-i <path>] [-w <int>] [-h <int>] [-f] [-o <path>]
 
-Example usage: python screenshoter.py -i data/alexa_top_50_global_sites.txt -w 1280 -h 800 -o data/screenshots/ALEXA_50/
+Example usage: python screenshoter.py -i data/alexa_top_50_global_sites_2021-01-25.txt -w 1280 -h 800 -o data/screenshots/ALEXA_50/
 """
 
 
