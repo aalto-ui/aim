@@ -5,9 +5,9 @@
 Screenshoter utility application.
 
 
-Usage: screenshoter.py [-h] [-c <path>] [-v] [-i <path>] [-w <int>] [-h <int>] [-o <path>]
+Usage: screenshoter.py [-h] [-c <path>] [-v] [-i <path>] [-w <int>] [-h <int>] [-f] [-o <path>]
 
-Example usage: python screenshoter.py -i data/alexa_top_50_global_sites.txt -w 1280 -h 800 -f -o data/screenshots/ALEXA_50/
+Example usage: python screenshoter.py -i data/alexa_top_50_global_sites.txt -w 1280 -h 800 -o data/screenshots/ALEXA_50/
 """
 
 
@@ -36,7 +36,7 @@ from aim.tools import Screenshots
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-17"
+__date__ = "2021-03-18"
 __email__ = "markku.laine@aalto.fi"
 __title__ = "Screenshoter"
 __version__ = "1.0"
@@ -129,7 +129,8 @@ def main():
         )
         screenshots.take()
         logger.info(
-            "{} screenshots were taken and stored at '{}'.".format(
+            "{} out of {} screenshots were successfully taken and stored at '{}'.".format(
+                screenshots.success_counter,
                 len(screenshots.input_urls),
                 screenshots.output_dir,
             )

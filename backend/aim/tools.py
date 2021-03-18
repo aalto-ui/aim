@@ -19,21 +19,19 @@ from urllib.parse import urlparse
 # Third-party modules
 from loguru import logger
 from selenium import webdriver
+from selenium.common.exceptions import InvalidArgumentException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 
 # First-party modules
-from aim.core.constants import (
-    CHROME_DRIVER_BASE_FILE_PATH,
-    SCREENSHOTER_MIN_HEIGHT_DESKTOP,
-)
+from aim.core.constants import CHROME_DRIVER_BASE_FILE_PATH
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-17"
+__date__ = "2021-03-18"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -65,6 +63,7 @@ class Screenshots:
         self.full_page: bool = full_page
         self.output_dir: Path = output_dir
         self.driver: ChromeWebDriver = None
+        self.success_counter: int = 0
 
     # Private methods
     def _read_input_urls(self) -> None:
@@ -114,30 +113,41 @@ class Screenshots:
         self.driver = self._get_web_driver()
 
         # Iterate over input URLs
+        self.success_counter = 0
         for input_url in self.input_urls:
             logger.info("Taking a screenshot of {}".format(input_url))
 
-            self.driver.set_window_size(self.width, self.height)
-            self.driver.get(input_url)
+            try:
+                self.driver.set_window_size(self.width, self.height)
+                self.driver.get(input_url)
 
-            # Take full page screenshot
-            if self.full_page:
-                document_size: Tuple[int, int] = self._get_document_size()
-                self.driver.set_window_size(document_size[0], document_size[1])
-                self.driver.find_element_by_tag_name("body").screenshot(
-                    str(
-                        self.output_dir
-                        / "{}.png".format(urlparse(input_url).hostname)
+                # Take full page screenshot
+                if self.full_page:
+                    document_size: Tuple[int, int] = self._get_document_size()
+                    self.driver.set_window_size(
+                        document_size[0], document_size[1]
                     )
+                    self.driver.find_element_by_tag_name("body").screenshot(
+                        str(
+                            self.output_dir
+                            / "{}.png".format(urlparse(input_url).hostname)
+                        )
+                    )
+                # Take fixed size screenshot
+                else:
+                    self.driver.save_screenshot(
+                        str(
+                            self.output_dir
+                            / "{}.png".format(urlparse(input_url).hostname)
+                        )
+                    )
+            except InvalidArgumentException as err:
+                logger.error(
+                    "Failed to take a screenshot of {}".format(input_url)
                 )
-            # Take fixed size screenshot
+                logger.error(err)
             else:
-                self.driver.save_screenshot(
-                    str(
-                        self.output_dir
-                        / "{}.png".format(urlparse(input_url).hostname)
-                    )
-                )
+                self.success_counter += 1
 
         # Close the browser
         self.driver.quit()
