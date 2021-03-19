@@ -41,6 +41,17 @@ __version__ = "1.0"
 # ----------------------------------------------------------------------------
 
 
+def get_configured_metrics():
+    metrics_configurations = utils.load_metrics_configurations()
+    return ",".join(
+        list(
+            utils.deep_get(
+                metrics_configurations, ["metrics"], default={}
+            ).keys()
+        )
+    )
+
+
 def init():
     # Add application-specific configuration options
     configmanager.parser.add_argument(
@@ -66,7 +77,7 @@ def init():
         dest="metrics",
         type=str,
         required=False,
-        default=constants.EVALUATOR_METRICS,
+        default=get_configured_metrics(),
     )
     configmanager.parser.add(
         "-p",

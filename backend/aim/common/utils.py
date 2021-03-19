@@ -11,6 +11,7 @@ Utility functions.
 # ----------------------------------------------------------------------------
 
 # Standard library modules
+import json
 import sys
 
 # Third-party modules
@@ -19,6 +20,7 @@ from loguru import logger
 
 # First-party modules
 from aim.common import configmanager
+from aim.common.constants import METRICS_CONFIG_FILE
 
 # ----------------------------------------------------------------------------
 # Metadata
@@ -93,3 +95,30 @@ def get_loguru_handlers():
         )
 
     return handlers
+
+
+def load_metrics_configurations():
+    # Load metrics configurations
+    metrics_configurations = {}
+    with open(METRICS_CONFIG_FILE) as f:
+        metrics_configurations = json.load(f)
+
+    return metrics_configurations
+
+
+def deep_get(d, keys, default=None):
+    """
+    Source: https://stackoverflow.com/questions/25833613/python-safe-method-to-get-value-of-nested-dictionary
+
+    Example:
+        d = {'meta': {'status': 'OK', 'status_code': 200}}
+        deep_get(d, ['meta', 'status_code'])          # => 200
+        deep_get(d, ['garbage', 'status_code'])       # => None
+        deep_get(d, ['meta', 'garbage'], default='-') # => '-'
+    """
+    assert type(keys) is list
+    if d is None:
+        return default
+    if not keys:
+        return d
+    return deep_get(d.get(keys[0]), keys[1:], default)

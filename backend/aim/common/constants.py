@@ -53,7 +53,6 @@ SCREENSHOTER_INPUT_FILE: str = "data/alexa_top_50_global_sites_2021-01-25.txt"
 SCREENSHOTER_OUTPUT_DIR: str = "data/screenshots/DEFAULT/"
 EVALUATOR_INPUT_DIR: str = SCREENSHOTER_OUTPUT_DIR
 EVALUATOR_EXCLUDE_FILENAME: str = "exclude.txt"
-EVALUATOR_METRICS: str = "m1,m2,m3,m4,m5,m6"
 EVALUATOR_OUTPUT_DIR: str = "data/evaluations/DEFAULT/"
 
 # Web application

@@ -32,11 +32,10 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 
 # First-party modules
-from aim.common import image_utils
+from aim.common import image_utils, utils
 from aim.common.constants import (
     CHROME_DRIVER_BASE_FILE_PATH,
     EVALUATOR_EXCLUDE_FILENAME,
-    METRICS_CONFIG_FILE,
     METRICS_DIR,
     METRICS_FILE_PATTERN,
 )
@@ -194,7 +193,9 @@ class Evaluation:
         self.output_dir: Path = output_dir
         self.output_csv_file: Path = self.output_dir / "results.csv"
         self.success_counter: int = 0
-        self.metrics_configurations: Optional[Dict[str, Any]] = None
+        self.metrics_configurations: Dict[
+            str, Any
+        ] = utils.load_metrics_configurations()
 
     # Private methods
     def _read_excluded_screenshots(self) -> None:
@@ -229,11 +230,6 @@ class Evaluation:
 
             # Convert DataFrame to List
             self.results = results_df.to_dict("records")
-
-    def _read_metrics_configurations(self) -> None:
-        # Read metrics configurations
-        with open(METRICS_CONFIG_FILE) as f:
-            self.metrics_configurations = json.load(f)
 
     def _execute_metrics(self):
         # Iterate over input screenshot files
@@ -460,6 +456,5 @@ class Evaluation:
         self._read_excluded_screenshots()
         self._read_input_screenshot_files()
         self._read_previous_results()
-        self._read_metrics_configurations()
         self._execute_metrics()
         self._plot_results()
