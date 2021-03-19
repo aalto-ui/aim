@@ -22,7 +22,7 @@ from pathlib import Path
 from loguru import logger
 
 # First-party modules
-from aim.core import configmanager, constants, utils
+from aim.common import configmanager, constants, utils
 from aim.tools import Evaluation
 
 # ----------------------------------------------------------------------------

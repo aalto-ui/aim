@@ -32,8 +32,8 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 
 # First-party modules
-from aim.core import image_utils
-from aim.core.constants import (
+from aim.common import image_utils
+from aim.common.constants import (
     CHROME_DRIVER_BASE_FILE_PATH,
     EVALUATOR_EXCLUDE_FILENAME,
     METRICS_CONFIG_FILE,

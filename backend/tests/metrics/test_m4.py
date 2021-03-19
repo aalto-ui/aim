@@ -18,16 +18,16 @@ from typing import Any, List, Optional, Union
 import pytest
 
 # First-party modules
-from aim.core import image_utils
+from aim.common import image_utils
 from aim.metrics.m4_contour_density import Metric
-from tests.core.constants import DATA_TESTS_DIR
+from tests.common.constants import DATA_TESTS_DIR
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-11"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 

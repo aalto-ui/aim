@@ -60,7 +60,7 @@ from typing import List, Optional, Tuple, Union
 from PIL import Image
 
 # First-party modules
-from aim.core.constants import (
+from aim.common.constants import (
     COLOR_REDUCTION_THRESHOLD_DESKTOP,
     COLOR_REDUCTION_THRESHOLD_MOBILE,
     GUI_TYPE_DESKTOP,
@@ -73,7 +73,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Kseniia Palin, Thomas Langerak, Yuxi Zhu"
-__date__ = "2021-02-11"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 

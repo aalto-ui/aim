@@ -24,15 +24,15 @@ import tornado.websocket
 from tornado.options import define, options
 
 # First-party modules
-from aim.core.constants import SERVER_CONFIG_FILE
-from aim.handlers.handlers import AIMWebSocketHandler
+from aim.common.constants import SERVER_CONFIG_FILE
+from aim.handlers import AIMWebSocketHandler
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-09"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 

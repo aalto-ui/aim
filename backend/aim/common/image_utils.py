@@ -20,20 +20,20 @@ from PIL import Image
 from resizeimage import resizeimage
 
 # First-party modules
-from aim.core.constants import (
+from aim.common.constants import (
     IMAGE_HEIGHT_DESKTOP,
     IMAGE_QUALITY_JPEG,
     IMAGE_QUALITY_PNG,
     IMAGE_WIDTH_DESKTOP,
 )
-from aim.exceptions.exceptions import ValidationError
+from aim.exceptions import ValidationError
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-10"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 

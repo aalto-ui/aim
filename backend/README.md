@@ -9,7 +9,7 @@ The structure of this subproject is as follows:
 ```
 .
 ├── aim                          : AIM source codes
-│   ├── core                     : Core functions
+│   ├── common                   : Common functions
 │   ├── evaluators               : GUI design evaluators
 │   ├── exceptions               : Custom exceptions and errors
 │   ├── metrics                  : AIM metrics
@@ -21,7 +21,7 @@ The structure of this subproject is as follows:
 │   ├── outputs                  : Evaluation results
 │   └── tests                    : Test files
 ├── tests                        : Unit tests
-│   ├── core                     : Tests for core functions
+│   ├── common                   : Tests for common functions
 │   └── metrics                  : Tests for AIM metrics
 │   │   ├── test_m1.py           : Tests for AIM metric 1
 │   │   └── ...

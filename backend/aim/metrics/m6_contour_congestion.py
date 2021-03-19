@@ -73,7 +73,7 @@ import numpy as np
 from PIL import Image
 
 # First-party modules
-from aim.core.constants import GUI_TYPE_DESKTOP
+from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak"
-__date__ = "2021-02-11"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 

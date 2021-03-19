@@ -15,14 +15,14 @@ import abc
 from typing import Any, List, Optional, Union
 
 # First-party modules
-from aim.core.constants import GUI_TYPE_DESKTOP
+from aim.common.constants import GUI_TYPE_DESKTOP
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-11"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 

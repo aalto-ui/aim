@@ -64,7 +64,7 @@ import numpy as np
 from PIL import Image
 
 # First-party modules
-from aim.core.constants import (
+from aim.common.constants import (
     CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD,
     GAUSSIAN_KERNEL_SIZE,
     GAUSSIAN_KERNEL_STANDARD_DEVIATION,
@@ -78,7 +78,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2021-02-11"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 

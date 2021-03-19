@@ -26,16 +26,20 @@ from pydantic.error_wrappers import ValidationError
 from tornado.options import options
 
 # First-party modules
-from aim.core import image_utils
-from aim.core.constants import ALLOWED_HOSTS, METRICS_DIR, METRICS_FILE_PATTERN
-from aim.models.models import MessageBase, MessageImage
+from aim.common import image_utils
+from aim.common.constants import (
+    ALLOWED_HOSTS,
+    METRICS_DIR,
+    METRICS_FILE_PATTERN,
+)
+from aim.models import MessageBase, MessageImage
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-02"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 

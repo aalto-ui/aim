@@ -18,14 +18,14 @@ from fastapi.encoders import jsonable_encoder
 from pydantic.error_wrappers import ValidationError
 
 # First-party modules
-from aim.models.models import MessageImage, MessageURL
+from aim.models import MessageImage, MessageURL
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-22"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 

@@ -23,7 +23,7 @@ from pydantic import AnyHttpUrl, BaseModel, Extra, Field, validator
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-22"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 

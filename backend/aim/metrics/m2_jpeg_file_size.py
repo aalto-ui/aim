@@ -64,8 +64,8 @@ Change log:
 from typing import List, Optional, Union
 
 # First-party modules
-from aim.core import image_utils
-from aim.core.constants import GUI_TYPE_DESKTOP, IMAGE_QUALITY_JPEG
+from aim.common import image_utils
+from aim.common.constants import GUI_TYPE_DESKTOP, IMAGE_QUALITY_JPEG
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak"
-__date__ = "2021-02-11"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
