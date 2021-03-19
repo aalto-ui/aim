@@ -7,7 +7,7 @@ Evaluator utility application.
 
 Usage: evaluator.py [-h] [-c <path>] [-v] [-i <path>] [-m <str>] [-p] [-o <path>]
 
-Example usage: python evaluator.py -i data/screenshots/ALEXA_50/ -m m1,m2,m3 -p -o data/evaluations/ALEXA_50/
+Example usage: python evaluator.py -i data/screenshots/DEFAULT/ -m m1,m2,m3 -p -o data/evaluations/DEFAULT/
 """
 
 
