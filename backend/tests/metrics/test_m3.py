@@ -19,7 +19,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m3_distinct_rgb_values import Metric
+from aim.metrics.m3.m3_distinct_rgb_values import Metric
 from tests.common.constants import DATA_TESTS_DIR
 
 # ----------------------------------------------------------------------------

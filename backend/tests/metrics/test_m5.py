@@ -19,7 +19,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m5_figure_ground_contrast import Metric
+from aim.metrics.m5.m5_figure_ground_contrast import Metric
 from tests.common.constants import DATA_TESTS_DIR
 
 # ----------------------------------------------------------------------------

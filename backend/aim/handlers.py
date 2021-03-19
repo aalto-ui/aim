@@ -117,8 +117,10 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 if len(metric_files) > 0:
                     # Import metric module
                     metric_module = importlib.import_module(
-                        "{}{}".format(
-                            re.sub("/", ".", METRICS_DIR), metric_files[0].stem
+                        "{}{}.{}".format(
+                            re.sub("/", ".", METRICS_DIR),
+                            metric,
+                            metric_files[0].stem,
                         )
                     )
 

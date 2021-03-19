@@ -19,7 +19,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m6_contour_congestion import Metric
+from aim.metrics.m6.m6_contour_congestion import Metric
 from tests.common.constants import DATA_TESTS_DIR
 
 # ----------------------------------------------------------------------------
