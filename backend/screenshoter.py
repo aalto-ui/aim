@@ -7,7 +7,7 @@ Screenshoter utility application.
 
 Usage: screenshoter.py [-h] [-c <path>] [-v] [-i <path>] [-w <int>] [-h <int>] [-f] [-o <path>]
 
-Example usage: python screenshoter.py -i data/alexa_top_50_global_sites_2021-01-25.txt -w 1280 -h 800 -o data/screenshots/ALEXA_50/
+Example usage: python screenshoter.py -i data/alexa_top_50_global_sites_2021-01-25.txt -w 1280 -h 800 -f -o data/screenshots/ALEXA_50/
 """
 
 
@@ -29,7 +29,7 @@ from aim.core.constants import (
     SCREENSHOTER_INPUT_FILE,
     SCREENSHOTER_OUTPUT_DIR,
 )
-from aim.tools import Screenshots
+from aim.tools import Screenshot
 
 # ----------------------------------------------------------------------------
 # Metadata
@@ -84,6 +84,14 @@ def init():
         default=constants.IMAGE_HEIGHT_DESKTOP,
     )
     configmanager.parser.add(
+        "-f",
+        help="whether to take full page screenshots",
+        dest="full_page",
+        required=False,
+        action="store_true",
+        default=False,
+    )
+    configmanager.parser.add(
         "-o",
         metavar="<path>",
         help="path to output directory",
@@ -91,14 +99,6 @@ def init():
         type=configmanager.writable_dir,
         required=False,
         default=constants.SCREENSHOTER_OUTPUT_DIR,
-    )
-    configmanager.parser.add(
-        "-f",
-        help="whether to take full page screenshots",
-        dest="full_page",
-        required=False,
-        action="store_true",
-        default=False,
     )
     configmanager.options = configmanager.parser.parse_known_args()[
         0
@@ -119,20 +119,25 @@ def main():
     init()
 
     try:
-        # Evaluate GUI designs
-        screenshots: Screenshots = Screenshots(
+        # Take a screenshot of URLs
+        logger.info(
+            "Take a screenshot of URLs read from '{}'.".format(
+                configmanager.options.input
+            )
+        )
+        screenshot: Screenshot = Screenshot(
             input_file=Path(configmanager.options.input),
             width=configmanager.options.width,
             height=configmanager.options.height,
             full_page=configmanager.options.full_page,
             output_dir=Path(configmanager.options.output),
         )
-        screenshots.take()
+        screenshot.take()
         logger.info(
             "{} out of {} screenshots were successfully taken and stored at '{}'.".format(
-                screenshots.success_counter,
-                len(screenshots.input_urls),
-                screenshots.output_dir,
+                screenshot.success_counter,
+                len(screenshot.input_urls),
+                screenshot.output_dir,
             )
         )
     except Exception as err:

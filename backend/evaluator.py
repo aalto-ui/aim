@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 """
-GUI designs evaluator utility application.
+Evaluator utility application.
 
 
-Usage: gui_designs_evaluator.py [-h] [-c <path>] [-v] [-i <path>] [-m <str>] [-o <path>] [-p]
+Usage: evaluator.py [-h] [-c <path>] [-v] [-i <path>] [-m <str>] [-p] [-o <path>]
 
-Example usage: python gui_designs_evaluator.py -i data/inputs/alexa_top_50_global_sites/ -m m1,m2,m3 -o data/outputs/ -p
+Example usage: python evaluator.py -i data/screenshots/ALEXA_50/ -m m1,m2,m3 -p -o data/evaluations/ALEXA_50/
 """
 
 
@@ -16,22 +16,23 @@ Example usage: python gui_designs_evaluator.py -i data/inputs/alexa_top_50_globa
 # ----------------------------------------------------------------------------
 
 # Standard library modules
+from pathlib import Path
 
 # Third-party modules
 from loguru import logger
 
 # First-party modules
 from aim.core import configmanager, constants, utils
-from aim.evaluators.evaluators import GUIDesignsEvaluator
+from aim.tools import Evaluation
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-26"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
-__title__ = "GUI Designs Evaluator"
+__title__ = "Evaluator"
 __version__ = "1.0"
 
 
@@ -68,6 +69,14 @@ def init():
         default=constants.EVALUATOR_METRICS,
     )
     configmanager.parser.add(
+        "-p",
+        help="whether to plot evaluation results",
+        dest="plot",
+        required=False,
+        action="store_true",
+        default=False,
+    )
+    configmanager.parser.add(
         "-o",
         metavar="<path>",
         help="path to output directory",
@@ -75,14 +84,6 @@ def init():
         type=configmanager.writable_dir,
         required=False,
         default=constants.EVALUATOR_OUTPUT_DIR,
-    )
-    configmanager.parser.add(
-        "-p",
-        help="whether to plot evaluation results",
-        dest="plot",
-        required=False,
-        action="store_true",
-        default=False,
     )
     configmanager.options = configmanager.parser.parse_known_args()[
         0
@@ -103,22 +104,27 @@ def main():
     init()
 
     try:
-        # Evaluate GUI designs
-        evaluator = GUIDesignsEvaluator(
-            input_dir=configmanager.options.input,
+        # Evaluate screenshots
+        logger.info(
+            "Evaluate screenshots stored at '{}'.".format(
+                configmanager.options.input
+            )
+        )
+        evaluation: Evaluation = Evaluation(
+            input_dir=Path(configmanager.options.input),
             metrics=[
                 metric.strip()
                 for metric in configmanager.options.metrics.split(",")
             ],
-            output_dir=configmanager.options.output,
             plot_results=configmanager.options.plot,
+            output_dir=Path(configmanager.options.output),
         )
-        evaluator.evaluate()
+        evaluation.evaluate()
         logger.info(
-            "{} GUI designs at '{}' were evaluated and the results were stored at '{}'.".format(
-                len(evaluator.input_gui_design_files),
-                evaluator.input_dir,
-                evaluator.output_dir,
+            "{} out of {} screenshots were successfully evaluated and the results were stored at '{}'.".format(
+                evaluation.success_counter,
+                len(evaluation.input_screenshot_files),
+                evaluation.output_dir,
             )
         )
     except Exception as err:

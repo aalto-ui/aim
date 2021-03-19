@@ -18,7 +18,7 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-18"
+__date__ = "2021-03-19"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -49,12 +49,12 @@ CANNY_EDGE_DETECTION_PYTHON_MIN_THRESHOLD: int = 0
 CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD: int = 255
 
 # Tools
-EVALUATOR_INPUT_DIR: str = "data/inputs/alexa_top_50_global_sites/"
-EVALUATOR_METRICS: str = "m1,m2,m3,m4,m5,m6"
-EVALUATOR_OUTPUT_DIR: str = "data/outputs/"
-SCREENSHOTER_MIN_HEIGHT_DESKTOP: int = IMAGE_HEIGHT_DESKTOP
 SCREENSHOTER_INPUT_FILE: str = "data/alexa_top_50_global_sites_2021-01-25.txt"
 SCREENSHOTER_OUTPUT_DIR: str = "data/screenshots/ALEXA_50/"
+EVALUATOR_INPUT_DIR: str = SCREENSHOTER_OUTPUT_DIR
+EVALUATOR_EXCLUDE_FILENAME: str = "exclude.txt"
+EVALUATOR_METRICS: str = "m1,m2,m3,m4,m5,m6"
+EVALUATOR_OUTPUT_DIR: str = "data/evaluations/"
 
 # Web application
 ALLOWED_HOSTS: List[str] = [
