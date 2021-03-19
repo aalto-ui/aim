@@ -62,7 +62,7 @@ ALLOWED_HOSTS: List[str] = [
     "interfacemetrics.aalto.fi",
 ]
 SERVER_CONFIG_FILE: str = "server.conf"
-METRICS_CONFIG_FILE: str = "../frontend/src/config/metrics.json"
+METRICS_CONFIG_FILE: str = "../metrics.json"
 METRICS_DIR: str = "aim/metrics/"
 METRICS_FILE_PATTERN: str = "m*/m*_*.py"
 CHROME_DRIVER_BASE_FILE_PATH = "webdrivers/chromedriver"

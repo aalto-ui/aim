@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
 
-import metricConfig from '../config/metrics.json'
+import metricConfig from '../../../metrics.json'
 
 Vue.use(Vuex)
 

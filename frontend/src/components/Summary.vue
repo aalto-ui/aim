@@ -88,7 +88,7 @@
 <script>
 import _ from 'lodash'
 import { mapGetters } from 'vuex'
-import metricConfig from '../config/metrics.json'
+import metricConfig from '../../../metrics.json'
 
 export default {
   data () {
