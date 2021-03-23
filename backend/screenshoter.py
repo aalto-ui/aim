@@ -5,9 +5,9 @@
 Screenshoter utility application.
 
 
-Usage: screenshoter.py [-h] [-c <path>] [-v] [-i <path>] [-w <int>] [-h <int>] [-f] [-o <path>]
+Usage: screenshoter.py [-h] [-c <path>] [-v] [-i <path>] [-sw <int>] [-sh <int>] [-f] [-o <path>]
 
-Example usage: python screenshoter.py -i data/alexa_top_50_global_sites_2021-01-25.txt -w 1280 -h 800 -f -o data/screenshots/DEFAULT/
+Example usage: python screenshoter.py -i data/alexa_top_50_global_sites_2021-01-25.txt -sw 1280 -sh 800 -f -o data/screenshots/DEFAULT/
 """
 
 
@@ -36,7 +36,7 @@ from aim.tools import Screenshot
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-03-23"
 __email__ = "markku.laine@aalto.fi"
 __title__ = "Screenshoter"
 __version__ = "1.0"
@@ -66,7 +66,7 @@ def init():
         default=constants.SCREENSHOTER_INPUT_FILE,
     )
     configmanager.parser.add(
-        "-w",
+        "-sw",
         metavar="<int>",
         help="width of screenshots",
         dest="width",
@@ -75,7 +75,7 @@ def init():
         default=constants.IMAGE_WIDTH_DESKTOP,
     )
     configmanager.parser.add(
-        "-h",
+        "-sh",
         metavar="<int>",
         help="height of screenshots (minimum height with full page screenshots)",
         dest="height",
