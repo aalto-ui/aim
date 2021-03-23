@@ -45,7 +45,7 @@ from aim.common.constants import (
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-03-23"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -86,14 +86,26 @@ class Screenshot:
 
         self.input_urls = [input_url.strip() for input_url in self.input_urls]
 
-    def _get_web_driver(self) -> ChromeWebDriver:
-        options = ChromeOptions()
+    def _get_document_size(self) -> Tuple[int, int]:
+        width: int = self.driver.execute_script(
+            "return document.body.parentNode.scrollWidth"
+        )
+        height: int = self.driver.execute_script(
+            "return document.body.parentNode.scrollHeight"
+        )
+
+        return (width, height)
+
+    # Public methods
+    @staticmethod
+    def get_web_driver() -> ChromeWebDriver:
+        options: ChromeOptions = ChromeOptions()
         options.add_argument("--headless")
         options.add_argument("--force-device-scale-factor")
         options.add_argument("--hide-scrollbars")
         options.add_argument("--disable-gpu")
 
-        plt = platform.system()
+        plt: str = platform.system()
         executable_path: str
         if plt == "Windows":
             executable_path = "{}_windows.exe".format(
@@ -108,23 +120,12 @@ class Screenshot:
             executable_path=executable_path, options=options
         )
 
-    def _get_document_size(self) -> Tuple[int, int]:
-        width: int = self.driver.execute_script(
-            "return document.body.parentNode.scrollWidth"
-        )
-        height: int = self.driver.execute_script(
-            "return document.body.parentNode.scrollHeight"
-        )
-
-        return (width, height)
-
-    # Public methods
     def take(self) -> None:
         # Read input URLs
         self._read_input_urls()
 
         # Get web driver
-        self.driver = self._get_web_driver()
+        self.driver = self.get_web_driver()
 
         # Iterate over input URLs
         self.success_counter = 0

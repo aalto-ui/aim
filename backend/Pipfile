@@ -26,6 +26,7 @@ tornado = "*"
 motor = "*"
 python-resize-image = "*"
 pydantic = "*"
+selenium = "*"
 
 [requires]
 python_version = "3.7"

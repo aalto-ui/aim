@@ -16,14 +16,14 @@ from enum import Enum
 from typing import Dict, Optional, Union
 
 # Third-party modules
-from pydantic import AnyHttpUrl, BaseModel, Extra, Field, validator
+from pydantic import BaseModel, Extra, Field, HttpUrl, validator
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-03-23"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -69,14 +69,14 @@ class MessageBase(MessageConfigBase):
         description="The type of this message.",
         example=MessageType.execute,
     )
-    url: Union[str, AnyHttpUrl] = Field(
+    url: Union[str, HttpUrl] = Field(
         ..., description="The URL of this message.", example="https://aalto.fi"
     )
     data: Optional[str] = Field(
         ...,
         description="The data (PNG image encoded in Base64) of this message.",
     )
-    filename: Optional[Union[pathlib.Path, str]] = Field(
+    filename: Optional[pathlib.Path] = Field(
         ...,
         description="The filename (PNG image) of this message.",
         example="aalto.fi.png",
@@ -100,11 +100,11 @@ class MessageURL(MessageBase):
     The MessageURL model.
     """
 
-    url: AnyHttpUrl = Field(
+    url: HttpUrl = Field(
         ..., description="The URL of this message.", example="https://aalto.fi"
     )
-    # data: Optional[str] = None  # Support for the None type will be in the next release https://github.com/samuelcolvin/pydantic/pull/2149
-    # filename: Optional[str] = None  # Support for the None type will be in the next release https://github.com/samuelcolvin/pydantic/pull/2149
+    data: Optional[str] = None
+    filename: Optional[pathlib.Path] = None
 
     @validator("data")
     def data_must_be_none(cls, v: Optional[str]):

@@ -23,23 +23,27 @@ from urllib.parse import urlparse
 import tornado.ioloop
 import tornado.websocket
 from pydantic.error_wrappers import ValidationError
+from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 from tornado.options import options
 
 # First-party modules
 from aim.common import image_utils
 from aim.common.constants import (
     ALLOWED_HOSTS,
+    IMAGE_HEIGHT_DESKTOP,
+    IMAGE_WIDTH_DESKTOP,
     METRICS_DIR,
     METRICS_FILE_PATTERN,
 )
-from aim.models import MessageBase, MessageImage
+from aim.models import MessageBase, MessageImage, MessageURL
+from aim.tools import Screenshot
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-03-23"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -73,27 +77,32 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
             message_data: Dict[str, Any] = json.loads(message)
 
             # Create message base model
-            msg_base: MessageBase = MessageBase(**message_data)
+            msg: MessageBase = MessageBase(**message_data)
 
             # Create variables
             # server_name: str = options.name
             # session_id: str = uuid.uuid4().hex
+            png_image_base64: str
 
             # Input: URL
-            if msg_base.data is None:
-                logging.error(
-                    "Error: URL input implementation is not available."
+            if msg.data is None:
+                # Create message URL model
+                msg_url: MessageURL = MessageURL(**msg.dict())
+
+                # Take screenshot
+                driver: ChromeWebDriver = Screenshot.get_web_driver()
+                driver.set_window_size(
+                    IMAGE_WIDTH_DESKTOP, IMAGE_HEIGHT_DESKTOP
                 )
-                raise NotImplementedError(
-                    "URL input implementation is not available."
-                )
+                driver.get(msg_url.url)
+                png_image_base64 = driver.get_screenshot_as_base64()
             # Input: image
             else:
                 # Create message image model
-                msg: MessageImage = MessageImage(**msg_base.dict())
+                msg_image: MessageImage = MessageImage(**msg.dict())
 
                 # Crop image
-                png_image_base64: str = image_utils.crop_image(msg.raw_data)
+                png_image_base64 = image_utils.crop_image(msg_image.raw_data)
                 image_utils.write_image(
                     png_image_base64,
                     Path(options.runtime_data_dir)
