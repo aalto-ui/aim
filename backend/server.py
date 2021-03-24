@@ -32,7 +32,7 @@ from aim.handlers import AIMWebSocketHandler
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-03-24"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -46,12 +46,6 @@ define(
     "environment", default="development", help="Runtime environment", type=str
 )
 define("name", default="aim-dev", help="Instance name", type=str)
-define(
-    "runtime_data_dir",
-    default="data/temp",
-    help="Directory to store runtime data",
-    type=str,
-)
 
 
 # ----------------------------------------------------------------------------

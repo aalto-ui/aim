@@ -43,7 +43,7 @@ from aim.tools import Screenshot
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-23"
+__date__ = "2021-03-24"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -103,11 +103,15 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
 
                 # Crop image
                 png_image_base64 = image_utils.crop_image(msg_image.raw_data)
-                image_utils.write_image(
-                    png_image_base64,
-                    Path(options.runtime_data_dir)
-                    / "{}.png".format(options.name),
-                )
+
+            # Push preview
+            self.write_message(
+                {
+                    "type": "preview",
+                    "action": "pushPreview",
+                    "preview": png_image_base64,
+                }
+            )
 
             # Iterate over selected metrics and execute them one by one
             for metric in {k: v for k, v in msg.metrics.items()}:
