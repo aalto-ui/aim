@@ -18,7 +18,7 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-03-24"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -50,10 +50,10 @@ CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD: int = 255
 
 # Tools
 SCREENSHOTER_INPUT_FILE: str = "data/alexa_top_50_global_sites_2021-01-25.txt"
-SCREENSHOTER_OUTPUT_DIR: str = "data/screenshots/DEFAULT/"
+SCREENSHOTER_OUTPUT_DIR: str = "data/screenshots/default/"
 EVALUATOR_INPUT_DIR: str = SCREENSHOTER_OUTPUT_DIR
 EVALUATOR_EXCLUDE_FILENAME: str = "exclude.txt"
-EVALUATOR_OUTPUT_DIR: str = "data/evaluations/DEFAULT/"
+EVALUATOR_OUTPUT_DIR: str = "data/evaluations/default/"
 
 # Web application
 ALLOWED_HOSTS: List[str] = [
@@ -66,3 +66,5 @@ METRICS_CONFIG_FILE: str = "../metrics.json"
 METRICS_DIR: str = "aim/metrics/"
 METRICS_FILE_PATTERN: str = "m*/m*_*.py"
 CHROME_DRIVER_BASE_FILE_PATH = "webdrivers/chromedriver"
+WEBAPP_INPUT_DIR: str = "data/webapp/inputs/"
+WEBAPP_RESULTS_DIR: str = "data/webapp/results/"

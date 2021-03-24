@@ -69,10 +69,10 @@ const getters = {
 }
 
 const actions = {
-  pushResult (context, data) {
-    context.commit('pushResult', {
+  pushResults (context, data) {
+    context.commit('pushResults', {
       metric: data.metric,
-      result: data.result
+      result: data.results
     })
     context.commit('increaseFetchedCount')
     context.commit('updateProgressBarVisibility')
@@ -114,7 +114,7 @@ const mutations = {
     state.display.input = false
     state.generalError = true
   },
-  pushResult (state, payload) {
+  pushResults (state, payload) {
     Vue.set(state.display, 'results', true)
     const result = {}
     result[payload.metric] = payload.result

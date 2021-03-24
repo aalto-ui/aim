@@ -15,6 +15,8 @@ import importlib
 import json
 import logging
 import re
+import time
+import uuid
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 from urllib.parse import urlparse
@@ -34,6 +36,8 @@ from aim.common.constants import (
     IMAGE_WIDTH_DESKTOP,
     METRICS_DIR,
     METRICS_FILE_PATTERN,
+    WEBAPP_INPUT_DIR,
+    WEBAPP_RESULTS_DIR,
 )
 from aim.models import MessageBase, MessageImage, MessageURL
 from aim.tools import Screenshot
@@ -81,7 +85,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
 
             # Create variables
             # server_name: str = options.name
-            # session_id: str = uuid.uuid4().hex
+            session_id: str = uuid.uuid4().hex
             png_image_base64: str
 
             # Input: URL
@@ -103,6 +107,12 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
 
                 # Crop image
                 png_image_base64 = image_utils.crop_image(msg_image.raw_data)
+
+            # Store image (input screenshot)
+            image_utils.write_image(
+                png_image_base64,
+                Path(WEBAPP_INPUT_DIR) / "{}.png".format(session_id),
+            )
 
             # Push preview
             self.write_message(
@@ -138,9 +148,12 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     )
 
                     # Execute metric
-                    result: Optional[List[Union[int, float, str]]] = metric_module.Metric.execute_metric(  # type: ignore
+                    # start_time: float = time.time()
+                    results: Optional[List[Union[int, float, str]]] = metric_module.Metric.execute_metric(  # type: ignore
                         png_image_base64
                     )
+                    # end_time: float = time.time()
+                    # execution_time: float = round(end_time - start_time, 4)
                 # Metric implementation is not available
                 else:
                     logging.error(
@@ -152,12 +165,26 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                         )
                     )
 
+                # Iterate over metric results
+                for count, result in enumerate(results, start=1):  # type: ignore
+                    logging.info("Result: {}".format(result))
+                    if isinstance(
+                        result, str
+                    ):  # str = image encoded in Base64
+                        # Store image (output result)
+                        image_utils.write_image(
+                            result,
+                            Path(WEBAPP_RESULTS_DIR)
+                            / "{}-{}_{}.png".format(session_id, metric, count),
+                        )
+
+                # Push result
                 self.write_message(
                     {
                         "metric": metric,
-                        "result": result,
-                        "type": "result",
-                        "action": "pushResult",
+                        "results": results,
+                        "type": "results",
+                        "action": "pushResults",
                     }
                 )
         except ValidationError as e:
