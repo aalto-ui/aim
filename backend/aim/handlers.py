@@ -17,6 +17,7 @@ import logging
 import re
 import time
 import uuid
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 from urllib.parse import urlparse
@@ -24,12 +25,13 @@ from urllib.parse import urlparse
 # Third-party modules
 import tornado.ioloop
 import tornado.websocket
+from motor.motor_tornado import MotorDatabase
 from pydantic.error_wrappers import ValidationError
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 from tornado.options import options
 
 # First-party modules
-from aim.common import image_utils
+from aim.common import image_utils, utils
 from aim.common.constants import (
     ALLOWED_HOSTS,
     IMAGE_HEIGHT_DESKTOP,
@@ -39,7 +41,7 @@ from aim.common.constants import (
     WEBAPP_INPUT_DIR,
     WEBAPP_RESULTS_DIR,
 )
-from aim.models import MessageBase, MessageImage, MessageURL
+from aim.models import MessageBase, MessageImage, MessageInput, MessageURL
 from aim.tools import Screenshot
 
 # ----------------------------------------------------------------------------
@@ -47,7 +49,7 @@ from aim.tools import Screenshot
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-24"
+__date__ = "2021-03-25"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -58,6 +60,12 @@ __version__ = "1.0"
 
 
 class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
+
+    # Private methods
+    def _save_data(self, collection_name, data):
+        db: MotorDatabase = self.settings["db"]
+        collection = db[collection_name]
+        collection.insert_one(data)
 
     # Public methods
     def check_origin(self, origin: str) -> bool:
@@ -71,10 +79,10 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
             return False
 
     # def open(self):
-    #     logging.info("Connection opened")
+    #     logging.debug("Connection opened")
 
     def on_message(self, message: Union[str, bytes]):
-        # logging.info("Message received: {!r}".format(message))
+        logging.debug("Message received: {!r}".format(message))
 
         try:
             # Load message
@@ -84,12 +92,12 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
             msg: MessageBase = MessageBase(**message_data)
 
             # Create variables
-            # server_name: str = options.name
+            server_name: str = options.name
             session_id: str = uuid.uuid4().hex
             png_image_base64: str
 
             # Input: URL
-            if msg.data is None:
+            if msg.input == MessageInput.url:
                 # Create message URL model
                 msg_url: MessageURL = MessageURL(**msg.dict())
 
@@ -108,10 +116,26 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 # Crop image
                 png_image_base64 = image_utils.crop_image(msg_image.raw_data)
 
-            # Store image (input screenshot)
-            image_utils.write_image(
-                png_image_base64,
-                Path(WEBAPP_INPUT_DIR) / "{}.png".format(session_id),
+            # Store input image
+            input_image_path: Path = Path(WEBAPP_INPUT_DIR) / "{}.png".format(
+                session_id
+            )
+            image_utils.write_image(png_image_base64, input_image_path)
+
+            # Save inputs data
+            self._save_data(
+                "inputs",
+                {
+                    "server": server_name,
+                    "session": session_id,
+                    "datetime": utils.custom_isoformat(datetime.utcnow()),
+                    "type": msg.input,
+                    "url": msg.url,
+                    "filename": msg.filename.name
+                    if msg.filename is not None
+                    else None,
+                    "image": input_image_path.name,
+                },
             )
 
             # Push preview
@@ -125,7 +149,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
 
             # Iterate over selected metrics and execute them one by one
             for metric in {k: v for k, v in msg.metrics.items()}:
-                logging.info("Executing metric {}...".format(metric))
+                logging.debug("Executing metric {}...".format(metric))
 
                 # Locate metric implementation
                 metric_files = [
@@ -148,12 +172,12 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     )
 
                     # Execute metric
-                    # start_time: float = time.time()
+                    start_time: float = time.time()
                     results: Optional[List[Union[int, float, str]]] = metric_module.Metric.execute_metric(  # type: ignore
                         png_image_base64
                     )
-                    # end_time: float = time.time()
-                    # execution_time: float = round(end_time - start_time, 4)
+                    end_time: float = time.time()
+                    execution_time: float = round(end_time - start_time, 4)
                 # Metric implementation is not available
                 else:
                     logging.error(
@@ -165,18 +189,42 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                         )
                     )
 
-                # Iterate over metric results
-                for count, result in enumerate(results, start=1):  # type: ignore
-                    logging.info("Result: {}".format(result))
-                    if isinstance(
-                        result, str
-                    ):  # str = image encoded in Base64
-                        # Store image (output result)
-                        image_utils.write_image(
-                            result,
-                            Path(WEBAPP_RESULTS_DIR)
-                            / "{}-{}_{}.png".format(session_id, metric, count),
-                        )
+                results_modified: Optional[List[Union[int, float, str]]]
+                if results is not None:
+                    # Iterate over metric results
+                    results_modified = []
+                    for count, result in enumerate(results, start=1):
+                        logging.debug("Result: {}".format(result))
+                        # str = image encoded in Base64
+                        if isinstance(result, str):
+                            # Store result image
+                            result_image_path: Path = Path(
+                                WEBAPP_RESULTS_DIR
+                            ) / "{}-{}_{}.png".format(
+                                session_id, metric, count
+                            )
+                            image_utils.write_image(result, result_image_path)
+
+                            # Replace Based64 encoded image with a file path
+                            results_modified.append(result_image_path.name)
+                        # int or float
+                        else:
+                            results_modified.append(result)
+                else:
+                    results_modified = None
+
+                # Save results data
+                self._save_data(
+                    "results",
+                    {
+                        "server": server_name,
+                        "session": session_id,
+                        "datetime": utils.custom_isoformat(datetime.utcnow()),
+                        "metric": metric,
+                        "results": results_modified,
+                        "execution_time": execution_time,
+                    },
+                )
 
                 # Push result
                 self.write_message(
@@ -216,4 +264,4 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
         self.close()
 
     # def on_close(self):
-    #     logging.info("Connection closed")
+    #     logging.debug("Connection closed")

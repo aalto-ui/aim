@@ -23,7 +23,7 @@ from pydantic import BaseModel, Extra, Field, HttpUrl, validator
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-23"
+__date__ = "2021-03-25"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -34,6 +34,11 @@ __version__ = "1.0"
 
 class MessageType(str, Enum):
     execute = "execute"
+
+
+class MessageInput(str, Enum):
+    url = "url"
+    image = "image"
 
 
 # ----------------------------------------------------------------------------
@@ -69,7 +74,12 @@ class MessageBase(MessageConfigBase):
         description="The type of this message.",
         example=MessageType.execute,
     )
-    url: Union[str, HttpUrl] = Field(
+    input: MessageInput = Field(
+        ...,
+        description="The input of this message.",
+        example=MessageInput.url,
+    )
+    url: Optional[HttpUrl] = Field(
         ..., description="The URL of this message.", example="https://aalto.fi"
     )
     data: Optional[str] = Field(
@@ -124,13 +134,7 @@ class MessageImage(MessageBase):
     The MessageImage model.
     """
 
-    url: str = Field(
-        ...,
-        description="The URL of this message.",
-        example="https://aalto.fi",
-        min_length=0,
-        max_length=0,
-    )
+    url: Optional[HttpUrl] = None
     data: str = Field(
         ...,
         description="The data (PNG image encoded in Base64) of this message.",

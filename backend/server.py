@@ -16,11 +16,13 @@ import pathlib
 from typing import Any, Dict
 
 # Third-party modules
+import motor
 import tornado.ioloop
 import tornado.log
 import tornado.options
 import tornado.web
 import tornado.websocket
+from motor.motor_tornado import MotorClient, MotorDatabase
 from tornado.options import define, options
 
 # First-party modules
@@ -41,11 +43,12 @@ __version__ = "1.0"
 # Definitions
 # ----------------------------------------------------------------------------
 
-define("port", default=8888, help="Port to listen on", type=int)
 define(
     "environment", default="development", help="Runtime environment", type=str
 )
 define("name", default="aim-dev", help="Instance name", type=str)
+define("port", default=8888, help="Port to listen on", type=int)
+define("database_uri", default=None, help="Database URI", type=str)
 
 
 # ----------------------------------------------------------------------------
@@ -62,7 +65,10 @@ def parse_options() -> None:
 
 
 def make_app() -> tornado.web.Application:
+    client: MotorClient = motor.motor_tornado.MotorClient(options.database_uri)
+    db: MotorDatabase = client.get_database()
     settings: Dict[str, Any] = {
+        "db": db,
         "debug": True if options.environment == "development" else False,
         "websocket_max_message_size": 5242880,  # 5 MB
     }

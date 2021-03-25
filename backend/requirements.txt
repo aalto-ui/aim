@@ -26,6 +26,7 @@ kiwisolver==1.3.1
 loguru==0.5.3
 matplotlib==3.4.0rc3
 mccabe==0.6.1
+motor==2.3.1
 mypy==0.812
 mypy-extensions==0.4.3
 nodeenv==1.5.0
@@ -43,6 +44,7 @@ pycodestyle==2.7.0
 pycparser==2.20
 pydantic==1.8.1
 pyflakes==2.3.0
+pymongo==3.11.3
 pyOpenSSL==20.0.1
 pyparsing==3.0.0b2
 pytest==6.2.2

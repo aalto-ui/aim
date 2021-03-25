@@ -30,7 +30,7 @@
           <h4 class="alert-heading">Validation Error</h4>
           <hr>
           <p>
-            <strong>Whoops!</strong> We are having some problems with your input, please try again with a different URL or screenshot.
+            <strong>Whoops!</strong> We are having some problems with your input, please try again with a different URL or image.
           </p>
         </div>
       </b-col>
@@ -41,7 +41,7 @@
           <b-input-group prepend="URL">
             <b-form-input id="url-input" type="url" v-model.trim="form.url" required placeholder="https://www.example.com"></b-form-input>
             <b-input-group-append>
-              <b-btn id="btn-url-proceed" type="submit" variant="primary">Proceed</b-btn>
+              <b-btn id="btn-url-apply" type="submit" variant="primary">Apply</b-btn>
             </b-input-group-append>
             <div class="invalid-feedback">
               Please provide a valid URL.
@@ -53,15 +53,15 @@
         - OR -
       </b-col>
       <b-col>
-        <b-form id="aim-screenshot-form" class="needs-validation" novalidate @submit="onSubmitScreenshot">
-          <b-input-group id="screenshot-input-group" prepend="Screenshot">
-            <b-form-file id="screenshot-input" required placeholder="Choose a PNG file..." accept="image/png" @change="onFileSelected"></b-form-file>
+        <b-form id="aim-image-form" class="needs-validation" novalidate @submit="onSubmitImage">
+          <b-input-group id="image-input-group" prepend="Image">
+            <b-form-file id="image-input" required placeholder="Choose a PNG file..." accept="image/png" @change="onFileSelected"></b-form-file>
             <b-input-group-append>
-              <b-btn id="btn-screenshot-proceed" type="submit" variant="primary">Proceed</b-btn>
+              <b-btn id="btn-image-apply" type="submit" variant="primary">Apply</b-btn>
             </b-input-group-append>
           </b-input-group>
           <div v-if="fileTooLarge === false" class="invalid-feedback">
-            Please provide a valid screenshot image.
+            Please provide a valid image.
           </div>
           <div v-if="fileTooLarge" class="invalid-feedback">
             File is too large (max 5 MB).
@@ -395,12 +395,13 @@ export default {
     return {
       selected: {},
       form: {
-        url: '',
+        url: null,
         data: null,
         filename: null
       },
       metricConfig,
-      fileTooLarge: false
+      fileTooLarge: false,
+      input: null
     }
   },
   methods: {
@@ -409,40 +410,49 @@ export default {
       event.preventDefault()
       event.stopPropagation()
 
+      // Update input
+      this.input = 'url'
+
       // Hide validation error
       this.$store.commit('hideValidationError')
 
       // Fix URL, if needed
       this.fixURL()
 
-      // Reset screenshot form
-      this.resetForm(false, true, false)
+      // Reset image form
+      this.resetForm(false, true, false, false)
 
       // Validate URL form
       let form = event.target
-      if ((this.$store.state.generalError === false) && (form.checkValidity() === true)) {
+      if ((this.$store.state.generalError === false) && (form.checkValidity() === true && this.form.url !== null)) {
         this.$store.commit('showMetrics')
+      } else {
+        this.$store.commit('hideMetrics')
       }
       form.classList.add('was-validated')
     },
-    onSubmitScreenshot (event) {
+    onSubmitImage (event) {
       // Prevent the event
       event.preventDefault()
       event.stopPropagation()
+
+      // Update input
+      this.input = 'image'
 
       // Hide validation error
       this.$store.commit('hideValidationError')
 
       // Reset URL form
-      this.resetForm(true, false, false)
+      this.resetForm(true, false, false, false)
 
-      // Validate screenshot form
+      // Validate image form
       let form = event.target
       if ((this.$store.state.generalError === false) && (form.checkValidity() === true && this.form.data !== null && this.form.filename !== null)) {
-        document.querySelector('#screenshot-input-group').classList.remove('is-invalid') // Hack due to the use of Bootstrap's custom image upload
+        document.querySelector('#image-input-group').classList.remove('is-invalid') // Hack due to the use of Bootstrap's custom image upload
         this.$store.commit('showMetrics')
       } else {
-        document.querySelector('#screenshot-input-group').classList.add('is-invalid') // Hack due to the use of Bootstrap's custom image upload
+        document.querySelector('#image-input-group').classList.add('is-invalid') // Hack due to the use of Bootstrap's custom image upload
+        this.$store.commit('hideMetrics')
       }
       form.classList.add('was-validated')
     },
@@ -454,13 +464,14 @@ export default {
       // Fix URL, if needed
       this.fixURL()
 
-      // Validate URL and screenshot forms
+      // Validate URL and image forms
       let urlForm = document.querySelector('#aim-url-form')
-      let screenshotForm = document.querySelector('#aim-screenshot-form')
-      if ((this.$store.state.generalError === false) && (urlForm.checkValidity() === true) || (screenshotForm.checkValidity() === true && this.form.data !== null && this.form.filename !== null)) {
+      let imageForm = document.querySelector('#aim-image-form')
+      if ((this.$store.state.generalError === false) && ((urlForm.checkValidity() === true && this.form.url !== null) || (imageForm.checkValidity() === true && this.form.data !== null && this.form.filename !== null))) {
         // Submit data
         this.$socket.sendObj({
           type: 'execute',
+          input: this.input,
           url: this.form.url,
           data: this.form.data,
           filename: this.form.filename,
@@ -468,8 +479,8 @@ export default {
         })
         this.$store.commit('fetchResults', this.selected)
 
-        // Reset URL and screenshot forms
-        this.resetForm(true, true, true)
+        // Reset URL and image forms
+        this.resetForm(true, true, true, true)
       } else {
         this.$store.commit('hideMetrics')
       }
@@ -477,26 +488,24 @@ export default {
     onFileSelected (event) {
       let thisObj = this
       let file = event.target.files[0]
-      document.querySelector('#screenshot-input ~ .custom-file-label').textContent = file.name // Hack due to a Vue.js's "bug"; filename doesn't get updated on the second upload
-
-      // Reset URL form
-      this.resetForm(true, false, false)
+      document.querySelector('#image-input ~ .custom-file-label').textContent = file.name // Hack due to a Vue.js's "bug"; filename doesn't get updated on the second upload
 
       // Validate file size
       if (this.isFileTooLarge(file)) {
-        document.querySelector('#screenshot-input-group').classList.add('is-invalid') // Hack due to the use of Bootstrap's custom image upload
+        document.querySelector('#image-input-group').classList.add('is-invalid') // Hack due to the use of Bootstrap's custom image upload
         this.form.data = null
         this.form.filename = null
         this.fileTooLarge = true
+        this.$store.commit('hideMetrics')
       } else {
         this.getBase64(file, function (e) {
-          document.querySelector('#screenshot-input-group').classList.remove('is-invalid') // Hack due to the use of Bootstrap's custom image upload
+          document.querySelector('#image-input-group').classList.remove('is-invalid') // Hack due to the use of Bootstrap's custom image upload
           thisObj.form.data = e.target.result
           thisObj.form.filename = file.name
           thisObj.fileTooLarge = false
         })
       }
-      document.querySelector('#aim-screenshot-form').classList.add('was-validated')
+      document.querySelector('#aim-image-form').classList.add('was-validated')
     },
     isFileTooLarge (file) {
       const MAX_FILE_SIZE = 5242880 // 5 MB
@@ -513,23 +522,25 @@ export default {
       }
     },
     fixURL () {
-      this.form.url = this.form.url.toLowerCase()
-      if (!!this.form.url && !/^https?:\/\//i.test(this.form.url)) {
-        document.querySelector('#url-input').value = 'http://' + this.form.url // Hack due to a Vue's "bug"; updating the value of this.form.url doesn't pass validation even though its bound to the form input field
-        this.form.url = 'http://' + this.form.url
+      if (this.form.url !== null) {
+        this.form.url = this.form.url.toLowerCase()
+        if (!!this.form.url && !/^https?:\/\//i.test(this.form.url)) {
+          document.querySelector('#url-input').value = 'http://' + this.form.url // Hack due to a Vue's "bug"; updating the value of this.form.url doesn't pass validation even though its bound to the form input field
+          this.form.url = 'http://' + this.form.url
+        }
       }
     },
-    resetForm (url, screenshot, metrics) {
+    resetForm (url, image, metrics, input) {
       if (url) {
         document.querySelector('#aim-url-form').classList.remove('was-validated')
-        this.form.url = ''
+        this.form.url = null
       }
 
-      if (screenshot) {
-        document.querySelector('#screenshot-input').value = ''
-        document.querySelector('#screenshot-input ~ .custom-file-label').textContent = 'Choose a PNG file...'
-        document.querySelector('#screenshot-input-group').classList.remove('is-invalid')
-        document.querySelector('#aim-screenshot-form').classList.remove('was-validated')
+      if (image) {
+        document.querySelector('#image-input').value = ''
+        document.querySelector('#image-input ~ .custom-file-label').textContent = 'Choose a PNG file...'
+        document.querySelector('#image-input-group').classList.remove('is-invalid')
+        document.querySelector('#aim-image-form').classList.remove('was-validated')
         this.form.data = null
         this.form.filename = null
         this.fileTooLarge = false
@@ -537,6 +548,10 @@ export default {
 
       if (metrics) {
         this.selected = {}
+      }
+
+      if (input) {
+        this.input = null
       }
     }
   },
@@ -641,11 +656,11 @@ header{
   padding-top: 6px;
   padding-bottom: 6px;
 }
-#btn-url-proceed {
+#btn-url-apply {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;  
 }
-#btn-screenshot-proceed {
+#btn-image-apply {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;  
 }
@@ -658,10 +673,10 @@ header{
   border-color: #dc3545;
   box-shadow: none;
 }
-#screenshot-input ~ .custom-file-label {
+#image-input ~ .custom-file-label {
   color: #6D757D;
 }
-#screenshot-input ~ .custom-file-label::after {
+#image-input ~ .custom-file-label::after {
   display: none;
 }
 .input-group.is-invalid ~ .invalid-feedback {
