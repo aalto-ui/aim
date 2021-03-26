@@ -19,6 +19,7 @@ import time
 import uuid
 from datetime import datetime
 from pathlib import Path
+from types import ModuleType
 from typing import Any, Dict, List, Optional, Union
 from urllib.parse import urlparse
 
@@ -49,7 +50,7 @@ from aim.tools import Screenshot
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-25"
+__date__ = "2021-03-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -163,7 +164,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 # Metric implementation is available
                 if len(metric_files) > 0:
                     # Import metric module
-                    metric_module = importlib.import_module(
+                    metric_module: ModuleType = importlib.import_module(
                         "{}{}.{}".format(
                             re.sub("/", ".", METRICS_DIR),
                             metric,
