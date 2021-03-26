@@ -34,7 +34,7 @@ from aim.handlers import AIMWebSocketHandler
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-24"
+__date__ = "2021-03-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -49,6 +49,7 @@ define(
 define("name", default="aim-dev", help="Instance name", type=str)
 define("port", default=8888, help="Port to listen on", type=int)
 define("database_uri", default=None, help="Database URI", type=str)
+# In addition, Tornado provides built-in support for the "logging" (level) option
 
 
 # ----------------------------------------------------------------------------
@@ -88,7 +89,9 @@ def main() -> None:
     app: tornado.web.Application = make_app()
     app.listen(options.port)
     logging.info(
-        "Server is listening on http://localhost:{}".format(options.port)
+        "Server '{}' in {} environment is listening on http://localhost:{}".format(
+            options.name, options.environment, options.port
+        )
     )
 
     # Start application
