@@ -39,8 +39,6 @@ from aim.common.constants import (
     IMAGE_WIDTH_DESKTOP,
     METRICS_DIR,
     METRICS_FILE_PATTERN,
-    WEBAPP_INPUT_DIR,
-    WEBAPP_RESULTS_DIR,
 )
 from aim.models import MessageBase, MessageImage, MessageInput, MessageURL
 from aim.tools import Screenshot
@@ -118,7 +116,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 png_image_base64 = image_utils.crop_image(msg_image.raw_data)
 
             # Store input image
-            input_image_path: Path = Path(WEBAPP_INPUT_DIR) / "{}.png".format(
+            input_image_path: Path = options.data_inputs_dir / "{}.png".format(
                 session_id
             )
             image_utils.write_image(png_image_base64, input_image_path)
@@ -199,10 +197,11 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                         # str = image encoded in Base64
                         if isinstance(result, str):
                             # Store result image
-                            result_image_path: Path = Path(
-                                WEBAPP_RESULTS_DIR
-                            ) / "{}-{}_{}.png".format(
-                                session_id, metric, count
+                            result_image_path: Path = (
+                                options.data_results_dir
+                                / "{}-{}_{}.png".format(
+                                    session_id, metric, count
+                                )
                             )
                             image_utils.write_image(result, result_image_path)
 

@@ -12,7 +12,7 @@ AIM backend server.
 
 # Standard library modules
 import logging
-import pathlib
+from pathlib import Path
 from typing import Any, Dict
 
 # Third-party modules
@@ -48,6 +48,18 @@ define(
 )
 define("name", default="aim-dev", help="Instance name", type=str)
 define("port", default=8888, help="Port to listen on", type=int)
+define(
+    "data_inputs_dir",
+    default=None,
+    help="Directory to store input files",
+    type=Path,
+)
+define(
+    "data_results_dir",
+    default=None,
+    help="Directory to store result files",
+    type=Path,
+)
 define("database_uri", default=None, help="Database URI", type=str)
 # In addition, Tornado provides built-in support for the "logging" (level) option
 
@@ -58,7 +70,7 @@ define("database_uri", default=None, help="Database URI", type=str)
 
 
 def parse_options() -> None:
-    server_config_filepath: pathlib.Path = pathlib.Path(SERVER_CONFIG_FILE)
+    server_config_filepath: Path = Path(SERVER_CONFIG_FILE)
     if server_config_filepath.exists() and server_config_filepath.is_file():
         tornado.options.parse_config_file(SERVER_CONFIG_FILE)
     else:

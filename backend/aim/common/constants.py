@@ -18,7 +18,7 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-24"
+__date__ = "2021-03-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -66,5 +66,3 @@ METRICS_CONFIG_FILE: str = "../metrics.json"
 METRICS_DIR: str = "aim/metrics/"
 METRICS_FILE_PATTERN: str = "m*/m*_*.py"
 CHROME_DRIVER_BASE_FILE_PATH = "webdrivers/chromedriver"
-WEBAPP_INPUT_DIR: str = "data/webapp/inputs/"
-WEBAPP_RESULTS_DIR: str = "data/webapp/results/"
