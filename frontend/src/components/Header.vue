@@ -110,8 +110,6 @@
     header .title-citation {
         font-weight: 700;
     }
-    header .release-citation {
-    }
     header code {
         font-size: 1rem;
         font-family: monospace;

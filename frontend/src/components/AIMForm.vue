@@ -3,9 +3,9 @@
   <b-jumbotron bg-variant="light">
     <template slot="header">
       <b-row>
-          <b-col class="hero-image text-center">
-              <img src="../assets/workflow.png" width="100%" alt="Workflow">
-          </b-col>
+        <b-col class="hero-image text-center">
+          <img src="../assets/workflow.png" width="100%" alt="Workflow">
+        </b-col>
       </b-row>
       <h1 id="service_title" class="display-4">AIM - Aalto Interface Metrics service</h1>
       <h2 class="text-muted">Compute how good your design is!</h2>
@@ -82,7 +82,6 @@
           </b-card-header>
           <b-collapse id="cat-one-accordion" visible role="tabpanel">
             <b-card-body>
-              
               <table class="table table-striped table-bordered table-hover table-sm">
                 <thead>
                   <tr>
@@ -96,7 +95,7 @@
                 </thead>
                 <tbody>
                   <template v-for="metric in metricConfig.categories[0].metrics">
-                    <tr>
+                    <tr :key="metric.id">
                       <td class="text-center">
                         <b-form-checkbox class="metric-checkbox" :id="'metric-cb-' + metric" v-model="selected[metric]"></b-form-checkbox>
                       </td>
@@ -108,7 +107,7 @@
                         [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank">{{ index + 1 }}</a>
+                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
                           </template>
                         ]
                       </td>
@@ -153,7 +152,6 @@
           </b-card-header>
           <b-collapse id="cat-two-accordion" visible role="tabpanel">
             <b-card-body>
-              
               <table class="table table-striped table-bordered table-hover table-sm">
                 <thead>
                   <tr>
@@ -167,7 +165,7 @@
                 </thead>
                 <tbody>
                   <template v-for="metric in metricConfig.categories[1].metrics">
-                    <tr>
+                    <tr :key="metric.id">
                       <td class="text-center">
                         <b-form-checkbox class="metric-checkbox" :id="'metric-cb-' + metric" v-model="selected[metric]"></b-form-checkbox>
                       </td>
@@ -179,7 +177,7 @@
                         [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank">{{ index + 1 }}</a>
+                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
                           </template>
                         ]
                       </td>
@@ -220,7 +218,6 @@
               <font-awesome-icon :icon="metricConfig.categories[2].icon" />
               </span>
               <span class="title">{{ metricConfig.categories[2].name }}</span>
-              
             </div>
           </b-card-header>
           <b-collapse id="cat-three-accordion" visible role="tabpanel">
@@ -238,7 +235,7 @@
                 </thead>
                 <tbody>
                   <template v-for="metric in metricConfig.categories[2].metrics">
-                    <tr>
+                    <tr :key="metric.id">
                       <td class="text-center">
                         <b-form-checkbox class="metric-checkbox" :id="'metric-cb-' + metric" v-model="selected[metric]"></b-form-checkbox>
                       </td>
@@ -250,7 +247,7 @@
                         [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank">{{ index + 1 }}</a>
+                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
                           </template>
                         ]
                       </td>
@@ -295,11 +292,6 @@
           </b-card-header>
           <b-collapse id="cat-four-accordion" visible role="tabpanel">
             <b-card-body>
-              <p><!--
-                These metrics indicate information loss for users with color vision deficiencies.
-                The metrics are physiologically motivated and currently handle anomalous
-                trichromacy and dichromacy. Evidence for the metric come from controlled experiments.
-              --></p>
               <table class="table table-striped table-bordered table-hover table-sm">
                 <thead>
                   <tr>
@@ -313,7 +305,7 @@
                 </thead>
                 <tbody>
                   <template v-for="metric in metricConfig.categories[3].metrics">
-                    <tr>
+                    <tr :key="metric.id">
                       <td class="text-center">
                         <b-form-checkbox class="metric-checkbox" :id="'metric-cb-' + metric" v-model="selected[metric]"></b-form-checkbox>
                       </td>
@@ -325,7 +317,7 @@
                         [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank">{{ index + 1 }}</a>
+                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
                           </template>
                         ]
                       </td>
@@ -362,23 +354,20 @@
       </div>
       <b-btn class="mt-2" size="lg" type="submit" variant="primary">Submit</b-btn>
     </b-form>
-   </b-jumbotron>
-   
-    <div class="mt-2" v-if="display.progressBar">
-      <ProgressBar />
-    </div>
-    <div class="mt-2" v-if="display.summary">
-      <Summary />
-    </div>
-    <div class="mt-2" v-if="display.preview">
-      <Preview />
-    </div>
-    <div class="mt-2" v-if="display.results">
-      <Results />
-    </div>
-    
- 
+  </b-jumbotron>
+  <div class="mt-2" v-if="display.progressBar">
+    <ProgressBar />
   </div>
+  <div class="mt-2" v-if="display.summary">
+    <Summary />
+  </div>
+  <div class="mt-2" v-if="display.preview">
+    <Preview />
+  </div>
+  <div class="mt-2" v-if="display.results">
+    <Results />
+  </div>
+</div>
 </template>
 
 <script>
@@ -579,10 +568,11 @@ table thead th{
 }
 
 #aim-url-form input:-webkit-autofill {
+    box-shadow: 0 0 0 30px white inset;
     -webkit-box-shadow: 0 0 0 30px white inset;
 }
 #aim-form {
-  margin-top: 5rem;  
+  margin-top: 5rem;
 }
 #aim-form svg {
   position: relative;
@@ -622,7 +612,7 @@ header{
   position: relative;
   color: #fff;
   background-color: #7553a0;
-  border: 1px solid #7553a0; 
+  border: 1px solid #7553a0;
   padding: 0px 10px 0px 10px;
   text-align: left;
 }
@@ -658,11 +648,11 @@ header{
 }
 #btn-url-apply {
   border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;  
+  border-bottom-right-radius: 0.25rem;
 }
 #btn-image-apply {
   border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;  
+  border-bottom-right-radius: 0.25rem;
 }
 .was-validated .form-control:valid, .was-validated .form-control:valid:focus,
 .was-validated .custom-file-input:valid ~ .custom-file-label, .was-validated .custom-file-input:valid:focus ~ .custom-file-label {
