@@ -1,7 +1,7 @@
 {
   "name": "aim_frontend",
-  "version": "1.0.0",
-  "description": "AIM service frontend.",
+  "version": "2.0.0",
+  "description": "AIM - Aalto Interface Metrics service",
   "author": "Samuli De Pascale <samuli.depascale@aalto.fi>",
   "private": true,
   "scripts": {
