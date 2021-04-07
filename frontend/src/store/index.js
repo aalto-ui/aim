@@ -72,7 +72,7 @@ const actions = {
   pushResults (context, data) {
     context.commit('pushResults', {
       metric: data.metric,
-      result: data.results
+      results: data.results
     })
     context.commit('increaseFetchedCount')
     context.commit('updateProgressBarVisibility')
@@ -116,9 +116,9 @@ const mutations = {
   },
   pushResults (state, payload) {
     Vue.set(state.display, 'results', true)
-    const result = {}
-    result[payload.metric] = payload.result
-    state.results = _.merge({}, state.results, result)
+    const results = {}
+    results[payload.metric] = payload.results
+    state.results = _.merge({}, state.results, results)
     let newFetching = _.omit(state.fetching, payload.metric)
     state.fetching = newFetching
   },
