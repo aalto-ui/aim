@@ -30,6 +30,7 @@ from loguru import logger
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
+from selenium.webdriver.common.by import By
 
 # First-party modules
 from aim.common import image_utils, utils
@@ -45,7 +46,7 @@ from aim.common.constants import (
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-23"
+__date__ = "2021-04-07"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -142,7 +143,7 @@ class Screenshot:
                     self.driver.set_window_size(
                         document_size[0], document_size[1]
                     )
-                    self.driver.find_element_by_tag_name("body").screenshot(
+                    self.driver.find_element(By.TAG_NAME, "body").screenshot(
                         str(
                             self.output_dir
                             / "{}.png".format(urlparse(input_url).hostname)
