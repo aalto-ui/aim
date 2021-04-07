@@ -60,12 +60,7 @@ from typing import List, Optional, Tuple, Union
 from PIL import Image
 
 # First-party modules
-from aim.common.constants import (
-    COLOR_REDUCTION_THRESHOLD_DESKTOP,
-    COLOR_REDUCTION_THRESHOLD_MOBILE,
-    GUI_TYPE_DESKTOP,
-    GUI_TYPE_MOBILE,
-)
+from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
@@ -73,7 +68,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Kseniia Palin, Thomas Langerak, Yuxi Zhu"
-__date__ = "2021-03-19"
+__date__ = "2021-04-07"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -88,10 +83,14 @@ class Metric(AIMMetricInterface):
     Metric: Distinct RGB values.
     """
 
+    # Private constants
+    _COLOR_REDUCTION_THRESHOLD_DESKTOP: int = 5
+    _COLOR_REDUCTION_THRESHOLD_MOBILE: int = 2
+
     # Public methods
-    @staticmethod
+    @classmethod
     def execute_metric(
-        gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
+        cls, gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
     ) -> Optional[List[Union[int, float, str]]]:
         """
         Execute the metric.
@@ -123,9 +122,9 @@ class Metric(AIMMetricInterface):
         # Set color reduction threshold; five (pixels) for desktop GUIs and
         # two (pixels) for mobile GUIs
         color_reduction_threshold: int = (
-            COLOR_REDUCTION_THRESHOLD_MOBILE
+            cls._COLOR_REDUCTION_THRESHOLD_MOBILE
             if gui_type == GUI_TYPE_MOBILE
-            else COLOR_REDUCTION_THRESHOLD_DESKTOP
+            else cls._COLOR_REDUCTION_THRESHOLD_DESKTOP
         )
 
         # Calculate number of distinct RGB values after color reduction

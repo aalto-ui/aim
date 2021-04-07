@@ -75,13 +75,7 @@ import numpy as np
 from PIL import Image
 
 # First-party modules
-from aim.common.constants import (
-    CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD,
-    GAUSSIAN_KERNEL_SIZE,
-    GAUSSIAN_KERNEL_STANDARD_DEVIATION,
-    GUI_TYPE_DESKTOP,
-    GUI_TYPE_MOBILE,
-)
+from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
@@ -89,7 +83,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2021-03-19"
+__date__ = "2021-04-07"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -104,10 +98,16 @@ class Metric(AIMMetricInterface):
     Metric: Figure-ground contrast.
     """
 
+    # Private constants
+    _CANNY_EDGE_DETECTION_PYTHON_MIN_THRESHOLD: int = 0
+    _CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD: int = 255
+    _GAUSSIAN_KERNEL_SIZE: Tuple[int, int] = (0, 0)
+    _GAUSSIAN_KERNEL_STANDARD_DEVIATION: int = 2
+
     # Public methods
-    @staticmethod
+    @classmethod
     def execute_metric(
-        gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
+        cls, gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
     ) -> Optional[List[Union[int, float, str]]]:
         """
         Execute the metric.
@@ -132,8 +132,8 @@ class Metric(AIMMetricInterface):
         img_l_nparray: np.ndarray = np.array(img_l)
 
         # Gaussian filter parameters
-        ksize: Tuple[int, int] = GAUSSIAN_KERNEL_SIZE
-        sigma: int = GAUSSIAN_KERNEL_STANDARD_DEVIATION
+        ksize: Tuple[int, int] = cls._GAUSSIAN_KERNEL_SIZE
+        sigma: int = cls._GAUSSIAN_KERNEL_STANDARD_DEVIATION
         # Note 1: ksize.width and ksize.height can differ but they both must
         # be positive and odd. Or, they can be zero's and then they are
         # computed from sigma. For details, see
@@ -162,7 +162,9 @@ class Metric(AIMMetricInterface):
         # Canny edge detection parameters
         high_thresholds: List[float] = [
             round(
-                CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD * luminance_level, 2
+                cls._CANNY_EDGE_DETECTION_PYTHON_MAX_THRESHOLD
+                * luminance_level,
+                2,
             )
             for luminance_level in luminance_levels
         ]
