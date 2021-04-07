@@ -65,7 +65,7 @@
                       <template slot="evaluation" slot-scope="data">
                         <div class="scores" :id="data.item.id" v-if="metrics[metric].results[data.index].scores.length > 1" >
                           <div v-for="score in metrics[metric].results[data.index].scores" :key="score.description">
-                           <div class="score" v-show="getJoudgement(score, data.item.value)" :class="score.judgment">
+                           <div class="score" v-show="getJudgement(score, data.item.value)" :class="score.judgment">
                               {{score.description}}
                               <template v-if="(score.icon[0]!=null)">
                                 <font-awesome-icon :icon="score.icon" />
@@ -151,15 +151,12 @@ export default {
     resetForm () {
       this.$store.commit('resetState')
     },
-    getJoudgement (score, value) {
-      // console.log(`---- getJoudgement Res ----`)
-      // console.log(score, value)
+    getJudgement (score, value) {
       if (score.range[0] === null) {
         return false
       }
       const min = score.range[0]
       const max = score.range[1]
-      // console.log(value)
       return (
         min <= value && (max >= value || max === null)
       )

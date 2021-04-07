@@ -49,7 +49,7 @@
                     </a>
                   </div>
                   <template v-for="(score) in result.scores" v-if="result.scores.length > 1">                        
-                    <div class="score" v-show="getJoudgement(score, results[metric][i].value)"> 
+                    <div class="score" v-show="getJudgement(score, results[metric][i].value)"> 
                       <div class="description" :class="score.judgment" >
                         {{score.description}}
                         <template v-if="(score.icon[0]!=null)">
@@ -109,7 +109,6 @@ export default {
       )
     },
     metricLoading () {
-      // console.log(this.$store.state.fetchingCount)
       if (this.$store.state.fetchingCount === this.$store.state.fetchedCount) {
         return true
       }
@@ -121,15 +120,12 @@ export default {
     resetForm () {
       this.$store.commit('resetState')
     },
-    getJoudgement (score, value) {
-      // console.log(`---- getJoudgement Sum ----`)
-      // console.log(score, value)
+    getJudgement (score, value) {
       if (score.range[0] === null) {
         return false
       }
       const min = score.range[0]
       const max = score.range[1]
-      // console.log(value)
       return (
         min <= value && (max >= value || max === null)
       )
