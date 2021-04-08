@@ -7,7 +7,7 @@ Evaluator utility application.
 
 Usage: evaluator.py [-h] [-c <path>] [-v] [-i <path>] [-m <str>] [-p] [-o <path>]
 
-Example usage: python evaluator.py -i data/screenshots/DEFAULT/ -m m1,m2,m3 -p -o data/evaluations/DEFAULT/
+Example usage: python evaluator.py -i data/screenshots/default/ -m m1,m2,m3 -p -o data/evaluations/default/
 """
 
 
@@ -30,7 +30,7 @@ from aim.tools import Evaluation
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-04-08"
 __email__ = "markku.laine@aalto.fi"
 __title__ = "Evaluator"
 __version__ = "1.0"
