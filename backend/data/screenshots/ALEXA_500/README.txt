@@ -17,11 +17,12 @@ Accept-Language: en-US,en;q=0.9
 
 Method
 ======
-Full screen screenshot of landing page: command + shift + 3
+Full screen screenshot of landing page: command + shift + 3 (Screenshot.app)
 Language: US English (if possible)
 Location: United States (if possible), IP in Finland
 Accept all cookies, close all popups
 Country-specific websites use that language
+URLs were extracted on April 9, 2021
 Screenshots were taken on April 11-13, 2021
 Exclude: country-specific versions, service not available in your country, subdomains, forbidden, unavailable
 

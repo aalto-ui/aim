@@ -82,8 +82,8 @@
                               </template>
                               <h4>Your score: {{ row.item.value }}</h4>
                               <hr />
-                              <p>The histogram below shows the results of this metric for <em>Alexa top 500 global sites</em>. The list of sites was retrieved from <a href="https://www.alexa.com/topsites" target="_blank">https://www.alexa.com/topsites</a> on July 2, 2018 and their respective GUI designs were evaluated on December 18-19, 2018<sup>*</sup>.</p>
-                              <img class="histogram" :src="'/static/histograms/' + row.item.id + '.png'" />
+                              <p>The histogram below shows the results of this metric for <em>Alexa Top 500 Global Sites</em>. The list of sites was retrieved from <a href="https://www.alexa.com/topsites" target="_blank">https://www.alexa.com/topsites</a> on April 9, 2021 and their respective GUI designs were evaluated on April 11-13, 2021<sup>*</sup>.</p>
+                              <img class="histogram" :src="'/static/histograms/' + row.item.id + '_histogram.png'" />
                               <p style="font-size: 11px;"><sup>*</sup>Country-specific, non-representative, and non-relevant sites were excluded from the list.</p>
                             </b-modal>
                           </template>
