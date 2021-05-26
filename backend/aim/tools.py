@@ -12,7 +12,6 @@ Tools.
 
 # Standard library modules
 import importlib
-import json
 import platform
 import re
 import time
@@ -46,7 +45,7 @@ from aim.common.constants import (
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-04-07"
+__date__ = "2021-05-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -193,7 +192,10 @@ class Evaluation:
         self.plot_results: bool = plot_results
         self.results: Optional[List[Dict[str, Any]]] = []
         self.output_dir: Path = output_dir
-        self.output_csv_file: Path = self.output_dir / "results.csv"
+        self.output_results_csv_file: Path = self.output_dir / "results.csv"
+        self.output_quantiles_csv_file: Path = (
+            self.output_dir / "quantiles.csv"
+        )
         self.success_counter: int = 0
         self.metrics_configurations: Dict[
             str, Any
@@ -222,10 +224,12 @@ class Evaluation:
         ]
 
     def _read_previous_results(self):
-        # Get output CSV file (previous results)
-        if self.output_csv_file.exists():
+        # Get output results CSV file (previous results)
+        if self.output_results_csv_file.exists():
             # Create DataFrame
-            results_df: pd.DataFrame = pd.read_csv(self.output_csv_file)
+            results_df: pd.DataFrame = pd.read_csv(
+                self.output_results_csv_file
+            )
 
             # Remove unfinished evaluation rows
             results_df = results_df.dropna()
@@ -322,9 +326,10 @@ class Evaluation:
                 # Append results
                 self.results.append(results_row)
 
-                # Precaution against crashes: save results after each screenshot
-                # evaluation instead of after completing all of them
-                self._save_results()
+                # Precaution against crashes: save results and quantiles
+                # after each screenshot evaluation instead of after
+                # completing all of them
+                self._save_results_and_quantiles()
             except Exception as err:
                 logger.error(
                     "Failed to evaluate a screenshot of {}".format(
@@ -335,7 +340,7 @@ class Evaluation:
             else:
                 self.success_counter += 1
 
-    def _save_results(self):
+    def _save_results_and_quantiles(self):
         # Create DataFrame
         results_df: pd.DataFrame = pd.DataFrame(self.results)
 
@@ -353,9 +358,12 @@ class Evaluation:
             "read_image_time",
         ] + cols
         results_df = results_df[cols]
+        quantiles_df = results_df.quantile([0.25, 0.5, 0.75])
+        quantiles_df = quantiles_df.round(decimals=4)
 
-        # Save results
-        results_df.to_csv(self.output_csv_file, index=False)
+        # Save results and quantiles
+        results_df.to_csv(self.output_results_csv_file, index=False)
+        quantiles_df.to_csv(self.output_quantiles_csv_file, index=True)
 
     def _reformat_large_tick_values(self, tick_val, pos):
         """
@@ -395,9 +403,9 @@ class Evaluation:
     def _plot_results(self):
         # Plot results
         if self.plot_results:
-            # Get output CSV file (evaluation results)
+            # Get output results CSV file (evaluation results)
             evaluation_results_df = pd.read_csv(
-                self.output_csv_file,
+                self.output_results_csv_file,
                 header=0,
                 dtype={"filename": "str"},
                 parse_dates=[1],
