@@ -35,7 +35,7 @@ const getters = {
         const metricResults = []
         state.results[key].forEach((result, index) => {
           if (metrics[key].results[index].type === 'float') {
-            result = parseFloat(result).toFixed(2)
+            result = parseFloat(result).toFixed(4)
           }
           metricResults.push({
             id: metrics[key].results[index].id,

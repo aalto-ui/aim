@@ -28,7 +28,7 @@
                         References: [
                         <template v-for="(reference, index) in metrics[metric].references">
                           <template v-if="index > 0">, </template>
-                          <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank">{{ index + 1 }}</a>
+                          <a :href="reference.url" :title="reference.title" target="_blank">{{ index + 1 }}</a>
                         </template>
                         ]
                       </p>
@@ -62,7 +62,7 @@
                           <template slot="evaluation" slot-scope="data">
                             <div class="scores" :id="data.item.id" v-if="metrics[metric].results[data.index].scores.length > 1" >
                               <div v-for="score in metrics[metric].results[data.index].scores" :key="score.description">
-                                <div class="score" v-show="getJudgement(score, data.item.value)" :class="score.judgment">
+                                <div class="score" v-show="getJudgment(score, data.item.value)" :class="score.judgment">
                                   {{score.description}}
                                   <template v-if="(score.icon[0]!=null)">
                                     <font-awesome-icon :icon="score.icon" />
@@ -126,7 +126,24 @@ export default {
     return {
       categories: metricConfig.categories,
       metrics: metricConfig.metrics,
-      resultTableFields: ['result', 'value', 'evaluation', 'show_details']
+      resultTableFields: [
+        {
+          key: 'result',
+          thStyle: 'width: 50%'
+        },
+        {
+          key: 'value',
+          thStyle: 'width: 15%'
+        },
+        {
+          key: 'evaluation',
+          thStyle: 'width: 15%'
+        },
+        {
+          key: 'show_details',
+          thStyle: 'width: 20%'
+        }
+      ]
     }
   },
   computed: mapGetters({
@@ -145,14 +162,14 @@ export default {
     resetForm () {
       this.$store.commit('resetState')
     },
-    getJudgement (score, value) {
+    getJudgment (score, value) {
       if (score.range[0] === null) {
         return false
       }
       const min = score.range[0]
       const max = score.range[1]
       return (
-        min <= value && (max >= value || max === null)
+        min <= value && (value <= max || max === null)
       )
     }
   },
@@ -161,7 +178,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 
 .component-section{
   margin-bottom: 40px;

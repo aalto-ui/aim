@@ -107,7 +107,7 @@
                         [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
+                            <a :href="reference.url" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
                           </template>
                         ]
                       </td>
@@ -177,7 +177,7 @@
                         [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
+                            <a :href="reference.url" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
                           </template>
                         ]
                       </td>
@@ -247,7 +247,7 @@
                         [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
+                            <a :href="reference.url" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
                           </template>
                         ]
                       </td>
@@ -317,7 +317,7 @@
                         [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="'/static/publications/' + reference.fileName" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
+                            <a :href="reference.url" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
                           </template>
                         ]
                       </td>
@@ -708,7 +708,7 @@ hr {
 }
 
 th{
-    font-weight: normal;
+    font-weight: bold;
     font-size: 0.9rem;
     color: #333;
 }

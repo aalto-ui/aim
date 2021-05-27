@@ -35,7 +35,7 @@
             <div class="metric">
               <div class="title text-primary">
                 <a :href="'#'+ metrics[metric].id" >
-                  <div class="inner" :class="{'up': category.evaluation=='good','down': category.evaluation=='bad'}" >
+                  <div class="inner">
                     {{metrics[metric].name}}
                     <font-awesome-icon :icon="['fas', 'angle-down']" />
                   </div>
@@ -49,7 +49,7 @@
                     </a>
                   </div>
                   <template v-for="(score) in result.scores" v-if="result.scores.length > 1">                        
-                    <div class="score" v-show="getJudgement(score, results[metric][i].value)"> 
+                    <div class="score" v-show="getJudgment(score, results[metric][i].value)">
                       <div class="description" :class="score.judgment" >
                         {{score.description}}
                         <template v-if="(score.icon[0]!=null)">
@@ -120,7 +120,7 @@ export default {
     resetForm () {
       this.$store.commit('resetState')
     },
-    getJudgement (score, value) {
+    getJudgment (score, value) {
       if (score.range[0] === null) {
         return false
       }

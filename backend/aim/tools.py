@@ -45,7 +45,7 @@ from aim.common.constants import (
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-05-26"
+__date__ = "2021-05-27"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -235,7 +235,7 @@ class Evaluation:
             results_df = results_df.dropna()
 
             # Convert DataFrame to List
-            self.results = results_df.to_dict("records")
+            self.results = results_df.to_dict(orient="records")
 
     def _execute_metrics(self):
         # Iterate over input screenshot files
@@ -358,6 +358,7 @@ class Evaluation:
             "read_image_time",
         ] + cols
         results_df = results_df[cols]
+        results_df = results_df.sort_values(by=["filename"])
         quantiles_df = results_df.quantile([0.25, 0.5, 0.75])
         quantiles_df = quantiles_df.round(decimals=4)
 

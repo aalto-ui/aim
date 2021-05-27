@@ -35,7 +35,7 @@ References:
         Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
         doi: https://doi.org/10.1145/2598153.2598173
 
-    4.  Reber, R., Wurtz, P., and Zimmermann, T.D. (2004). Exploring "fringe"
+    4.  Reber, R., Wurtz, P., and Zimmermann, T.D. (2004). Exploring "Fringe"
         Consciousness: The Subjective Experience of Perceptual Fluency and
         its Objective Bases. Consciousness and Cognition, 13(1), 47-60.
         doi: https://doi.org/10.1016/S1053-8100(03)00049-7
@@ -83,7 +83,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2021-04-07"
+__date__ = "2021-05-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
