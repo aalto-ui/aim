@@ -566,6 +566,24 @@ export default {
 table thead th{
   word-break: break-word;
 }
+table thead th:nth-child(1){
+  width: 10%;
+}
+table thead th:nth-child(2){
+  width: 30%;
+}
+table thead th:nth-child(3){
+  width: 18%;
+}
+table thead th:nth-child(4){
+  width: 12%;
+}
+table thead th:nth-child(5){
+  width: 12%;
+}
+table thead th:nth-child(6){
+  width: 18%;
+}
 
 #aim-url-form input:-webkit-autofill {
     box-shadow: 0 0 0 30px white inset;
