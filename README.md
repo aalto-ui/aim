@@ -193,7 +193,7 @@ python screenshoter.py -i data/screenshots/ALEXA_500/urls.csv -sw 1280 -sh 800 -
 
 ## Evaluator App <a name="evaluator"></a>
 
-AIM backend also provides a utility app for evaluating GUI designs (i.e., web page screenshots) against seelected metrics. The app generates two CSV files, `results.csv` and `quantiles.csv`, with evaluation results and statistics, respectively. Optionally, it also generates histogram figures for each metric. To configure and run the app, go to the [backend](./backend/) directory and follow the instructions below.
+AIM backend also provides a utility app for evaluating GUI designs (i.e., web page screenshots) against selected metrics. The app generates two CSV files, `results.csv` and `quantiles.csv`, with evaluation results and statistics, respectively. Optionally, it also generates histogram figures for each metric. To configure and run the app, go to the [backend](./backend/) directory and follow the instructions below.
 
 ### Configuration
 
@@ -217,6 +217,8 @@ Example of evaluating GUI designs:
 ```
 python evaluator.py -i data/screenshots/ALEXA_500/ -m m1,m2,m3 -p -o data/evaluations/results/
 ```
+
+**Note:** A set of screenshots in the input directory can be excluded from the evaluation by listing their file names in the `exclude.txt` file.
 
 
 ## Utility Tools
@@ -309,6 +311,11 @@ Run all pre-commit hooks against specific files:
 ```
 pre-commit run --files [FILES [FILES ...]]
 ```
+
+
+## Troubleshooting
+
+1. **PROBLEM:** Running `mypy` fails and the following error message is shown *./venv/lib/python3.7/site-packages is in the PYTHONPATH. Please change directory so it is not.* **SOLUTION:** Create your virtual environment outside of the AIM backend directory. For example, `virtualenv ../venv`. Mypy 0.810 will include the `--exclude` argument to address this issue (see [pull request #9992](https://github.com/python/mypy/pull/9992)).
 
 
 ## Contributing
