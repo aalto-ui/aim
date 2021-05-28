@@ -585,6 +585,10 @@ table thead th:nth-child(6){
   width: 18%;
 }
 
+table tbody td:nth-child(2) svg{
+  margin-bottom: 6px;
+}
+
 #aim-url-form input:-webkit-autofill {
     box-shadow: 0 0 0 30px white inset;
     -webkit-box-shadow: 0 0 0 30px white inset;
