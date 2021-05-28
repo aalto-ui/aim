@@ -12,7 +12,8 @@ AIM has been designed from the ground-up with extensibility in mind. As a result
 3. The latter file is the entry point for your metric and it must implement the `AIMMetricInterface`, specified in the [interfaces.py](./backend/aim/metrics/interfaces.py) file. The easiest way to get started is to copy paste the code from an existing metric file (e.g., `m1/m1_png_file_size.py`) and modify it according to your needs. **Note:** Remember to include extensive documentation to your metric.
 4. For testing your metric, create a new Python file within the AIM backend [tests](./backend/tests/metrics/) directory. For example, `test_m7.py`.
 5. Implement unit tests within the file. Again, the easiest way to get started is to copy paste the code from an existing unit test file (e.g., `test_m1.py`) and modify it according to your needs. **Note:** You might need to include metric-specific test files within the AIM backend [data](./backend/data/tests/) directory.
-6. Run the test file (see [Tests](./README.md/#tests)).
+6. Run the utility tools to unify and improve code quality (see [Utility Tools](./README.md/#tools))
+7. Run the test file (see [Tests](./README.md/#tests)).
 
 In addition to the metric implementation, the metric must be registered into the system. This is done by editing the [metrics.json](./metrics.json) file.
 

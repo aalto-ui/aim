@@ -221,9 +221,9 @@ python evaluator.py -i data/screenshots/ALEXA_500/ -m m1,m2,m3 -p -o data/evalua
 **Note:** A set of screenshots in the input directory can be excluded from the evaluation by listing their file names in the `exclude.txt` file.
 
 
-## Utility Tools
+## Utility Tools <a name="tools"></a>
 
-In addition, AIM backend supports the following utility tools to (i) ease development and (ii) improve code quality. Their installation and use is optional, but highly recommended.
+In addition, AIM backend supports the following utility tools to (i) ease development and (ii) unify and improve code quality. Their installation and use is optional, but highly recommended.
 
 - **isort.** Python utility to automatically sort imports. https://pypi.org/project/isort/
 - **Black.** Python code formatter. https://pypi.org/project/black/
