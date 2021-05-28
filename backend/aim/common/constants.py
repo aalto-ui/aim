@@ -18,7 +18,7 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-04-07"
+__date__ = "2021-05-28"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -41,11 +41,11 @@ GUI_TYPE_DESKTOP: int = 0
 GUI_TYPE_MOBILE: int = 1
 
 # Tools
-SCREENSHOTER_INPUT_FILE: str = "data/alexa_top_50_global_sites_2021-01-25.txt"
-SCREENSHOTER_OUTPUT_DIR: str = "data/screenshots/default/"
-EVALUATOR_INPUT_DIR: str = SCREENSHOTER_OUTPUT_DIR
+SCREENSHOTER_INPUT_FILE: str = "data/screenshots/ALEXA_500/urls.csv"
+SCREENSHOTER_OUTPUT_DIR: str = "data/screenshots/results/"
+EVALUATOR_INPUT_DIR: str = "data/screenshots/ALEXA_500/"
 EVALUATOR_EXCLUDE_FILENAME: str = "exclude.txt"
-EVALUATOR_OUTPUT_DIR: str = "data/evaluations/default/"
+EVALUATOR_OUTPUT_DIR: str = "data/evaluations/results/"
 
 # Web application
 ALLOWED_HOSTS: List[str] = [

@@ -1,50 +1,118 @@
-![interfacemetrics.aalto.fi](./aim_frontend/src/assets/workflow.png)
+![interfacemetrics.aalto.fi](./frontend/src/assets/workflow.png)
 
 # Aalto Interface Metrics (AIM)
 
-Aalto Interface Metrics (AIM) is a new service that lets you automatically test the usability and aesthetics of your websites using several verified user interface metrics. Simply enter a webpage URL or upload a screenshot, and select desired metrics to get started. AIM segments the page, and displays a preview. As results are computed, they are presented along with detailed explanations, and histograms for comparison. AIM is fully open-sourced, and we invite you to extend the service with your own contributions. Head over to [interfacemetrics.aalto.fi](https://interfacemetrics.aalto.fi/) to give it a try, and for more information.
+**Aalto Interface Metrics (AIM)** is a new service that lets you automatically test the usability and aesthetics of your website using several verified user interface metrics. Simply enter a web page URL or upload a screenshot, and select desired metrics to get started. AIM segments the page, and displays a preview. As results are computed, they are presented along with detailed explanations, and histograms for comparison. AIM is fully open-sourced, and we invite you to extend the service with your own contributions. Head over to [interfacemetrics.aalto.fi](https://interfacemetrics.aalto.fi/) to give it a try, and for more information.
 
 
-## Architecture and Technologies
+## Architecture
 
-AIM's codebase is divided into four distinct parts:
+AIM codebase is divided into three distinct parts:
 
-* [Frontend - web application](./aim_frontend/)
-* [Backend - web application](./aim_backend/)
-* [Metrics library](./aim_metrics/)
-* [Segmentation script](./aim_segmentation/)
+* [Backend - web application](./backend/)
+* [Frontend - web application](./frontend/)
+* [Legacy - miscellaneous files](./legacy/)
 
-The web application's frontend is built with [Vue.js](https://vuejs.org/), whereas the backend is based on [Tornado](http://www.tornadoweb.org/). The frontend and the backend communicate with each other via [WebSocket](https://tools.ietf.org/html/rfc6455).
+The backend is written in Python using the [Tornado](http://www.tornadoweb.org/) web application framework having [MongoDB](https://www.mongodb.com/) as a database, whereas the frontend is built with [Vue.js](https://vuejs.org/). The backend and the frontend communicate with each other in real-time via [WebSocket](https://tools.ietf.org/html/rfc6455). The legacy folder contains miscellaneous files of AIM version 1 that have not been integrated into the new AIM version yet.
 
-### Depencencies
-
-The metrics library and the segmentation script are both dependencies for the web application's backend. Other dependencies include [Node.js](https://nodejs.org/) + [npm](https://www.npmjs.com/) (frontend), **[Python 2.7](https://www.python.org/)** + [pip](https://pypi.org/project/pip/) (backend), and [MongoDB](https://www.mongodb.com/) (database). In addition, the backend depends on [Headless Chrome](https://www.google.com/chrome/) and [layout-learning](./aim_backend/bin/layout-learning). The former is used to capture web page screenshots and the latter offers an implementation for the visual search performance metric (needs to be compiled under the target platform, only Linux is available for now).
+The most important files and folders in the AIM codebase are:
+```
+.
+├── backend               : AIM Backend files
+│   ├── aim               : Source code (incl. metrics)
+│   ├── data              : Data files (incl. datasets)
+│   ├── tests             : Unit tests
+│   ├── webdrivers        : Web drivers
+│   ├── evaluator.py      : Evaluator utility app
+│   ├── screenshoter.py   : Screenshoter utility app
+│   ├── server.conf       : Server configuration file
+│   └── server.py         : Server app
+├── frontend              : AIM frontend files
+│   ├── build             : Build scripts
+│   ├── config            : Configuration files
+│   ├── src               : Sources code (incl. assets)
+│   ├── static            : Static files (incl. histograms)
+│   └── test              : Unit tests, etc.
+├── legacy                : AIM legacy files (version 1)
+├── metrics.json          : AIM metrics configuration file
+├── ...
+.
+```
 
 
 ## Installation
 
+Clone the [AIM git repository](https://github.com/aalto-ui/aim) and checkout the `aim2` branch:
+```
+git clone https://github.com/aalto-ui/aim.git
+cd aim
+git checkout aim2
+```
+
+### Dependencies
+
+Make sure you have the following software already installed on your computer before proceeding!
+
+The backend dependencies include [Python 3.7+](https://www.python.org/), [pip](https://pypi.org/project/pip/), and [MongoDB](https://www.mongodb.com/). In addition, it is highly recommended to install [virtualenv](https://pypi.org/project/virtualenv/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment (see [instructions](#installation_backend)). Other dependencies include [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) for the frontend and [git](https://git-scm.com/) to track changes made to the codebase.
+
 ### Database
 
-Start by creating the `aim` database in MongoDB with the following two collections under it: `screenshots` and `results`.
+Create a new database called `aim` in [MongoDB](https://www.mongodb.com/) with the following two collections in it: `inputs` and `results`.
 
-### Backend
+### Backend <a name="installation_backend"></a>
 
-Configure backend environment variables for [development](./aim_backend/configs/development.conf), [test](./aim_backend/configs/test.conf), and [production](./aim_backend/configs/production.conf). Next, go to the [aim_backend](./aim_backend/) directory, and create and activate a new Python *virtual environment* (if needed). The final step involves running the following commands:
+Go to the [backend](./backend/) directory and configure the server by editing the [server.conf](./backend/server.conf) file, especially the `database_uri` property.
 
-```bash
-# Install required packages
-pip install ../aim_metrics
-pip install ../aim_segmentation
+#### Working with `virtualenv`
+
+Create a new virtual environment:
+```
+virtualenv ../venv
+```
+
+Activate the virtual environment:
+```
+source ../venv/bin/activate
+```
+
+Install all dependencies, including development packages:
+```
 pip install -r requirements.txt
-pip install opencv-python
+```
+
+Re-activate the virtual environment to update paths (see [Stack Overflow](https://stackoverflow.com/questions/35045038/how-do-i-use-pytest-with-virtualenv) for details):
+```
+deactivate && source ../venv/bin/activate
+```
+
+To deactivate the virtual environment, run:
+```
+deactivate
+```
+
+#### Working with `Pipenv`
+
+Install all dependencies, including development packages:
+```
+pipenv install --dev
+```
+
+Activate your Pipenv environment:
+```
+pipenv shell
+```
+
+To deactivate your Pipenv environment, run:
+```
+exit
 ```
 
 ### Frontend
 
-Configure frontend environment variables for [development](./aim_frontend/config/dev.env.js), [test](./aim_frontend/config/test.env.js), and [production](./aim_frontend/config/prod.env.js). Then, go to the [aim_frontend](./aim_frontend/) directory and run the following command:
+Go to the [frontend](./frontend/) directory and configure the web application by editing the files in the [config](./frontend/config/) directory, if needed.
 
-```bash
-# Install required packages
+Then, in that directory, run the following command to install all dependencies:
+```
 npm install
 ```
 
@@ -53,36 +121,194 @@ npm install
 
 ### Backend
 
-To run the backend server, go to the [aim_backend](./aim_backend/) directory and execute:
-
-```bash
-# Start the server
-python uimetrics_backend/main.py
+To start the backend server, go to the [backend](./backend/) directory and run:
+```
+python server.py
 ```
 
 ### Frontend
 
-Go to the [aim_frontend](./aim_frontend/) directory, and run the following command:
-
-```bash
-# Serve with hot reload at localhost:8080
+To start the frontend HTTP server in development mode, go to the [frontend](./frontend/) directory and run:
+```
 npm run dev
 ```
-To build the frontend for production:
 
-```bash
-# Build for production with minification
+To build the frontend for production, run the following command in the same directory:
+```
 npm run build
 ```
 
 After the build is complete, the files (for production) can be found under the newly created `dist` directory. These files are meant to be served over an HTTP server, such as [Apache HTTP Server](https://httpd.apache.org/).
 
-It is highly recommended to use a *load balancer* (e.g., Apache HTTP Server) in a production environment, as certain metrics are extremely CPU intensive. This means that the backend needs to be launched with multiple instances, each listening to a different port. A process manager (e.g., [pm2](http://pm2.keymetrics.io/)) will come in handy at that point. Also, define the `AIM_ENV` environment variable on the production server and set its value to "production" (defaults to "development").
+It is highly recommended to use a *load balancer* (e.g., Apache HTTP Server) in a production environment, as certain metrics are extremely CPU intensive. This means that the backend needs to be launched with multiple instances, each listening to a different port. A process manager (e.g., [pm2](http://pm2.keymetrics.io/)) will come in handy at that point.
 
 
-## AIM 2 Metrics
+## Tests <a name="tests"></a>
 
-Go to the [aim2_metrics](./aim2_metrics/) directory and read [README.md](./aim2_metrics/README.md) for details.
+AIM backend uses [pytest](https://pypi.org/project/pytest/), a Python testing framework, to run tests on the backend source code, including metrics. To configure and run the tests, go to the [backend](./backend/) directory and follow the instructions below.
+
+### Configuration
+
+Configure pytest, if needed:
+```
+nano pytest.ini
+```
+
+### Usage
+
+Run all tests:
+```
+pytest .
+```
+
+Run a specific test file:
+```
+pytest [FILEPATH]
+```
+
+
+## Screenshoter App <a name="screenshoter"></a>
+
+AIM backend provides a utility app for taking web page screenshots in specified dimensions (i.e., width, height, and/or full page). To configure and run the app, go to the [backend](./backend/) directory and follow the instructions below.
+
+### Configuration
+
+Configure [Loguru](https://pypi.org/project/loguru/), if needed:
+```
+nano loguru.ini
+```
+
+### Usage
+
+Show the help message:
+```
+python screenshoter.py -h
+```
+
+Example of taking web page screenshots:
+```
+python screenshoter.py -i data/screenshots/ALEXA_500/urls.csv -sw 1280 -sh 800 -f -o data/screenshots/results/
+```
+
+
+## Evaluator App <a name="evaluator"></a>
+
+AIM backend also provides a utility app for evaluating GUI designs (i.e., web page screenshots) against seelected metrics. The app generates two CSV files, `results.csv` and `quantiles.csv`, with evaluation results and statistics, respectively. Optionally, it also generates histogram figures for each metric. To configure and run the app, go to the [backend](./backend/) directory and follow the instructions below.
+
+### Configuration
+
+Configure [Loguru](https://pypi.org/project/loguru/), if needed:
+```
+nano loguru.ini
+```
+
+### Datasets
+
+[Alexa Top Global Sites](https://www.alexa.com/topsites) (ALEXA_500) currently serves as our test dataset. Additional datasets can be downloaded, for instance, from https://doi.org/10.7910/DVN/XEYNYW.
+
+### Usage
+
+Show the help message:
+```
+python evaluator.py -h
+```
+
+Example of evaluating GUI designs:
+```
+python evaluator.py -i data/screenshots/ALEXA_500/ -m m1,m2,m3 -p -o data/evaluations/results/
+```
+
+
+## Utility Tools
+
+In addition, AIM backend supports the following utility tools to (i) ease development and (ii) improve code quality. Their installation and use is optional, but highly recommended.
+
+- **isort.** Python utility to automatically sort imports. https://pypi.org/project/isort/
+- **Black.** Python code formatter. https://pypi.org/project/black/
+- **Mypy.** Static type checker for Python. https://pypi.org/project/mypy/
+- **Flake8.** Python tool for style guide enforcement. https://pypi.org/project/flake8/
+- **pre-commit.** Package manager for pre-commit hooks. https://pypi.org/project/pre-commit/
+
+### Installation
+
+Go to the [backend](./backend/) directory and install pre-commit into your git hooks:
+```
+pre-commit install --install-hooks --overwrite
+```
+
+To uninstall pre-commit from your git hooks, run:
+```
+pre-commit uninstall
+```
+
+### Configuration
+
+Configure isort, if needed:
+```
+nano .isort.cfg
+```
+
+Configure Black, if needed:
+```
+nano pyproject.toml
+```
+
+Configure mypy, if needed:
+```
+nano mypy.ini
+```
+
+Configure flake8, if needed:
+```
+nano .flake8
+```
+
+Configure pre-commit, if needed:
+```
+nano .pre-commit-config.yaml
+```
+
+### Usage
+
+Sort imports:
+```
+isort .
+```
+
+Format code:
+```
+black .
+```
+
+Type check code:
+```
+mypy .
+``` 
+
+Lint code:
+```
+flake8 .
+```
+
+Run all pre-commit hooks against currently staged files:
+```
+pre-commit run
+```
+
+Run a single pre-commit hook against currently staged files:
+```
+pre-commit run [HOOK ID]
+```
+
+Run all pre-commit hooks against all files:
+```
+pre-commit run --all-files
+```
+
+Run all pre-commit hooks against specific files:
+```
+pre-commit run --files [FILES [FILES ...]]
+```
 
 
 ## Contributing

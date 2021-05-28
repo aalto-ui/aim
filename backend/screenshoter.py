@@ -7,7 +7,7 @@ Screenshoter utility application.
 
 Usage: screenshoter.py [-h] [-c <path>] [-v] [-i <path>] [-sw <int>] [-sh <int>] [-f] [-o <path>]
 
-Example usage: python screenshoter.py -i data/alexa_top_50_global_sites_2021-01-25.txt -sw 1280 -sh 800 -f -o data/screenshots/default/
+Example usage: python screenshoter.py -i data/screenshots/ALEXA_500/urls.csv -sw 1280 -sh 800 -f -o data/screenshots/results/
 """
 
 
@@ -36,7 +36,7 @@ from aim.tools import Screenshot
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-04-08"
+__date__ = "2021-05-28"
 __email__ = "markku.laine@aalto.fi"
 __title__ = "Screenshoter"
 __version__ = "1.0"
