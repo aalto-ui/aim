@@ -317,6 +317,7 @@ pre-commit run --files [FILES [FILES ...]]
 
 1. **PROBLEM:** Running `mypy` fails and the following error message is shown *./venv/lib/python3.7/site-packages is in the PYTHONPATH. Please change directory so it is not.* **SOLUTION:** Create your virtual environment outside of the AIM backend directory. For example, `virtualenv ../venv`. Alternatively, configure mypy to exclude your virtual environment directory.
 2. **PROBLEM:** Running `mypy` finds errors in files that are not part of the AIM backend. For example, *venv/bin/activate_this.py:28: error: "str" has no attribute "decode"; maybe "encode"?* **SOLUTION:** Create your virtual environment outside of the AIM backend directory. For example, `virtualenv ../venv`. Alternatively, configure mypy to exclude your virtual environment directory.
+3. **PROBLEM:** Running `python screenshoter.py` or submitting an URL in the web application fails and an error message similar to the following is shown *selenium.common.exceptions.SessionNotCreatedException: Message: session not created: This version of ChromeDriver only supports Chrome version 89. Current browser version is 91.0.4472.77 with binary path /Applications/Google Chrome.app/Contents/MacOS/Google Chrome* **SOLUTION:** Download a matching version of [ChromeDriver](https://chromedriver.chromium.org/downloads) and replace the appropriate `chromedriver_xxx` file in the [webdrivers](./backend/webdrivers/) directory.
 
 ## Contributing
 
