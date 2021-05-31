@@ -192,7 +192,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 if results is not None:
                     # Iterate over metric results
                     results_modified = []
-                    for count, result in enumerate(results, start=1):
+                    for count, result in enumerate(results, start=0):
                         logging.debug("Result: {}".format(result))
                         # str = image encoded in Base64
                         if isinstance(result, str):
