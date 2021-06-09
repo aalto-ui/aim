@@ -101,7 +101,7 @@
                       </td>
                       <td>
                         {{metricConfig.metrics[metric].name}}
-                        <icon class="question-circle" name="question-circle" v-b-tooltip.hover :title="metricConfig.metrics[metric].description"></icon>
+                        <font-awesome-icon :icon="['fas', 'question-circle']" v-b-tooltip.hover :title="metricConfig.metrics[metric].description" />
                       </td>
                       <td>
                         [
@@ -112,10 +112,18 @@
                         ]
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
+                        <span name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['fas', 'star']" />
+                        </span><span name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['far', 'star']" />
+                        </span>
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
+                        <span name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['fas', 'star']" />
+                        </span><span name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['far', 'star']" />
+                        </span>
                       </td>
                       <td>
                         <template v-if="metricConfig.metrics[metric].speed === 2">
@@ -171,7 +179,7 @@
                       </td>
                       <td>
                         {{metricConfig.metrics[metric].name}}
-                        <icon class="question-circle" name="question-circle" v-b-tooltip.hover :title="metricConfig.metrics[metric].description"></icon>
+                        <font-awesome-icon :icon="['fas', 'question-circle']" v-b-tooltip.hover :title="metricConfig.metrics[metric].description" />
                       </td>
                       <td>
                         [
@@ -182,10 +190,18 @@
                         ]
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
+                        <span name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['fas', 'star']" />
+                        </span><span name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['far', 'star']" />
+                        </span>
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
+                        <span name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['fas', 'star']" />
+                        </span><span name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['far', 'star']" />
+                        </span>
                       </td>
                       <td>
                         <template v-if="metricConfig.metrics[metric].speed === 2">
@@ -241,7 +257,7 @@
                       </td>
                       <td>
                         {{metricConfig.metrics[metric].name}}
-                        <icon class="question-circle" name="question-circle" v-b-tooltip.hover :title="metricConfig.metrics[metric].description"></icon>
+                        <font-awesome-icon :icon="['fas', 'question-circle']" v-b-tooltip.hover :title="metricConfig.metrics[metric].description" />
                       </td>
                       <td>
                         [
@@ -252,10 +268,18 @@
                         ]
                       </td>
                       <td>
-                        <icon name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
+                        <span name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['fas', 'star']" />
+                        </span><span name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['far', 'star']" />
+                        </span>
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
+                        <span name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['fas', 'star']" />
+                        </span><span name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['far', 'star']" />
+                        </span>
                       </td>
                       <td>
                         <template v-if="metricConfig.metrics[metric].speed === 2">
@@ -311,7 +335,7 @@
                       </td>
                       <td>
                         {{metricConfig.metrics[metric].name}}
-                        <icon class="question-circle" name="question-circle" v-b-tooltip.hover :title="metricConfig.metrics[metric].description"></icon>
+                        <font-awesome-icon :icon="['fas', 'question-circle']" v-b-tooltip.hover :title="metricConfig.metrics[metric].description" />
                       </td>
                       <td>
                         [
@@ -322,10 +346,18 @@
                         ]
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
+                        <span name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['fas', 'star']" />
+                        </span><span name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['far', 'star']" />
+                        </span>
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
+                        <span name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['fas', 'star']" />
+                        </span><span name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i">
+                          <font-awesome-icon :icon="['far', 'star']" />
+                        </span>
                       </td>
                       <td>
                         <template v-if="metricConfig.metrics[metric].speed === 2">
@@ -586,7 +618,7 @@ table thead th:nth-child(6){
 }
 
 table tbody td:nth-child(2) svg{
-  margin-bottom: 6px;
+  margin-bottom: 3px;
 }
 
 #aim-url-form input:-webkit-autofill {
@@ -613,9 +645,8 @@ h2.text-muted {
   font-size: 1.5rem;
   margin-bottom: 20px;
 }
-.fa-icon.star,
-.fa-icon.star-o,
-.fa-icon.question-circle {
+.fa-star,
+.fa-question-circle {
   color: #555555;
 }
 

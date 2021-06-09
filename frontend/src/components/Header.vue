@@ -32,7 +32,7 @@
                                         </a>
                                     </div>
                                     <a href="/static/publications/oulasvirta_et_al_2018.pdf" target="_blank">
-                                        <icon class="icon-pdf" name="regular/file-pdf"></icon> PDF (1 MB)
+                                        <font-awesome-icon :icon="['far', 'file-pdf']" /> PDF (1 MB)
                                     </a>
                                     <br>
                                     <span class="authors-citation">Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, and Tino Weinkauf. 2018.</span>
