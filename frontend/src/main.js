@@ -18,9 +18,9 @@ Vue.config.productionTip = false
 
 import 'vue-awesome/icons/check'
 import 'vue-awesome/icons/star'
-import 'vue-awesome/icons/star-o'
+import 'vue-awesome/icons/regular/star'
 import 'vue-awesome/icons/question-circle'
-import 'vue-awesome/icons/file-pdf-o'
+import 'vue-awesome/icons/regular/file-pdf'
 import Icon from 'vue-awesome/components/Icon'
 
 Vue.component('icon', Icon)

@@ -32,7 +32,7 @@
                                         </a>
                                     </div>
                                     <a href="/static/publications/oulasvirta_et_al_2018.pdf" target="_blank">
-                                        <icon class="icon-pdf" name="file-pdf-o"></icon> PDF (1 MB)
+                                        <icon class="icon-pdf" name="regular/file-pdf"></icon> PDF (1 MB)
                                     </a>
                                     <br>
                                     <span class="authors-citation">Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, and Tino Weinkauf. 2018.</span>
@@ -63,7 +63,7 @@
                                     </pre>
                                 </b-col>
                             </b-row>
-                        </b-modal> 
+                        </b-modal>
                     </b-col>
                     <b-col cols="12" class="col-lg-auto text-right">
                         <b-btn class="btn-nav btn-lg" v-b-modal.modal-project variant="link font-weight-bold">Project</b-btn>
@@ -80,7 +80,7 @@
                                     </p>
                                 </b-col>
                             </b-row>
-                        </b-modal> 
+                        </b-modal>
                     </b-col>
                     <b-col cols="12" class="col-lg-auto text-right last">
                         <b-btn class="btn-nav btn-lg" href="https://github.com/aalto-ui/aim" target="_blank" variant="link font-weight-bold">GitHub</b-btn>

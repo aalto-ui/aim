@@ -112,10 +112,10 @@
                         ]
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
+                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
+                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
                       </td>
                       <td>
                         <template v-if="metricConfig.metrics[metric].speed === 2">
@@ -182,10 +182,10 @@
                         ]
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
+                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
+                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
                       </td>
                       <td>
                         <template v-if="metricConfig.metrics[metric].speed === 2">
@@ -252,10 +252,10 @@
                         ]
                       </td>
                       <td>
-                        <icon name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
+                        <icon name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
+                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
                       </td>
                       <td>
                         <template v-if="metricConfig.metrics[metric].speed === 2">
@@ -322,10 +322,10 @@
                         ]
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
+                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
                       </td>
                       <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
+                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="regular/star" name="regular/star" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
                       </td>
                       <td>
                         <template v-if="metricConfig.metrics[metric].speed === 2">

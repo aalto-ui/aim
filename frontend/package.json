@@ -15,10 +15,10 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
-    "@fortawesome/free-brands-svg-icons": "^5.8.2",
-    "@fortawesome/free-regular-svg-icons": "^5.8.2",
-    "@fortawesome/free-solid-svg-icons": "^5.8.2",
-    "@fortawesome/vue-fontawesome": "^0.1.6",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "2.0.0-rc.20",
     "chart.js": "^2.7.2",
@@ -29,7 +29,7 @@
     "plotly.js": "^1.58.4",
     "popper.js": "^1.14.3",
     "vue": "^2.6.14",
-    "vue-awesome": "^2.3.5",
+    "vue-awesome": "^4.3.1",
     "vue-chartjs": "^3.5.1",
     "vue-native-websocket": "^2.0.14",
     "vuex": "^3.6.2"

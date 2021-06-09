@@ -37,7 +37,7 @@
                         <span name="star" v-for="i in metrics[metric].evidence" :key="'res-evidence-star-' + metric + '-' + i">
                           <font-awesome-icon :icon="['fas', 'star']" />
                         </span>
-                        <span name="star-o" v-for="i in 5 - metrics[metric].evidence" :key="'res-evidence-star-o-' + metric + '-' + i">
+                        <span name="regular/star" v-for="i in 5 - metrics[metric].evidence" :key="'res-evidence-star-o-' + metric + '-' + i">
                           <font-awesome-icon :icon="['far', 'star']" />
                         </span>
                         <br />
@@ -45,7 +45,7 @@
                         <span name="star" v-for="i in metrics[metric].relevance" :key="'res-relevance-star-' + metric + '-' + i">
                           <font-awesome-icon :icon="['fas', 'star']" />
                         </span>
-                        <span name="star-o" v-for="i in 5 - metrics[metric].relevance" :key="'res-relevance-star-o-' + metric + '-' + i">
+                        <span name="regular/star" v-for="i in 5 - metrics[metric].relevance" :key="'res-relevance-star-o-' + metric + '-' + i">
                           <font-awesome-icon :icon="['far', 'star']" />
                         </span>
                       </p>
