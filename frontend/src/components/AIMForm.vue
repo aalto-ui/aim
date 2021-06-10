@@ -101,7 +101,7 @@
                       </td>
                       <td>
                         {{metricConfig.metrics[metric].name}}
-                        <font-awesome-icon :icon="['fas', 'question-circle']" v-b-tooltip.hover :title="metricConfig.metrics[metric].description" />
+                        <span v-b-tooltip.hover :title="metricConfig.metrics[metric].description"><font-awesome-icon :icon="['fas', 'question-circle']" /></span>
                       </td>
                       <td>
                         [
@@ -179,7 +179,7 @@
                       </td>
                       <td>
                         {{metricConfig.metrics[metric].name}}
-                        <font-awesome-icon :icon="['fas', 'question-circle']" v-b-tooltip.hover :title="metricConfig.metrics[metric].description" />
+                        <span v-b-tooltip.hover :title="metricConfig.metrics[metric].description"><font-awesome-icon :icon="['fas', 'question-circle']" /></span>
                       </td>
                       <td>
                         [
@@ -257,7 +257,7 @@
                       </td>
                       <td>
                         {{metricConfig.metrics[metric].name}}
-                        <font-awesome-icon :icon="['fas', 'question-circle']" v-b-tooltip.hover :title="metricConfig.metrics[metric].description" />
+                        <span v-b-tooltip.hover :title="metricConfig.metrics[metric].description"><font-awesome-icon :icon="['fas', 'question-circle']" /></span>
                       </td>
                       <td>
                         [
@@ -335,7 +335,7 @@
                       </td>
                       <td>
                         {{metricConfig.metrics[metric].name}}
-                        <font-awesome-icon :icon="['fas', 'question-circle']" v-b-tooltip.hover :title="metricConfig.metrics[metric].description" />
+                        <span v-b-tooltip.hover :title="metricConfig.metrics[metric].description"><font-awesome-icon :icon="['fas', 'question-circle']" /></span>
                       </td>
                       <td>
                         [
@@ -618,7 +618,7 @@ table thead th:nth-child(6){
 }
 
 table tbody td:nth-child(2) svg{
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 
 #aim-url-form input:-webkit-autofill {
