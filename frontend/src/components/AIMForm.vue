@@ -412,6 +412,21 @@ import Preview from './Preview'
 import { mapState } from 'vuex'
 
 export default {
+  created () {
+    this.$socketClient.onOpen = () => {
+      // console.log('socket connected')
+    }
+    this.$socketClient.onMessage = msg => {
+      const data = JSON.parse(msg.data)
+      if (data.action) this.$store.dispatch(data.action, data)
+    }
+    this.$socketClient.onClose = () => {
+      // console.log('socket closed')
+    }
+    this.$socketClient.onError = () => {
+      // console.log('socket error')
+    }
+  },
   data () {
     return {
       selected: {},
@@ -490,7 +505,7 @@ export default {
       let imageForm = document.querySelector('#aim-image-form')
       if ((this.$store.state.generalError === false) && ((urlForm.checkValidity() === true && this.form.url !== null) || (imageForm.checkValidity() === true && this.form.data !== null && this.form.filename !== null))) {
         // Submit data
-        this.$socket.sendObj({
+        this.$socketClient.sendObj({
           type: 'execute',
           input: this.input,
           url: this.form.url,
