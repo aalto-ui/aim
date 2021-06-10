@@ -21,7 +21,7 @@
                   <b-card-header header-tag="header" class="p-0" :id="metrics[metric].id">
                     <b-btn :variant="category.color" block v-b-toggle="`${category}-${metric}-collapse`">{{metrics[metric].name}}</b-btn>
                   </b-card-header>
-                  <b-collapse visible :id="`${category}-${metric}-collapse`">
+                  <b-collapse visible :id="`${category.id}-${metric}-collapse`">
                     <b-card-body>
                       <p>{{metrics[metric].description}}</p>
                       <p>
@@ -49,7 +49,7 @@
                       </p>
                       <template v-if="metrics[metric].visualizationType==='table'">
                         <b-table striped hover :items="results[metric]" :fields="resultTableFields" class="mt-4">
-                          <template slot="result" slot-scope="data">
+                          <template #cell(result)="data">
                             {{data.value.name}}
                             <template v-if="data.value.description">
                               <span v-b-tooltip.hover :title="data.value.description">
@@ -57,7 +57,7 @@
                               </span>
                             </template>
                           </template>
-                          <template slot="evaluation" slot-scope="data">
+                          <template #cell(evaluation)="data">
                             <div class="scores" :id="data.item.id" v-if="metrics[metric].results[data.index].scores.length > 1" >
                               <div v-for="score in metrics[metric].results[data.index].scores" :key="score.description">
                                 <div class="score" v-show="getJudgment(score, data.item.value)" :class="score.judgment">
@@ -72,16 +72,16 @@
                               <span>-</span>
                             </div>
                           </template>
-                          <template slot="show_details" slot-scope="row">
-                            <b-btn v-b-modal="`${row.item.id}-modal`" variant="link">Show Details</b-btn>
-                            <b-modal size="lg" :title="row.item.result.name" :id="`${row.item.id}-modal`" ok-only ok-title="Close">
-                              <template v-if="row.item.result.description">
-                                <p>{{ row.item.result.description }}</p>
+                          <template #cell(show_details)="data">
+                            <b-btn v-b-modal="`${data.item.id}-modal`" variant="link">Show Details</b-btn>
+                            <b-modal size="lg" :title="data.item.result.name" :id="`${data.item.id}-modal`" ok-only ok-title="Close">
+                              <template v-if="data.item.result.description">
+                                <p>{{ data.item.result.description }}</p>
                               </template>
-                              <h4>Your score: {{ row.item.value }}</h4>
+                              <h4>Your score: {{ data.item.value }}</h4>
                               <hr />
                               <p>The histogram below shows the results of this metric for <em>Alexa Top 500 Global Sites</em>. The list of sites was retrieved from <a href="https://www.alexa.com/topsites" target="_blank">https://www.alexa.com/topsites</a> on April 9, 2021 and their respective GUI designs were evaluated on April 11-13, 2021<sup>*</sup>.</p>
-                              <img class="histogram" :src="'/static/histograms/' + row.item.id + '_histogram.png'" />
+                              <img class="histogram" :src="'/static/histograms/' + data.item.id + '_histogram.png'" />
                               <p style="font-size: 11px;"><sup>*</sup>Country-specific, non-representative, and non-relevant sites were excluded from the list.</p>
                             </b-modal>
                           </template>
