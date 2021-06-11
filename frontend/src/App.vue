@@ -4,7 +4,7 @@
       <Header />
       <b-row>
         <b-col>
-          <AIMForm></AIMForm>
+          <AIMForm />
         </b-col>
       </b-row>
     </b-container>
@@ -16,7 +16,7 @@ import Header from './components/Header'
 import AIMForm from './components/AIMForm'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     Header,
     AIMForm
