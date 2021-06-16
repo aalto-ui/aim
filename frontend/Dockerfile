@@ -2,7 +2,7 @@ FROM node:14.17.0-alpine
 
 WORKDIR /home/node/app
 
-COPY . ./
+COPY ./frontend ./
 
 COPY ./metrics.json ../
 

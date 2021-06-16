@@ -2,7 +2,7 @@ FROM python:3.8.5-slim-buster
 
 WORKDIR /usr/src/app
 
-COPY . ./
+COPY ./backend ./
 COPY ./metrics.json ../
 
 RUN apt-get update \

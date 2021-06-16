@@ -26,7 +26,9 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./
+      dockerfile: ./frontend/Dockerfile
     command: ["node", "build/dev-server.js"]
     environment:
       NODE_ENV: development
@@ -35,7 +37,9 @@ services:
     init: true
 
   backend:
-    build: ./backend
+    build:
+      context: ./
+      dockerfile: ./backend/Dockerfile
     ports:
       - 4444:4444
       - 8888:8888
