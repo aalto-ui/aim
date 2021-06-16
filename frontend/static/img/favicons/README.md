@@ -1,9 +1,15 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
+# Your Favicon Package
 
-    <!-- Favicons - generated with https://realfavicongenerator.net -->
+This package was generated with [RealFaviconGenerator](https://realfavicongenerator.net/) [v0.16](https://realfavicongenerator.net/change_log#v0.16)
+
+## Install instructions
+
+To install this package:
+
+Extract this package in <code>&lt;web site&gt;/static/img/favicons/</code>. If your site is <code>http://www.example.com</code>, you should be able to access a file named <code>http://www.example.com/static/img/favicons/favicon.ico</code>.
+
+Insert the following code in the `head` section of your pages:
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/static/img/favicons/android-chrome-192x192.png">
@@ -18,10 +24,4 @@
     <meta name="msapplication-config" content="/static/img/favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
-    <title>AIM - Aalto Interface Metrics service</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
-</html>
+*Optional* - Check your favicon with the [favicon checker](https://realfavicongenerator.net/favicon_checker)
