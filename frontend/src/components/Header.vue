@@ -2,13 +2,18 @@
     <header class="mt-3">
         <b-row class="align-items-end">
             <b-col class="col-auto text-left">
+                <a href="">
+                    <img id="logo-aim" src="../assets/aim_logo.png" alt="Aalto Interface Metrics" height="61">
+                </a>
+            </b-col>
+            <b-col class="col-auto text-left">
                 <a href="http://www.aalto.fi">
-                    <img id="logo-aalto" src="../assets/Aalto_EN_21_RGB_4.png" alt="Aalto University" height="150">
+                    <img id="logo-aalto" src="../assets/aalto_logo.png" alt="Aalto University" height="150">
                 </a>
             </b-col>
             <b-col class="col-auto text-left">
                 <a href="http://userinterfaces.aalto.fi">
-                    <img id="logo-aaltoui" src="../assets/ui_logo.png" alt="User Interfaces Group" height="50">
+                    <img id="logo-userinterfaces" src="../assets/user_interfaces_logo.png" alt="User Interfaces Group" height="61">
                 </a>
             </b-col>
             <b-col class="text-right">
@@ -90,34 +95,37 @@
 </template>
 
 <style>
+    #logo-aim {
+        margin-bottom: 17px;
+    }
     #logo-aalto {
-        margin-left: -40px;
+        margin-left: -30px;
         margin-right: -30px;
         margin-bottom: -28px;
     }
-    #logo-aaltoui {
-        margin-bottom: 23px;
+    #logo-userinterfaces {
+        margin-bottom: 17px;
     }
     header .text-right.last {
         padding-bottom: 8px;
     }
-    header .paper-thumbnail {
+    #modal-publication .paper-thumbnail {
         border: 1px solid gray;
     }
-    header .authors-citation {
+    #modal-publication .authors-citation {
         padding-top: 5px;
     }
-    header .title-citation {
+    #modal-publication .title-citation {
         font-weight: 700;
     }
-    header code {
+    #modal-publication code {
         font-size: 1rem;
         font-family: monospace;
     }
-    header .icon-pdf {
+    #modal-publication .icon-pdf {
         margin-right: 5px;
     }
-    header .btn-nav {
+    .btn-nav {
         padding: 0;
     }
 
