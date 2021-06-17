@@ -437,18 +437,13 @@ export default {
     validationError: state => state.validationError
   }),
   created () {
-    this.$socketClient.onOpen = () => {
-      // console.log('socket connected')
-    }
     this.$socketClient.onMessage = msg => {
       const data = JSON.parse(msg.data)
       if (data.action) this.$store.dispatch(data.action, data)
     }
     this.$socketClient.onClose = () => {
       // console.log('socket closed')
-    }
-    this.$socketClient.onError = () => {
-      // console.log('socket error')
+      this.$socketClient.reconnect()
     }
   },
   methods: {
