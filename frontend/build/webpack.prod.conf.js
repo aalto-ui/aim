@@ -2,7 +2,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const path = require('path')
-const TerserPlugin = require('terser-webpack-plugin')
 const webpack = require('webpack')
 const { merge } = require('webpack-merge')
 const config = require('../config')
@@ -61,14 +60,6 @@ var webpackConfig = merge(baseWebpackConfig, {
       }
     ])
   ],
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        sourceMap: true
-      }),
-    ],
-  },
 })
 
 module.exports = webpackConfig

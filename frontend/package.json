@@ -80,7 +80,6 @@
     "shelljs": "^0.8.4",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.8.0",
-    "terser-webpack-plugin": "^4.2.3",
     "url-loader": "^4.1.1",
     "vue-eslint-parser": "^7.6.0",
     "vue-loader": "^15.9.7",
