@@ -25,7 +25,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'assets/_custom.scss';
+$theme-colors: (
+  "primary": #7553A0,
+);
+
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 @import '../node_modules/bootstrap-vue/dist/bootstrap-vue.css';
 </style>

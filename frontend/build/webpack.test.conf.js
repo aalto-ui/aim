@@ -1,12 +1,8 @@
 // This is the webpack config used for unit tests.
 
-const ESLintPlugin = require('eslint-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
-const webpack = require('webpack')
 const { merge } = require('webpack-merge')
 const utils = require('./utils')
 const baseConfig = require('./webpack.base.conf')
-const config = require('../config')
 
 const webpackConfig = merge(baseConfig, {
   mode: 'testing',
@@ -21,18 +17,7 @@ const webpackConfig = merge(baseConfig, {
       // see discussion at https://github.com/vuejs/vue-loader/issues/724
       'scss-loader': 'sass-loader'
     }
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': config.env
-    }),
-    new VueLoaderPlugin(),
-    new ESLintPlugin({
-      extensions: ['js', 'vue'],
-      files: ['src', 'test'],
-      formatter: require('eslint-friendly-formatter')
-    }),
-  ]
+  }
 })
 
 // no need for app entry during tests

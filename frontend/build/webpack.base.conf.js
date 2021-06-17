@@ -1,4 +1,7 @@
+const ESLintPlugin = require('eslint-webpack-plugin')
 var path = require('path')
+const { VueLoaderPlugin } = require('vue-loader')
+const webpack = require('webpack')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
@@ -65,5 +68,16 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': config.env
+    }),
+    new VueLoaderPlugin(),
+    new ESLintPlugin({
+      extensions: ['js', 'vue'],
+      files: ['src', 'test'],
+      formatter: require('eslint-friendly-formatter')
+    })
+  ]
 }

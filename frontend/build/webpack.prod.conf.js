@@ -2,9 +2,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const path = require('path')
-const ESLintPlugin = require('eslint-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack')
 const { merge } = require('webpack-merge')
 const config = require('../config')
@@ -27,16 +25,6 @@ var webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
-    // http://vuejs.github.io/vue-loader/en/workflow/production.html
-    new webpack.DefinePlugin({
-      'process.env': config.env
-    }),
-    new VueLoaderPlugin(),
-    new ESLintPlugin({
-      extensions: ['js', 'vue'],
-      files: ['src', 'test'],
-      formatter: require('eslint-friendly-formatter')
-    }),
     // extract css into its own file
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
