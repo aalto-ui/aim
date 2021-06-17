@@ -28,7 +28,7 @@ services:
   frontend:
     build:
       context: ./
-      dockerfile: ./frontend/Dockerfile
+      dockerfile: ./frontend/dev.Dockerfile
     command: ["node", "build/dev-server.js"]
     environment:
       NODE_ENV: development

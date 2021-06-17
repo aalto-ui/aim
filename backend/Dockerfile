@@ -6,7 +6,7 @@ COPY ./backend ./
 COPY ./metrics.json ../
 
 RUN apt-get update \
-  && apt-get install -y curl unzip \
+  && apt-get install -y --no-install-recommends curl unzip \
   libglib2.0-0 libnss3 libgconf-2-4 libxcb1 libfontconfig1 xvfb \
   # Add aim user
   && useradd --system -s /sbin/nologin aim \
@@ -27,7 +27,8 @@ RUN apt-get update \
   && mv chromedriver ./webdrivers/chromedriver_linux \
   && rm driver.zip \
   # remove unwanted packages
-  && apt-get remove --purge -y curl unzip \
+  && apt-get remove --purge -y --auto-remove curl unzip \
+  && rm -rf /var/lib/apt/lists/* \
   # change user permissions
   && chown -R aim . \
   && chown -R aim ../metrics.json \
