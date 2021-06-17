@@ -6,6 +6,7 @@ const webpack = require('webpack')
 const { merge } = require('webpack-merge')
 const utils = require('./utils')
 const baseConfig = require('./webpack.base.conf')
+const config = require('../config')
 
 const webpackConfig = merge(baseConfig, {
   mode: 'testing',
@@ -23,7 +24,7 @@ const webpackConfig = merge(baseConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': require('../config/test.env')
+      'process.env': config.env
     }),
     new VueLoaderPlugin(),
     new ESLintPlugin({
