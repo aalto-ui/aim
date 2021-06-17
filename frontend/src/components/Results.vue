@@ -19,7 +19,7 @@
               <template v-for="(metric, metricIdx) in category.metrics.filter(m => metricVisible(m))">
                 <b-card :key="metricIdx" no-body class="mb-1">
                   <b-card-header :id="metrics[metric].id" header-tag="header" class="p-0">
-                    <b-btn v-b-toggle="`${category}-${metric}-collapse`" :variant="category.color" block>{{ metrics[metric].name }}</b-btn>
+                    <b-btn v-b-toggle="`${category.id}-${metric}-collapse`" :variant="category.color" block>{{ metrics[metric].name }}</b-btn>
                   </b-card-header>
                   <b-collapse :id="`${category.id}-${metric}-collapse`" visible>
                     <b-card-body>
