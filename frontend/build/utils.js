@@ -1,8 +1,8 @@
-var path = require('path')
-var config = require('../config')
+const path = require('path')
+const config = require('../config')
 
 exports.assetsPath = function (_path) {
-  var assetsSubDirectory = process.env.NODE_ENV === 'production'
+  const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
     : config.dev.assetsSubDirectory
   return path.posix.join(assetsSubDirectory, _path)
@@ -11,7 +11,7 @@ exports.assetsPath = function (_path) {
 exports.cssLoaders = function (options) {
   options = options || {}
 
-  var cssLoader = {
+  const cssLoader = {
     loader: 'css-loader',
     options: {
       minimize: process.env.NODE_ENV === 'production',
@@ -21,7 +21,7 @@ exports.cssLoaders = function (options) {
 
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
-    var loaders = [cssLoader]
+    const loaders = [cssLoader]
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
@@ -48,10 +48,10 @@ exports.cssLoaders = function (options) {
 
 // Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
-  var output = []
-  var loaders = exports.cssLoaders(options)
-  for (var extension in loaders) {
-    var loader = loaders[extension]
+  const output = []
+  const loaders = exports.cssLoaders(options)
+  for (let extension in loaders) {
+    const loader = loaders[extension]
     output.push({
       test: new RegExp('\\.' + extension + '$'),
       use: loader

@@ -556,7 +556,7 @@ export default {
       return (file.size > MAX_FILE_SIZE)
     },
     getBase64 (file, onLoadCallback) {
-      var reader = new FileReader()
+      let reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = onLoadCallback
       reader.onerror = function (error) {

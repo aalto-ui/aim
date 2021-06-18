@@ -9,7 +9,7 @@ const utils = require('./utils')
 const baseWebpackConfig = require('./webpack.base.conf')
 
 process.traceDeprecation = true
-var webpackConfig = merge(baseWebpackConfig, {
+const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
   module: {
     rules: utils.styleLoaders({

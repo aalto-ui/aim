@@ -1,10 +1,10 @@
 const ESLintPlugin = require('eslint-webpack-plugin')
-var path = require('path')
+const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack')
-var utils = require('./utils')
-var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
+const utils = require('./utils')
+const config = require('../config')
+const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
