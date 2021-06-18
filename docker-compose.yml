@@ -32,8 +32,14 @@ services:
     command: ["node", "build/dev-server.js"]
     environment:
       NODE_ENV: development
+      WS_URL: ws://localhost:8888/
+      PORT: 8080
     ports:
       - 8080:8080
+    volumes:
+      - ./frontend/build:/usr/src/app/build
+      - ./frontend/src:/usr/src/app/src
+      - ./frontend/static:/usr/src/app/static
     init: true
 
   backend:

@@ -6,9 +6,9 @@ COPY ["./frontend/package.json",  "./frontend/package-lock.json*", "./"]
 
 RUN npm install
 
+USER node
+
 COPY ./frontend ./
 COPY ./metrics.json ../
-
-USER node
 
 CMD ["node", "build/build.js"]
