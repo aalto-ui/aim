@@ -18,6 +18,7 @@ from typing import Any, Dict, Tuple
 
 # Third-party modules
 import motor
+import os
 import tornado.ioloop
 import tornado.log
 import tornado.options
@@ -80,6 +81,21 @@ def parse_options() -> None:
     else:
         tornado.options.parse_command_line()
 
+def parse_environ_options() -> None:
+    if os.environ.get('ENVIRONMENT'):
+        options['environment'] = os.environ.get('ENVIRONMENT')
+    if os.environ.get('NAME'):
+        options['name'] = os.environ.get('NAME')
+    if os.environ.get('PORT'):
+        options['port'] = int(os.environ.get('PORT'))
+
+    DB_USER = os.environ.get('DB_USER')
+    DB_PASS = os.environ.get('DB_PASS')
+    DB_HOST = os.environ.get('DB_HOST')
+    DB_PORT = os.environ.get('DB_PORT')
+    DB_NAME = os.environ.get('DB_NAME')
+    if DB_USER and DB_PASS and DB_HOST and DB_PORT and DB_NAME:
+        options['database_uri'] = f"mongodb://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}?authSource=admin"
 
 def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
     client: MotorClient = motor.motor_tornado.MotorClient(options.database_uri)
@@ -127,6 +143,9 @@ def main() -> None:
 
     # Tornado root formatter settings
     set_tornado_logging()
+
+    # Use environment variables to override options
+    parse_environ_options()
 
     # Make application
     db, app = make_app()
