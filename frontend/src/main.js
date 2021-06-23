@@ -17,8 +17,8 @@ Vue.config.productionTip = false
 
 import VueSimpleWebSocket from 'vue-simple-websocket'
 Vue.use(VueSimpleWebSocket, process.env.WS_URL, {
-  reconnectEnabled: true,
-  reconnectInterval: 3000
+  reconnectEnabled: false,
+  reconnectInterval: 0
 })
 
 Vue.use(BootstrapVue)

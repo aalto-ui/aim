@@ -448,7 +448,9 @@ export default {
     this.$socketClient.onClose = () => {
       if (this.reconnectCount >= 2) {
         this.$store.commit('pushGeneralError')
-        this.$store.commit('setReconnectCount', 2)
+        this.$socketClient.removeListeners()
+        this.$socketClient.instance.close()
+        delete this.$socketClient.instance
       } else {
         this.$store.commit('setReconnectCount', this.reconnectCount + 1)
         this.$socketClient.reconnect()
