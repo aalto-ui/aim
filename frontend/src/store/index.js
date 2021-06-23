@@ -13,6 +13,7 @@ const initialState = () => {
     fetching: {},
     fetchingCount: 0,
     fetchedCount: 0,
+    reconnectCount: 0,
     validationError: false,
     generalError: false,
     display: {
@@ -103,6 +104,9 @@ const mutations = {
   },
   increaseFetchedCount (state) {
     state.fetchedCount++
+  },
+  setReconnectCount (state, value=0) {
+    state.reconnectCount = value
   },
   updateSummary (state) {
     // console.log(state.fetchedCount)

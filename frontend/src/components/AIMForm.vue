@@ -434,16 +434,25 @@ export default {
   computed: mapState({
     display: state => state.display,
     generalError: state => state.generalError,
-    validationError: state => state.validationError
+    validationError: state => state.validationError,
+    reconnectCount: state => state.reconnectCount
   }),
   created () {
     this.$socketClient.onMessage = msg => {
       const data = JSON.parse(msg.data)
-      if (data.action) this.$store.dispatch(data.action, data)
+      if (data.action) {
+        this.$store.dispatch(data.action, data)
+        this.$store.commit('setReconnectCount', 0)
+      }
     }
     this.$socketClient.onClose = () => {
-      // console.log('socket closed')
-      this.$socketClient.reconnect()
+      if (this.reconnectCount >= 2) {
+        this.$store.commit('pushGeneralError')
+        this.$store.commit('setReconnectCount', 2)
+      } else {
+        this.$store.commit('setReconnectCount', this.reconnectCount + 1)
+        this.$socketClient.reconnect()
+      }
     }
   },
   methods: {
