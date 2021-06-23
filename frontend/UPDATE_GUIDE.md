@@ -30,13 +30,13 @@ major/minor/patch (shown by which part of the version number changed).
 For **minor** or **patch** changes, it is generally easy to update automatically
 to the latest, but you might want to check the release notes on the package's
 GitHub page (which you can access directly from NPM). For **major** changes,
-alwasy check if the peer dependencies changed, if the release notes deprecate
+always check if the peer dependencies changed, if the release notes deprecate
 an api or if they have an upgrade guide.
 
 
 ## Historical update
 
-Date: *Jun 21*
+Date: *20th Jun 2021*
 
 - removed `vue-awesome` and replaced with `@fortawesome` icons
 - removed chart related dependencies
