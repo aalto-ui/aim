@@ -453,7 +453,9 @@ export default {
         delete this.$socketClient.instance
       } else {
         this.$store.commit('setReconnectCount', this.reconnectCount + 1)
-        this.$socketClient.reconnect()
+        setTimeout(() => {
+          this.$socketClient.reconnect()
+        }, 3000)
       }
     }
   },
