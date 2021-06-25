@@ -29,10 +29,10 @@ The most important files and folders in the AIM codebase are:
 │   └── server.py         : Server app
 ├── frontend              : AIM frontend files
 │   ├── build             : Build scripts
-│   ├── config            : Configuration files
 │   ├── src               : Sources code (incl. assets)
 │   ├── static            : Static files (incl. histograms)
-│   └── test              : Unit tests, etc.
+│   ├── test              : Unit tests, etc.
+│   └── config.js         : Configuration module
 ├── legacy                : AIM legacy files (version 1)
 ├── metrics.json          : AIM metrics configuration file
 ├── ...
@@ -109,9 +109,7 @@ exit
 
 ### Frontend
 
-Go to the [frontend](./frontend/) directory and configure the web application by editing the files in the [config](./frontend/config/) directory.
-
-Then, in that directory, run the following command to install all dependencies:
+Go to the [frontend](./frontend/) directory and install the dependencies by running:
 ```
 npm install
 ```
@@ -131,6 +129,14 @@ python server.py
 To start the frontend HTTP server in development mode, go to the [frontend](./frontend/) directory and run:
 ```
 npm run dev
+```
+
+
+You can find the accepted environment variables in `frontend/config.js`. If you
+want to change on of the default values, you can pass them directly an runtime
+or by setting them in the shell environment. For example:
+```sh
+WS_URL='ws://localhost:8889/' npm run dev
 ```
 
 To build the frontend for production, run the following command in the same directory:
@@ -285,7 +291,7 @@ black .
 Type check code:
 ```
 mypy .
-``` 
+```
 
 Lint code:
 ```

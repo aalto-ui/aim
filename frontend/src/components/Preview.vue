@@ -3,13 +3,15 @@
     <div class="component-section">
       <b-row>
         <b-col cols="12">
-          <h2 class="component-title">Preview</h2>
-           <p>1280 x 800 pixels at 72 dpi (URL) or original image resized to 1280 pixels width at 72 dpi (screenshot)</p>
+          <h2 class="component-title">
+            Preview
+          </h2>
+          <p>1280 x 800 pixels at 72 dpi (URL) or original image resized to 1280 pixels width at 72 dpi (screenshot)</p>
         </b-col>
       </b-row>
       <b-row>
         <b-col cols="12">
-          <img class="preview-img" :src="'data:image/png;base64, ' + b64" />
+          <img class="preview-img" :src="'data:image/png;base64, ' + b64">
         </b-col>
       </b-row>
     </div>

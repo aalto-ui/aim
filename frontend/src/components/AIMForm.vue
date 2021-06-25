@@ -1,373 +1,405 @@
 <template>
-<div>
-  <b-jumbotron bg-variant="light">
-    <template slot="header">
-      <b-row>
-        <b-col class="hero-image text-center">
-          <img src="../assets/workflow.png" width="100%" alt="Workflow">
+  <div>
+    <b-jumbotron bg-variant="light">
+      <template slot="header">
+        <b-row>
+          <b-col class="hero-image text-center">
+            <img src="../assets/workflow.png" width="100%" alt="Workflow">
+          </b-col>
+        </b-row>
+        <h1 id="service_title" class="display-4">AIM - Aalto Interface Metrics service</h1>
+        <h2 class="text-muted">Compute how good your design is!</h2>
+      </template>
+      <template slot="lead">
+        Welcome to AIM! Send your design and choose metrics: AIM computes numerous metrics and models that predict how users perceive, search, and experience your design. Download & contribute to the project at <a href="https://github.com/aalto-ui/aim" target="_blank">GitHub</a>.
+      </template>
+      <b-row v-if="generalError">
+        <b-col>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Technical Difficulties</h4>
+            <hr>
+            <p>
+              <strong>Whoops!</strong> We are having some technical difficulties, please try again later.
+            </p>
+          </div>
         </b-col>
       </b-row>
-      <h1 id="service_title" class="display-4">AIM - Aalto Interface Metrics service</h1>
-      <h2 class="text-muted">Compute how good your design is!</h2>
-    </template>
-    <template slot="lead">
-      Welcome to AIM! Send your design and choose metrics: AIM computes numerous metrics and models that predict how users perceive, search, and experience your design. Download & contribute to the project at <a href="https://github.com/aalto-ui/aim" target="_blank">GitHub</a>.
-    </template>
-    <b-row v-if="generalError">
-      <b-col>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <h4 class="alert-heading">Technical Difficulties</h4>
-          <hr>
-          <p>
-            <strong>Whoops!</strong> We are having some technical difficulties, please try again later.
-          </p>
-        </div>
-      </b-col>
-    </b-row>
-    <b-row v-if="validationError">
-      <b-col>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <h4 class="alert-heading">Validation Error</h4>
-          <hr>
-          <p>
-            <strong>Whoops!</strong> We are having some problems with your input, please try again with a different URL or image.
-          </p>
-        </div>
-      </b-col>
-    </b-row>
-    <b-row v-if="display.input">
-      <b-col>
-        <b-form id="aim-url-form" class="needs-validation" novalidate @submit="onSubmitURL">
-          <b-input-group prepend="URL">
-            <b-form-input id="url-input" type="url" v-model.trim="form.url" required placeholder="https://www.example.com"></b-form-input>
-            <b-input-group-append>
-              <b-btn id="btn-url-apply" type="submit" variant="primary">Apply</b-btn>
-            </b-input-group-append>
-            <div class="invalid-feedback">
-              Please provide a valid URL.
-            </div>
-          </b-input-group>
-        </b-form>
-      </b-col>
-      <b-col cols="12" class="col-lg-auto text-center or">
-        - OR -
-      </b-col>
-      <b-col>
-        <b-form id="aim-image-form" class="needs-validation" novalidate @submit="onSubmitImage">
-          <b-input-group id="image-input-group" prepend="Image">
-            <b-form-file id="image-input" required placeholder="Choose a PNG file..." accept="image/png" @change="onFileSelected"></b-form-file>
-            <b-input-group-append>
-              <b-btn id="btn-image-apply" type="submit" variant="primary">Apply</b-btn>
-            </b-input-group-append>
-          </b-input-group>
-          <div v-if="fileTooLarge === false" class="invalid-feedback">
-            Please provide a valid image.
+      <b-row v-if="validationError">
+        <b-col>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Validation Error</h4>
+            <hr>
+            <p>
+              <strong>Whoops!</strong> We are having some problems with your input, please try again with a different URL or image.
+            </p>
           </div>
-          <div v-if="fileTooLarge" class="invalid-feedback">
-            File is too large (max 5 MB).
-          </div>
-        </b-form>
-      </b-col>
-    </b-row>
-    <b-form id="aim-form" @submit="onSubmit" v-if="display.metrics">
-      <div class="tablist" role="tablist">
-        <b-card no-body active class="mb-4">
-          <b-card-header header-tag="header" role="tab" class="p-0">
-            <div variant="cat-one" class="rounded" block v-b-toggle.cat-one-accordion href="#">
-              <span class="fa">
-                <font-awesome-icon :icon="metricConfig.categories[0].icon" />
-              </span>
-              <span class="title">{{ metricConfig.categories[0].name }}</span>
+        </b-col>
+      </b-row>
+      <b-row v-if="display.input">
+        <b-col>
+          <b-form id="aim-url-form" class="needs-validation" novalidate @submit="onSubmitURL">
+            <b-input-group prepend="URL">
+              <b-form-input id="url-input" v-model.trim="form.url" type="url" required placeholder="https://www.example.com" />
+              <b-input-group-append>
+                <b-btn id="btn-url-apply" type="submit" variant="primary">Apply</b-btn>
+              </b-input-group-append>
+              <div class="invalid-feedback">
+                Please provide a valid URL.
+              </div>
+            </b-input-group>
+          </b-form>
+        </b-col>
+        <b-col cols="12" class="col-lg-auto text-center or">
+          - OR -
+        </b-col>
+        <b-col>
+          <b-form id="aim-image-form" class="needs-validation" novalidate @submit="onSubmitImage">
+            <b-input-group id="image-input-group" prepend="Image">
+              <b-form-file id="image-input" required placeholder="Choose a PNG file..." accept="image/png" @change="onFileSelected" />
+              <b-input-group-append>
+                <b-btn id="btn-image-apply" type="submit" variant="primary">Apply</b-btn>
+              </b-input-group-append>
+            </b-input-group>
+            <div v-if="fileTooLarge === false" class="invalid-feedback">
+              Please provide a valid image.
             </div>
-          </b-card-header>
-          <b-collapse id="cat-one-accordion" visible role="tabpanel">
-            <b-card-body>
-              <table class="table table-striped table-bordered table-hover table-sm">
-                <thead>
-                  <tr>
-                    <th class="text-center" scope="col">Selected</th>
-                    <th scope="col">Metric</th>
-                    <th scope="col">References</th>
-                    <th scope="col">Evidence</th>
-                    <th scope="col">Relevance</th>
-                    <th scope="col">Computation time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <template v-for="metric in metricConfig.categories[0].metrics">
-                    <tr :key="metric.id">
-                      <td class="text-center">
-                        <b-form-checkbox class="metric-checkbox" :id="'metric-cb-' + metric" v-model="selected[metric]"></b-form-checkbox>
-                      </td>
-                      <td>
-                        {{metricConfig.metrics[metric].name}}
-                        <icon class="question-circle" name="question-circle" v-b-tooltip.hover :title="metricConfig.metrics[metric].description"></icon>
-                      </td>
-                      <td>
-                        [
+            <div v-if="fileTooLarge" class="invalid-feedback">
+              File is too large (max 5 MB).
+            </div>
+          </b-form>
+        </b-col>
+      </b-row>
+      <b-form v-if="display.metrics" id="aim-form" @submit="onSubmit">
+        <div class="tablist" role="tablist">
+          <b-card no-body active class="mb-4">
+            <b-card-header header-tag="header" role="tab" class="p-0">
+              <div v-b-toggle.cat-one-accordion variant="cat-one" class="rounded" block href="#">
+                <span class="fa">
+                  <font-awesome-icon :icon="metricConfig.categories[0].icon" />
+                </span>
+                <span class="title">{{ metricConfig.categories[0].name }}</span>
+              </div>
+            </b-card-header>
+            <b-collapse id="cat-one-accordion" visible role="tabpanel">
+              <b-card-body>
+                <table class="table table-striped table-bordered table-hover table-sm">
+                  <thead>
+                    <tr>
+                      <th class="text-center" scope="col">Selected</th>
+                      <th scope="col">Metric</th>
+                      <th scope="col">References</th>
+                      <th scope="col">Evidence</th>
+                      <th scope="col">Relevance</th>
+                      <th scope="col">Computation time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <template v-for="metric in metricConfig.categories[0].metrics">
+                      <tr :key="metric.id">
+                        <td class="text-center">
+                          <b-form-checkbox :id="'metric-cb-' + metric" v-model="selected[metric]" class="metric-checkbox" />
+                        </td>
+                        <td>
+                          {{ metricConfig.metrics[metric].name }}
+                          <span v-b-tooltip.hover :title="metricConfig.metrics[metric].description"><font-awesome-icon :icon="['fas', 'question-circle']" /></span>
+                        </td>
+                        <td>
+                          [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="reference.url" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
+                            <a :key="index" :href="reference.url" :title="reference.title" target="_blank">{{ index + 1 }}</a>
                           </template>
-                        ]
-                      </td>
-                      <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
-                      </td>
-                      <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
-                      </td>
-                      <td>
-                        <template v-if="metricConfig.metrics[metric].speed === 2">
-                          <div style="color: green">
-                            Fast
-                          </div>
-                        </template>
-                        <template v-else-if="metricConfig.metrics[metric].speed === 1">
-                          <div style="color: orange">
-                            Medium
-                          </div>
-                        </template>
-                        <template v-else-if="metricConfig.metrics[metric].speed === 0">
-                          <div style="color: red">
-                            Slow
-                          </div>
-                        </template>
-                      </td>
+                          ]
+                        </td>
+                        <td>
+                          <span v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i" name="star">
+                            <font-awesome-icon :icon="['fas', 'star']" />
+                          </span><span v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i" name="star-o">
+                            <font-awesome-icon :icon="['far', 'star']" />
+                          </span>
+                        </td>
+                        <td>
+                          <span v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i" name="star">
+                            <font-awesome-icon :icon="['fas', 'star']" />
+                          </span><span v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i" name="star-o">
+                            <font-awesome-icon :icon="['far', 'star']" />
+                          </span>
+                        </td>
+                        <td>
+                          <template v-if="metricConfig.metrics[metric].speed === 2">
+                            <div style="color: green">
+                              Fast
+                            </div>
+                          </template>
+                          <template v-else-if="metricConfig.metrics[metric].speed === 1">
+                            <div style="color: orange">
+                              Medium
+                            </div>
+                          </template>
+                          <template v-else-if="metricConfig.metrics[metric].speed === 0">
+                            <div style="color: red">
+                              Slow
+                            </div>
+                          </template>
+                        </td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </b-card-body>
+            </b-collapse>
+          </b-card>
+          <b-card no-body class="mb-4">
+            <b-card-header header-tag="header" role="tab" class="p-0">
+              <div v-b-toggle.cat-two-accordion variant="cat-two" class="rounded" block href="#">
+                <span class="fa">
+                  <font-awesome-icon :icon="metricConfig.categories[1].icon" />
+                </span>
+                <span class="title">{{ metricConfig.categories[1].name }}</span>
+              </div>
+            </b-card-header>
+            <b-collapse id="cat-two-accordion" visible role="tabpanel">
+              <b-card-body>
+                <table class="table table-striped table-bordered table-hover table-sm">
+                  <thead>
+                    <tr>
+                      <th class="text-center" scope="col">Selected</th>
+                      <th scope="col">Metric</th>
+                      <th scope="col">References</th>
+                      <th scope="col">Evidence</th>
+                      <th scope="col">Relevance</th>
+                      <th scope="col">Computation time</th>
                     </tr>
-                  </template>
-                </tbody>
-              </table>
-            </b-card-body>
-          </b-collapse>
-        </b-card>
-        <b-card no-body class="mb-4">
-          <b-card-header header-tag="header" role="tab" class="p-0">
-            <div variant="cat-two" class="rounded" block v-b-toggle.cat-two-accordion href="#">
-              <span class="fa">
-              <font-awesome-icon :icon="metricConfig.categories[1].icon" />
-              </span>
-              <span class="title">{{ metricConfig.categories[1].name }}</span>
-            </div>
-          </b-card-header>
-          <b-collapse id="cat-two-accordion" visible role="tabpanel">
-            <b-card-body>
-              <table class="table table-striped table-bordered table-hover table-sm">
-                <thead>
-                  <tr>
-                    <th class="text-center" scope="col">Selected</th>
-                    <th scope="col">Metric</th>
-                    <th scope="col">References</th>
-                    <th scope="col">Evidence</th>
-                    <th scope="col">Relevance</th>
-                    <th scope="col">Computation time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <template v-for="metric in metricConfig.categories[1].metrics">
-                    <tr :key="metric.id">
-                      <td class="text-center">
-                        <b-form-checkbox class="metric-checkbox" :id="'metric-cb-' + metric" v-model="selected[metric]"></b-form-checkbox>
-                      </td>
-                      <td>
-                        {{metricConfig.metrics[metric].name}}
-                        <icon class="question-circle" name="question-circle" v-b-tooltip.hover :title="metricConfig.metrics[metric].description"></icon>
-                      </td>
-                      <td>
-                        [
+                  </thead>
+                  <tbody>
+                    <template v-for="metric in metricConfig.categories[1].metrics">
+                      <tr :key="metric.id">
+                        <td class="text-center">
+                          <b-form-checkbox :id="'metric-cb-' + metric" v-model="selected[metric]" class="metric-checkbox" />
+                        </td>
+                        <td>
+                          {{ metricConfig.metrics[metric].name }}
+                          <span v-b-tooltip.hover :title="metricConfig.metrics[metric].description"><font-awesome-icon :icon="['fas', 'question-circle']" /></span>
+                        </td>
+                        <td>
+                          [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="reference.url" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
+                            <a :key="index" :href="reference.url" :title="reference.title" target="_blank">{{ index + 1 }}</a>
                           </template>
-                        ]
-                      </td>
-                      <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
-                      </td>
-                      <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
-                      </td>
-                      <td>
-                        <template v-if="metricConfig.metrics[metric].speed === 2">
-                          <div style="color: green">
-                            Fast
-                          </div>
-                        </template>
-                        <template v-else-if="metricConfig.metrics[metric].speed === 1">
-                          <div style="color: orange">
-                            Medium
-                          </div>
-                        </template>
-                        <template v-else-if="metricConfig.metrics[metric].speed === 0">
-                          <div style="color: red">
-                            Slow
-                          </div>
-                        </template>
-                      </td>
+                          ]
+                        </td>
+                        <td>
+                          <span v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i" name="star">
+                            <font-awesome-icon :icon="['fas', 'star']" />
+                          </span><span v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i" name="star-o">
+                            <font-awesome-icon :icon="['far', 'star']" />
+                          </span>
+                        </td>
+                        <td>
+                          <span v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i" name="star">
+                            <font-awesome-icon :icon="['fas', 'star']" />
+                          </span><span v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i" name="star-o">
+                            <font-awesome-icon :icon="['far', 'star']" />
+                          </span>
+                        </td>
+                        <td>
+                          <template v-if="metricConfig.metrics[metric].speed === 2">
+                            <div style="color: green">
+                              Fast
+                            </div>
+                          </template>
+                          <template v-else-if="metricConfig.metrics[metric].speed === 1">
+                            <div style="color: orange">
+                              Medium
+                            </div>
+                          </template>
+                          <template v-else-if="metricConfig.metrics[metric].speed === 0">
+                            <div style="color: red">
+                              Slow
+                            </div>
+                          </template>
+                        </td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </b-card-body>
+            </b-collapse>
+          </b-card>
+          <b-card no-body class="mb-4">
+            <b-card-header header-tag="header" role="tab" class="p-0">
+              <div v-b-toggle.cat-three-accordion variant="cat-three" block class="rounded" href="#">
+                <span class="fa">
+                  <font-awesome-icon :icon="metricConfig.categories[2].icon" />
+                </span>
+                <span class="title">{{ metricConfig.categories[2].name }}</span>
+              </div>
+            </b-card-header>
+            <b-collapse id="cat-three-accordion" visible role="tabpanel">
+              <b-card-body>
+                <table class="table table-striped table-bordered table-hover table-sm">
+                  <thead>
+                    <tr>
+                      <th class="text-center" scope="col">Selected</th>
+                      <th scope="col">Metric</th>
+                      <th scope="col">References</th>
+                      <th scope="col">Evidence</th>
+                      <th scope="col">Relevance</th>
+                      <th scope="col">Computation time</th>
                     </tr>
-                  </template>
-                </tbody>
-              </table>
-            </b-card-body>
-          </b-collapse>
-        </b-card>
-        <b-card no-body class="mb-4">
-          <b-card-header header-tag="header" role="tab" class="p-0">
-            <div variant="cat-three" class="rounded" block v-b-toggle.cat-three-accordion href="#">
-              <span class="fa">
-              <font-awesome-icon :icon="metricConfig.categories[2].icon" />
-              </span>
-              <span class="title">{{ metricConfig.categories[2].name }}</span>
-            </div>
-          </b-card-header>
-          <b-collapse id="cat-three-accordion" visible role="tabpanel">
-            <b-card-body>
-              <table class="table table-striped table-bordered table-hover table-sm">
-                <thead>
-                  <tr>
-                    <th class="text-center" scope="col">Selected</th>
-                    <th scope="col">Metric</th>
-                    <th scope="col">References</th>
-                    <th scope="col">Evidence</th>
-                    <th scope="col">Relevance</th>
-                    <th scope="col">Computation time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <template v-for="metric in metricConfig.categories[2].metrics">
-                    <tr :key="metric.id">
-                      <td class="text-center">
-                        <b-form-checkbox class="metric-checkbox" :id="'metric-cb-' + metric" v-model="selected[metric]"></b-form-checkbox>
-                      </td>
-                      <td>
-                        {{metricConfig.metrics[metric].name}}
-                        <icon class="question-circle" name="question-circle" v-b-tooltip.hover :title="metricConfig.metrics[metric].description"></icon>
-                      </td>
-                      <td>
-                        [
+                  </thead>
+                  <tbody>
+                    <template v-for="metric in metricConfig.categories[2].metrics">
+                      <tr :key="metric.id">
+                        <td class="text-center">
+                          <b-form-checkbox :id="'metric-cb-' + metric" v-model="selected[metric]" class="metric-checkbox" />
+                        </td>
+                        <td>
+                          {{ metricConfig.metrics[metric].name }}
+                          <span v-b-tooltip.hover :title="metricConfig.metrics[metric].description"><font-awesome-icon :icon="['fas', 'question-circle']" /></span>
+                        </td>
+                        <td>
+                          [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="reference.url" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
+                            <a :key="index" :href="reference.url" :title="reference.title" target="_blank">{{ index + 1 }}</a>
                           </template>
-                        ]
-                      </td>
-                      <td>
-                        <icon name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
-                      </td>
-                      <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
-                      </td>
-                      <td>
-                        <template v-if="metricConfig.metrics[metric].speed === 2">
-                          <div style="color: green">
-                            Fast
-                          </div>
-                        </template>
-                        <template v-else-if="metricConfig.metrics[metric].speed === 1">
-                          <div style="color: orange">
-                            Medium
-                          </div>
-                        </template>
-                        <template v-else-if="metricConfig.metrics[metric].speed === 0">
-                          <div style="color: red">
-                            Slow
-                          </div>
-                        </template>
-                      </td>
+                          ]
+                        </td>
+                        <td>
+                          <span v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i" name="star">
+                            <font-awesome-icon :icon="['fas', 'star']" />
+                          </span><span v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i" name="star-o">
+                            <font-awesome-icon :icon="['far', 'star']" />
+                          </span>
+                        </td>
+                        <td>
+                          <span v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i" name="star">
+                            <font-awesome-icon :icon="['fas', 'star']" />
+                          </span><span v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i" name="star-o">
+                            <font-awesome-icon :icon="['far', 'star']" />
+                          </span>
+                        </td>
+                        <td>
+                          <template v-if="metricConfig.metrics[metric].speed === 2">
+                            <div style="color: green">
+                              Fast
+                            </div>
+                          </template>
+                          <template v-else-if="metricConfig.metrics[metric].speed === 1">
+                            <div style="color: orange">
+                              Medium
+                            </div>
+                          </template>
+                          <template v-else-if="metricConfig.metrics[metric].speed === 0">
+                            <div style="color: red">
+                              Slow
+                            </div>
+                          </template>
+                        </td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </b-card-body>
+            </b-collapse>
+          </b-card>
+          <b-card no-body class="mb-4">
+            <b-card-header header-tag="header" role="tab" class="p-0">
+              <div v-b-toggle.cat-four-accordion variant="cat-four" block class="rounded" href="#">
+                <span class="fa">
+                  <font-awesome-icon :icon="metricConfig.categories[3].icon" />
+                </span>
+                <span class="title">{{ metricConfig.categories[3].name }}</span>
+              </div>
+            </b-card-header>
+            <b-collapse id="cat-four-accordion" visible role="tabpanel">
+              <b-card-body>
+                <table class="table table-striped table-bordered table-hover table-sm">
+                  <thead>
+                    <tr>
+                      <th class="text-center" scope="col">Selected</th>
+                      <th scope="col">Metric</th>
+                      <th scope="col">References</th>
+                      <th scope="col">Evidence</th>
+                      <th scope="col">Relevance</th>
+                      <th scope="col">Computation time</th>
                     </tr>
-                  </template>
-                </tbody>
-              </table>
-            </b-card-body>
-          </b-collapse>
-        </b-card>
-        <b-card no-body class="mb-4">
-          <b-card-header header-tag="header" role="tab" class="p-0">
-            <div variant="cat-four" class="rounded" block v-b-toggle.cat-four-accordion href="#">
-              <span class="fa">
-              <font-awesome-icon :icon="metricConfig.categories[3].icon" />
-              </span>
-              <span class="title">{{ metricConfig.categories[3].name }}</span>
-            </div>
-          </b-card-header>
-          <b-collapse id="cat-four-accordion" visible role="tabpanel">
-            <b-card-body>
-              <table class="table table-striped table-bordered table-hover table-sm">
-                <thead>
-                  <tr>
-                    <th class="text-center" scope="col">Selected</th>
-                    <th scope="col">Metric</th>
-                    <th scope="col">References</th>
-                    <th scope="col">Evidence</th>
-                    <th scope="col">Relevance</th>
-                    <th scope="col">Computation time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <template v-for="metric in metricConfig.categories[3].metrics">
-                    <tr :key="metric.id">
-                      <td class="text-center">
-                        <b-form-checkbox class="metric-checkbox" :id="'metric-cb-' + metric" v-model="selected[metric]"></b-form-checkbox>
-                      </td>
-                      <td>
-                        {{metricConfig.metrics[metric].name}}
-                        <icon class="question-circle" name="question-circle" v-b-tooltip.hover :title="metricConfig.metrics[metric].description"></icon>
-                      </td>
-                      <td>
-                        [
+                  </thead>
+                  <tbody>
+                    <template v-for="metric in metricConfig.categories[3].metrics">
+                      <tr :key="metric.id">
+                        <td class="text-center">
+                          <b-form-checkbox :id="'metric-cb-' + metric" v-model="selected[metric]" class="metric-checkbox" />
+                        </td>
+                        <td>
+                          {{ metricConfig.metrics[metric].name }}
+                          <span v-b-tooltip.hover :title="metricConfig.metrics[metric].description"><font-awesome-icon :icon="['fas', 'question-circle']" /></span>
+                        </td>
+                        <td>
+                          [
                           <template v-for="(reference, index) in metricConfig.metrics[metric].references">
                             <template v-if="index > 0">, </template>
-                            <a :href="reference.url" :title="reference.title" target="_blank" :key="index">{{ index + 1 }}</a>
+                            <a :key="index" :href="reference.url" :title="reference.title" target="_blank">{{ index + 1 }}</a>
                           </template>
-                        ]
-                      </td>
-                      <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i"></icon>
-                      </td>
-                      <td>
-                        <icon class="star" name="star" v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i"></icon><icon class="star-o" name="star-o" v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i"></icon>
-                      </td>
-                      <td>
-                        <template v-if="metricConfig.metrics[metric].speed === 2">
-                          <div style="color: green">
-                            Fast
-                          </div>
-                        </template>
-                        <template v-else-if="metricConfig.metrics[metric].speed === 1">
-                          <div style="color: orange">
-                            Medium
-                          </div>
-                        </template>
-                        <template v-else-if="metricConfig.metrics[metric].speed === 0">
-                          <div style="color: red">
-                            Slow
-                          </div>
-                        </template>
-                      </td>
-                    </tr>
-                  </template>
-                </tbody>
-              </table>
-            </b-card-body>
-          </b-collapse>
-        </b-card>
-      </div>
-      <b-btn class="mt-2" size="lg" type="submit" variant="primary">Submit</b-btn>
-    </b-form>
-  </b-jumbotron>
-  <div class="mt-2" v-if="display.progressBar">
-    <ProgressBar />
+                          ]
+                        </td>
+                        <td>
+                          <span v-for="i in metricConfig.metrics[metric].evidence" :key="'evidence-star-' + metric + '-' + i" name="star">
+                            <font-awesome-icon :icon="['fas', 'star']" />
+                          </span><span v-for="i in 5 - metricConfig.metrics[metric].evidence" :key="'evidence-star-o-' + metric + '-' + i" name="star-o">
+                            <font-awesome-icon :icon="['far', 'star']" />
+                          </span>
+                        </td>
+                        <td>
+                          <span v-for="i in metricConfig.metrics[metric].relevance" :key="'relevance-star-' + metric + '-' + i" name="star">
+                            <font-awesome-icon :icon="['fas', 'star']" />
+                          </span><span v-for="i in 5 - metricConfig.metrics[metric].relevance" :key="'relevance-star-o-' + metric + '-' + i" name="star-o">
+                            <font-awesome-icon :icon="['far', 'star']" />
+                          </span>
+                        </td>
+                        <td>
+                          <template v-if="metricConfig.metrics[metric].speed === 2">
+                            <div style="color: green">
+                              Fast
+                            </div>
+                          </template>
+                          <template v-else-if="metricConfig.metrics[metric].speed === 1">
+                            <div style="color: orange">
+                              Medium
+                            </div>
+                          </template>
+                          <template v-else-if="metricConfig.metrics[metric].speed === 0">
+                            <div style="color: red">
+                              Slow
+                            </div>
+                          </template>
+                        </td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </b-card-body>
+            </b-collapse>
+          </b-card>
+        </div>
+        <b-btn class="mt-2" size="lg" type="submit" variant="primary">Submit</b-btn>
+      </b-form>
+    </b-jumbotron>
+    <div v-if="display.progressBar" class="mt-2">
+      <ProgressBar />
+    </div>
+    <div v-if="display.summary" class="mt-2">
+      <Summary />
+    </div>
+    <div v-if="display.preview" class="mt-2">
+      <Preview />
+    </div>
+    <div v-if="display.results" class="mt-2">
+      <Results />
+    </div>
   </div>
-  <div class="mt-2" v-if="display.summary">
-    <Summary />
-  </div>
-  <div class="mt-2" v-if="display.preview">
-    <Preview />
-  </div>
-  <div class="mt-2" v-if="display.results">
-    <Results />
-  </div>
-</div>
 </template>
 
 <script>
@@ -380,6 +412,12 @@ import Preview from './Preview'
 import { mapState } from 'vuex'
 
 export default {
+  components: {
+    Results,
+    ProgressBar,
+    Preview,
+    Summary
+  },
   data () {
     return {
       selected: {},
@@ -391,6 +429,34 @@ export default {
       metricConfig,
       fileTooLarge: false,
       input: null
+    }
+  },
+  computed: mapState({
+    display: state => state.display,
+    generalError: state => state.generalError,
+    validationError: state => state.validationError,
+    reconnectCount: state => state.reconnectCount
+  }),
+  created () {
+    this.$socketClient.onMessage = msg => {
+      const data = JSON.parse(msg.data)
+      if (data.action) {
+        this.$store.dispatch(data.action, data)
+        this.$store.commit('setReconnectCount', 0)
+      }
+    }
+    this.$socketClient.onClose = () => {
+      if (this.reconnectCount >= 2) {
+        this.$store.commit('pushGeneralError')
+        this.$socketClient.removeListeners()
+        this.$socketClient.instance.close()
+        delete this.$socketClient.instance
+      } else {
+        this.$store.commit('setReconnectCount', this.reconnectCount + 1)
+        setTimeout(() => {
+          this.$socketClient.reconnect()
+        }, 3000)
+      }
     }
   },
   methods: {
@@ -458,7 +524,7 @@ export default {
       let imageForm = document.querySelector('#aim-image-form')
       if ((this.$store.state.generalError === false) && ((urlForm.checkValidity() === true && this.form.url !== null) || (imageForm.checkValidity() === true && this.form.data !== null && this.form.filename !== null))) {
         // Submit data
-        this.$socket.sendObj({
+        this.$socketClient.sendObj({
           type: 'execute',
           input: this.input,
           url: this.form.url,
@@ -503,7 +569,7 @@ export default {
       return (file.size > MAX_FILE_SIZE)
     },
     getBase64 (file, onLoadCallback) {
-      var reader = new FileReader()
+      let reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = onLoadCallback
       reader.onerror = function (error) {
@@ -543,18 +609,7 @@ export default {
         this.input = null
       }
     }
-  },
-  components: {
-    Results,
-    ProgressBar,
-    Preview,
-    Summary
-  },
-  computed: mapState({
-    display: state => state.display,
-    generalError: state => state.generalError,
-    validationError: state => state.validationError
-  })
+  }
 }
 </script>
 
@@ -586,7 +641,7 @@ table thead th:nth-child(6){
 }
 
 table tbody td:nth-child(2) svg{
-  margin-bottom: 6px;
+  margin-bottom: 2px;
 }
 
 #aim-url-form input:-webkit-autofill {
@@ -613,9 +668,8 @@ h2.text-muted {
   font-size: 1.5rem;
   margin-bottom: 20px;
 }
-.fa-icon.star,
-.fa-icon.star-o,
-.fa-icon.question-circle {
+.fa-star,
+.fa-question-circle {
   color: #555555;
 }
 

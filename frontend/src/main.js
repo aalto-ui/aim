@@ -8,32 +8,18 @@ import store from './store'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
+import { faStar, faFilePdf, faCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(fas, fab, far)
+library.add(fas, faStar, faFilePdf, faCheckCircle)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 
-import 'vue-awesome/icons/check'
-import 'vue-awesome/icons/star'
-import 'vue-awesome/icons/star-o'
-import 'vue-awesome/icons/question-circle'
-import 'vue-awesome/icons/file-pdf-o'
-import Icon from 'vue-awesome/components/Icon'
-
-Vue.component('icon', Icon)
-
-import VueNativeSock from 'vue-native-websocket'
-const sockOptions = {
-  reconnection: true,
-  reconnectionAttempts: 3,
-  format: 'json',
-  store
-}
-
-Vue.use(VueNativeSock, process.env.WS_URL, sockOptions)
+import VueSimpleWebSocket from 'vue-simple-websocket'
+Vue.use(VueSimpleWebSocket, process.env.WS_URL, {
+  reconnectEnabled: false,
+  reconnectInterval: 0
+})
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
@@ -41,7 +27,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  template: '<App/>',
   components: { App },
+  template: '<App/>',
   store
 })

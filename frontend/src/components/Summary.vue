@@ -6,82 +6,84 @@
           <h2 id="summary" class="component-title">Summary</h2>
         </b-col>
       </b-row>
-    <b-row>
-    <template v-for="category in categories" lang="html">
-      <div class="col-12 col-sm-6 col-md-3 category">
-        <div class="category-title rounded" :class="{ 'bg-primary' : categoryVisible(category.id, category.metrics) !== -1, 'bg-secondary' : categoryVisible(category.id, category.metrics) === -1, }">
-          <div class="loader-bg" :class="{done: fetching}" v-if="!metricLoading()" >
-            <div class="loader">Loading...</div>
-          </div>
-          
-          <font-awesome-icon :icon="category.icon" />
-          <!-- if any metrics are selected -->
-          <div class="category-title-inner" v-if="categoryVisible(category.id, category.metrics) !== -1" >
-            <a :href="'#'+category.id">
-              <h4 class="title">{{category.name}}</h4>
-            </a>
-          </div>
-          <!-- if no metrics is selected -->
-          <div v-else class="category-title-inner" >
-              <h4 class="title">{{category.name}}</h4>
-              <div class="info" v-if="metricLoading()">
-                <div class="msg">not selected</div>
+      <b-row>
+        <template v-for="(category, catIdx) in categories" lang="html">
+          <div :key="catIdx" class="col-12 col-sm-6 col-md-3 category">
+            <div class="category-title rounded" :class="{ 'bg-primary' : categoryVisible(category.id, category.metrics) !== -1, 'bg-secondary' : categoryVisible(category.id, category.metrics) === -1, }">
+              <div v-if="!metricLoading()" :class="{done: fetching}" class="loader-bg">
+                <div class="loader">Loading...</div>
               </div>
-          </div>
-        </div><!-- category-title -->
 
-        <div class="metrics">
-          <template v-for="metric in category.metrics" v-if="metricVisible(metric)" > 
-            <div class="metric">
-              <div class="title text-primary">
-                <a :href="'#'+ metrics[metric].id" >
-                  <div class="inner">
-                    {{metrics[metric].name}}
-                    <font-awesome-icon :icon="['fas', 'angle-down']" />
-                  </div>
+              <font-awesome-icon :icon="category.icon" />
+              <!-- if any metrics are selected -->
+              <div v-if="categoryVisible(category.id, category.metrics) !== -1" class="category-title-inner">
+                <a :href="'#'+category.id">
+                  <h4 class="title">{{ category.name }}</h4>
                 </a>
               </div>
-              <div v-if="metrics[metric].visualizationType==='table'">
-                <div class="result" v-for="(result, i) in metrics[metric].results">
-                  <div class="info">
-                    <a :href="'#'+ result.id" >
-                      <div class="result-name">{{result.name}}</div>
-                    </a>
-                  </div>
-                  <template v-for="(score) in result.scores" v-if="result.scores.length > 1">                        
-                    <div class="score" v-show="getJudgment(score, results[metric][i].value)">
-                      <div class="description" :class="score.judgment" >
-                        {{score.description}}
-                        <template v-if="(score.icon[0]!=null)">
-                          <font-awesome-icon :icon="score.icon" />
-                        </template>
-                      </div> 
-                    </div>
-                  </template>
+              <!-- if no metrics is selected -->
+              <div v-else class="category-title-inner">
+                <h4 class="title">{{ category.name }}</h4>
+                <div v-if="metricLoading()" class="info">
+                  <div class="msg">not selected</div>
                 </div>
               </div>
+            </div><!-- category-title -->
 
-                <div v-if="metrics[metric].visualizationType==='b64'" class="results">
-                  <div v-for="result in results[metric]" class="result">
-                    <div class="info">
-                      <a :href="'#'+ result.id" >
-                        <span>{{result.result.name}}</span>
-                      </a>
-                    </div>
-                    <img v-if="result.value !== ''" 
-                          class="result-img" 
-                          :src="'data:image/png;base64, ' + result.value" />
+            <div class="metrics">
+              <template v-for="(metric, metricIdx) in category.metrics.filter(m => metricVisible(m))">
+                <div :key="metricIdx" class="metric">
+                  <div class="title text-primary">
+                    <a :href="'#'+ metrics[metric].id">
+                      <div class="inner">
+                        {{ metrics[metric].name }}
+                        <font-awesome-icon :icon="['fas', 'angle-down']" />
+                      </div>
+                    </a>
                   </div>
-                </div>
-                </div><!-- metric -->        
+                  <div v-if="metrics[metric].visualizationType==='table'">
+                    <div v-for="(result, i) in metrics[metric].results" :key="i" class="result">
+                      <div class="info">
+                        <a :href="'#'+ result.id">
+                          <div class="result-name">{{ result.name }}</div>
+                        </a>
+                      </div>
+                      <span v-if="result.scores.length > 1">
+                        <template v-for="(score, scoreIdx) in result.scores">
+                          <div v-show="getJudgment(score, results[metric][i].value)" :key="scoreIdx" class="score">
+                            <div class="description" :class="score.judgment">
+                              {{ score.description }}
+                              <template v-if="(score.icon[0]!=null)">
+                                <font-awesome-icon :icon="score.icon" />
+                              </template>
+                            </div>
+                          </div>
+                        </template>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div v-if="metrics[metric].visualizationType==='b64'" class="results">
+                    <div v-for="(result, resultIdx) in results[metric]" :key="resultIdx" class="result">
+                      <div class="info">
+                        <a :href="'#'+ result.id">
+                          <span>{{ result.result.name }}</span>
+                        </a>
+                      </div>
+                      <img
+                        v-if="result.value !== ''"
+                        class="result-img"
+                        :src="'data:image/png;base64, ' + result.value"
+                      >
+                    </div>
+                  </div>
+                </div><!-- metric -->
               </template>
             </div><!-- metrics -->
-
           </div><!--//// div col-3, col-6 -->
         </template><!-- //// categories -->
       </b-row>
     </div><!-- //// summary-section -->
-    <!-- <hr> -->
   </div>
 </template>
 
@@ -91,6 +93,7 @@ import { mapGetters } from 'vuex'
 import metricConfig from '../../../metrics.json'
 
 export default {
+  components: {},
   data () {
     return {
       categories: metricConfig.categories,
@@ -130,8 +133,6 @@ export default {
         min <= value && (max >= value || max === null)
       )
     }
-  },
-  components: {
   }
 }
 
@@ -186,13 +187,13 @@ export default {
 .category-title .info .evalation {
     position: absolute;
     bottom: 10px;
-    font-size: 3rem; 
+    font-size: 3rem;
     text-transform: capitalize;
 }
 
 .category-title .info .msg {
     margin-top: 25px;
-    font-size: 1rem; 
+    font-size: 1rem;
     text-transform: capitalize;
 }
 
@@ -263,12 +264,12 @@ export default {
   /* border-bottom: 2px solid #7553a0; */
   border-left: 2px solid #9d94a8;
   border-bottom: 2px solid #9d94a8;
-  text-align: left; 
+  text-align: left;
 }
 
 .metric .result .info{
   padding: 0px 60px 0px 0px;
-  font-size: .8rem; 
+  font-size: .8rem;
 }
 
 .metric .result .score .description {
@@ -284,7 +285,7 @@ export default {
 }
 
 .metric .result .score .description.good {
-  color: #1e7e56; 
+  color: #1e7e56;
 }
 
 .metric .result .score .description.bad{
@@ -376,7 +377,7 @@ export default {
     font-size: 1.2rem;
     word-break: break-all;
   }
-  
+
   .metric .result .info{
     padding: 0;
     font-size: .7rem;

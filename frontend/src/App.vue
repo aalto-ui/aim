@@ -4,7 +4,7 @@
       <Header />
       <b-row>
         <b-col>
-          <AIMForm></AIMForm>
+          <AIMForm />
         </b-col>
       </b-row>
     </b-container>
@@ -16,7 +16,7 @@ import Header from './components/Header'
 import AIMForm from './components/AIMForm'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     Header,
     AIMForm
@@ -25,7 +25,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'assets/_custom.scss';
+$theme-colors: (
+  "primary": #7553A0,
+);
+
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 @import '../node_modules/bootstrap-vue/dist/bootstrap-vue.css';
 </style>

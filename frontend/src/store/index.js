@@ -13,6 +13,7 @@ const initialState = () => {
     fetching: {},
     fetchingCount: 0,
     fetchedCount: 0,
+    reconnectCount: 0,
     validationError: false,
     generalError: false,
     display: {
@@ -93,27 +94,6 @@ const actions = {
 }
 
 const mutations = {
-  SOCKET_ONOPEN (state, event) {
-    // console.log('Socket connected')
-  },
-  SOCKET_ONCLOSE (state, event) {
-    // console.log('Socket closed')
-  },
-  SOCKET_ONERROR (state, event) {
-    // console.error(event)
-  },
-  SOCKET_ONMESSAGE (state, message) {
-    // console.log(message)
-  },
-  SOCKET_RECONNECT (state, count) {
-    // console.info('Reconnecting, attempt ' + count)
-  },
-  SOCKET_RECONNECT_ERROR (state) {
-    // console.error('Reconnection error')
-    this.commit('resetState')
-    state.display.input = false
-    state.generalError = true
-  },
   pushResults (state, payload) {
     Vue.set(state.display, 'results', true)
     const results = {}
@@ -124,6 +104,9 @@ const mutations = {
   },
   increaseFetchedCount (state) {
     state.fetchedCount++
+  },
+  setReconnectCount (state, value=0) {
+    state.reconnectCount = value
   },
   updateSummary (state) {
     // console.log(state.fetchedCount)
