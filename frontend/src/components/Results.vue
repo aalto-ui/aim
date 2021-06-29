@@ -81,7 +81,14 @@
                               <h4>Your score: {{ data.item.value }}</h4>
                               <hr>
                               <p>The histogram below shows the results of this metric for <em>Alexa Top 500 Global Sites</em>. The list of sites was retrieved from <a href="https://www.alexa.com/topsites" target="_blank">https://www.alexa.com/topsites</a> on April 9, 2021 and their respective GUI designs were evaluated on April 11-13, 2021<sup>*</sup>.</p>
-                              <img class="histogram" :src="'/static/histograms/' + data.item.id + '_histogram.png'">
+                              <recorded-results-chart
+                                v-if="chartData[data.item.id]"
+                                :chart-data="chartData[data.item.id]"
+                                :options="chartOptions[data.item.id]"
+                                :width="null"
+                                :height="null"
+                                :plugins="chartPlugins[data.item.id]"
+                              />
                               <p style="font-size: 11px;"><sup>*</sup>Country-specific, non-representative, and non-relevant sites were excluded from the list.</p>
                             </b-modal>
                           </template>
@@ -113,14 +120,14 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
 import _ from 'lodash'
+import { RecordedResultsChart, fillData } from './RecordedResultsChart'
 import metricConfig from '../../../metrics.json'
 
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {},
+  components: { RecordedResultsChart },
   data () {
     return {
       categories: metricConfig.categories,
@@ -142,13 +149,24 @@ export default {
           key: 'show_details',
           thStyle: 'width: 20%'
         }
-      ]
+      ],
+      chartData: {},
+      chartOptions: {},
+      chartPlugins: {},
     }
   },
   computed: mapGetters({
     results: 'resultsFormatted',
     fetching: 'fetchingMetrics'
   }),
+  updated () {
+    fillData({
+      chartData: this.chartData,
+      chartOptions: this.chartOptions,
+      chartPlugins: this.chartPlugins,
+      results: this.results,
+    })
+  },
   methods: {
     categoryVisible (category, metrics) {
       return (
@@ -240,10 +258,6 @@ table thead th{
 
 .card-body table .btn {
     padding: 0;
-}
-
-.histogram {
-  max-width: 100%;
 }
 
 .b64{

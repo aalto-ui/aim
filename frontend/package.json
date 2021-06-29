@@ -20,9 +20,11 @@
     "@fortawesome/vue-fontawesome": "^2.0.2",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "2.21.2",
+    "chart.js": "^2.9.4",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
     "vue": "^2.6.14",
+    "vue-chartjs": "^3.5.1",
     "vue-simple-websocket": "^0.0.3",
     "vuex": "^3.6.2"
   },
