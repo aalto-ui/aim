@@ -79,6 +79,7 @@ def get_loguru_handlers():
                 "format": format_string,
                 "level": configmanager.options.loguru_level,
                 "backtrace": configmanager.options.loguru_backtrace,
+                "colorize": configmanager.options.loguru_colorize,
             }
         )
 

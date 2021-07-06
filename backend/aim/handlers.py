@@ -13,7 +13,6 @@ Handlers.
 # Standard library modules
 import importlib
 import json
-import logging
 import re
 import time
 import uuid
@@ -26,6 +25,7 @@ from urllib.parse import urlparse
 # Third-party modules
 import tornado.ioloop
 import tornado.websocket
+from loguru import logger
 from motor.motor_tornado import MotorDatabase
 from pydantic.error_wrappers import ValidationError
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
@@ -78,10 +78,10 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
             return False
 
     # def open(self):
-    #     logging.debug("Connection opened")
+    #     logger.debug("Connection opened")
 
     def on_message(self, message: Union[str, bytes]):
-        logging.debug("Message received: {!r}".format(message))
+        logger.debug("Message received: {!r}".format(message))
 
         try:
             # Load message
@@ -148,7 +148,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
 
             # Iterate over selected metrics and execute them one by one
             for metric in {k: v for k, v in msg.metrics.items()}:
-                logging.debug("Executing metric {}...".format(metric))
+                logger.debug("Executing metric {}...".format(metric))
 
                 # Locate metric implementation
                 metric_files = [
@@ -179,7 +179,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     execution_time: float = round(end_time - start_time, 4)
                 # Metric implementation is not available
                 else:
-                    logging.error(
+                    logger.error(
                         "Error: Metric implementation is not available."
                     )
                     raise NotImplementedError(
@@ -193,7 +193,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     # Iterate over metric results
                     results_modified = []
                     for count, result in enumerate(results, start=0):
-                        logging.debug("Result: {}".format(result))
+                        logger.debug("Result: {}".format(result))
                         # str = image encoded in Base64
                         if isinstance(result, str):
                             # Store result image
@@ -236,6 +236,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     }
                 )
         except ValidationError as e:
+            logger.error("ValidationError", e)
             self.write_message(
                 {
                     "type": "error",
@@ -244,6 +245,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 }
             )
         except NotImplementedError as e:
+            logger.error("NotImplementedError", e)
             self.write_message(
                 {
                     "type": "error",
@@ -252,6 +254,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 }
             )
         except Exception as e:
+            logger.error("Exception: {!r}".format(e))
             self.write_message(
                 {
                     "type": "error",
@@ -264,4 +267,4 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
         self.close()
 
     # def on_close(self):
-    #     logging.debug("Connection closed")
+    #     logger.debug("Connection closed")

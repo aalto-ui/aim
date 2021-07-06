@@ -11,7 +11,6 @@ AIM backend server.
 # ----------------------------------------------------------------------------
 
 # Standard library modules
-import logging
 from pathlib import Path
 from typing import Any, Dict
 
@@ -22,10 +21,12 @@ import tornado.log
 import tornado.options
 import tornado.web
 import tornado.websocket
+from loguru import logger
 from motor.motor_tornado import MotorClient, MotorDatabase
 from tornado.options import define, options
 
 # First-party modules
+from aim.common import configmanager, utils
 from aim.common.constants import SERVER_CONFIG_FILE
 from aim.handlers import AIMWebSocketHandler
 
@@ -71,6 +72,7 @@ define("database_uri", default=None, help="Database URI", type=str)
 
 def parse_options() -> None:
     server_config_filepath: Path = Path(SERVER_CONFIG_FILE)
+    tornado.options.logging = None
     if server_config_filepath.exists() and server_config_filepath.is_file():
         tornado.options.parse_config_file(SERVER_CONFIG_FILE)
     else:
@@ -94,13 +96,20 @@ def make_app() -> tornado.web.Application:
 
 
 def main() -> None:
+    configmanager.options = configmanager.parser.parse_known_args()[
+        0
+    ]  # Get known options, i.e., Namespace from the tuple
+
+    # Configure logger
+    utils.configure_logger()
+
     # Parse options
     parse_options()
 
     # Make application
     app: tornado.web.Application = make_app()
     app.listen(options.port)
-    logging.info(
+    logger.info(
         "Server '{}' in {} environment is listening on http://localhost:{}".format(
             options.name, options.environment, options.port
         )

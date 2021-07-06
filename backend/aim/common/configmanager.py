@@ -163,6 +163,14 @@ parser.add(
     action="store_true",
     default=False,
 )
+parser.add(
+    "--loguru_colorize",
+    help="whether to colorize the stdout output",
+    dest="loguru_colorize",
+    required=False,
+    action="store_true",
+    default=False,
+)
 
 # Options to access parsed configurations
 options = None
