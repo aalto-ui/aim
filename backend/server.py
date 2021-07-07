@@ -12,7 +12,7 @@ AIM backend server.
 
 # Standard library modules
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Tuple
 
 # Third-party modules
 import motor
@@ -79,7 +79,7 @@ def parse_options() -> None:
         tornado.options.parse_command_line()
 
 
-def make_app() -> tornado.web.Application:
+def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
     client: MotorClient = motor.motor_tornado.MotorClient(options.database_uri)
     db: MotorDatabase = client.get_database()
     settings: Dict[str, Any] = {
@@ -87,12 +87,12 @@ def make_app() -> tornado.web.Application:
         "debug": True if options.environment == "development" else False,
         "websocket_max_message_size": 5242880,  # 5 MB
     }
-    return tornado.web.Application(
+    return (db, tornado.web.Application(
         handlers=[
             (r"/", AIMWebSocketHandler),
         ],
         **settings,
-    )
+    ))
 
 
 def main() -> None:
@@ -100,20 +100,21 @@ def main() -> None:
         0
     ]  # Get known options, i.e., Namespace from the tuple
 
-    # Configure logger
-    utils.configure_logger()
-
     # Parse options
     parse_options()
 
     # Make application
-    app: tornado.web.Application = make_app()
+    db, app = make_app()
     app.listen(options.port)
     logger.info(
         "Server '{}' in {} environment is listening on http://localhost:{}".format(
             options.name, options.environment, options.port
         )
     )
+
+    # Configure logger
+    configmanager.database_sink = lambda msg: db['errors'].insert_one({ "error": msg })
+    utils.configure_logger()
 
     # Start application
     tornado.ioloop.IOLoop.current().start()

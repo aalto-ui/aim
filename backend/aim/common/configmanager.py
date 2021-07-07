@@ -156,6 +156,14 @@ parser.add(
     default=False,
 )
 parser.add(
+    "--loguru_db",
+    help="whether to log to database",
+    dest="loguru_db",
+    required=False,
+    action="store_true",
+    default=False,
+)
+parser.add(
     "--loguru_backtrace",
     help="whether to show full stacktrace",
     dest="loguru_backtrace",

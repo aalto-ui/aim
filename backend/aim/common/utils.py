@@ -95,6 +95,17 @@ def get_loguru_handlers():
             }
         )
 
+    if configmanager.options.loguru_db:
+        handlers.append(
+            {
+                "sink": configmanager.database_sink,
+                "format": format_string,
+                "level": "ERROR",
+                "backtrace": configmanager.options.loguru_backtrace,
+                "serialize": True,
+            }
+        )
+
     return handlers
 
 
