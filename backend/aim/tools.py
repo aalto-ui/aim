@@ -193,6 +193,7 @@ class Evaluation:
         self.results: Optional[List[Dict[str, Any]]] = []
         self.output_dir: Path = output_dir
         self.output_results_csv_file: Path = self.output_dir / "results.csv"
+        self.output_results_json_file: Path = self.output_dir / "results.json"
         self.output_quantiles_csv_file: Path = (
             self.output_dir / "quantiles.csv"
         )
@@ -365,6 +366,9 @@ class Evaluation:
         # Save results and quantiles
         results_df.to_csv(self.output_results_csv_file, index=False)
         quantiles_df.to_csv(self.output_quantiles_csv_file, index=True)
+
+        # Save results to json for the frontend
+        results_df.to_json(self.output_results_json_file, orient="records")
 
     def _reformat_large_tick_values(self, tick_val, pos):
         """
