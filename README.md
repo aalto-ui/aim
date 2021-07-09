@@ -53,7 +53,7 @@ git checkout aim2
 
 Make sure you have the following software already installed on your computer before proceeding!
 
-The backend dependencies include [Python 3.7+](https://www.python.org/), [pip](https://pypi.org/project/pip/), and [MongoDB](https://www.mongodb.com/). In addition, it is highly recommended to install [virtualenv](https://pypi.org/project/virtualenv/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment (see [instructions](#installation_backend)). Other dependencies include [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) for the frontend and [git](https://git-scm.com/) to track changes made to the codebase.
+The backend dependencies include [Python 3.7](https://www.python.org/), [pip](https://pypi.org/project/pip/), and [MongoDB](https://www.mongodb.com/). In addition, it is highly recommended to install [virtualenv](https://pypi.org/project/virtualenv/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment (see [instructions](#installation_backend)). Other dependencies include [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) for the frontend and [git](https://git-scm.com/) to track changes made to the codebase.
 
 ### Database
 
