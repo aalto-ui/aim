@@ -11,6 +11,7 @@ AIM backend server.
 # ----------------------------------------------------------------------------
 
 # Standard library modules
+import logging
 from pathlib import Path
 from typing import Any, Dict, Tuple
 
@@ -23,6 +24,7 @@ import tornado.web
 import tornado.websocket
 from loguru import logger
 from motor.motor_tornado import MotorClient, MotorDatabase
+from tornado.log import LogFormatter
 from tornado.options import define, options
 
 # First-party modules
@@ -97,6 +99,17 @@ def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
     )
 
 
+def set_tornado_logging() -> None:
+    for handler in logging.getLogger().handlers:
+        handler.setFormatter(
+            LogFormatter(
+                fmt="%(color)s%(asctime)s.%(msecs)03dZ | %(levelname)s \t| %(module)s:%(funcName)s:%(lineno)d | %(end_color)s%(message)s",
+                datefmt="%Y-%m-%dT%H:%M:%S",
+                color=True,
+            )
+        )
+
+
 def main() -> None:
     configmanager.options = configmanager.parser.parse_known_args()[
         0
@@ -104,6 +117,9 @@ def main() -> None:
 
     # Parse options
     parse_options()
+
+    # Tornado root formatter settings
+    set_tornado_logging()
 
     # Make application
     db, app = make_app()
