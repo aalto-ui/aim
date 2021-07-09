@@ -13,6 +13,7 @@ Configuration manager.
 # Standard library modules
 import os
 from pathlib import Path
+from typing import Any, Callable
 
 # Third-party modules
 import configargparse
@@ -182,3 +183,6 @@ parser.add(
 
 # Options to access parsed configurations
 options = None
+
+# Loguru database sink reference
+database_sink: Callable[[Any], None] = lambda msg: None

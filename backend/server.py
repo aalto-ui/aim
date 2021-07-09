@@ -72,7 +72,6 @@ define("database_uri", default=None, help="Database URI", type=str)
 
 def parse_options() -> None:
     server_config_filepath: Path = Path(SERVER_CONFIG_FILE)
-    tornado.options.logging = None
     if server_config_filepath.exists() and server_config_filepath.is_file():
         tornado.options.parse_config_file(SERVER_CONFIG_FILE)
     else:
@@ -87,12 +86,15 @@ def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
         "debug": True if options.environment == "development" else False,
         "websocket_max_message_size": 5242880,  # 5 MB
     }
-    return (db, tornado.web.Application(
-        handlers=[
-            (r"/", AIMWebSocketHandler),
-        ],
-        **settings,
-    ))
+    return (
+        db,
+        tornado.web.Application(
+            handlers=[
+                (r"/", AIMWebSocketHandler),
+            ],
+            **settings,
+        ),
+    )
 
 
 def main() -> None:
@@ -113,7 +115,9 @@ def main() -> None:
     )
 
     # Configure logger
-    configmanager.database_sink = lambda msg: db['errors'].insert_one({ "error": msg })
+    configmanager.database_sink = lambda msg: db["errors"].insert_one(
+        {"error": msg}
+    )
     utils.configure_logger()
 
     # Start application
