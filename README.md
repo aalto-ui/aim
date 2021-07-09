@@ -235,19 +235,10 @@ In addition, AIM backend supports the following utility tools to (i) ease develo
 - **Black.** Python code formatter. https://pypi.org/project/black/
 - **Mypy.** Static type checker for Python. https://pypi.org/project/mypy/
 - **Flake8.** Python tool for style guide enforcement. https://pypi.org/project/flake8/
-- **pre-commit.** Package manager for pre-commit hooks. https://pypi.org/project/pre-commit/
 
 ### Installation
 
-Go to the [backend](./backend/) directory and install pre-commit into your git hooks:
-```
-pre-commit install --install-hooks --overwrite
-```
-
-To uninstall pre-commit from your git hooks, run:
-```
-pre-commit uninstall
-```
+Go to the [backend](./backend/) directory. No additional installation is needed.
 
 ### Configuration
 
@@ -271,11 +262,6 @@ Configure flake8, if needed:
 nano .flake8
 ```
 
-Configure pre-commit, if needed:
-```
-nano .pre-commit-config.yaml
-```
-
 ### Usage
 
 Sort imports:
@@ -297,6 +283,34 @@ Lint code:
 ```
 flake8 .
 ```
+
+
+## Pre-Commit <a name="pre-commit"></a>
+
+Git hook scripts for AIM backend that are automatically run on every commit to point out issues in code such as missing semicolons, trailing whitespace, and debug statements. Its installation and use is optional, but highly recommended.
+
+- **pre-commit.** Package manager for pre-commit hooks. https://pypi.org/project/pre-commit/
+
+### Installation
+
+Go to the [project home](./) directory and install pre-commit into your git hooks:
+```
+pre-commit install --install-hooks --overwrite
+```
+
+To uninstall pre-commit from your git hooks, run:
+```
+pre-commit uninstall
+```
+
+### Configuration
+
+Configure pre-commit, if needed:
+```
+nano .pre-commit-config.yaml
+```
+
+### Usage
 
 Run all pre-commit hooks against currently staged files:
 ```
