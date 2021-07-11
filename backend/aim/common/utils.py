@@ -27,7 +27,7 @@ from aim.common.constants import METRICS_CONFIG_FILE
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-07-11"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -56,6 +56,7 @@ def show_configurations():
 def custom_isoformat(datetime_obj):
     return (
         arrow.get(datetime_obj)
+        .to("utc")
         .format("YYYY-MM-DDTHH:mm:ss.SSSZZ")
         .replace("+00:00", "Z")
     )

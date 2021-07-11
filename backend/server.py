@@ -12,6 +12,7 @@ AIM backend server.
 
 # Standard library modules
 import logging
+import time
 from pathlib import Path
 from typing import Any, Dict, Tuple
 
@@ -37,7 +38,7 @@ from aim.handlers import AIMWebSocketHandler
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-26"
+__date__ = "2021-07-11"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -101,13 +102,13 @@ def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
 
 def set_tornado_logging() -> None:
     for handler in logging.getLogger().handlers:
-        handler.setFormatter(
-            LogFormatter(
-                fmt="%(color)s%(asctime)s.%(msecs)03dZ | %(levelname)s \t| %(module)s:%(funcName)s:%(lineno)d | %(end_color)s%(message)s",
-                datefmt="%Y-%m-%dT%H:%M:%S",
-                color=True,
-            )
+        formatter: LogFormatter = LogFormatter(
+            fmt="%(color)s%(asctime)s.%(msecs)03dZ | %(levelname)s \t| %(module)s:%(funcName)s:%(lineno)d | %(end_color)s%(message)s",
+            datefmt="%Y-%m-%dT%H:%M:%S",
+            color=True,
         )
+        setattr(formatter, "converter", time.gmtime)
+        handler.setFormatter(formatter)
 
 
 def main() -> None:
@@ -117,6 +118,12 @@ def main() -> None:
 
     # Parse options
     parse_options()
+
+    # Configure logger
+    configmanager.database_sink = lambda msg: db["errors"].insert_one(
+        {"error": msg}
+    )
+    utils.configure_logger()
 
     # Tornado root formatter settings
     set_tornado_logging()
@@ -129,12 +136,6 @@ def main() -> None:
             options.name, options.environment, options.port
         )
     )
-
-    # Configure logger
-    configmanager.database_sink = lambda msg: db["errors"].insert_one(
-        {"error": msg}
-    )
-    utils.configure_logger()
 
     # Start application
     tornado.ioloop.IOLoop.current().start()
