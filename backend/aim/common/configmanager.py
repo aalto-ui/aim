@@ -13,6 +13,7 @@ Configuration manager.
 # Standard library modules
 import os
 from pathlib import Path
+from typing import Any, Callable
 
 # Third-party modules
 import configargparse
@@ -156,6 +157,14 @@ parser.add(
     default=False,
 )
 parser.add(
+    "--loguru_db",
+    help="whether to log to database",
+    dest="loguru_db",
+    required=False,
+    action="store_true",
+    default=False,
+)
+parser.add(
     "--loguru_backtrace",
     help="whether to show full stacktrace",
     dest="loguru_backtrace",
@@ -163,6 +172,17 @@ parser.add(
     action="store_true",
     default=False,
 )
+parser.add(
+    "--loguru_colorize",
+    help="whether to colorize the stdout output",
+    dest="loguru_colorize",
+    required=False,
+    action="store_true",
+    default=False,
+)
 
 # Options to access parsed configurations
 options = None
+
+# Loguru database sink reference
+database_sink: Callable[[Any], None] = lambda msg: None
