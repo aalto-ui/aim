@@ -103,7 +103,7 @@ def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
 def set_tornado_logging() -> None:
     for handler in logging.getLogger().handlers:
         formatter: LogFormatter = LogFormatter(
-            fmt="%(color)s%(asctime)s.%(msecs)03dZ | %(levelname)s \t| %(module)s:%(funcName)s:%(lineno)d | %(end_color)s%(message)s",
+            fmt="%(color)s%(asctime)s.%(msecs)03dZ | %(levelname)s     | %(module)s:%(funcName)s:%(lineno)d | %(end_color)s%(message)s",
             datefmt="%Y-%m-%dT%H:%M:%S",
             color=True,
         )
