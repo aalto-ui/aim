@@ -29,6 +29,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && wget -q "https://chromedriver.storage.googleapis.com/${VERSION}/chromedriver_linux64.zip" -O driver.zip \
   && unzip driver.zip \
   && chmod +x chromedriver \
+  && mkdir webdrivers \
   && mv chromedriver ./webdrivers/chromedriver_linux \
   # remove unwanted packages
   # BUG: uninstalling wget removes chrome
@@ -39,8 +40,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && chown -R aim ../metrics.json \
   && chown -R aim /home/aim \
   # delete unnecessary sources
-  && rm -rf driver.zip ./webdrivers/chromedriver_mac \
-  /etc/apt/sources.list.d/google-chrome.list /var/lib/apt/lists/* /var/cache/apt/*
+  && rm -rf driver.zip /etc/apt/sources.list.d/google-chrome.list /var/lib/apt/lists/* /var/cache/apt/*
 
 USER aim
 
