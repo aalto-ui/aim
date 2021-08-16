@@ -22,7 +22,6 @@ The most important files and folders in the AIM codebase are:
 │   ├── aim               : Source code (incl. metrics)
 │   ├── data              : Data files (incl. datasets)
 │   ├── tests             : Unit tests
-│   ├── webdrivers        : Web drivers
 │   ├── evaluator.py      : Evaluator utility app
 │   ├── screenshoter.py   : Screenshoter utility app
 │   ├── server.conf       : Server configuration file
@@ -38,6 +37,33 @@ The most important files and folders in the AIM codebase are:
 ├── ...
 .
 ```
+
+## Usage with Docker
+
+AIM can be run as a set of [Docker](https://docs.docker.com/get-docker/)
+containers. A **Docker Compose** [file](./docker-compose.yml) is provided
+starting containers for both the **backend** and the **frontend**, but also
+a **Mongo** database and a **Mongo Express** utility that can be accessed on
+[http://localhost:8081](http://localhost:8081) for database management.
+
+In order to use it, copy the [.env.example](./.env.example) to a `.env` file,
+build the images and run the setup given. The frontend will be accessible on
+[http://localhost:8080](http://localhost:8080)
+
+
+```sh
+# Create environment variable config
+cp .env.example .env
+# Build Docker images and run containers for the first time
+docker-compose up --build
+# Next runs don't need the long build step anymore
+docker-compose up
+```
+
+Development can be done in both the frontend and the backend containers,
+as we use bind mounts to most essential source files, but some events, such as
+installing new dependencies, might require rebuilding the images (with the same
+command as above).
 
 
 ## Installation
@@ -62,6 +88,15 @@ Create a new database called `aim` in [MongoDB](https://www.mongodb.com/) with t
 ### Backend <a name="installation_backend"></a>
 
 Go to the [backend](./backend/) directory and configure the server by editing the [server.conf](./backend/server.conf) file, especially the `database_uri` property.
+
+### Chrome webdrivers
+
+In order for the Selenium functionality in the backend to work, Chrome and
+appropriate Chrome webdrivers need to be installed in the `./backend/webdrivers`
+folder. You can run `bash ./scripts/get_webdrivers.sh` in order to automatically
+download the latest drivers, if you are using Linux or OSX. For more
+instructions or what the necessary steps are, check the comments in the
+[script](./scripts/get_webdrivers.sh).
 
 #### Working with `virtualenv`
 
