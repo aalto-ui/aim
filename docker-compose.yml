@@ -37,6 +37,7 @@ services:
       NODE_ENV: ${ENVIRONMENT}
       WS_URL: ${WS_URL}
       PORT: ${FRONTEND_PORT}
+      AUTO_OPEN_BROWSER: ${AUTO_OPEN_BROWSER}
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     volumes: # frontend source code bind mounts
