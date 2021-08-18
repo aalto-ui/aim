@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   mongo:
-    image: mongo
+    image: mongo:5.0-focal
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
@@ -17,7 +17,7 @@ services:
       driver: none
 
   mongo-express:
-    image: mongo-express
+    image: mongo-express:0.54.0
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_USER}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_PASS}
@@ -25,8 +25,6 @@ services:
       - 8081:8081
     networks:
       - data_network
-    logging:
-      driver: none
 
   frontend:
     build:
