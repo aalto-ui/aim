@@ -60,7 +60,6 @@ services:
       DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
     ports:
-      - 4444:4444
       - ${BACKEND_PORT}:${BACKEND_PORT}
     networks:
       - backend_network
