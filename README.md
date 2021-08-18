@@ -24,7 +24,6 @@ The most important files and folders in the AIM codebase are:
 │   ├── tests             : Unit tests
 │   ├── evaluator.py      : Evaluator utility app
 │   ├── screenshoter.py   : Screenshoter utility app
-│   ├── server.conf       : Server configuration file
 │   └── server.py         : Server app
 ├── frontend              : AIM frontend files
 │   ├── build             : Build scripts
@@ -37,6 +36,21 @@ The most important files and folders in the AIM codebase are:
 ├── ...
 .
 ```
+
+## Configuration
+
+In order to configure the application settings, copy the `.env.example` to a
+`.env` file, independent of using it as a dockerized application or standalone.
+
+In order to run the backend, you will need to make the below environment
+variables (available in the `.env` file) available to the script, either by
+setting them in the shell or using the following prefix when running the backend
+
+```sh
+# run from the `./backend` folder
+export $(cat ../.env | xargs) &&  python server.py
+```
+
 
 ## Usage with Docker
 
@@ -65,6 +79,16 @@ as we use bind mounts to most essential source files, but some events, such as
 installing new dependencies, might require rebuilding the images (with the same
 command as above).
 
+In order to stop the containers, just hit `Ctrl+C`. You can also stop containers
+by their id, like the following:
+
+```sh
+# list all running containers
+docker container ls
+# stop a specific container by its id
+docker container stop <ID>
+```
+
 
 ## Installation
 
@@ -83,11 +107,8 @@ The backend dependencies include [Python 3.7](https://www.python.org/), [pip](ht
 
 ### Database
 
-Create a new database called `aim` in [MongoDB](https://www.mongodb.com/) with the following two collections in it: `inputs` and `results`.
-
-### Backend <a name="installation_backend"></a>
-
-Go to the [backend](./backend/) directory and configure the server by editing the [server.conf](./backend/server.conf) file, especially the `database_uri` property.
+Create a new database called `aim` in [MongoDB](https://www.mongodb.com/) with
+the following three collections in it: `inputs`, `errors` and `results`.
 
 ### Chrome webdrivers
 
@@ -156,6 +177,12 @@ npm install
 
 To start the backend server, go to the [backend](./backend/) directory and run:
 ```
+export $(cat ../.env | xargs) &&  python server.py
+```
+
+If you have exported the necessary variables already, you can just run:
+
+```sh
 python server.py
 ```
 
