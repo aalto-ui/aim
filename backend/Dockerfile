@@ -11,8 +11,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y --no-install-recommends wget unzip gnupg2 \
   libglib2.0-0 libnss3 libgconf-2-4 libxcb1 libfontconfig1 xvfb \
-  # Change configuration file line
-  && sed -i '/database_uri/c\database_uri="mongodb://root:example@mongo:27017/aim?authSource=admin"' server.conf \
   # Add aim user
   && useradd --system -s /sbin/nologin aim \
   && mkdir /home/aim \

@@ -31,7 +31,6 @@ from tornado.options import define, options
 
 # First-party modules
 from aim.common import configmanager, utils
-from aim.common.constants import SERVER_CONFIG_FILE
 from aim.handlers import AIMWebSocketHandler
 
 # ----------------------------------------------------------------------------
@@ -74,13 +73,6 @@ define("database_uri", default=None, help="Database URI", type=str)
 # ----------------------------------------------------------------------------
 
 
-def parse_options() -> None:
-    server_config_filepath: Path = Path(SERVER_CONFIG_FILE)
-    if server_config_filepath.exists() and server_config_filepath.is_file():
-        tornado.options.parse_config_file(SERVER_CONFIG_FILE)
-    else:
-        tornado.options.parse_command_line()
-
 def parse_environ_options() -> None:
     if os.environ.get('ENVIRONMENT'):
         options['environment'] = os.environ.get('ENVIRONMENT')
@@ -88,6 +80,10 @@ def parse_environ_options() -> None:
         options['name'] = os.environ.get('NAME')
     if os.environ.get('PORT'):
         options['port'] = int(os.environ.get('PORT'))
+    if os.environ.get('DATA_INPUTS_DIR'):
+        options['data_inputs_dir'] = Path(os.environ.get('DATA_INPUTS_DIR'))
+    if os.environ.get('DATA_RESULTS_DIR'):
+        options['data_results_dir'] = Path(os.environ.get('DATA_RESULTS_DIR'))
 
     DB_USER = os.environ.get('DB_USER')
     DB_PASS = os.environ.get('DB_PASS')
@@ -133,7 +129,7 @@ def main() -> None:
     ]  # Get known options, i.e., Namespace from the tuple
 
     # Parse options
-    parse_options()
+    tornado.options.parse_command_line()
 
     # Configure logger
     configmanager.database_sink = lambda msg: db["errors"].insert_one(
