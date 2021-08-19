@@ -42,13 +42,38 @@ The most important files and folders in the AIM codebase are:
 In order to configure the application settings, copy the `.env.example` to a
 `.env` file, independent of using it as a dockerized application or standalone.
 
-In order to run the backend, you will need to make the below environment
+In order to run the app, you will need to make the below environment
 variables (available in the `.env` file) available to the script, either by
 setting them in the shell or using the following prefix when running the backend
 
 ```sh
 # run from the `./backend` folder
-export $(cat ../.env | xargs) &&  python server.py
+export $(cat ../.env | xargs) && python server.py
+
+# run from the `./frontend` folder
+export $(cat ../.env | xargs) && npm run dev
+```
+
+The variables of interest (with default values):
+
+```
+# Frontend specific variables
+NODE_ENV=development
+FRONTEND_PORT=8080
+WS_URL=ws://localhost:8888/
+AUTO_OPEN_BROWSER=false
+
+# Backend specific variables
+ENVIRONMENT=development
+NAME=aim-dev
+PORT=8888
+DATA_INPUTS_DIR=data/webapp/inputs/
+DATA_RESULTS_DIR=data/webapp/results/
+DB_USER=root
+DB_PASS=example
+DB_HOST=mongo
+DB_PORT=27017
+DB_NAME=aim
 ```
 
 
@@ -176,8 +201,9 @@ npm install
 ### Backend
 
 To start the backend server, go to the [backend](./backend/) directory and run:
-```
-export $(cat ../.env | xargs) &&  python server.py
+
+```sh
+export $(cat ../.env | xargs) && python server.py
 ```
 
 If you have exported the necessary variables already, you can just run:
@@ -188,15 +214,20 @@ python server.py
 
 ### Frontend
 
-To start the frontend HTTP server in development mode, go to the [frontend](./frontend/) directory and run:
+To start the frontend HTTP server in development mode, go to the
+[frontend](./frontend/) directory and run:
+
+```sh
+export $(cat ../.env | xargs) && npm run dev
 ```
+
+If you have exported the necessary variables already, you can just run:
+
+```sh
 npm run dev
 ```
 
-
-You can find the accepted environment variables in `frontend/config.js`. If you
-want to change on of the default values, you can pass them directly an runtime
-or by setting them in the shell environment. For example:
+Or you can pass them directly an runtime.. For example:
 ```sh
 WS_URL='ws://localhost:8889/' npm run dev
 ```

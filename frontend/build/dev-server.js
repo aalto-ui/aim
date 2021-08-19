@@ -15,7 +15,7 @@ const webpackConfig = (process.env.NODE_ENV === 'testing' || process.env.NODE_EN
   : require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic
-const port = process.env.PORT || config.dev.port
+const port = process.env.FRONTEND_PORT || config.dev.port;
 // automatically open browser, if not set will be false
 const autoOpenBrowser = process.env.AUTO_OPEN_BROWSER
   ? JSON.parse(process.env.AUTO_OPEN_BROWSER)

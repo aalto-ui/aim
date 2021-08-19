@@ -34,9 +34,9 @@ services:
       dockerfile: ./frontend/dev.Dockerfile
     command: ["node", "build/dev-server.js"]
     environment:
-      NODE_ENV: ${ENVIRONMENT}
+      NODE_ENV: ${NODE_ENV}
       WS_URL: ${WS_URL}
-      PORT: ${FRONTEND_PORT}
+      FRONTEND_PORT: ${FRONTEND_PORT}
       AUTO_OPEN_BROWSER: ${AUTO_OPEN_BROWSER}
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
