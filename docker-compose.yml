@@ -52,8 +52,8 @@ services:
       dockerfile: ./backend/Dockerfile
     environment:
       ENVIRONMENT: ${ENVIRONMENT}
-      NAME: ${BACKEND_NAME}
-      PORT: ${BACKEND_PORT}
+      NAME: ${NAME}
+      PORT: ${PORT}
       DATA_INPUTS_DIR: ${DATA_INPUTS_DIR}
       DATA_RESULTS_DIR: ${DATA_RESULTS_DIR}
       DB_USER: ${DB_USER}
@@ -62,7 +62,7 @@ services:
       DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
     ports:
-      - ${BACKEND_PORT}:${BACKEND_PORT}
+      - ${PORT}:${PORT}
     networks:
       - backend_network
     volumes: # backend source code bind mounts
