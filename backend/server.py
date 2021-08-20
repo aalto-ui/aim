@@ -12,18 +12,19 @@ AIM backend server.
 
 # Standard library modules
 import logging
+import os
 import time
 from pathlib import Path
 from typing import Any, Dict, Tuple
 
 # Third-party modules
 import motor
-import os
 import tornado.ioloop
 import tornado.log
 import tornado.options
 import tornado.web
 import tornado.websocket
+from dotenv import load_dotenv
 from loguru import logger
 from motor.motor_tornado import MotorClient, MotorDatabase
 from tornado.log import LogFormatter
@@ -69,29 +70,39 @@ define("database_uri", default=None, help="Database URI", type=str)
 
 
 # ----------------------------------------------------------------------------
+# Take environment variables from .env
+# ----------------------------------------------------------------------------
+
+load_dotenv()
+
+
+# ----------------------------------------------------------------------------
 # Functions
 # ----------------------------------------------------------------------------
 
 
 def parse_environ_options() -> None:
-    if os.environ.get('ENVIRONMENT'):
-        options['environment'] = os.environ.get('ENVIRONMENT')
-    if os.environ.get('NAME'):
-        options['name'] = os.environ.get('NAME')
-    if os.environ.get('PORT'):
-        options['port'] = int(os.environ.get('PORT'))
-    if os.environ.get('DATA_INPUTS_DIR'):
-        options['data_inputs_dir'] = Path(os.environ.get('DATA_INPUTS_DIR'))
-    if os.environ.get('DATA_RESULTS_DIR'):
-        options['data_results_dir'] = Path(os.environ.get('DATA_RESULTS_DIR'))
+    if os.environ.get("ENVIRONMENT"):
+        options["environment"] = os.environ.get("ENVIRONMENT")
+    if os.environ.get("NAME"):
+        options["name"] = os.environ.get("NAME")
+    if os.environ.get("PORT"):
+        options["port"] = int(os.environ.get("PORT"))
+    if os.environ.get("DATA_INPUTS_DIR"):
+        options["data_inputs_dir"] = Path(os.environ.get("DATA_INPUTS_DIR"))
+    if os.environ.get("DATA_RESULTS_DIR"):
+        options["data_results_dir"] = Path(os.environ.get("DATA_RESULTS_DIR"))
 
-    DB_USER = os.environ.get('DB_USER')
-    DB_PASS = os.environ.get('DB_PASS')
-    DB_HOST = os.environ.get('DB_HOST')
-    DB_PORT = os.environ.get('DB_PORT')
-    DB_NAME = os.environ.get('DB_NAME')
+    DB_USER = os.environ.get("DB_USER")
+    DB_PASS = os.environ.get("DB_PASS")
+    DB_HOST = os.environ.get("DB_HOST")
+    DB_PORT = os.environ.get("DB_PORT")
+    DB_NAME = os.environ.get("DB_NAME")
     if DB_USER and DB_PASS and DB_HOST and DB_PORT and DB_NAME:
-        options['database_uri'] = f"mongodb://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}?authSource=admin"
+        options[
+            "database_uri"
+        ] = f"mongodb://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}?authSource=admin"
+
 
 def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
     client: MotorClient = motor.motor_tornado.MotorClient(options.database_uri)
