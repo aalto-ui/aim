@@ -13,7 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   libglib2.0-0 libnss3 libgconf-2-4 libxcb1 libfontconfig1 xvfb \
   # Add aim user
   && useradd --system -s /sbin/nologin aim \
-  && mkdir /home/aim \
+  && mkdir -p /home/aim \
   # Install Chrome for Selenium
   && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
   && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
@@ -29,7 +29,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && wget -q "https://chromedriver.storage.googleapis.com/${VERSION}/chromedriver_linux64.zip" -O driver.zip \
   && unzip driver.zip \
   && chmod +x chromedriver \
-  && mkdir webdrivers \
+  && mkdir -p webdrivers \
   && mv chromedriver ./webdrivers/chromedriver_linux \
   # remove unwanted packages
   # BUG: uninstalling wget removes chrome
