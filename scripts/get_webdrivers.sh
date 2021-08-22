@@ -2,11 +2,11 @@
 
 #############
 #
-# This script downloads the Chrome webdrivers for Selenium needed for the functioning of the backend.
-# It currently runs on Linux or OSX.
+# This script downloads the Chrome WebdDriver for Selenium needed for the
+# backend to work. It currently runs on Linux or macOS.
 #
-# You can pass a specific Chrome version number (only the major, like "89", not the complete release number) if
-# you don't use the latest release.
+# You can pass a specific Chrome version number (only the major, like "89",
+# not the complete release number) if you don't use the latest release.
 #
 # bash ./scripts/get_webdrivers.sh [CHROME_VERSION]
 #
@@ -17,7 +17,7 @@ RELEASE="LATEST_RELEASE"
 
 # 1. Check for dependencies of this script depending on the OS
 if [ "$(uname)" == "Darwin" ]; then
-  # Mac OS X platform
+  # MacOS platform
   OS="mac"
 
   if [ ! $(which wget) ] || [ ! $(which unzip) ]; then
@@ -36,20 +36,20 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     exit 2
   fi
 else
-  echo "This script does not support your operating system. Run on OSX or Linux."
+  echo "This script does not support your operating system. Run it on macOS or Linux."
   exit 1
 fi
 
-# 2. Find the release number for the Chrome driver
+# 2. Find the release number for ChromeDriver
 if [ $1 ]; then
   RELEASE="LATEST_RELEASE_$1"
 fi
 
-# Find the local chrome version
+# Find the local Chrome version
 VERSION=$(wget -qO- https://chromedriver.storage.googleapis.com/${RELEASE})
-echo "Downloading chrome driver ${RELEASE}"
+echo "Downloading ChromeDriver ${RELEASE}"
 
-# 3. Download chromedriver
+# 3. Download ChromeDriver
 wget -q "https://chromedriver.storage.googleapis.com/${VERSION}/chromedriver_${OS}64.zip" -O driver.zip
 
 # 4. Unzip and make it executable
@@ -62,5 +62,5 @@ if [ ! -d "./backend/webdrivers" ]; then
 fi
 mv chromedriver ./backend/webdrivers/chromedriver_${OS}
 
-# 6. Cleanup
+# 6. Clean up
 rm driver.zip
