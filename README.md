@@ -130,7 +130,9 @@ DB_NAME=aim
 
 ### Database
 
-Create a new database called `aim` in [MongoDB](https://www.mongodb.com/) with the following three collections in it: `errors`, `inputs`, and `results`.
+Create a new database called `$DB_NAME` (see the AIM environment variables above) in [MongoDB](https://www.mongodb.com/) with the following three collections in it: `errors`, `inputs`, and `results`. Further, create a new user called `$DB_USER` with a password `$DB_PASS` in the `admin` database, or use the user credentials of an existing one. You also have to change `$DB_HOST` and `$DB_PORT` to match the host (e.g., `localhost`) and port (e.g., `27017`) used by your MonggoDB, respectively.
+
+**Note:** AIM backend will attempt to authenticate the user to the `admin` database in MongoDB (for details, see [authSource](https://docs.mongodb.com/manual/reference/connection-string/#mongodb-urioption-urioption.authSource)). Therefore, make sure that your `$DB_USER` exists in the `admin` database (not in your `$DB_NAME`) and it has appropriate roles (e.g., `readWrite`) on your `$DB_NAME` database.
 
 ### Backend <a name="installation_backend"></a>
 
