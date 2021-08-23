@@ -82,16 +82,20 @@ load_dotenv()
 
 
 def parse_environ_options() -> None:
+    port = os.environ.get("PORT")
+    data_inputs_dir = os.environ.get("DATA_INPUTS_DIR")
+    data_results_dir = os.environ.get("DATA_RESULTS_DIR")
+
     if os.environ.get("ENVIRONMENT"):
         options["environment"] = os.environ.get("ENVIRONMENT")
     if os.environ.get("NAME"):
         options["name"] = os.environ.get("NAME")
-    if os.environ.get("PORT"):
-        options["port"] = int(os.environ.get("PORT"))
-    if os.environ.get("DATA_INPUTS_DIR"):
-        options["data_inputs_dir"] = Path(os.environ.get("DATA_INPUTS_DIR"))
-    if os.environ.get("DATA_RESULTS_DIR"):
-        options["data_results_dir"] = Path(os.environ.get("DATA_RESULTS_DIR"))
+    if port:
+        options["port"] = int(port)
+    if data_inputs_dir:
+        options["data_inputs_dir"] = Path(data_inputs_dir)
+    if data_results_dir:
+        options["data_results_dir"] = Path(data_results_dir)
 
     DB_USER = os.environ.get("DB_USER")
     DB_PASS = os.environ.get("DB_PASS")
