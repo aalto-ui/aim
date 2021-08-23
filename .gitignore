@@ -230,3 +230,6 @@ venv.bak/
 # IDEs
 .idea/
 .vscode/
+
+# AIM
+backend/webdrivers/

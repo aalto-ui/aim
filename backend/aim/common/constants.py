@@ -53,7 +53,6 @@ ALLOWED_HOSTS: List[str] = [
     "127.0.0.1",
     "interfacemetrics.aalto.fi",
 ]
-SERVER_CONFIG_FILE: str = "server.conf"
 METRICS_CONFIG_FILE: str = "../metrics.json"
 METRICS_DIR: str = "aim/metrics/"
 METRICS_FILE_PATTERN: str = "m*/m*_*.py"

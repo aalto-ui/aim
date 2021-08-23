@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:5.0-focal
+    command: mongod --port ${DB_PORT}
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    networks:
+      - backend_network
+      - data_network
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro # startup script
+      - mongo_volume:/data/db
+    logging:
+      driver: none
+
+  mongo-express:
+    image: mongo-express:0.54.0
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_PASS}
+      ME_CONFIG_MONGODB_SERVER: ${DB_HOST}
+      ME_CONFIG_MONGODB_PORT: ${DB_PORT}
+    ports:
+      - 8081:8081
+    networks:
+      - data_network
+
+  frontend:
+    build:
+      context: ./
+      dockerfile: ./frontend/Dockerfile
+    command: ["node", "build/dev-server.js"]
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      WS_URL: ${WS_URL}
+      FRONTEND_PORT: ${FRONTEND_PORT}
+      AUTO_OPEN_BROWSER: ${AUTO_OPEN_BROWSER}
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+    volumes: # frontend source code bind mounts
+      - ./frontend/build:/usr/src/app/build
+      - ./frontend/src:/usr/src/app/src
+      - ./frontend/static:/usr/src/app/static
+    init: true
+
+  backend:
+    build:
+      context: ./
+      dockerfile: ./backend/Dockerfile
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT}
+      NAME: ${NAME}
+      PORT: ${PORT}
+      DATA_INPUTS_DIR: ${DATA_INPUTS_DIR}
+      DATA_RESULTS_DIR: ${DATA_RESULTS_DIR}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - backend_network
+    volumes: # backend source code bind mounts
+      - ./backend/aim:/usr/src/app/aim
+      - ./backend/server.py:/usr/src/app/server.py
+      - ./backend/evaluator.py:/usr/src/app/evaluator.py
+      - ./backend/screenshoter.py:/usr/src/app/screenshoter.py
+      - backend_screenshots:/usr/src/app/data/webapp/inputs
+    restart: on-failure
+
+networks:
+  data_network:
+  backend_network:
+
+volumes:
+  mongo_volume:
+  backend_screenshots:

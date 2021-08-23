@@ -12,6 +12,7 @@ AIM backend server.
 
 # Standard library modules
 import logging
+import os
 import time
 from pathlib import Path
 from typing import Any, Dict, Tuple
@@ -23,6 +24,7 @@ import tornado.log
 import tornado.options
 import tornado.web
 import tornado.websocket
+from dotenv import load_dotenv
 from loguru import logger
 from motor.motor_tornado import MotorClient, MotorDatabase
 from tornado.log import LogFormatter
@@ -30,7 +32,6 @@ from tornado.options import define, options
 
 # First-party modules
 from aim.common import configmanager, utils
-from aim.common.constants import SERVER_CONFIG_FILE
 from aim.handlers import AIMWebSocketHandler
 
 # ----------------------------------------------------------------------------
@@ -69,16 +70,42 @@ define("database_uri", default=None, help="Database URI", type=str)
 
 
 # ----------------------------------------------------------------------------
+# Take environment variables from .env
+# ----------------------------------------------------------------------------
+
+load_dotenv()
+
+
+# ----------------------------------------------------------------------------
 # Functions
 # ----------------------------------------------------------------------------
 
 
-def parse_options() -> None:
-    server_config_filepath: Path = Path(SERVER_CONFIG_FILE)
-    if server_config_filepath.exists() and server_config_filepath.is_file():
-        tornado.options.parse_config_file(SERVER_CONFIG_FILE)
-    else:
-        tornado.options.parse_command_line()
+def parse_environ_options() -> None:
+    port = os.environ.get("PORT")
+    data_inputs_dir = os.environ.get("DATA_INPUTS_DIR")
+    data_results_dir = os.environ.get("DATA_RESULTS_DIR")
+
+    if os.environ.get("ENVIRONMENT"):
+        options["environment"] = os.environ.get("ENVIRONMENT")
+    if os.environ.get("NAME"):
+        options["name"] = os.environ.get("NAME")
+    if port:
+        options["port"] = int(port)
+    if data_inputs_dir:
+        options["data_inputs_dir"] = Path(data_inputs_dir)
+    if data_results_dir:
+        options["data_results_dir"] = Path(data_results_dir)
+
+    DB_USER = os.environ.get("DB_USER")
+    DB_PASS = os.environ.get("DB_PASS")
+    DB_HOST = os.environ.get("DB_HOST")
+    DB_PORT = os.environ.get("DB_PORT")
+    DB_NAME = os.environ.get("DB_NAME")
+    if DB_USER and DB_PASS and DB_HOST and DB_PORT and DB_NAME:
+        options[
+            "database_uri"
+        ] = f"mongodb://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}?authSource=admin"
 
 
 def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
@@ -117,7 +144,7 @@ def main() -> None:
     ]  # Get known options, i.e., Namespace from the tuple
 
     # Parse options
-    parse_options()
+    tornado.options.parse_command_line()
 
     # Configure logger
     configmanager.database_sink = lambda msg: db["errors"].insert_one(
@@ -127,6 +154,9 @@ def main() -> None:
 
     # Tornado root formatter settings
     set_tornado_logging()
+
+    # Use environment variables to override options
+    parse_environ_options()
 
     # Make application
     db, app = make_app()

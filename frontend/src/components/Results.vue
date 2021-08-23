@@ -159,6 +159,14 @@ export default {
     results: 'resultsFormatted',
     fetching: 'fetchingMetrics'
   }),
+  mounted() {
+    fillData({
+      chartData: this.chartData,
+      chartOptions: this.chartOptions,
+      chartPlugins: this.chartPlugins,
+      results: this.results,
+    })
+  },
   updated () {
     fillData({
       chartData: this.chartData,

@@ -22,88 +22,170 @@ The most important files and folders in the AIM codebase are:
 │   ├── aim               : Source code (incl. metrics)
 │   ├── data              : Data files (incl. datasets)
 │   ├── tests             : Unit tests
-│   ├── webdrivers        : Web drivers
 │   ├── evaluator.py      : Evaluator utility app
 │   ├── screenshoter.py   : Screenshoter utility app
-│   ├── server.conf       : Server configuration file
 │   └── server.py         : Server app
 ├── frontend              : AIM frontend files
 │   ├── build             : Build scripts
 │   ├── src               : Sources code (incl. assets)
-│   ├── static            : Static files (incl. histograms)
+│   ├── static            : Static files
 │   ├── test              : Unit tests, etc.
 │   └── config.js         : Configuration module
 ├── legacy                : AIM legacy files (version 1)
+├── scripts               : AIM utility scripts
+├── .env(.example)        : AIM environment variables
+├── docker-compose.yml    : AIM environment and services
 ├── metrics.json          : AIM metrics configuration file
 ├── ...
 .
 ```
 
 
+## Quick Start with Docker
+
+The easiest and fastest way to get AIM up and running on your computer is by using [Docker](https://docs.docker.com/get-docker/) and following the instructions below.
+
+### Prerequisites
+
+1. [Docker Engine](https://docs.docker.com/engine/)
+2. [Docker Compose](https://docs.docker.com/compose/)
+
+### Configuration
+
+Go to the [project home](./) directory and copy the `.env.example` to a `.env` file:
+```sh
+cp .env.example .env
+```
+
+Then, configure AIM environment variables, if needed:
+```sh
+nano .env
+```
+
+### Usage
+
+AIM uses Docker Compose (see `docker-compose.yml`) to define its environment and services. The services consist of AIM backend (`backend`) and AIM frontend (`frontend`) as well as [MongoDB](https://www.mongodb.com/) (`mongo`) and [Mongo Express](https://github.com/mongo-express/mongo-express) (`mongo-express`). The latter is a web application for managing the MongoDB database, and it can be accessed at [http://localhost:8081](http://localhost:8081).
+
+To build and start the services (i.e., the entire AIM web application), run:
+```sh
+# Note: The --build option can be omitted on subsequent runs
+docker-compose up --build
+```
+
+Upon completion, you can start using the AIM web application by opening your web browser and navigating to [http://localhost:8080](http://localhost:8080).
+
+The setup also supports smooth frontend and backend development, as it uses bind mounts to most essential source files. However, some actions such as installing new dependencies might require rebuilding the images (with the same command as above).
+
+To stop the services, just hit `Ctrl+C`. You can also stop services by their ID as follows:
+```sh
+# List all running containers
+docker container ls
+# Stop a specific container by its ID
+docker container stop <ID>
+```
+
+
 ## Installation
 
-Clone the [AIM git repository](https://github.com/aalto-ui/aim) and checkout the `aim2` branch:
-```
-git clone https://github.com/aalto-ui/aim.git
-cd aim
-git checkout aim2
-```
+AIM can also be installed and run without Docker. While this installation process requires some additional effort, it may work better for some practitioners. Moreover, it offers additional utility apps and tools that ain't currently available in docker mode.
 
-### Dependencies
+### Prerequisites
 
 Make sure you have the following software already installed on your computer before proceeding!
 
-The backend dependencies include [Python 3.7](https://www.python.org/), [pip](https://pypi.org/project/pip/), and [MongoDB](https://www.mongodb.com/). In addition, it is highly recommended to install [virtualenv](https://pypi.org/project/virtualenv/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment (see [instructions](#installation_backend)). Other dependencies include [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) for the frontend and [git](https://git-scm.com/) to track changes made to the codebase.
+The backend dependencies include [Python 3.7](https://www.python.org/), [pip](https://pypi.org/project/pip/), [MongoDB](https://www.mongodb.com/), and [Chrome](https://www.google.com/chrome/). In addition, it is highly recommended to install [virtualenv](https://pypi.org/project/virtualenv/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment (see [instructions](#installation_backend)). Other dependencies include [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) for the frontend and [git](https://git-scm.com/) to track changes made to the codebase.
+
+### Configuration
+
+Go to the [project home](./) directory and copy the `.env.example` to a `.env` file:
+```sh
+cp .env.example .env
+```
+
+Then, configure AIM environment variables, if needed:
+```sh
+nano .env
+```
+
+The variables of interest (with default values) are as follows:
+```
+# Frontend-specific variables
+NODE_ENV=development
+FRONTEND_PORT=8080
+WS_URL=ws://localhost:8888/
+AUTO_OPEN_BROWSER=false
+
+# Backend-specific variables
+ENVIRONMENT=development
+NAME=aim-dev
+PORT=8888
+DATA_INPUTS_DIR=data/webapp/inputs/
+DATA_RESULTS_DIR=data/webapp/results/
+DB_USER=root
+DB_PASS=example
+DB_HOST=mongo
+DB_PORT=27017
+DB_NAME=aim
+```
 
 ### Database
 
-Create a new database called `aim` in [MongoDB](https://www.mongodb.com/) with the following two collections in it: `inputs` and `results`.
+Create a new database called `$DB_NAME` (see the AIM environment variables above) in [MongoDB](https://www.mongodb.com/) with the following three collections in it: `errors`, `inputs`, and `results`. Further, create a new user called `$DB_USER` with a password `$DB_PASS` in the `admin` database, or use the user credentials of an existing one. You also have to change `$DB_HOST` and `$DB_PORT` to match the host (e.g., `localhost`) and port (e.g., `27017`) used by your MonggoDB, respectively.
+
+**Note:** AIM backend will attempt to authenticate the user to the `admin` database in MongoDB (for details, see [authSource](https://docs.mongodb.com/manual/reference/connection-string/#mongodb-urioption-urioption.authSource)). Therefore, make sure that your `$DB_USER` exists in the `admin` database (not in your `$DB_NAME`) and it has appropriate roles (e.g., `readWrite`) on your `$DB_NAME` database.
 
 ### Backend <a name="installation_backend"></a>
 
-Go to the [backend](./backend/) directory and configure the server by editing the [server.conf](./backend/server.conf) file, especially the `database_uri` property.
+AIM backend uses [Selenium](https://selenium-python.readthedocs.io/) to take screenshots of web pages. Our Selenium code, in turn, depends on [Chrome](https://www.google.com/chrome/) and a *matching* version of [ChromeDriver](https://chromedriver.chromium.org/), of which the latter needs to be placed into the `./backend/webdrivers` folder. For Linux and macOS, we provide a [script](./scripts/get_webdrivers.sh) that automatically downloads a *matching* version of ChromeDriver and places it into the above-mentioned folder. To execute the script, run:
+```sh
+bash ./scripts/get_webdrivers.sh
+```
+
+Alternatively, on Windows, you need to manually download a *matching* version of ChromeDriver and place it into the above-mentioned folder. For more instructions or what the necessary steps are, please check the comments in the [script](./scripts/get_webdrivers.sh) file.
+
+In the next step, we will create a new Python virtual environment (recommended) for the backend. Before proceeding, go to the [backend](./backend/) directory.
 
 #### Working with `virtualenv`
 
 Create a new virtual environment:
-```
+```sh
 virtualenv ../venv
 ```
 
 Activate the virtual environment:
-```
+```sh
 source ../venv/bin/activate
 ```
 
 Install all dependencies, including development packages:
-```
+```sh
 pip install -r requirements.txt
 ```
 
 Re-activate the virtual environment to update paths (see [Stack Overflow](https://stackoverflow.com/questions/35045038/how-do-i-use-pytest-with-virtualenv) for details):
-```
+```sh
 deactivate && source ../venv/bin/activate
 ```
 
 To deactivate the virtual environment, run:
-```
+```sh
 deactivate
 ```
 
 #### Working with `Pipenv`
 
 Install all dependencies, including development packages:
-```
+```sh
 pipenv install --dev
 ```
 
 Activate your Pipenv environment:
-```
+```sh
 pipenv shell
 ```
 
 To deactivate your Pipenv environment, run:
-```
+```sh
 exit
 ```
 
@@ -120,27 +202,19 @@ npm install
 ### Backend
 
 To start the backend server, go to the [backend](./backend/) directory and run:
-```
+```sh
 python server.py
 ```
 
 ### Frontend
 
 To start the frontend HTTP server in development mode, go to the [frontend](./frontend/) directory and run:
-```
+```sh
 npm run dev
 ```
 
-
-You can find the accepted environment variables in `frontend/config.js`. If you
-want to change on of the default values, you can pass them directly an runtime
-or by setting them in the shell environment. For example:
-```sh
-WS_URL='ws://localhost:8889/' npm run dev
-```
-
 To build the frontend for production, run the following command in the same directory:
-```
+```sh
 npm run build
 ```
 
@@ -156,19 +230,19 @@ AIM backend uses [pytest](https://pypi.org/project/pytest/), a Python testing fr
 ### Configuration
 
 Configure pytest, if needed:
-```
+```sh
 nano pytest.ini
 ```
 
 ### Usage
 
 Run all tests:
-```
+```sh
 pytest .
 ```
 
 Run a specific test file:
-```
+```sh
 pytest [FILEPATH]
 ```
 
@@ -180,19 +254,19 @@ AIM backend provides a utility app for taking web page screenshots in specified 
 ### Configuration
 
 Configure [Loguru](https://pypi.org/project/loguru/), if needed:
-```
+```sh
 nano loguru.ini
 ```
 
 ### Usage
 
 Show the help message:
-```
+```sh
 python screenshoter.py -h
 ```
 
 Example of taking web page screenshots:
-```
+```sh
 python screenshoter.py -i data/screenshots/ALEXA_500/urls.csv -sw 1280 -sh 800 -f -o data/screenshots/results/
 ```
 
@@ -204,7 +278,7 @@ AIM backend also provides a utility app for evaluating GUI designs (i.e., web pa
 ### Configuration
 
 Configure [Loguru](https://pypi.org/project/loguru/), if needed:
-```
+```sh
 nano loguru.ini
 ```
 
@@ -215,12 +289,12 @@ nano loguru.ini
 ### Usage
 
 Show the help message:
-```
+```sh
 python evaluator.py -h
 ```
 
 Example of evaluating GUI designs:
-```
+```sh
 python evaluator.py -i data/screenshots/ALEXA_500/ -m m1,m2,m3 -p -o data/evaluations/results/
 ```
 
@@ -243,44 +317,44 @@ Go to the [backend](./backend/) directory. No additional installation is needed.
 ### Configuration
 
 Configure isort, if needed:
-```
+```sh
 nano .isort.cfg
 ```
 
 Configure Black, if needed:
-```
+```sh
 nano pyproject.toml
 ```
 
 Configure mypy, if needed:
-```
+```sh
 nano mypy.ini
 ```
 
 Configure flake8, if needed:
-```
+```sh
 nano .flake8
 ```
 
 ### Usage
 
 Sort imports:
-```
+```sh
 isort .
 ```
 
 Format code:
-```
+```sh
 black .
 ```
 
 Type check code:
-```
+```sh
 mypy .
 ```
 
 Lint code:
-```
+```sh
 flake8 .
 ```
 
@@ -294,41 +368,41 @@ Git hook scripts for AIM backend that are automatically run on every commit to p
 ### Installation
 
 Go to the [project home](./) directory and install pre-commit into your git hooks:
-```
+```sh
 pre-commit install --install-hooks --overwrite
 ```
 
 To uninstall pre-commit from your git hooks, run:
-```
+```sh
 pre-commit uninstall
 ```
 
 ### Configuration
 
 Configure pre-commit, if needed:
-```
+```sh
 nano .pre-commit-config.yaml
 ```
 
 ### Usage
 
 Run all pre-commit hooks against currently staged files:
-```
+```sh
 pre-commit run
 ```
 
 Run a single pre-commit hook against currently staged files:
-```
+```sh
 pre-commit run [HOOK ID]
 ```
 
 Run all pre-commit hooks against all files:
-```
+```sh
 pre-commit run --all-files
 ```
 
 Run all pre-commit hooks against specific files:
-```
+```sh
 pre-commit run --files [FILES [FILES ...]]
 ```
 

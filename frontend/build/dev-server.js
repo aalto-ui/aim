@@ -1,4 +1,5 @@
 require('./check-versions')()
+require('dotenv').config({ path: '../.env' })
 
 const config = require('../config')
 if (!process.env.NODE_ENV) {
@@ -15,9 +16,11 @@ const webpackConfig = (process.env.NODE_ENV === 'testing' || process.env.NODE_EN
   : require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic
-const port = process.env.PORT || config.dev.port
+const port = process.env.FRONTEND_PORT || config.dev.port;
 // automatically open browser, if not set will be false
-const autoOpenBrowser = !!config.dev.autoOpenBrowser
+const autoOpenBrowser = process.env.AUTO_OPEN_BROWSER
+  ? JSON.parse(process.env.AUTO_OPEN_BROWSER)
+  : !!config.dev.autoOpenBrowser;
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
 const proxyTable = config.dev.proxyTable
