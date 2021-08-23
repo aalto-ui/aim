@@ -3,12 +3,13 @@ version: '3.8'
 services:
   mongo:
     image: mongo:5.0-focal
+    command: mongod --port ${DB_PORT}
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
       MONGO_INITDB_DATABASE: ${DB_NAME}
     ports:
-      - 27017:27017
+      - ${DB_PORT}:${DB_PORT}
     networks:
       - backend_network
       - data_network
@@ -23,6 +24,8 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_USER}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_PASS}
+      ME_CONFIG_MONGODB_SERVER: ${DB_HOST}
+      ME_CONFIG_MONGODB_PORT: ${DB_PORT}
     ports:
       - 8081:8081
     networks:
