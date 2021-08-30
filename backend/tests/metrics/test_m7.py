@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'PNG file size' metric (m1).
+Tests for the 'Subband Entropy' metric (m7).
 """
 
 
