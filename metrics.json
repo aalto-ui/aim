@@ -391,6 +391,53 @@
           ]
         }
       ]
+    },
+    "m7": {
+      "id": "m7",
+      "name": "Subband Entropy",
+      "description": "Measure the efficiency with which the image can be encoded while maintaining perceptual imagequality.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 1,
+      "visualizationType": "table",
+      "references": [
+        {
+          "title": "Rosenholtz, Ruth, Yuanzhen Li, and Lisa Nakano.    Measuring visual clutter. Journal of vision 7.2 (2007): 17-17.      doi:https://doi.org/10.1167/7.2.17",
+          "url": "https://doi.org/10.1167/7.2.17"
+        }
+      ],
+      "results": [
+        {
+          "id": "m7_0",
+          "index": 0,
+          "type": "float",
+          "name": "Subband Entropy",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "Sparse",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [null, null],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [null, null],
+              "description": "Congested",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        }
+      ]
     }
   }
 }
