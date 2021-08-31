@@ -72,3 +72,5 @@ urllib3==1.26.2
 virtualenv==20.4.3
 wsproto==1.0.0
 zipp==3.4.1
+pyrtools == 1.0.0
+scikit-image==0.18.3
