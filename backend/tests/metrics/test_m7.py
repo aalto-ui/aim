@@ -40,9 +40,9 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_result"],
     [
-        ("aalto.fi_website.png", [3.2021]),
-        ("myhelsinki.fi_website.png", [3.7556]),
-        ("wikipedia.org_website.png", [3.6787]),
+        ("aalto.fi_website.png", [3.1430]),
+        ("myhelsinki.fi_website.png", [3.6824]),
+        ("wikipedia.org_website.png", [3.6276]),
     ],
 )
 def test_subband_entropy_desktop(
