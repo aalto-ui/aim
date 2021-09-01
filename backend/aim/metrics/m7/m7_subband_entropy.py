@@ -74,7 +74,7 @@ class Metric(AIMMetricInterface):
     # Private constants
     _W_LEVELS: int = 3 # the number of spatial scales for the subband decomposition
     _WGHT_CHROM: float = 0.0625 # the weight on chrominance 
-    _WOR: int = 3 # the number of orientations for the subband decomposition
+    _WOR: int = 4 # the number of orientations for the subband decomposition
     
     # Private methods
     @classmethod
