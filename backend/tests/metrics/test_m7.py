@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Subband Entropy' metric (m7).
+Tests for the 'Subband entropy' metric (m7).
 """
 
 
@@ -40,16 +40,16 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_result"],
     [
-        ("aalto.fi_website.png", [3.1430]),
-        ("myhelsinki.fi_website.png", [3.6824]),
-        ("wikipedia.org_website.png", [3.6276]),
+        ("aalto.fi_website.png", [3.1430370972220922]),
+        ("myhelsinki.fi_website.png", [3.6823907373501106]),
+        ("wikipedia.org_website.png", [3.6276330215052264]),
     ],
 )
 def test_subband_entropy_desktop(
     input_value: str, expected_result: List[Any]
 ) -> None:
     """
-    Test PNG file size (desktop GUIs).
+    Test subband entropy (desktop GUIs).
 
     Args:
         input_value: GUI image file name
@@ -70,4 +70,4 @@ def test_subband_entropy_desktop(
 
     # Test result
     if result is not None:
-        assert result[0].round(decimals=4) == expected_result[0]
+        assert result[0] == expected_result[0]

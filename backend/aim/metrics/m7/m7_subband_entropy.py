@@ -3,16 +3,14 @@
 
 """
 Metric:
-    Subband Entropy clutter measure
+    Subband entropy
 
 
 Description:
-    This measure (Subband Entropy) of visual clutter is based on the notion
-    that clutter is related to the number of bits required for subband
-    (wavelet) image coding.
+    The amount of redundancy introduced to a scene.
 
-    Category: Visual complexity > Information discriminability.
-    For details, see 'Subband Entropy clutter measure' [1].
+    Category: Visual complexity > Information amount > Visual clutter.
+    For details, see CL2 [1], A10 [2], and CL2 [3].
 
 
 Funding information and contact:
@@ -22,14 +20,29 @@ Funding information and contact:
 
 
 References:
-    1.  Rosenholtz, Ruth, Yuanzhen Li, and Lisa Nakano.
-        "Measuring visual clutter." Journal of vision 7.2 (2007): 17-17.
-        doi:https://doi.org/10.1167/7.2.17
+    1.  Miniukovich, A. and De Angeli, A. (2015). Computation of Interface
+        Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human
+        Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM.
+        doi: https://doi.org/10.1145/2702123.2702575
+
+    2.  Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile
+        App Interfaces. In Proceedings of the 8th Nordic Conference on
+        Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM.
+        doi: https://doi.org/10.1145/2639189.2641219
+
+    3.  Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface
+        Visual Complexity. In Proceedings of the 2014 International Working
+        Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
+        doi: https://doi.org/10.1145/2598153.2598173
+
+    4.  Rosenholtz, R., Li, Y., and Nakano, L. (2007). Measuring Visual
+        Clutter. Journal of Vision, 7(2), 1-22.
+        doi: https://doi.org/10.1167/7.2.17
+
 
 Change log:
     v1.0 (2021-08-27)
       * Initial implementation
-
 """
 
 
@@ -44,13 +57,14 @@ from typing import Dict, List, Optional, Tuple, Union
 
 # Third-party modules
 import numpy as np
-from PIL import Image
 import pyrtools as pt
+from PIL import Image
 
 # First-party modules
 from aim.common.constants import GUI_TYPE_DESKTOP
+from aim.common.image_visual_clutter_utils import entropy, rgb2lab
 from aim.metrics.interfaces import AIMMetricInterface
-from aim.common.image_visual_clutter_utils import rgb2lab, entropy
+
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
@@ -68,40 +82,41 @@ __version__ = "1.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Subband Entropy clutter measure.
+    Metric: Subband entropy.
     """
 
     # Private constants
-    _W_LEVELS: int = 3 # the number of spatial scales for the subband decomposition
-    _WGHT_CHROM: float = 0.0625 # the weight on chrominance 
-    _WOR: int = 4 # the number of orientations for the subband decomposition
-    
+    _W_LEVELS: int = (
+        3  # the number of spatial scales for the subband decomposition
+    )
+    _WGHT_CHROM: float = 0.0625  # the weight on chrominance
+    _WOR: int = 4  # the number of orientations for the subband decomposition
+
     # Private methods
     @classmethod
-    def _band_entropy(
-        cls,
-        map_: np.ndarray,
-    ) -> List:
+    def _band_entropy(cls, map_: np.ndarray) -> List:
         """
         Compute Shannon entropies of all the subbands.
 
         Args:
             map_: a monochromatic image
-            
+
         Returns:
             a list containing Shannon entropies of all the subbands.
         """
-   
+
         # Decompose the image into subbands
-        SFpyr = pt.pyramids.SteerablePyramidFreq(map_, height=cls._W_LEVELS, order=cls._WOR-1)
+        SFpyr = pt.pyramids.SteerablePyramidFreq(
+            map_, height=cls._W_LEVELS, order=cls._WOR - 1
+        )
         S = SFpyr.pyr_coeffs
-        
+
         en_band = []
         for ind in S.keys():
             en_band.append(entropy(S[ind].ravel()))
 
         return en_band
-   
+
     # Public methods
     @classmethod
     def execute_metric(
@@ -118,7 +133,7 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Subband Entropy (float)
+            - Subband entropy (float)
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -132,11 +147,11 @@ class Metric(AIMMetricInterface):
         # Convert image into the perceptually-based CIELab color space.
         lab = rgb2lab(img_rgb_nparray)
         lab_float = lab.astype(np.float32)
-        
+
         # Split image to luminance(L) and the chrominance(a,b) channels
-        L = lab_float[:,:,0]
-        a = lab_float[:,:,1]
-        b = lab_float[:,:,2]
+        L = lab_float[:, :, 0]
+        a = lab_float[:, :, 1]
+        b = lab_float[:, :, 2]
 
         # Compute subband entropy for luminance channel
         en_band = cls._band_entropy(L)
@@ -144,14 +159,14 @@ class Metric(AIMMetricInterface):
 
         # Compute subband entropy for chrominance channels
         for jj in [a, b]:
-            if np.max(jj)-np.min(jj) < 0.008:
+            if np.max(jj) - np.min(jj) < 0.008:
                 jj = np.zeros_like(jj)
 
             en_band = cls._band_entropy(jj)
             clutter_se = clutter_se + cls._WGHT_CHROM * np.mean(en_band)
 
-        clutter_se = clutter_se/(1 + 2 * cls._WGHT_CHROM)   
-    
+        clutter_se = clutter_se / (1 + 2 * cls._WGHT_CHROM)
+
         return [
             clutter_se,
         ]
