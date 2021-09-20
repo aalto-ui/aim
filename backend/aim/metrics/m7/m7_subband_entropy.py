@@ -91,10 +91,13 @@ class Metric(AIMMetricInterface):
     )
     _WGHT_CHROM: float = 0.0625  # the weight on chrominance
     _WOR: int = 4  # the number of orientations for the subband decomposition
+    _ZERO_THRESHOLD: float = (
+        0.008  # threshold to consider an array as a zeros array
+    )
 
     # Private methods
     @classmethod
-    def _band_entropy(cls, map_: np.ndarray) -> List:
+    def _band_entropy(cls, map_: np.ndarray) -> List[float]:
         """
         Compute Shannon entropies of all the subbands.
 
@@ -102,7 +105,7 @@ class Metric(AIMMetricInterface):
             map_: a monochromatic image
 
         Returns:
-            a list containing Shannon entropies of all the subbands.
+            a list containing Shannon entropies of all the subbands
         """
 
         # Decompose the image into subbands
@@ -133,7 +136,7 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Subband entropy (float)
+            - Subband entropy (float, [0, +inf))
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -145,25 +148,25 @@ class Metric(AIMMetricInterface):
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
         # Convert image into the perceptually-based CIELab color space.
-        lab = rgb2lab(img_rgb_nparray)
-        lab_float = lab.astype(np.float32)
+        lab: np.ndarray = rgb2lab(img_rgb_nparray)
+        lab_float: np.ndarray = lab.astype(np.float32)
 
         # Split image to luminance(L) and the chrominance(a,b) channels
-        L = lab_float[:, :, 0]
-        a = lab_float[:, :, 1]
-        b = lab_float[:, :, 2]
+        L: np.ndarray = lab_float[:, :, 0]
+        a: np.ndarray = lab_float[:, :, 1]
+        b: np.ndarray = lab_float[:, :, 2]
 
         # Compute subband entropy for luminance channel
         en_band = cls._band_entropy(L)
-        clutter_se = np.mean(en_band)
+        clutter_se: float = float(np.mean(en_band))
 
         # Compute subband entropy for chrominance channels
         for jj in [a, b]:
-            if np.max(jj) - np.min(jj) < 0.008:
+            if np.max(jj) - np.min(jj) < cls._ZERO_THRESHOLD:
                 jj = np.zeros_like(jj)
 
             en_band = cls._band_entropy(jj)
-            clutter_se = clutter_se + cls._WGHT_CHROM * np.mean(en_band)
+            clutter_se = float(clutter_se + cls._WGHT_CHROM * np.mean(en_band))
 
         clutter_se = clutter_se / (1 + 2 * cls._WGHT_CHROM)
 
