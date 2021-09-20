@@ -40,9 +40,10 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_result"],
     [
-        ("aalto.fi_website.png", [3.1430370972220922]),
-        ("myhelsinki.fi_website.png", [3.6823907373501106]),
-        ("wikipedia.org_website.png", [3.6276330215052264]),
+        ("aalto.fi_website.png", [3.143037]),
+        ("myhelsinki.fi_website.png", [3.682391]),
+        ("wikipedia.org_website.png", [3.627632]),
+        ("black.png", [0]),
     ],
 )
 def test_subband_entropy_desktop(
@@ -69,5 +70,5 @@ def test_subband_entropy_desktop(
     )
 
     # Test result
-    if result is not None:
-        assert result[0] == expected_result[0]
+    if result is not None and isinstance(result[0], float):
+        assert round(result[0], 6) == expected_result[0]
