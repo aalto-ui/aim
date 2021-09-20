@@ -40,9 +40,10 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_result"],
     [
-        ("aalto.fi_website.png", [3.7579]),
-        ("myhelsinki.fi_website.png", [4.6258]),
-        ("wikipedia.org_website.png", [6.6986])
+        ("aalto.fi_website.png", [3.826612]),
+        ("myhelsinki.fi_website.png", [4.667929]),
+        ("wikipedia.org_website.png", [6.741694]),
+        ("black.png", [1.248283]),
     ],
 )
 def test_feature_congestion_desktop(
@@ -69,5 +70,5 @@ def test_feature_congestion_desktop(
     )
 
     # Test result
-    if result is not None:
-        assert result[0].round(decimals=4) == expected_result[0]
+    if result is not None and isinstance(result[0], float):
+        assert round(result[0], 6) == expected_result[0]
