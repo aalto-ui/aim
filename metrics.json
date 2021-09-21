@@ -428,22 +428,22 @@
           "scores": [
             {
               "id": "r1",
-              "range": [null, null],
-              "description": "Sparse",
+              "range": [0, 2.7153],
+              "description": "Good",
               "icon": ["far", "check-circle"],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [null, null],
+              "range": [2.7154, 3.4693],
               "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [null, null],
-              "description": "Congested",
+              "range": [3.4694, null],
+              "description": "Poor",
               "icon": ["fas", "exclamation-triangle"],
               "judgment": "bad"
             }
