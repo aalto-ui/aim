@@ -39,7 +39,7 @@ References:
         Clutter. Journal of Vision, 7(2), 1-22.
         doi: https://doi.org/10.1167/7.2.17
 
-    5.  Rosenholtz, R., Li, Y., and Mansfield, J. (2005). Feature Congestion: A Measure of Display Clutter
+    5.  Rosenholtz, R., Li, Y., Mansfield, J., & Jin, Z. (2005). Feature Congestion: A Measure of Display Clutter
         CHI '05: Proc. of the SIGCHI conference on Human factors in computing systems. May 2005. 761-770.
         doi: https://doi.org/10.1167/6.6.827
 
@@ -151,9 +151,9 @@ class Metric(AIMMetricInterface):
         kernel_1d: np.ndarray = np.array([[0.05, 0.25, 0.4, 0.25, 0.05]])
         kernel_2d: np.ndarray = conv2(kernel_1d, kernel_1d.T)
 
-        clutter_map = clutter_levels[0].copy()
+        clutter_map: np.ndarray = clutter_levels[0].copy()
         for scale in range(1, len(clutter_levels)):
-            clutter_here = clutter_levels[scale]
+            clutter_here: np.ndarray = clutter_levels[scale]
 
             for kk in range(scale, 0, -1):
                 clutter_here = pt.upConv(
@@ -203,9 +203,9 @@ class Metric(AIMMetricInterface):
         # deltaL2, deltaa2, and deltab2 to "scale" the L,a,b axes when computing
         # the covariance matrix. Eventually these numbers should be vary according
         # to the spatial scales, mimicing our visual system's sensitivity function
-        deltaL2 = 0.0007 ** 2
-        deltaa2 = 0.1 ** 2
-        deltab2 = 0.05 ** 2
+        deltaL2: float = 0.0007 ** 2
+        deltaa2: float = 0.1 ** 2
+        deltab2: float = 0.05 ** 2
 
         # Get a Gaussian filter for computing the covariance
         bigG: np.ndarray = RRgaussfilter1D(

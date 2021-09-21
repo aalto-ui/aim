@@ -402,11 +402,23 @@
       "visualizationType": "table",
       "references": [
         {
-          "title": "Rosenholtz, Ruth, Yuanzhen Li, and Lisa Nakano. Measuring visual clutter. Journal of vision 7.2 (2007): 17-17. doi:https://doi.org/10.1167/7.2.17",
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        },
+        {
+          "title": "Rosenholtz, R., Li, Y., and Nakano, L. (2007). Measuring Visual Clutter. Journal of Vision, 7(2), 1-22. doi: https://doi.org/10.1167/7.2.17",
           "url": "https://doi.org/10.1167/7.2.17"
         },
         {
-          "title": "Ruth Rosenholtz, Yuanzhen Li, Jonathan Mansfield, and Zhenlan Jin. Feature Congestion: A Measure of Display Clutter. CHI '05: Proc. of the SIGCHI conference on Human factors in computing systems. May 2005. 761-770. doi:https://doi.org/10.1167/6.6.827",
+          "title": "Rosenholtz, R., Li, Y., Mansfield, J., & Jin, Z. (2005). Feature Congestion: A Measure of Display Clutter. CHI '05: Proc. of the SIGCHI conference on Human factors in computing systems. May 2005. 761-770. doi: https://doi.org/10.1167/6.6.827",
           "url": "https://doi.org/10.1167/6.6.827"
         }
       ],
@@ -420,22 +432,22 @@
           "scores": [
             {
               "id": "r1",
-              "range": [null, null],
-              "description": "Sparse",
+              "range": [0, 3.771],
+              "description": "Good",
               "icon": ["far", "check-circle"],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [null, null],
+              "range": [3.772, 5.5113],
               "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [null, null],
-              "description": "Congested",
+              "range": [5.5114, null],
+              "description": "Poor",
               "icon": ["fas", "exclamation-triangle"],
               "judgment": "bad"
             }
