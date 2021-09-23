@@ -27,6 +27,9 @@ arrow = "*"
 configargparse = "*"
 opencv-python = "*"
 motor = "*"
+python-dotenv = "*"
+pyrtools = "*"
+scikit-image = "*"
 
 [requires]
 python_version = "3.7"
