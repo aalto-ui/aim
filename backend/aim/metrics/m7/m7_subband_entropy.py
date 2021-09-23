@@ -41,7 +41,7 @@ References:
 
 
 Change log:
-    v1.0 (2021-08-27)
+    v1.0 (2021-08-28)
       * Initial implementation
 """
 
@@ -105,9 +105,8 @@ class Metric(AIMMetricInterface):
             map_: a monochromatic image
 
         Returns:
-            a list containing Shannon entropies of all the subbands
+            A list containing Shannon entropies of all the subbands
         """
-
         # Decompose the image into subbands
         SFpyr = pt.pyramids.SteerablePyramidFreq(
             map_, height=cls._W_LEVELS, order=cls._WOR - 1
@@ -147,20 +146,20 @@ class Metric(AIMMetricInterface):
         # Get NumPy array
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
-        # Convert image into the perceptually-based CIELab color space.
+        # Convert image into the perceptually-based CIELab color space
         lab: np.ndarray = rgb2lab(img_rgb_nparray)
         lab_float: np.ndarray = lab.astype(np.float32)
 
-        # Split image to luminance(L) and the chrominance(a,b) channels
+        # Split image to the luminance (L) and chrominance (a,b) channels
         L: np.ndarray = lab_float[:, :, 0]
         a: np.ndarray = lab_float[:, :, 1]
         b: np.ndarray = lab_float[:, :, 2]
 
-        # Compute subband entropy for luminance channel
-        en_band = cls._band_entropy(L)
+        # Compute subband entropy for the luminance channel
+        en_band: List[float] = cls._band_entropy(L)
         clutter_se: float = float(np.mean(en_band))
 
-        # Compute subband entropy for chrominance channels
+        # Compute subband entropy for the chrominance channels
         for jj in [a, b]:
             if np.max(jj) - np.min(jj) < cls._ZERO_THRESHOLD:
                 jj = np.zeros_like(jj)

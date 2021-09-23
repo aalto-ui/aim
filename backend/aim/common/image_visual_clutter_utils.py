@@ -36,13 +36,13 @@ __version__ = "1.0"
 
 def rgb2lab(im: np.ndarray) -> np.ndarray:
     """
-    Converts RGB color space to CIELab color space
+    Converts the RGB color space to the CIELab color space.
 
     Args:
-        im : an input RGB image
+        im: Input RGB image
 
     Returns:
-        the output Lab image
+        Output Lab image
     """
     im = im / 255.0  # get r,g,b value in the range of [0,1]
 
@@ -84,13 +84,13 @@ def rgb2lab(im: np.ndarray) -> np.ndarray:
 
 def normlize(arr: np.ndarray) -> np.ndarray:
     """
-    Normlizes the array input between (min, max) -> (0, 255)
+    Normalizes the array input between (min, max) -> (0, 255).
 
     Args:
-        arr: a ndarray image.
+        arr: Ndarray image
 
     Returns:
-        a normlized ndarray.
+        Normlized ndarray
     """
     min_min = arr.min()
     max_max = arr.max()
@@ -110,12 +110,13 @@ def conv2(
     Computes the two-dimensional convolution of matrices x and y.
 
     Args:
-        x: first ndarray
-        y: second ndarray
-        mode: method of convolution, default=None, if it sets "same" then computes the central part of the convolution
+        x: First ndarray
+        y: Second ndarray
+        mode: Method of convolution, default=None, if it sets "same" then
+              computes the central part of the convolution
 
     Returns:
-        a convolution ndarray of input matrices
+        Convolution ndarray of input matrices
     """
     if mode == "same":
         return np.rot90(
@@ -133,11 +134,11 @@ def RRoverlapconv(kernel: np.ndarray, in_: np.ndarray) -> np.ndarray:
     kernel.
 
     Args:
-        in_: input ndarray image
-        kernel: input ndarray filter kernel
+        in_: Input ndarray image
+        kernel: Input ndarray filter kernel
 
     Returns:
-        filtered ndarray of input image with the filter kernel
+        Filtered ndarray of input image with the filter kernel
     """
     # Convolve with the original kernel
     out = conv2(in_, kernel, mode="same")
@@ -155,16 +156,17 @@ def RRgaussfilter1D(
     halfsupport: int, sigma: Union[int, float], center: Union[int, float] = 0
 ) -> np.ndarray:
     """
-    Creates a 1D gaussian filter kernel, centered at center (default=0), with pixels from
-    a range -halfsupport:halfsupport+1, and standard deviation sigma.
+    Creates a one-dimensional gaussian filter kernel, centered at center
+    (default=0), with pixels from a range -halfsupport:halfsupport+1, and
+    standard deviation sigma.
 
     Args:
-        halfsupport: range parameter
-        sigma: standard deviation sigma
-        center: center
+        halfsupport: Range parameter
+        sigma: Standard deviation sigma
+        center: Center
 
     Returns:
-        filtered ndarray of input image with the filter kernel
+        Filtered ndarray of input image with the filter kernel
     """
     t = list(range(-halfsupport, halfsupport + 1))
     kernel = np.array(
@@ -179,15 +181,16 @@ def DoG1filter(
     a: int, sigma: Union[int, float]
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Creates 2 1-D gaussian filters.
-    2-D DoG filters can be contructed by combining 2 1-D DoG filters separably, in x and y directions
+    Creates 2 one-dimensional gaussian filters. Two-dimensional DoG filters
+    can be contructed by combining 2 one-dimensional DoG filters separately,
+    in x and y directions.
 
     Args:
-        a : half-support of the filter.
-        sigma: standard deviation.
+        a : Half-support of the filter
+        sigma: Standard deviation
 
     Returns:
-        2 1-D ndarray gaussian filters
+        Two one-dimensional ndarray gaussian filters
 
     References:
         Jitendra Malik and Pietro Perona. Preattentive texture discrimination
@@ -211,22 +214,23 @@ def addborder(
     im: np.ndarray, xbdr: int, ybdr: int, arg: Union[str, int, float]
 ) -> np.ndarray:
     """
-    Make image w/added border.
+    Make image with added border.
 
     Args:
-        im: input ndarray image
-        xbdr: x border size
-        ybdr: y border size
-        arg: constant int for add border values, 'even' for Even reflection, 'odd' Odd reflection, 'wrap' for Wraparound
+        im: Input ndarray image
+        xbdr: X border size
+        ybdr: Y border size
+        arg: Constant int for add border values, 'even' for Even reflection,
+             'odd' Odd reflection, 'wrap' for Wraparound
 
     Returns:
-        output ndarray addbordered image
+        Output ndarray addbordered image
 
     Examples:
-        imnew = addborder(im,5,5,128)  Add 5 wide border of val 128.
-        imnew = addborder (im,5,5,'even')  Even reflection.
-        imnew = addborder (im,5,5,'odd')  Odd reflection.
-        imnew = addborder (im,5,5,'wrap')  Wraparound.
+        imnew = addborder(im,5,5,128)  Add 5 wide border of val 128
+        imnew = addborder (im,5,5,'even')  Even reflection
+        imnew = addborder (im,5,5,'odd')  Odd reflection
+        imnew = addborder (im,5,5,'wrap')  Wrap around
     """
     ysize, xsize = im.shape
 
@@ -270,17 +274,17 @@ def filt2(
     Default style is 'odd'. Also can be 'even', or 'wrap'.
 
     Args:
-        kernel: kernel
-        im1: input ndarray image
-        reflect_style: kernel reflection, see examples.
+        kernel: Kernel
+        im1: Input ndarray image
+        reflect_style: Kernel reflection, see examples
 
     Return:
-        output ndarray filterd image with kernel and reflection.
+        Output ndarray filterd image with kernel and reflection
 
     Examples:
-        im2 = filt2(kern,image)  apply kernel with odd reflection (default).
-        im2 = filt2(kern,image,'even')  Use even reflection.
-        im2 = filt2(kern,image,128)  Fill with 128's.
+        im2 = filt2(kern,image)  Apply kernel with odd reflection (default)
+        im2 = filt2(kern,image,'even')  Use even reflection
+        im2 = filt2(kern,image,128)  Fill with 128's
     """
     ky, kx = kernel.shape
     iy, ix = im1.shape
@@ -297,11 +301,13 @@ def RRcontrast1channel(pyr: Dict, DoG_sigma: Union[int, float] = 2) -> List:
     Filters a Gaussian pyramid, pyr, with a 1-channel contrast feature detector.
 
     Args:
-        pyr : a Gaussian pyramid. It can be computed from this "pyrtools" package
-        DoG_sigma : size of the center-surround (Difference-of-Gaussian) filter used for computing the contrast. Default = 2. Refer to DoG1filter.
+        pyr: Gaussian pyramid. It can be computed from this "pyrtools" package
+        DoG_sigma: Size of the center-surround (Difference-of-Gaussian) filter
+                   used for computing the contrast. Default = 2.
+                   Refer to DoG1filter
 
     Returns:
-        a 1-channel list contrast
+        1-channel list contrast
     """
     levels = len(pyr)
     contrast = [0] * levels
@@ -329,15 +335,15 @@ def reduce(
     Reduce for building Gaussian or Laplacian pyramids. 1-D separable kernels.
 
     Args:
-        image0: input ndarray
-        kernel: kernel
+        image0: Input ndarray
+        kernel: Kernel
 
     Returns:
-        ndarray output image
+        Ndarray output image
 
     Examples:
-        imnew = reduce(im0) Reduce w/default kernel: [.05 .25 .4 .25 .05]
-        imnew = reduce(im0, kern) Reduce with kern; sums to unity.
+        imnew = reduce(im0)  Reduce with default kernel: [.05 .25 .4 .25 .05]
+        imnew = reduce(im0, kern)  Reduce with kern; sums to unity
     """
     if kernel is None:
         # Default kernel
@@ -363,15 +369,15 @@ def RRoverlapconvexpand(
     See Examples.
 
     Args:
-        in_: input ndarray
-        kernel: kernel
+        in_: Input ndarray
+        kernel: Kernel
 
     Retruns:
-        output ndarray, see examples.
+        Output ndarray, see examples
 
     Examples:
-        out = RRoverlapconvexpand(in_)  return an image expanded to double size,
-        out = RRoverlapconvexpand(in, kernel); specify 1-D kernel with unity sum.
+        out = RRoverlapconvexpand(in_)  Return an image expanded to double size
+        out = RRoverlapconvexpand(in, kernel)  Specify 1-D kernel with unity sum
     """
     ysize, xsize = in_.shape
     kernel = kernel * 2  # kernel sum=2 to account for padding.
@@ -393,7 +399,7 @@ def RRoverlapconvexpand(
 
 def HV(in_: list):
     """
-    Outputs H-V, computes difference of first 2 elements of a list
+    Outputs H-V, computes difference of first 2 elements of a list.
     """
     out = in_[0] - in_[1]
     return out
@@ -401,7 +407,7 @@ def HV(in_: list):
 
 def DD(in_: list):
     """
-    Outputs R-L, computes difference of last 2 elements of a list
+    Outputs R-L, computes difference of last 2 elements of a list.
     """
     out = in_[3] - in_[2]
     return out
@@ -419,12 +425,12 @@ def poolnew(
     in_: list, sigma: Union[int, float, None] = None
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
-    Pools with a gaussian.  Note assumes that input image is actually
+    Pools with a gaussian. Note assumes that input image is actually
     4 equal-size images, side by side.
 
     Args:
-        in_: list of orientations, 4 equal-size images, side by side.
-        sigma: standard deviation sigma of gaussian filter
+        in_: List of orientations, 4 equal-size images, side by side
+        sigma: Standard deviation sigma of gaussian filter
 
     Returns:
         4 equal-size pooled images, side by side
@@ -459,17 +465,19 @@ def imrotate(
     bbox: str = "crop",
 ) -> np.ndarray:
     """
-    rotate an image by Skimage package.  Basically just a wrapper to
-    deal with the fact that skimage thinks floating point images need to be between [-1.0,1.0]
+    Rotate an image by Skimage package. Basically just a wrapper to deal with
+    the fact that skimage thinks floating point images need to be between
+    [-1.0,1.0].
 
     Args:
-        im: input ndarray image
-        anlge: angle is in DEGREE
-        method: interpolation
-        bbox: if output should be as the same size of the input the bbox should be "crop", if not should be "losse"
+        im: Input ndarray image
+        anlge: Angle is in DEGREE
+        method: Interpolation
+        bbox: If output should be as the same size of the input the bbox
+              should be "crop", if not should be "losse"
 
     Retruns:
-        rotated output ndarray image
+        Rotated output ndarray image
     """
     # interpolation methods
     func_method = {
@@ -502,15 +510,16 @@ def orient_filtnew(
     pyr: np.ndarray, sigma: Union[int, float] = 16 / 14
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
-    ORIENT_FILTNEW Filters "pyr" (in principle, one level of the Gaussian pyramid generated by gausspyr) with 2nd
-    derivative filters in 4 directions.
+    Filters "pyr" (in principle, one level of the Gaussian pyramid generated
+    by gausspyr) with 2nd derivative filters in 4 directions.
 
     Args:
-        pyr : a Gaussian pyramid. It can be computed from this "pyrtools" package
-        sigma : sigma of filter
+        pyr: Gaussian pyramid. It can be computed from this "pyrtools" package
+        sigma: Sigma of filter
 
     Returns:
-        the 4 output images appended together in a list, in the order horizontal, vertical, up-left, and down-right.
+        4 output images appended together in a list, in the order horizontal,
+        vertical, up-left, and down-right.
     """
     halfsupport = round(3 * sigma)
     # halfsupport was 10, for default sigma.  We need a halfsupport of about
@@ -563,11 +572,11 @@ def histc(x: np.ndarray, bins: np.ndarray) -> np.ndarray:
      MATLAB `histc` equivalent function.
 
      Args:
-         x: input array
-         bins: array of bins. It has to be 1-dimensional and monotonic.
+         x: Input array
+         bins: Array of bins. It has to be 1-dimensional and monotonic
 
     Rrturns
-        counts the number of values in x that are within each specified bin range.
+        Counts the number of values in x that are within each specified bin range
     """
     map_to_bins = np.digitize(
         x, bins
@@ -580,14 +589,15 @@ def histc(x: np.ndarray, bins: np.ndarray) -> np.ndarray:
 
 def entropy(x: np.ndarray, nbins: Optional[int] = None) -> float:
     """
-    Computes the entropy of signal "x", given the number of bins "nbins" used uniform binning in the calculation.
+    Computes the entropy of signal "x", given the number of bins "nbins" used
+    uniform binning in the calculation.
 
     Args:
-        x: ndarray signal x
-        nbins: number of bins
+        x: Ndarray signal x
+        nbins: Number of bins
 
     Returns:
-        a float, entropy of x
+        A float, entropy of x
     """
     nsamples = x.shape[0]
 
