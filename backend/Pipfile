@@ -30,6 +30,7 @@ motor = "*"
 python-dotenv = "*"
 pyrtools = "*"
 scikit-image = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.7"
