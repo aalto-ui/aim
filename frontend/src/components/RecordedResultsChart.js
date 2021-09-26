@@ -117,7 +117,7 @@ export const fillData = ({
           meta.data.forEach((element, idx) => {
             if (idx == valueIndex) {
               const position = element.tooltipPosition()
-              ctx.fillText(metricData.value, position.x, position.y - (fontSize / 2) - padding)
+              ctx.fillText(intl.format(metricData.value), position.x, position.y - (fontSize / 2) - padding)
             }
           })
         }
@@ -148,9 +148,9 @@ export const fillData = ({
         }
 
         // draw inferior limit
-        drawQuartile(limitLow, "1st quartile", metricRange[0])
+        drawQuartile(limitLow, "1st quartile", intl.format(metricRange[0]))
         // draw superior limit
-        drawQuartile(limitHigh, "3rd quartile", metricRange[1])
+        drawQuartile(limitHigh, "3rd quartile", intl.format(metricRange[1]))
       },
     }]
   })
