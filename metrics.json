@@ -16,7 +16,7 @@
       "id": "vg",
       "name": "Visual Guidance",
       "icon": "compass",
-      "metrics": []
+      "metrics": ["m9"]
     },
     {
       "id": "ac",
@@ -450,6 +450,30 @@
           ]
         }
       ]
-    }
+    },
+    "m9": {
+      "id": "m9",
+      "name": "UMSI",
+      "description": "TODO",
+      "evidence": 5,
+      "relevance": 5,
+      "speed": 1,
+      "visualizationType": "b64",
+      "references": [
+        {
+          "title": "TODO",
+          "url": "https://doi.org/10.1145/3379337.3415825"
+        }
+      ],
+      "results": [
+        {
+          "id": "m9_0",
+          "index": 0,
+          "type": "b64",
+          "name": "UMSI (Unified Model of Saliency and Importance)",
+          "description": false
+        }
+      ]
+    }    
   }
 }
