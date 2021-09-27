@@ -273,7 +273,7 @@ python screenshoter.py -i data/screenshots/ALEXA_500/urls.csv -sw 1280 -sh 800 -
 
 ## Evaluator App <a name="evaluator"></a>
 
-AIM backend also provides a utility app for evaluating GUI designs (i.e., web page screenshots) against selected metrics. The app generates two CSV files, `results.csv` and `quantiles.csv`, with evaluation results and statistics, respectively. Optionally, it also generates histogram figures for each metric. To configure and run the app, go to the [backend](./backend/) directory and follow the instructions below.
+AIM backend also provides a utility app for evaluating GUI designs (i.e., web page screenshots) against selected metrics. The app generates three files: `results.csv`, `results.json`, and `quantiles.csv`. Two former files contain evaluation results, while the latter file contains statistics. Optionally, it also generates histogram figures for each metric. To configure and run the app, go to the [backend](./backend/) directory and follow the instructions below.
 
 ### Configuration
 
