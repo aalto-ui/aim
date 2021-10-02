@@ -53,7 +53,7 @@ Change log:
 # Standard library modules
 import base64
 from io import BytesIO
-from typing import Dict, List, Optional, Union
+from typing import List, Optional, Union
 
 # Third-party modules
 import numpy as np
