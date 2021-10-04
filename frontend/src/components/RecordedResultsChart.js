@@ -33,15 +33,18 @@ export const fillData = ({
     // Compute bin size
     let binSize = maxValue / noBins
     const maxF = Math.ceil(Math.log10(binSize)) + 1
-    binSize = maxValue > 1 ? (new Array(maxF).fill(0).map(
-      (_, i) => maxF - i
-    ).map(
-      i => Math.ceil(binSize / (10 ** i)) * (10 ** i)
-    ).map(
-      i => [i, ((noBins - 1) * i < maxValue) && (noBins * i > maxValue)]
-    ).filter(
-      i => i[1] === true
-    )[0][0]) : (maxValue / noBins)
+    binSize =
+      maxValue > 1 && maxF > 1
+        ? new Array(maxF)
+            .fill(0)
+            .map((_, i) => maxF - i)
+            .map((i) => Math.ceil(binSize / 10 ** i) * 10 ** i)
+            .map((i) => [
+              i,
+              (noBins - 1) * i < maxValue && noBins * i > maxValue,
+            ])
+            .filter((i) => i[1] === true)[0][0]
+        : maxValue / noBins;
 
     // Compute data frequency bins
     const valueIndex = Math.floor(metricData.value / binSize)
@@ -114,7 +117,7 @@ export const fillData = ({
           meta.data.forEach((element, idx) => {
             if (idx == valueIndex) {
               const position = element.tooltipPosition()
-              ctx.fillText(metricData.value, position.x, position.y - (fontSize / 2) - padding)
+              ctx.fillText(intl.format(metricData.value), position.x, position.y - (fontSize / 2) - padding)
             }
           })
         }
@@ -145,9 +148,9 @@ export const fillData = ({
         }
 
         // draw inferior limit
-        drawQuartile(limitLow, "1st quartile", metricRange[0])
+        drawQuartile(limitLow, "1st quartile", intl.format(metricRange[0]))
         // draw superior limit
-        drawQuartile(limitHigh, "3rd quartile", metricRange[1])
+        drawQuartile(limitHigh, "3rd quartile", intl.format(metricRange[1]))
       },
     }]
   })
