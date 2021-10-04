@@ -1,4 +1,4 @@
-FROM python:3.8.5-slim-buster
+FROM python:3.7.12-slim-buster
 
 ARG CHROME_VERSION="google-chrome-stable"
 
@@ -10,7 +10,7 @@ COPY ./metrics.json ../
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
   && apt-get install -y --no-install-recommends wget unzip gnupg2 \
-  libglib2.0-0 libnss3 libgconf-2-4 libxcb1 libfontconfig1 xvfb \
+  libglib2.0-0 libnss3 libgconf-2-4 libxcb1 libfontconfig1 xvfb libc6-dev gcc \
   # Add aim user
   && useradd --system -s /sbin/nologin aim \
   && mkdir -p /home/aim \
