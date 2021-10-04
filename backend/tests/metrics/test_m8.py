@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Feature Congestion' metric (m8).
+Tests for the 'Feature congestion' metric (m8).
 """
 
 
@@ -50,7 +50,7 @@ def test_feature_congestion_desktop(
     input_value: str, expected_result: List[Any]
 ) -> None:
     """
-    Test PNG file size (desktop GUIs).
+    Test feature congestion (desktop GUIs).
 
     Args:
         input_value: GUI image file name

@@ -10,7 +10,7 @@
       "id": "pf",
       "name": "Perceptual Fluency",
       "icon": "brain",
-      "metrics": ["m2", "m4", "m5", "m6"]
+      "metrics": ["m2", "m4", "m5", "m6", "m8"]
     },
     {
       "id": "vg",
@@ -394,8 +394,8 @@
     },
     "m8": {
       "id": "m8",
-      "name": "Feature Congestion",
-      "description": "This Feature Congestion measure of clutter makes use of extensive modeling of what makes items in a display visually salient.",
+      "name": "Feature congestion",
+      "description": "This feature congestion measure of clutter makes use of extensive modeling of what makes items in a display visually salient.",
       "evidence": 3,
       "relevance": 3,
       "speed": 0,
@@ -418,7 +418,7 @@
           "url": "https://doi.org/10.1167/7.2.17"
         },
         {
-          "title": "Rosenholtz, R., Li, Y., Mansfield, J., & Jin, Z. (2005). Feature Congestion: A Measure of Display Clutter. CHI '05: Proc. of the SIGCHI conference on Human factors in computing systems. May 2005. 761-770. doi: https://doi.org/10.1167/6.6.827",
+          "title": "Rosenholtz, R., Li, Y., Jin, Z., and Mansfield, J. (2006). Feature Congestion: A Measure of Visual Clutter. Journal of Vision, 6(6), 827. doi: https://doi.org/10.1167/6.6.827",
           "url": "https://doi.org/10.1167/6.6.827"
         }
       ],
@@ -427,7 +427,7 @@
           "id": "m8_0",
           "index": 0,
           "type": "float",
-          "name": "Feature Congestion",
+          "name": "Feature congestion",
           "description": false,
           "scores": [
             {

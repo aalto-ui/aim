@@ -3,14 +3,14 @@
 
 """
 Metric:
-    Feature Congestion clutter measure
+    Feature congestion
 
 
 Description:
-    The amount of redundancy introduced to a scene.
+    The proportion of unused feature (e.g., color or luminance) variance.
 
     Category: Visual complexity > Information amount > Visual clutter.
-    For details, see CL2 [1], A10 [2], and CL2 [3].
+    For details, see CL3 [1], A11 [2], and CL3 [3].
 
 
 Funding information and contact:
@@ -39,14 +39,14 @@ References:
         Clutter. Journal of Vision, 7(2), 1-22.
         doi: https://doi.org/10.1167/7.2.17
 
-    5.  Rosenholtz, R., Li, Y., Mansfield, J., & Jin, Z. (2005). Feature Congestion: A Measure of Display Clutter
-        CHI '05: Proc. of the SIGCHI conference on Human factors in computing systems. May 2005. 761-770.
+    5.  Rosenholtz, R., Li, Y., Jin, Z., and Mansfield, J. (2006). Feature
+        Congestion: A Measure of Visual Clutter. Journal of Vision, 6(6), 827.
         doi: https://doi.org/10.1167/6.6.827
+
 
 Change log:
     v1.0 (2021-08-31)
       * Initial implementation
-
 """
 
 
@@ -57,7 +57,7 @@ Change log:
 # Standard library modules
 import base64
 from io import BytesIO
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Union
 
 # Third-party modules
 import numpy as np
@@ -90,6 +90,7 @@ __date__ = "2021-08-31"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
+
 # ----------------------------------------------------------------------------
 # Metric
 # ----------------------------------------------------------------------------
@@ -97,7 +98,7 @@ __version__ = "1.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Feature Congestion clutter measure.
+    Metric: Feature congestion.
     """
 
     # Private constants
@@ -108,9 +109,10 @@ class Metric(AIMMetricInterface):
         3  # the standard deviation of this Gaussian window for color clutter
     )
     _ORIENT_POOL_SIGMA: float = (
-        7 / 2
-    )  # orient_pool_sigma is the standard deviation of this Gaussian window
-    _ORIENT_NOISE: float = 0.001  # Was eps, but that gave too much orientation noise in the saliency maps.  Then changed to 0.000001
+        7
+        / 2  # orient_pool_sigma is the standard deviation of this Gaussian window
+    )
+    _ORIENT_NOISE: float = 0.001  # Was eps, but that gave too much orientation noise in the saliency maps. Then changed to 0.000001
 
     ## OPP_ENERGY constants:
     # These probably seem like arbitrary numbers, but it's just trying to get
@@ -120,7 +122,7 @@ class Metric(AIMMetricInterface):
     _OPP_ENERGY_FILTER_SCALE: float = 16 / 14 * 1.75
     _OPP_ENERGY_POOL_SCALE: float = 1.75
 
-    # clutter coeficients to compute final feature congestion map
+    # Clutter coeficients to compute final feature congestion map
     _COLOR_COEF: float = 0.2088
     _CONTRAST_COEF: float = 0.0660
     _ORIENT_COEF: float = 0.0269
@@ -128,11 +130,12 @@ class Metric(AIMMetricInterface):
         1.0  # a parameter when combining local clutter over space
     )
 
-    # Create empty luminance(L) and the chrominance(a,b) channels
+    # Create the empty luminance (L) and chrominance (a,b) channels
     _L_pyr: Dict = {}
     _a_pyr: Dict = {}
     _b_pyr: Dict = {}
 
+    # Private methods
     @staticmethod
     def _collapse(clutter_levels: List) -> np.ndarray:
         """
@@ -143,7 +146,7 @@ class Metric(AIMMetricInterface):
         across scales.
 
         Args:
-            clutter_levels: List of clutter levels
+            clutter_levels: list of clutter levels
 
         Returns:
             Collapsed clutter map
@@ -175,11 +178,10 @@ class Metric(AIMMetricInterface):
 
         return clutter_map
 
-    # Private methods
     @classmethod
     def _color_clutter(cls) -> np.ndarray:
         """
-        Computes the color clutter map of an image.
+        Compute the color clutter map of an image.
 
         Color clutter is computed as the "volume" of a color distribution
         ellipsoid, which is the determinant of covariance matrix. Covariance
@@ -191,18 +193,17 @@ class Metric(AIMMetricInterface):
             Results
             - color_clutter_map (ndarray): an array of the same size as inputImage
         """
-
-        # initiatialization
+        # Initiatialization
         covMx: Dict = {}
         color_clutter_levels = [0] * cls._NUM_LEVELS
         DL: list = [0] * cls._NUM_LEVELS
         Da: list = [0] * cls._NUM_LEVELS
         Db: list = [0] * cls._NUM_LEVELS
 
-        # sensitivitis to the L,a,and b channels are different, therefore we use
-        # deltaL2, deltaa2, and deltab2 to "scale" the L,a,b axes when computing
+        # Sensitivitis to the L, a, and b channels are different, therefore we use
+        # deltaL2, deltaa2, and deltab2 to "scale" the L, a, and b axes when computing
         # the covariance matrix. Eventually these numbers should be vary according
-        # to the spatial scales, mimicing our visual system's sensitivity function
+        # to the spatial scales, mimicing our visual system's sensitivity function.
         deltaL2: float = 0.0007 ** 2
         deltaa2: float = 0.1 ** 2
         deltab2: float = 0.05 ** 2
@@ -213,7 +214,7 @@ class Metric(AIMMetricInterface):
         )
 
         for i in range(0, cls._NUM_LEVELS):
-            # get E(X) by filtering X with a 1-D Gaussian window separably in x and y directions:
+            # Get E(X) by filtering X with a one-dimensional Gaussian window separably in x and y directions:
             DL[i] = RRoverlapconv(bigG, cls._L_pyr[(i, 0)])
             DL[i] = RRoverlapconv(bigG.T, DL[i])  # E(L)
             Da[i] = RRoverlapconv(bigG, cls._a_pyr[(i, 0)])
@@ -282,7 +283,7 @@ class Metric(AIMMetricInterface):
                 )
             )
 
-            # take the square root considering variance is squared, and the cube
+            # Take the square root considering variance is squared, and the cube
             # root, since this is the volume and the contrast measure is a "length"
             color_clutter_levels[i] = np.sqrt(detIm) ** (1 / 3)
 
@@ -296,7 +297,6 @@ class Metric(AIMMetricInterface):
         """
         Computes the contrast clutter map of an image.
 
-
          Returns:
             Results
             - contrast_clutter_map (ndarray): an array of the same size as inputImage
@@ -306,23 +306,26 @@ class Metric(AIMMetricInterface):
         # values of) the filter outputs. The center-surround filter is a DoG1 filter
         # with std 'contrast_filt_sigma'.
         contrast = RRcontrast1channel(cls._L_pyr, 1)
-        # initiate clutter_map and clutter_levels:
+
+        # Initiate clutter_map and clutter_levels
         contrast_clutter_levels = [0] * cls._NUM_LEVELS
-        # Get a Gaussian filter for computing the variance of contrast
+
+        # Get a Gaussian filter for computing the variance of contrast.
         # Since we used a Gaussian pyramid to find contrast features, these filters
         # have the same size regardless of the scale of processing.
         bigG = RRgaussfilter1D(round(6), 3)
 
         for scale in range(0, cls._NUM_LEVELS):
             # var(X) = E(X.^2) - E(X).^2
-            # get E(X) by filtering X with a 1-D Gaussian window separably in x and y directions
+            # Get E(X) by filtering X with a one-dimensional Gaussian window separably in x and y directions
             meanD = RRoverlapconv(bigG, contrast[scale])
             meanD = RRoverlapconv(bigG.T, meanD)
-            # get E(X.^2) by filtering X.^2 with a 1-D Gaussian window separably in x and y directions
+
+            # Get E(X.^2) by filtering X.^2 with a one-dimensional Gaussian window separably in x and y directions
             meanD2 = RRoverlapconv(bigG, contrast[scale] ** 2)
             meanD2 = RRoverlapconv(bigG.T, meanD2)
 
-            # get variance by var(X) = E(X.^2) - E(X).^2
+            # Get variance by var(X) = E(X.^2) - E(X).^2
             stddevD = np.sqrt(abs(meanD2 - meanD ** 2))
             contrast_clutter_levels[scale] = stddevD
 
@@ -333,13 +336,11 @@ class Metric(AIMMetricInterface):
     @classmethod
     def _rr_orientation_opp_energy(cls) -> list:
         """
-        OPP_ENERGY    This runs the oriented opponent energy calculation that
-        serves as the first stages in Bergen & Landy's (1990)
-        texture segmentor, except it uses DOOG filters (which actually
-        don't work as well, but at least we can more easily control the
-        scale).
+        OPP_ENERGY: This runs the oriented opponent energy calculation that
+        serves as the first stages in Bergen & Landy's (1990) texture segmentor,
+        except it uses DOOG filters (which actually don't work as well, but at
+        least we can more easily control the scale).
         """
-
         hvdd: list = [0] * cls._NUM_LEVELS
         hv: list = [0] * cls._NUM_LEVELS
         dd: list = [0] * cls._NUM_LEVELS
@@ -351,30 +352,31 @@ class Metric(AIMMetricInterface):
             hvdd[scale] = orient_filtnew(
                 cls._L_pyr[(scale, 0)], cls._OPP_ENERGY_FILTER_SCALE
             )
-            # filt with 4 oriented filters 0, 45, 90, 135.  Was sigma = 16/14, orient_filtnew,
+
+            # Filter with 4 oriented filters 0, 45, 90, 135. Was sigma = 16/14, orient_filtnew,
             # then 16/14*1.75 to match contrast and other scales.
             # Eventually make this sigma a variable that's passed to this routine.
             # hvdd[scale] is the 4 output images concatenated together,
             # in the order horizontal, vertical, up-left, and down-right.
-
             hvdd[scale] = [x ** 2 for x in hvdd[scale]]  # local energy
             hvdd[scale] = poolnew(
                 hvdd[scale], cls._OPP_ENERGY_POOL_SCALE
-            )  # Pools with a gaussian filter.  Was effectively sigma=1, then 1.75 to match 1.75 above.
+            )  # Pools with a gaussian filter. Was effectively sigma=1, then 1.75 to match 1.75 above.
+
             # RRR Should look at these results and see if this is the right amount of
-            # pooling for the new filters.  It was right for the Landy-Bergen
-            # filters.
+            # pooling for the new filters. It was right for the Landy-Bergen filters.
             hv[scale] = HV(
                 hvdd[scale]
             )  # get the difference image between horizontal and vertical: H-V (0-90)
             dd[scale] = DD(
                 hvdd[scale]
             )  # get the difference image between right and left: R-L (45-135)
+
             # Normalize by the total response at this scale, assuming the total
-            # response is high enough.  If it's too low, we'll never see this
-            # orientation.  I'm not sure what to do here -- set it to zeros and
-            # it's like that's the orientation.  Maybe output the total response
-            # and decide what to do later.  RRR
+            # response is high enough. If it's too low, we'll never see this
+            # orientation. I'm not sure what to do here -- set it to zeros and
+            # it's like that's the orientation. Maybe output the total response
+            # and decide what to do later. RRR
             total[scale] = (
                 sumorients(hvdd[scale]) + cls._OPP_ENERGY_NOISE
             )  # add noise based upon sumorients at visibility threshold
@@ -392,25 +394,23 @@ class Metric(AIMMetricInterface):
     @classmethod
     def _orientation_clutter(cls) -> np.ndarray:
         """
-        Computes the orientation clutter map of an image.
+        Compute the orientation clutter map of an image.
 
         Orientation clutter is computed as the "volume" of an orientation distribution
         ellipsoid, which is the determinant of covariance matrix. Treats cos(2 theta)
         and sin(2 theta) (computed from OrientedOppEnergy) as a two-vector, and gets
-        The covariance of this two-vector.  The covariance
-        matrix can be computed efficiently through linear filtering. More
-        specifically, cov(X,Y) = E(XY)-E(X)E(Y), where E (expectation value)
-        can be approximated by filtering with a Gaussian window.
+        The covariance of this two-vector. The covariance matrix can be computed
+        efficiently through linear filtering. More specifically, cov(X,Y) = E(XY)-E(X)E(Y),
+        where E (expectation value) can be approximated by filtering with a Gaussian window.
         poolScale is set to 7/2.
 
-        This currently seems far too dependent on luminance contrast.  Check into
+        This currently seems far too dependent on luminance contrast. Check into
         why this is so -- I thought we were normalizing by local contrast.
 
         Returns:
             Results
             - orientation_clutter_map (ndarray): an array of the same size as inputImage
         """
-
         Dc: list = [
             0
         ] * cls._NUM_LEVELS  # mean "cos 2 theta" at distractor scale
@@ -428,7 +428,7 @@ class Metric(AIMMetricInterface):
         bigG = RRgaussfilter1D(
             round(8 * cls._ORIENT_POOL_SIGMA), 4 * cls._ORIENT_POOL_SIGMA
         )
-        #         maxbigG = max(bigG) ** 2
+        # maxbigG = max(bigG) ** 2
 
         covMx: Dict = {}
         orientation_clutter_levels = [0] * cls._NUM_LEVELS
@@ -437,19 +437,20 @@ class Metric(AIMMetricInterface):
             cmx = angles[i][0]
             smx = angles[i][1]
 
-            # Pool to get means at distractor scale. In pooling, don't pool over the target
-            # region (implement this by pooling with a big Gaussian, then
-            # subtracting the pooling over the target region computed above.  Note,
-            # however, that we first need to scale the target region pooling so
-            # that its peak is the same height as this much broader Gaussian used
-            # to pool over the distractor region.
+            # Pool to get means at distractor scale. In pooling, don't pool
+            # over the target region (implement this by pooling with a big
+            # Gaussian, then subtracting the pooling over the target region
+            # computed above. Note, however, that we first need to scale the
+            # target region pooling so that its peak is the same height as
+            # this much broader Gaussian used to pool over the distractor
+            # region.
             Dc[i] = RRoverlapconv(bigG, cmx)
             Dc[i] = RRoverlapconv(bigG.T, Dc[i])
             Ds[i] = RRoverlapconv(bigG, smx)
             Ds[i] = RRoverlapconv(bigG.T, Ds[i])
 
-            # Covariance matrix elements.  Compare with computations in
-            # RRStatisticalSaliency.  I tried to match computeColorClutter, but I
+            # Covariance matrix elements. Compare with computations in
+            # RRStatisticalSaliency. I tried to match computeColorClutter, but I
             # don't remember the meaning of some of the terms I removed.  XXX
             covMx[(i, 0, 0)] = RRoverlapconv(bigG, cmx ** 2)
             covMx[(i, 0, 0)] = (
@@ -495,7 +496,7 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Subband Entropy (float)
+            - Feature congestion (float, [0, +inf))
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -506,11 +507,11 @@ class Metric(AIMMetricInterface):
         # Get NumPy array
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
-        # Convert image into the perceptually-based CIELab color space.
-        lab = rgb2lab(img_rgb_nparray)
-        lab_float = lab.astype(np.float32)
+        # Convert image into the perceptually-based CIELab color space
+        lab: np.ndarray = rgb2lab(img_rgb_nparray)
+        lab_float: np.ndarray = lab.astype(np.float32)
 
-        # Split image to luminance(L) and the chrominance(a,b) channels
+        # Split image to the luminance (L) and chrominance (a,b) channels
         L: np.ndarray = lab_float[:, :, 0]
         a: np.ndarray = lab_float[:, :, 1]
         b: np.ndarray = lab_float[:, :, 2]
@@ -523,12 +524,12 @@ class Metric(AIMMetricInterface):
         pyr = pt.pyramids.GaussianPyramid(b, height=cls._NUM_LEVELS)
         cls._b_pyr = pyr.pyr_coeffs
 
-        # compute the color, contrast and orientation clutters
+        # Compute the color, contrast, and orientation clutters
         color_clutter_map: np.ndarray = cls._color_clutter()
         contrast_clutter_map: np.ndarray = cls._contrast_clutter()
         orientation_clutter_map: np.ndarray = cls._orientation_clutter()
 
-        # Computes Feature Congestion measure of visual clutter
+        # Compute the feature congestion measure of visual clutter
         clutter_map_fc: np.ndarray = (
             color_clutter_map / cls._COLOR_COEF
             + contrast_clutter_map / cls._CONTRAST_COEF
