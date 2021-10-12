@@ -99,6 +99,9 @@ __version__ = "1.0"
 class Metric(AIMMetricInterface):
     """
     Metric: Feature congestion.
+
+    Reference:
+        Based on Rosenholtz et al.'s Matlab implementation available at http://hdl.handle.net/1721.1/37593
     """
 
     # Private constants
@@ -112,7 +115,7 @@ class Metric(AIMMetricInterface):
         7
         / 2  # orient_pool_sigma is the standard deviation of this Gaussian window
     )
-    _ORIENT_NOISE: float = 0.001  # Was eps, but that gave too much orientation noise in the saliency maps. Then changed to 0.000001
+    _ORIENT_NOISE: float = 0.001  # Was eps, but that gave too much orientation noise in the saliency maps. Then changed to 0.000001 and then changed to 0.001.
 
     ## OPP_ENERGY constants:
     # These probably seem like arbitrary numbers, but it's just trying to get
@@ -151,6 +154,7 @@ class Metric(AIMMetricInterface):
         Returns:
             Collapsed clutter map
         """
+        # kernel approximation for the five - tap 1D Gaussian filter used in pyramid methods for image processing
         kernel_1d: np.ndarray = np.array([[0.05, 0.25, 0.4, 0.25, 0.05]])
         kernel_2d: np.ndarray = conv2(kernel_1d, kernel_1d.T)
 
@@ -193,7 +197,7 @@ class Metric(AIMMetricInterface):
             Results
             - color_clutter_map (ndarray): an array of the same size as inputImage
         """
-        # Initiatialization
+        # Initialization
         covMx: Dict = {}
         color_clutter_levels = [0] * cls._NUM_LEVELS
         DL: list = [0] * cls._NUM_LEVELS
@@ -304,7 +308,7 @@ class Metric(AIMMetricInterface):
         # We then compute a form of "contrast-energy" by filtering the luminance
         # channel L by a center-surround filter and squaring (or taking the absolute
         # values of) the filter outputs. The center-surround filter is a DoG1 filter
-        # with std 'contrast_filt_sigma'.
+        # with std '_CONTRAST_FILT_SIGMA'.
         contrast = RRcontrast1channel(cls._L_pyr, 1)
 
         # Initiate clutter_map and clutter_levels
@@ -524,18 +528,20 @@ class Metric(AIMMetricInterface):
         pyr = pt.pyramids.GaussianPyramid(b, height=cls._NUM_LEVELS)
         cls._b_pyr = pyr.pyr_coeffs
 
-        # Compute the color, contrast, and orientation clutters
+        # Compute the local clutters: color, contrast, and orientation clutters
         color_clutter_map: np.ndarray = cls._color_clutter()
         contrast_clutter_map: np.ndarray = cls._contrast_clutter()
         orientation_clutter_map: np.ndarray = cls._orientation_clutter()
 
         # Compute the feature congestion measure of visual clutter
+        # Combine color, contrast, and orientation clutters
         clutter_map_fc: np.ndarray = (
             color_clutter_map / cls._COLOR_COEF
             + contrast_clutter_map / cls._CONTRAST_COEF
             + orientation_clutter_map / cls._ORIENT_COEF
         )
 
+        # Combine over space using a Minkowski mean of order "_MINKOWSKI_ORDER", then take the average
         clutter_scalar_fc: float = float(
             np.mean(clutter_map_fc ** cls._MINKOWSKI_ORDER)
             ** (1 / cls._MINKOWSKI_ORDER)
