@@ -44,6 +44,12 @@ __version__ = "1.0"
         ("myhelsinki.fi_website.png", [4.667929]),
         ("wikipedia.org_website.png", [6.741694]),
         ("black.png", [1.248283]),
+        ("white_50_transparent_50.png", [1.248283]),
+        ("red.png", [1.248283]),
+        ("green.png", [1.248283]),
+        ("blue.png", [1.248283]),
+        ("transparent.png", [1.248283]),
+        ("white.png", [1.248283])
     ],
 )
 def test_feature_congestion_desktop(
