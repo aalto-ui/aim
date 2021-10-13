@@ -49,7 +49,7 @@ __version__ = "1.0"
         ("green.png", [1.248283]),
         ("blue.png", [1.248283]),
         ("transparent.png", [1.248283]),
-        ("white.png", [1.248283])
+        ("white.png", [1.248283]),
     ],
 )
 def test_feature_congestion_desktop(
