@@ -9,6 +9,9 @@ Metric:
 Description:
     The proportion of unused feature (e.g., color or luminance) variance.
 
+    Notice: This metric is implemented with the Pyrtools library, making it available on Linux and OSX,
+    as Pyrtools cannot be run on windows. See more on https://github.com/LabForComputationalVision/pyrtools
+
     Category: Visual complexity > Information amount > Visual clutter.
     For details, see CL3 [1], A11 [2], and CL3 [3].
 
