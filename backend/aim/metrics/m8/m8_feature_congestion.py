@@ -9,11 +9,12 @@ Metric:
 Description:
     The proportion of unused feature (e.g., color or luminance) variance.
 
-    Notice: This metric is implemented with the Pyrtools library, making it available on Linux and OSX,
-    as Pyrtools cannot be run on windows. See more on https://github.com/LabForComputationalVision/pyrtools
-
     Category: Visual complexity > Information amount > Visual clutter.
     For details, see CL3 [1], A11 [2], and CL3 [3].
+
+    Notice: This metric uses the Pyrtools library, which supports Linux and
+    macOS only. Windows is not supported.
+    See more on https://pyrtools.readthedocs.io/en/latest/installation.html#install
 
 
 Funding information and contact:
@@ -76,7 +77,6 @@ from aim.common.image_visual_clutter_utils import (
     RRgaussfilter1D,
     RRoverlapconv,
     conv2,
-    normlize,
     orient_filtnew,
     poolnew,
     rgb2lab,
@@ -104,7 +104,7 @@ class Metric(AIMMetricInterface):
     Metric: Feature congestion.
 
     Reference:
-        Based on Rosenholtz et al.'s Matlab implementation available at http://hdl.handle.net/1721.1/37593
+        Based on Rosenholtz et al.'s MATLAB implementation available at http://hdl.handle.net/1721.1/37593
     """
 
     # Private constants
