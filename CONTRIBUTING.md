@@ -72,7 +72,7 @@ Second, a new metric entry must be added under the `metrics` key. Each entry’s
 | icon        | Score icon |
 | judgmeent   | Score judgment; CSS class name |
 
-Appropriate score ranges can be obtained by running the Evaluator utility app `python evaluator.py -p` in the [backend](./backend/) directory). This generates histogram figures for each metric as well as files for evaluation results and statistics. Open the `quantiles.csv` file to see the score ranges of your new metric and set them accordingly in `metrics.json`. In addition, you must format the generated `results.json` file, and use it to replace the [results.json](./frontend/src/assets/results.json) file.
+Appropriate score ranges can be obtained by running the Evaluator utility app `python evaluator.py -o data/evaluations/ALEXA_500/ -p` in the [backend](./backend/) directory). This generates histogram figures for each metric as well as files for evaluation results and statistics. Open the `quantiles.csv` file to see the score ranges of your new metric and set them accordingly in `metrics.json`. In addition, you must format the generated `results.json` file, and use it to replace the [results.json](./frontend/src/assets/results.json) file.
 
 After adding a new metric, the frontend must be restarted with `npm run dev` for development or recompiled with `npm run build` for production (executed in the [frontend](./frontend/) directory). The backend server must be restarted as well with `python server.py` (executed in the [backend](./backend/) directory). **Note:** Remember to test the AIM web application (incl. your new metric and its dynamically generated histogram) in both docker and dockerless mode.
 
