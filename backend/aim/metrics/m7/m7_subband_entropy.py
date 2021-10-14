@@ -12,6 +12,10 @@ Description:
     Category: Visual complexity > Information amount > Visual clutter.
     For details, see CL2 [1], A10 [2], and CL2 [3].
 
+    Notice: This metric uses the Pyrtools library, which supports Linux and
+    macOS only. Windows is not supported.
+    See more on https://pyrtools.readthedocs.io/en/latest/installation.html#install
+
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -83,6 +87,9 @@ __version__ = "1.0"
 class Metric(AIMMetricInterface):
     """
     Metric: Subband entropy.
+
+    Reference:
+        Based on Rosenholtz et al.'s MATLAB implementation available at http://hdl.handle.net/1721.1/37593
     """
 
     # Private constants
