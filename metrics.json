@@ -454,14 +454,14 @@
     "m9": {
       "id": "m9",
       "name": "UMSI",
-      "description": "TODO",
+      "description": "Predict visual importance in input graphic designs, and saliency in natural images",
       "evidence": 5,
       "relevance": 5,
-      "speed": 1,
+      "speed": 2,
       "visualizationType": "b64",
       "references": [
         {
-          "title": "TODO",
+          "title": "Fosco, C., Casser, V., Bedi, A. K., O'Donovan, P., Hertzmann, A., & Bylinskii, Z. (2020). Predicting Visual Importance Across Graphic Design Types. doi: https://doi.org/10.1145/3379337.3415825",
           "url": "https://doi.org/10.1145/3379337.3415825"
         }
       ],
@@ -471,7 +471,14 @@
           "index": 0,
           "type": "b64",
           "name": "UMSI (Unified Model of Saliency and Importance)",
-          "description": false
+          "description": "Visual importance heatmap"
+        },
+        {
+          "id": "m9_1",
+          "index": 1,
+          "type": "b64",
+          "name": "UMSI (Unified Model of Saliency and Importance)",
+          "description": "Overlay"
         }
       ]
     }    
