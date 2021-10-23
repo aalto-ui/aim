@@ -42,10 +42,11 @@ const getters = {
             id: metrics[key].results[index].id,
             result: {
               name: metrics[key].results[index].name,
+              type: metrics[key].results[index].type,
               description: metrics[key].results[index].description
             },
             value: result,
-            _show_details: false
+            _showDetails: metrics[key].results[index].type === 'b64' ? true : false
           })
         })
         results[key] = metricResults

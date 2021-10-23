@@ -33,7 +33,6 @@
       "evidence": 1,
       "relevance": 2,
       "speed": 2,
-      "visualizationType": "table",
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -88,7 +87,6 @@
       "evidence": 2,
       "relevance": 3,
       "speed": 2,
-      "visualizationType": "table",
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -151,7 +149,6 @@
       "evidence": 2,
       "relevance": 2,
       "speed": 2,
-      "visualizationType": "table",
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -206,7 +203,6 @@
       "evidence": 4,
       "relevance": 3,
       "speed": 2,
-      "visualizationType": "table",
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -265,7 +261,6 @@
       "evidence": 3,
       "relevance": 4,
       "speed": 2,
-      "visualizationType": "table",
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -332,7 +327,6 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
-      "visualizationType": "table",
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -399,7 +393,6 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
-      "visualizationType": "table",
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -458,7 +451,6 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 0,
-      "visualizationType": "table",
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",

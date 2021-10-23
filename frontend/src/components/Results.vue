@@ -47,18 +47,23 @@
                           <font-awesome-icon :icon="['far', 'star']" />
                         </span>
                       </p>
-                      <template v-if="metrics[metric].visualizationType==='table'">
-                        <b-table striped hover :items="results[metric]" :fields="resultTableFields" class="mt-4">
-                          <template #cell(result)="data">
-                            {{ data.value.name }}
-                            <template v-if="data.value.description">
-                              <span v-b-tooltip.hover :title="data.value.description">
-                                <font-awesome-icon :icon="['fas', 'question-circle']" />
-                              </span>
-                            </template>
+                      <b-table striped hover :items="results[metric]" :fields="resultTableFields" class="mt-4">
+                        <template #cell(result)="data">
+                          {{ data.item.result.name }}
+                          <template v-if="data.item.result.description">
+                            <span v-b-tooltip.hover :title="data.item.result.description">
+                              <font-awesome-icon :icon="['fas', 'question-circle']" />
+                            </span>
                           </template>
-                          <template #cell(evaluation)="data">
-                            <div v-if="metrics[metric].results[data.index].scores.length > 1" :id="data.item.id" class="scores">
+                        </template>
+                        <template #cell(value)="data">
+                          <template v-if="data.item.result.type!=='b64'">
+                            {{ data.item.value }}
+                          </template>
+                        </template>
+                        <template #cell(evaluation)="data">
+                          <template v-if="data.item.result.type!=='b64'">
+                            <div v-if="metrics[metric].results[data.index].scores && metrics[metric].results[data.index].scores.length > 1" :id="data.item.id" class="scores">
                               <div v-for="score in metrics[metric].results[data.index].scores" :key="score.description">
                                 <div v-show="getJudgment(score, data.item.value)" :class="score.judgment" class="score">
                                   {{ score.description }}
@@ -69,10 +74,12 @@
                               </div>
                             </div>
                             <div v-else :id="data.item.id">
-                              <span>-</span>
+                              -
                             </div>
                           </template>
-                          <template #cell(show_details)="data">
+                        </template>
+                        <template #cell(show_details)="data">
+                          <template v-if="data.item.result.type!=='b64'">
                             <b-btn v-b-modal="`${data.item.id}-modal`" variant="link">Show Details</b-btn>
                             <b-modal :id="`${data.item.id}-modal`" :title="data.item.result.name" size="lg" ok-only ok-title="Close">
                               <template v-if="data.item.result.description">
@@ -92,20 +99,11 @@
                               <p style="font-size: 11px;"><sup>*</sup>Country-specific, non-representative, and non-relevant sites were excluded from the list.</p>
                             </b-modal>
                           </template>
-                        </b-table>
-                      </template>
-                      <template v-else-if="metrics[metric].visualizationType==='b64'">
-                        <template v-for="(result, resultIdx) in results[metric]">
-                          <div :id="result.id" :key="resultIdx" class="b64">
-                            <h3 class="mt-2">{{ result.result.name }}</h3>
-                            <p v-if="result.result.description">{{ result.result.description }}</p>
-                            <img v-if="result.value !== ''" class="result-img" :src="'data:image/png;base64, ' + result.value">
-                            <p v-else class="alert alert-danger" role="alert">
-                              <strong>Whoops!</strong> Our experimental visual search performance metric failed to evaluate your image, please try again with a different one.
-                            </p>
-                          </div>
                         </template>
-                      </template>
+                        <template #row-details="data">
+                          <img v-if="data.item.result.type==='b64'" class="result-img" :src="'data:image/png;base64, ' + data.item.value">
+                        </template>
+                      </b-table>
                     </b-card-body>
                   </b-collapse>
                 </b-card>
