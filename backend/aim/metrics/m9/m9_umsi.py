@@ -60,7 +60,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 __author__ = "Chuhan Jiao, Markku Laine"
 __date__ = "2021-10-20"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "2.0"
+__version__ = "1.0"
 
 
 # ----------------------------------------------------------------------------

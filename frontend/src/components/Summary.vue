@@ -41,40 +41,36 @@
                       </div>
                     </a>
                   </div>
-                  <div v-if="metrics[metric].visualizationType==='table'">
-                    <div v-for="(result, i) in metrics[metric].results" :key="i" class="result">
+                  <div>
+                    <div v-for="(result, resultIdx) in metrics[metric].results" :key="resultIdx" class="result">
                       <div class="info">
                         <a :href="'#'+ result.id">
                           <div class="result-name">{{ result.name }}</div>
                         </a>
                       </div>
-                      <span v-if="result.scores.length > 1">
-                        <template v-for="(score, scoreIdx) in result.scores">
-                          <div v-show="getJudgment(score, results[metric][i].value)" :key="scoreIdx" class="score">
-                            <div class="description" :class="score.judgment">
-                              {{ score.description }}
-                              <template v-if="(score.icon[0]!=null)">
-                                <font-awesome-icon :icon="score.icon" />
-                              </template>
-                            </div>
-                          </div>
-                        </template>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div v-if="metrics[metric].visualizationType==='b64'" class="results">
-                    <div v-for="(result, resultIdx) in results[metric]" :key="resultIdx" class="result">
-                      <div class="info">
-                        <a :href="'#'+ result.id">
-                          <span>{{ result.result.name }}</span>
-                        </a>
+                      <!-- If result type is an image (PNG) encoded in Base64 -->
+                      <div v-if="result.type==='b64'">
+                        <img
+                          v-if="results[metric][resultIdx].value !== ''"
+                          class="result-img"
+                          :src="'data:image/png;base64, ' + results[metric][resultIdx].value"
+                        >
                       </div>
-                      <img
-                        v-if="result.value !== ''"
-                        class="result-img"
-                        :src="'data:image/png;base64, ' + result.value"
-                      >
+                      <!-- If result type is int or float -->
+                      <div v-else>
+                        <span v-if="result.scores && result.scores.length > 1">
+                          <template v-for="(score, scoreIdx) in result.scores">
+                            <div v-show="getJudgment(score, results[metric][resultIdx].value)" :key="scoreIdx" class="score">
+                              <div class="description" :class="score.judgment">
+                                {{ score.description }}
+                                <template v-if="(score.icon[0]!=null)">
+                                  <font-awesome-icon :icon="score.icon" />
+                                </template>
+                              </div>
+                            </div>
+                          </template>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div><!-- metric -->
