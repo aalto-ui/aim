@@ -77,6 +77,7 @@ from aim.common.image_visual_clutter_utils import (
     RRgaussfilter1D,
     RRoverlapconv,
     conv2,
+    normlize,
     orient_filtnew,
     poolnew,
     rgb2lab,
@@ -550,9 +551,14 @@ class Metric(AIMMetricInterface):
             ** (1 / cls._MINKOWSKI_ORDER)
         )  # element wise
 
-        # Output Image: ndarray format
-        # output_image_fc = normlize(clutter_map_fc)
+        # Normlize output image
+        array_fc: np.ndarray = normlize(clutter_map_fc)
+        im_fc = Image.fromarray(array_fc)
+        buffered = BytesIO()
+        im_fc.save(buffered, format="PNG", compress_level=6)
+        b64_fc: str = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
         return [
             clutter_scalar_fc,
+            b64_fc,
         ]
