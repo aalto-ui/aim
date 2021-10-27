@@ -1,1 +1,26 @@
-backend/aim/metrics/m9/xception_cl_fus_aspp_imp1k_10kl-3cc0.1mse-5nss5bc_bs4_ep30_valloss-2.5774_full.h5 filter=lfs diff=lfs merge=lfs -text
+###############################
+# Git Line Endings            #
+###############################
+
+# Set default behaviour to automatically normalize line endings.
+* text=auto
+
+# Force batch scripts to always use CRLF line endings so that if a repo is accessed
+# in Windows via a file share from Linux, the scripts will work.
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
+
+# Force bash scripts to always use LF line endings so that if a repo is accessed
+# in Unix via a file share from Windows, the scripts will work.
+*.sh text eol=lf
+
+
+###############################
+# Git Large File System (LFS) #
+###############################
+
+# Models
+*.h5 filter=lfs diff=lfs merge=lfs -text
+
+
+# Credits: https://rehansaeed.com/gitattributes-best-practices/

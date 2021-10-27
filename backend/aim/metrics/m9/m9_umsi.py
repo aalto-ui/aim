@@ -35,6 +35,7 @@ Change log:
 # Standard library modules
 import base64
 import os
+import pathlib
 import sys
 from io import BytesIO
 from typing import List, Optional, Union
@@ -287,8 +288,13 @@ class Metric(AIMMetricInterface):
         pre_image = cls.preprocess_images(cv_image, cls.shape_r, cls.shape_c)
 
         # Load the UMSI model
-        ckpt_path = "/usr/src/app/aim/metrics/m9/xception_cl_fus_aspp_imp1k_10kl-3cc0.1mse-5nss5bc_bs4_ep30_valloss-2.5774_full.h5"
-        model = keras.models.load_model(ckpt_path)
+        print(os.getcwd())
+        # Build model file path
+        model_filepath: pathlib.Path = pathlib.Path(
+            "aim/metrics/m9/xception_cl_fus_aspp_imp1k_10kl-3cc0.1mse-5nss5bc_bs4_ep30_valloss-2.5774_full.h5"
+        )
+        # ckpt_path = "/usr/src/app/aim/metrics/m9/xception_cl_fus_aspp_imp1k_10kl-3cc0.1mse-5nss5bc_bs4_ep30_valloss-2.5774_full.h5"
+        model = keras.models.load_model(model_filepath)
 
         # Predict and post process the heatmap
         preds = model.predict(pre_image)
