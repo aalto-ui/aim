@@ -61,8 +61,8 @@ from aim.metrics.interfaces import AIMMetricInterface
 # Metadata
 # ----------------------------------------------------------------------------
 
-__author__ = "Chuhan Jiao, Markku Laine"
-__date__ = "2021-10-28"
+__author__ = "Markku Laine, Chuhan Jiao"
+__date__ = "2021-10-29"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -146,7 +146,7 @@ class Metric(AIMMetricInterface):
         cls, original_image: Union[np.ndarray, Image.Image]
     ) -> np.ndarray:
         """
-        Resize the image by padding to that it maintains its original aspect ratio.
+        Resize the image by padding so that it maintains its original aspect ratio.
 
         Args:
             original_image: Original image
@@ -385,7 +385,6 @@ class Metric(AIMMetricInterface):
         # Original images to be predicted
         original_images: List[Image.Image] = []
         original_images.append(img_rgb)
-        # original_images.append(img_rgb)
 
         # Preprocess images
         img_batch: np.ndarray = cls._preprocess_images(
