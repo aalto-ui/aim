@@ -7,7 +7,8 @@ Metric:
 
 
 Description:
-    The visual importance heatmap and the overlay with the input image.
+    The predicted human attention on different design classes and natural
+    images, visualized as a heatmap and heatmap overlay.
 
 
 Funding information and contact:
@@ -17,13 +18,15 @@ Funding information and contact:
 
 
 References:
-    1.  Fosco, C., Casser, V., Kumar Bedi, A., O'Donovan, P., Hertzmann, A., Bylinskii, Z.
-        redicting Visual Importance Across Graphic Design Types. In ACM UIST, 2020.
+    1.  Fosco, C., Casser, V., Bedi, A.K., O'Donovan, P., Hertzmann, A., and
+        Bylinskii, Z. (2020). Predicting Visual Importance Across Graphic
+        Design Types. In Proceedings of the 33rd Annual ACM Symposium on User
+        Interface Software and Technology (UIST '20), pp. 249-260. ACM.
         doi: https://doi.org/10.1145/3379337.3415825
 
 
 Change log:
-    v1.0 (2021-10-20)
+    v1.0 (2021-10-28)
       * Initial implementation
 """
 
@@ -34,23 +37,23 @@ Change log:
 
 # Standard library modules
 import base64
-import os
 import pathlib
-import sys
 from io import BytesIO
-from typing import List, Optional, Union
+from typing import Any, List, Optional, Tuple, Union
 
 # Third-party modules
 import cv2
 import keras
-import keras.backend as K
+import matplotlib
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy
+import skimage.transform as skit
 from PIL import Image
 
 # First-party modules
+from aim.common import image_utils
 from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
 
@@ -59,7 +62,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Chuhan Jiao, Markku Laine"
-__date__ = "2021-10-20"
+__date__ = "2021-10-28"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -72,190 +75,287 @@ __version__ = "1.0"
 class Metric(AIMMetricInterface):
     """
     Metric: UMSI (Unified Model of Saliency and Importance).
+
+    Reference:
+        Based on Fosco et al.'s Python implementation available at https://github.com/diviz-mit/predimportance-public (see LICENSE within the distribution).
     """
 
-    # Input shape of the model
-    shape_r = 240
-    shape_c = 320
+    # Private constants
+    _SHAPE_R: int = 240  # input shape (rows) of the model
+    _SHAPE_C: int = 320  # input shape (columns) of the model
+    _SHOW: bool = False
+    _USE_CV2: bool = False
+    _HEATMAP_STYLE: str = "viridis"
 
+    # Private methods
     @classmethod
-    def padding(cls, img, shape_r, shape_c, channels=3):
+    def _preprocess_images(
+        cls, original_images: List[Image.Image], show: bool = False
+    ) -> np.ndarray:
         """
-        Resize the image maintain the aspect ratio by padding.
+        Preprocess images to the size required by the model.
 
         Args:
-            img: Image RGB data
-            shape_r: Model required width
-            shape_c: Model requied height
-            channels: Number of channels of the output image
+            original_images: List of original images
+            show: True, if input visualizations must be shown.
+                  Otherwise, False
 
         Returns:
-            Image data (numpy ndarray) with shape
-            (shape_r, shape_c, channels)
+            Preprocessed image data with the shape of (n_images, rows, columns, channels)
         """
+        imgs: np.ndarray = np.zeros(
+            (len(original_images), cls._SHAPE_R, cls._SHAPE_C, 3)
+        )
 
-        img_padded = np.zeros((shape_r, shape_c, channels), dtype=np.uint8)
-        if channels == 1:
-            img_padded = np.zeros((shape_r, shape_c), dtype=np.uint8)
+        for i, original_image in enumerate(original_images):
+            img: Union[np.ndarray, Image.Image]
+            if cls._USE_CV2:
+                img = cv2.cvtColor(
+                    np.asarray(original_image), cv2.COLOR_RGB2BGR
+                )
+            else:
+                img = original_image
 
-        original_shape = img.shape
-        rows_rate = original_shape[0] / shape_r
-        cols_rate = original_shape[1] / shape_c
+            padded_image: np.ndarray = cls._padding(img)
+            imgs[i] = padded_image
+
+            if show:
+                plt.figure(figsize=[15, 7])
+                plt.subplot(1, 2, 1)
+                if cls._USE_CV2:
+                    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+                else:
+                    plt.imshow(img)
+                plt.title("Original image")
+                plt.subplot(1, 2, 2)
+                if cls._USE_CV2:
+                    plt.imshow(cv2.cvtColor(padded_image, cv2.COLOR_BGR2RGB))
+                else:
+                    plt.imshow(padded_image)
+                plt.title("Input to network")
+                plt.show()
+
+        imgs[:, :, :, 0] -= 103.939
+        imgs[:, :, :, 1] -= 116.779
+        imgs[:, :, :, 2] -= 123.68
+
+        return imgs
+
+    @classmethod
+    def _padding(
+        cls, original_image: Union[np.ndarray, Image.Image]
+    ) -> np.ndarray:
+        """
+        Resize the image by padding to that it maintains its original aspect ratio.
+
+        Args:
+            original_image: Original image
+
+        Returns:
+            Resized (and padded) image data with the shape of
+            (rows, columns, channels)
+        """
+        img_padded: np.ndarray = np.zeros(
+            (cls._SHAPE_R, cls._SHAPE_C, 3), dtype=np.uint8
+        )
+
+        original_shape: Union[Tuple[int, ...], Any]
+        if cls._USE_CV2:
+            original_shape = original_image.shape
+        else:
+            original_shape = np.asarray(original_image).shape
+
+        rows_rate: float = original_shape[0] / cls._SHAPE_R
+        cols_rate: float = original_shape[1] / cls._SHAPE_C
 
         if rows_rate > cols_rate:
-            new_cols = (original_shape[1] * shape_r) // original_shape[0]
+            new_cols: int = (
+                original_shape[1] * cls._SHAPE_R
+            ) // original_shape[0]
+            if cls._USE_CV2:
+                original_image = cv2.resize(
+                    original_image, (new_cols, cls._SHAPE_R)
+                )
+            else:
+                original_image = original_image.resize(
+                    (new_cols, cls._SHAPE_R)
+                )
 
-            img = cv2.resize(img, (new_cols, shape_r))
-
-            if new_cols > shape_c:
-                new_cols = shape_c
+            if new_cols > cls._SHAPE_C:
+                new_cols = cls._SHAPE_C
             img_padded[
                 :,
                 ((img_padded.shape[1] - new_cols) // 2) : (
                     (img_padded.shape[1] - new_cols) // 2 + new_cols
                 ),
-            ] = img
+            ] = original_image
         else:
-            new_rows = (original_shape[0] * shape_c) // original_shape[1]
-            img = cv2.resize(img, (shape_c, new_rows))
-            if new_rows > shape_r:
-                new_rows = shape_r
+            new_rows: int = (
+                original_shape[0] * cls._SHAPE_C
+            ) // original_shape[1]
+            if cls._USE_CV2:
+                original_image = cv2.resize(
+                    original_image, (cls._SHAPE_C, new_rows)
+                )
+            else:
+                original_image = original_image.resize(
+                    (cls._SHAPE_C, new_rows)
+                )
+
+            if new_rows > cls._SHAPE_R:
+                new_rows = cls._SHAPE_R
+
             img_padded[
                 ((img_padded.shape[0] - new_rows) // 2) : (
                     (img_padded.shape[0] - new_rows) // 2 + new_rows
                 ),
                 :,
-            ] = img
+            ] = original_image
 
         return img_padded
 
     @classmethod
-    def preprocess_images(cls, img, shape_r, shape_c, pad=True):
+    def _postprocess_predictions(
+        cls,
+        original_images: List[Image.Image],
+        predictions: List[np.ndarray],
+        blur: bool = False,
+        normalize: bool = False,
+    ) -> List[np.ndarray]:
         """
-        Preprocess the image to the size required by the model.
+        Postprocess predictions back to the original size.
 
         Args:
-            img: Image RGB data
-            shape_r: Model required width
-            shape_c: Model requied height
-            pad: A boolean variable that decides whether the
-                 image needs to be padded. If True, the output
-                 image will maintain the aspect ratio of the
-                 input image
+            original_images: List of original images
+            predictions: Heatmaps predicted by the model
+            blur: True, if prediction heatmaps must be blurred.
+                  Otherwise, False
+            normalize: True, if prediction heatmaps must be normalized from
+                       [0, 1] to [0, 255]
 
         Returns:
-            Preprocessed_image (numpy ndarray) with shape
-            (1, shape_r, shape_c, 3)
+            Postprocessed prediction heatmaps
         """
+        heatmap_batch: List[np.ndarray] = []
+        for i, original_image in enumerate(original_images):
+            width: int
+            height: int
+            width, height = original_image.size
+            prediction: np.ndarray = predictions[0][i, :, :, 0]
+            prediction_shape: Tuple[int, ...] = prediction.shape
+            rows_rate: float = height / prediction_shape[0]
+            cols_rate: float = width / prediction_shape[1]
 
-        if pad:
-            ims = np.zeros((1, shape_r, shape_c, 3))
-        else:
-            ims = []
+            if blur:
+                sigma: bool = blur
+                prediction = scipy.ndimage.filters.gaussian_filter(
+                    prediction, sigma=sigma
+                )
 
-        original_image = img
+            img: np.ndarray
+            if rows_rate > cols_rate:
+                new_cols: int = (
+                    prediction_shape[1] * height
+                ) // prediction_shape[0]
+                if cls._USE_CV2:
+                    prediction = cv2.resize(prediction, (new_cols, height))
+                else:
+                    prediction = skit.resize(prediction, (height, new_cols))
+                img = prediction[
+                    :,
+                    ((prediction.shape[1] - width) // 2) : (
+                        (prediction.shape[1] - width) // 2 + width
+                    ),
+                ]
+            else:
+                new_rows: int = (
+                    prediction_shape[0] * width
+                ) // prediction_shape[1]
+                if cls._USE_CV2:
+                    prediction = cv2.resize(prediction, (width, new_rows))
+                else:
+                    prediction = skit.resize(prediction, (new_rows, width))
+                img = prediction[
+                    ((prediction.shape[0] - height) // 2) : (
+                        (prediction.shape[0] - height) // 2 + height
+                    ),
+                    :,
+                ]
 
-        if original_image is None:
-            raise ValueError("There is something wrong with the input image")
-        if pad:
-            padded_image = cls.padding(original_image, shape_r, shape_c, 3)
-            ims[0] = padded_image
-        else:
-            original_image = original_image.astype(np.float32)
-            original_image[..., 0] -= 103.939
-            original_image[..., 1] -= 116.779
-            original_image[..., 2] -= 123.68
-            ims.append(original_image)
-            ims = np.array(ims)
-            print("ims.shape in preprocess_imgs", ims.shape)
+            if normalize:
+                img = img / np.max(img) * 255
+            heatmap_batch.append(img)
 
-        if pad:
-            ims[:, :, :, 0] = ims[:, :, :, 0] - 103.939
-            ims[:, :, :, 1] = ims[:, :, :, 1] - 116.779
-            ims[:, :, :, 2] = ims[:, :, :, 2] - 123.68
-
-        return ims
+        return heatmap_batch
 
     @classmethod
-    def postprocess_predictions(
-        cls, pred, shape_r, shape_c, blur=False, normalize=False
-    ):
+    def _heatmap_overlays(
+        cls,
+        original_images: List[Image.Image],
+        heatmaps: List[np.ndarray],
+        colmap: str = "hot",
+    ) -> List[np.ndarray]:
         """
-        Preprocess the image to the size required by the model.
+        Overlay prediction heatmap on the original image.
 
         Args:
-            pred: The heatmap predicted by the model
-            shape_r: The width of the original image
-            shape_c: The height of the original image
-            blur: A boolean variable that decides whether
-                  the input heatmap needs to be blurred
-            normalize: A boolean variable that decides whether
-                  the output heatmap([0,1]) needs to be
-                  normalized to [0,255]
+            original_images: List of original images
+            heatmaps: Prediction heatmaps
+            colmap: Heatmap style
 
         Returns:
-            The heatmap with width=shape_r and height=shape_c
+            Prediction heatmap overlays
         """
-        predictions_shape = pred.shape
-        rows_rate = shape_r / predictions_shape[0]
-        cols_rate = shape_c / predictions_shape[1]
+        heatmap_overlay_batch: List[np.ndarray] = []
+        for i, original_image in enumerate(original_images):
+            heatmap: np.ndarray = heatmaps[i]
+            cm_array: matplotlib.colors.ListedColormap = cm.get_cmap(colmap)
+            im_array: np.ndarray = np.asarray(original_image)
+            heatmap_norm: np.ndarray = (heatmap - np.min(heatmap)) / float(
+                np.max(heatmap) - np.min(heatmap)
+            )
+            heatmap_cm: np.ndarray = cm_array(heatmap_norm)
+            res_final: np.ndarray = im_array.copy()
+            heatmap_rep: np.ndarray = np.repeat(
+                heatmap_norm[:, :, np.newaxis], 3, axis=2
+            )
+            res_final[...] = heatmap_cm[
+                ..., 0:3
+            ] * 255.0 * heatmap_rep + im_array[...] * (1 - heatmap_rep)
+            heatmap_overlay_batch.append(res_final)
 
-        if blur:
-            sigma = blur
-            pred = scipy.ndimage.filters.gaussian_filter(pred, sigma=sigma)
-
-        if rows_rate > cols_rate:
-            new_cols = (predictions_shape[1] * shape_r) // predictions_shape[0]
-            pred = cv2.resize(pred, (new_cols, shape_r))
-            img = pred[
-                :,
-                ((pred.shape[1] - shape_c) // 2) : (
-                    (pred.shape[1] - shape_c) // 2 + shape_c
-                ),
-            ]
-        else:
-            new_rows = (predictions_shape[0] * shape_c) // predictions_shape[1]
-
-            pred = cv2.resize(pred, (shape_c, new_rows))
-
-            img = pred[
-                ((pred.shape[0] - shape_r) // 2) : (
-                    (pred.shape[0] - shape_r) // 2 + shape_r
-                ),
-                :,
-            ]
-
-        if normalize:
-            img = img / np.max(img) * 255
-
-        return img
+        return heatmap_overlay_batch
 
     @classmethod
-    def heatmap_overlay(cls, im, heatmap, colmap="hot"):
+    def _show_results(
+        cls,
+        original_images: List[Image.Image],
+        heatmaps: List[np.ndarray],
+        heatmap_overlays: List[np.ndarray],
+    ) -> None:
         """
-        Overlay the heatmap on the input image.
+        Show results visualized.
 
         Args:
-            im: The original input image
-            heatmap: The heatmap which has the same width
-                and height as the im
-            colmap: The style of the heatmap
+            original_images: List of original images
+            heatmaps: Prediction heatmaps
+            heatmap_overlays: Prediction heatmap overlays
 
         Returns:
-            The overlay image.
+            None
         """
-        cm_array = cm.get_cmap(colmap)
-        im_array = np.asarray(im)
-        heatmap_norm = (heatmap - np.min(heatmap)) / float(
-            np.max(heatmap) - np.min(heatmap)
-        )
-        heatmap_hot = cm_array(heatmap_norm)
-        res_final = im_array.copy()
-        heatmap_rep = np.repeat(heatmap_norm[:, :, np.newaxis], 3, axis=2)
-        res_final[...] = heatmap_hot[
-            ..., 0:3
-        ] * 255.0 * heatmap_rep + im_array[...] * (1 - heatmap_rep)
-        return res_final
+        for i, _ in enumerate(original_images):
+            plt.figure(figsize=[15, 7])
+            plt.subplot(1, 3, 1)
+            plt.imshow(original_images[i])
+            plt.title("Original image")
+            plt.subplot(1, 3, 2)
+            plt.imshow(heatmaps[i])
+            plt.title("Prediction heatmap")
+            plt.subplot(1, 3, 3)
+            plt.imshow(heatmap_overlays[i])
+            plt.title("Prediction heatmap overlay")
+            plt.show()
 
     # Public methods
     @classmethod
@@ -273,46 +373,68 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - UMSI, image (PNG) encoded in Base64
+            - UMSI prediction heatmap (str, image (PNG) encoded in Base64)
+            - UMSI prediction heatmap overlay (str, image (PNG) encoded in Base64)
         """
-
         # Create PIL image
-        umsi_image: Image.Image = Image.open(
-            BytesIO(base64.b64decode(gui_image))
+        img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
+
+        # Convert image from ??? (e.g., RGBA) to RGB color space
+        img_rgb: Image.Image = img.convert("RGB")
+
+        # Original images to be predicted
+        original_images: List[Image.Image] = []
+        original_images.append(img_rgb)
+        # original_images.append(img_rgb)
+
+        # Preprocess images
+        img_batch: np.ndarray = cls._preprocess_images(
+            original_images, show=cls._SHOW
         )
-        umsi_image = umsi_image.convert("RGB")
-        width, height = umsi_image.size
 
-        # Preprocess the image
-        cv_image = cv2.cvtColor(np.asarray(umsi_image), cv2.COLOR_RGB2BGR)
-        pre_image = cls.preprocess_images(cv_image, cls.shape_r, cls.shape_c)
-
-        # Load the UMSI model
-        print(os.getcwd())
-        # Build model file path
+        # Load model
+        # The original model can be downloaded from here: http://predimportance.mit.edu/data/xception_cl_fus_aspp_imp1k_10kl-3cc0.1mse-5nss5bc_bs4_ep30_valloss-2.5774_full.h5
         model_filepath: pathlib.Path = pathlib.Path(
             "aim/metrics/m9/xception_cl_fus_aspp_imp1k_10kl-3cc0.1mse-5nss5bc_bs4_ep30_valloss-2.5774_full.h5"
         )
-        # ckpt_path = "/usr/src/app/aim/metrics/m9/xception_cl_fus_aspp_imp1k_10kl-3cc0.1mse-5nss5bc_bs4_ep30_valloss-2.5774_full.h5"
-        model = keras.models.load_model(model_filepath)
-
-        # Predict and post process the heatmap
-        preds = model.predict(pre_image)
-        heat_map = cls.postprocess_predictions(
-            preds[0][0, :, :, 0], height, width
+        model: keras.engine.training.Model = keras.models.load_model(
+            model_filepath
         )
-        overlay = cls.heatmap_overlay(umsi_image, heat_map, "viridis")
 
-        # convert 2d-array heatmap to PIL Image
-        pil_heatmap = np.uint8(cm.get_cmap("viridis")(heat_map) * 255)
+        # Predict maps
+        predictions: List[np.ndarray] = model.predict(img_batch)
 
-        # Save the results
-        final_heatmap = Image.fromarray(pil_heatmap)
-        final_overlay = Image.fromarray(overlay, mode="RGB")
-        buffered_h = BytesIO()
-        buffered_o = BytesIO()
-        final_heatmap.save(buffered_h, format="PNG", compress_level=6)
-        final_overlay.save(buffered_o, format="PNG", compress_level=6)
-        h_b64: str = base64.b64encode(buffered_h.getvalue()).decode("utf-8")
-        o_b64: str = base64.b64encode(buffered_o.getvalue()).decode("utf-8")
-        return [h_b64, o_b64]
+        # Postprocess predictions
+        heatmap_batch: List[np.ndarray] = cls._postprocess_predictions(
+            original_images, predictions
+        )
+
+        # Create prediction heatmap overlays
+        heatmap_overlay_batch: List[np.ndarray] = cls._heatmap_overlays(
+            original_images, heatmap_batch, colmap=cls._HEATMAP_STYLE
+        )
+
+        # Show results
+        if cls._SHOW:
+            cls._show_results(
+                original_images, heatmap_batch, heatmap_overlay_batch
+            )
+
+        # Prepare final results
+        img_umsi_prediction_heatmap: Image.Image = Image.fromarray(
+            heatmap_batch[0]
+        ).convert("RGB")
+        img_umsi_prediction_heatmap_overlay: Image.Image = Image.fromarray(
+            heatmap_overlay_batch[0]
+        ).convert("RGB")
+        umsi_prediction_heatmap: str = image_utils.to_png_image_base64(
+            img_umsi_prediction_heatmap
+        )
+        umsi_prediction_heatmap_overlay: str = image_utils.to_png_image_base64(
+            img_umsi_prediction_heatmap_overlay
+        )
+
+        return [
+            umsi_prediction_heatmap,
+            umsi_prediction_heatmap_overlay,
+        ]
