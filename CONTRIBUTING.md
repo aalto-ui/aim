@@ -75,11 +75,11 @@ Appropriate score ranges can be obtained by running the Evaluator utility app `p
 
 After adding a new metric, the frontend must be restarted with `npm run dev` for development or recompiled with `npm run build` for production (executed in the [frontend](./frontend/) directory). The backend server must be restarted as well with `python server.py` (executed in the [backend](./backend/) directory). **Note:** Remember to test the AIM web application (incl. your new metric and its dynamically generated histogram) in both docker and dockerless mode.
 
-Finally, append your name to the list of contributors below :)
+Finally, append your name to the list of contributors below and in [Header.vue](./frontend/src/components/Header.vue) :)
 
 
 ## Credits
 
 Big thank you to all the people who have already contributed to AIM!
 
-Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, Tino Weinkauf, Ai Nakajima, Valentin Ionita, Morteza Shiripour, and Amir Hossein Kargaran.
+Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, Tino Weinkauf, Ai Nakajima, Valentin Ionita, Morteza Shiripour, Amir Hossein Kargaran, and Chuhan Jiao.
