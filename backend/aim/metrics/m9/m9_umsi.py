@@ -37,13 +37,14 @@ Change log:
 
 # Standard library modules
 import base64
+import os
 import pathlib
+import sys
 from io import BytesIO
 from typing import Any, List, Optional, Tuple, Union
 
 # Third-party modules
 import cv2
-import keras
 import matplotlib
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
@@ -56,6 +57,17 @@ from PIL import Image
 from aim.common import image_utils
 from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
+
+# isort: off
+# Third-party modules - Ignore Keras outputs and logs
+stderr = sys.stderr
+sys.stderr = open(os.devnull, "w")
+import keras  # noqa: E402
+
+sys.stderr = stderr
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+# isort: on
+
 
 # ----------------------------------------------------------------------------
 # Metadata
