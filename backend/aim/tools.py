@@ -45,9 +45,9 @@ from aim.common.constants import (
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-05-27"
+__date__ = "2021-10-29"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -173,7 +173,7 @@ class Evaluation:
 
     # Public constants
     NAME: str = "Evaluation"
-    VERSION: str = "1.0"
+    VERSION: str = "1.1"
 
     # Initializer
     def __init__(
@@ -312,12 +312,15 @@ class Evaluation:
                                         metric
                                     ]["results"][index]["id"]
                                 ] = round(metric_result, 4)
-                            else:
+                            elif type(metric_result) is int:
                                 results_row[
                                     self.metrics_configurations["metrics"][
                                         metric
                                     ]["results"][index]["id"]
                                 ] = metric_result
+                            else:  # str
+                                # Image (PNG) encoded in Base64
+                                pass
 
                 # End total timer
                 end_time_total: float = time.time()
@@ -373,7 +376,9 @@ class Evaluation:
 
     def _reformat_large_tick_values(self, tick_val, pos):
         """
-        Turns large tick values (in the billions, millions and thousands) such as 4500 into 4.5K and also appropriately turns 4000 into 4K (no zero after the decimal).
+        Turns large tick values (in the billions, millions and thousands)
+        such as 4500 into 4.5K and also appropriately turns 4000 into 4K
+        (no zero after the decimal).
 
         Source: https://dfrieds.com/data-visualizations/how-format-large-tick-values.html
         """
@@ -428,44 +433,51 @@ class Evaluation:
                 for result in self.metrics_configurations["metrics"][metric][
                     "results"
                 ]:
-                    # Create a new figure and configure it
-                    sns.set(rc={"figure.figsize": (width / dpi, height / dpi)})
-                    sns.set_style("ticks")
-                    sns.set_context("paper", font_scale=1.5)
-                    plt.figure()
+                    if result["type"] != "b64":
+                        # Create a new figure and configure it
+                        sns.set(
+                            rc={"figure.figsize": (width / dpi, height / dpi)}
+                        )
+                        sns.set_style("ticks")
+                        sns.set_context("paper", font_scale=1.5)
+                        plt.figure()
 
-                    # Plot data on a histogram and configure it
-                    ax = sns.histplot(
-                        list(evaluation_results_df[result["id"]]),
-                        kde=False,
-                        color="#7553A0",
-                        bins=30,
-                    )
-                    ax.set_xlabel(
-                        result["name"],
-                        fontstyle="normal",
-                        fontweight="normal",
-                        labelpad=10,
-                    )
-                    ax.set_ylabel(
-                        "Frequency",
-                        fontstyle="normal",
-                        fontweight="normal",
-                        labelpad=10,
-                    )
-                    ax.xaxis.grid(False)
-                    ax.yaxis.grid(False)
-                    ax.xaxis.set_major_formatter(
-                        ticker.FuncFormatter(self._reformat_large_tick_values)
-                    )
-                    sns.despine(ax=ax, left=False, bottom=False)
+                        # Plot data on a histogram and configure it
+                        ax = sns.histplot(
+                            list(evaluation_results_df[result["id"]]),
+                            kde=False,
+                            color="#7553A0",
+                            bins=30,
+                        )
+                        ax.set_xlabel(
+                            result["name"],
+                            fontstyle="normal",
+                            fontweight="normal",
+                            labelpad=10,
+                        )
+                        ax.set_ylabel(
+                            "Frequency",
+                            fontstyle="normal",
+                            fontweight="normal",
+                            labelpad=10,
+                        )
+                        ax.xaxis.grid(False)
+                        ax.yaxis.grid(False)
+                        ax.xaxis.set_major_formatter(
+                            ticker.FuncFormatter(
+                                self._reformat_large_tick_values
+                            )
+                        )
+                        sns.despine(ax=ax, left=False, bottom=False)
 
-                    # Save plot
-                    output_plot_file: Path = (
-                        self.output_dir
-                        / "{}_histogram.png".format(result["id"])
-                    )
-                    plt.savefig(output_plot_file, dpi=dpi, transparent=False)
+                        # Save plot
+                        output_plot_file: Path = (
+                            self.output_dir
+                            / "{}_histogram.png".format(result["id"])
+                        )
+                        plt.savefig(
+                            output_plot_file, dpi=dpi, transparent=False
+                        )
 
     # Public methods
     def evaluate(self):
