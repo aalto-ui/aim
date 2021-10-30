@@ -26,7 +26,7 @@ References:
 
 
 Change log:
-    v1.0 (2021-10-28)
+    v1.0 (2021-10-30)
       * Initial implementation
 """
 
@@ -433,7 +433,10 @@ class Metric(AIMMetricInterface):
 
         # Prepare final results
         img_umsi_prediction_heatmap: Image.Image = Image.fromarray(
-            heatmap_batch[0]
+            # Apply the color map, rescale to the 0-255 range, convert to
+            # 8-bit unsigned integers. Note: Slight loss of accuracy due
+            # the float32 to uint8 conversion.
+            (cm.get_cmap("viridis")(heatmap_batch[0]) * 255).astype("uint8")
         ).convert("RGB")
         img_umsi_prediction_heatmap_overlay: Image.Image = Image.fromarray(
             heatmap_overlay_batch[0]
