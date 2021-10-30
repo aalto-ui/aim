@@ -45,7 +45,7 @@ from aim.common.constants import (
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-10-29"
+__date__ = "2021-10-30"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.1"
 
@@ -59,7 +59,7 @@ class Screenshot:
 
     # Public constants
     NAME: str = "Screenshot"
-    VERSION: str = "1.0"
+    VERSION: str = "1.1"
 
     # Initializer
     def __init__(
@@ -192,6 +192,7 @@ class Evaluation:
         self.metrics: List[str] = metrics
         self.plot_results: bool = plot_results
         self.results: Optional[List[Dict[str, Any]]] = []
+        self.n_previous_results: int = 0
         self.output_dir: Path = output_dir
         self.output_results_csv_file: Path = self.output_dir / "results.csv"
         self.output_results_json_file: Path = self.output_dir / "results.json"
@@ -238,16 +239,19 @@ class Evaluation:
 
             # Convert DataFrame to List
             self.results = results_df.to_dict(orient="records")
+            self.n_previous_results = len(self.results)
 
     def _execute_metrics(self):
         # Iterate over input screenshot files
-        self.success_counter = 0
-        for input_screenshot_file in self.input_screenshot_files[
-            len(self.results) :
-        ]:
+        self.success_counter = self.n_previous_results
+        for index, input_screenshot_file in enumerate(
+            self.input_screenshot_files[len(self.results) :]
+        ):
             logger.info(
-                "Evaluating a screenshot of {}".format(
-                    input_screenshot_file.name
+                "{}/{}: Evaluating a screenshot of {}".format(
+                    (index + 1 + self.n_previous_results),
+                    len(self.input_screenshot_files),
+                    input_screenshot_file.name,
                 )
             )
 

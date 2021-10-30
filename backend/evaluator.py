@@ -30,7 +30,7 @@ from aim.tools import Evaluation
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-10-29"
+__date__ = "2021-10-30"
 __email__ = "markku.laine@aalto.fi"
 __title__ = "Evaluator"
 __version__ = "1.1"
@@ -116,11 +116,6 @@ def main():
 
     try:
         # Evaluate screenshots
-        logger.info(
-            "Evaluate screenshots stored at '{}'.".format(
-                configmanager.options.input
-            )
-        )
         evaluation: Evaluation = Evaluation(
             input_dir=Path(configmanager.options.input),
             metrics=[
@@ -130,14 +125,22 @@ def main():
             plot_results=configmanager.options.plot,
             output_dir=Path(configmanager.options.output),
         )
-        evaluation.evaluate()
         logger.info(
-            "{} out of {} screenshots were successfully evaluated and the results were stored at '{}'.".format(
-                evaluation.success_counter,
-                len(evaluation.input_screenshot_files),
-                evaluation.output_dir,
+            "Evaluate screenshots stored at '{}'.".format(
+                evaluation.input_dir,
             )
         )
+        evaluation.evaluate()
+        if len(evaluation.input_screenshot_files) > 0:
+            logger.info(
+                "{} out of {} screenshots were successfully evaluated and the results were stored at '{}'.".format(
+                    evaluation.success_counter,
+                    len(evaluation.input_screenshot_files),
+                    evaluation.output_dir,
+                )
+            )
+        else:
+            logger.info("No screenshots to be evaluated")
     except Exception as err:
         logger.error(err)
         raise

@@ -36,10 +36,10 @@ from aim.tools import Screenshot
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-05-28"
+__date__ = "2021-10-30"
 __email__ = "markku.laine@aalto.fi"
 __title__ = "Screenshoter"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -133,13 +133,16 @@ def main():
             output_dir=Path(configmanager.options.output),
         )
         screenshot.take()
-        logger.info(
-            "{} out of {} screenshots were successfully taken and stored at '{}'.".format(
-                screenshot.success_counter,
-                len(screenshot.input_urls),
-                screenshot.output_dir,
+        if len(screenshot.input_urls) > 0:
+            logger.info(
+                "{} out of {} screenshots were successfully taken and stored at '{}'.".format(
+                    screenshot.success_counter,
+                    len(screenshot.input_urls),
+                    screenshot.output_dir,
+                )
             )
-        )
+        else:
+            logger.info("No screenshots to be taken")
     except Exception as err:
         logger.error(err)
         raise
