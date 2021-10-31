@@ -24,7 +24,7 @@ import configargparse
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-10-30"
+__date__ = "2021-10-31"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.1"
 
@@ -121,10 +121,10 @@ def writable_dir(path):
             input_path.mkdir(parents=True, exist_ok=False)
         except FileExistsError:
             if _confirm_prompt(
-                "The directory '{}' already exists. Delete all its contents before continuing?".format(
+                "The directory '{}' already exists. Delete existing files before continuing?".format(
                     input_path
                 ),
-                default="yes",
+                default="no",
             ):
                 shutil.rmtree(input_path)
             input_path.mkdir(parents=True, exist_ok=True)
