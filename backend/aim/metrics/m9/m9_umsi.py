@@ -40,6 +40,7 @@ import base64
 import os
 import pathlib
 import sys
+import warnings
 from io import BytesIO
 from typing import Any, List, Optional, Tuple, Union
 
@@ -66,6 +67,8 @@ import keras  # noqa: E402
 
 sys.stderr = stderr
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
+warnings.filterwarnings("ignore", category=UserWarning, module="keras.*")
 # isort: on
 
 
@@ -74,7 +77,7 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Chuhan Jiao"
-__date__ = "2021-10-29"
+__date__ = "2021-11-05"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
