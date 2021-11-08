@@ -39,7 +39,7 @@ from aim.handlers import AIMWebSocketHandler
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-07-11"
+__date__ = "2021-11-08"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -128,7 +128,11 @@ def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
 
 
 def set_tornado_logging() -> None:
+    """
+    Tornado root formatter settings.
+    """
     for handler in logging.getLogger().handlers:
+        handler.setLevel(configmanager.options.loguru_level)  # type: ignore
         formatter: LogFormatter = LogFormatter(
             fmt="%(color)s%(asctime)s.%(msecs)03dZ | %(levelname)s     | %(module)s:%(funcName)s:%(lineno)d | %(end_color)s%(message)s",
             datefmt="%Y-%m-%dT%H:%M:%S",
@@ -146,14 +150,17 @@ def main() -> None:
     # Parse options
     tornado.options.parse_command_line()
 
-    # Configure logger
+    # Configure Loguru logger
     configmanager.database_sink = lambda msg: db["errors"].insert_one(
         {"error": msg}
     )
-    utils.configure_logger()
+    utils.configure_loguru_logger()
 
-    # Tornado root formatter settings
+    # Configure other loggers
     set_tornado_logging()
+    logging.getLogger("tensorflow").setLevel(
+        logging.CRITICAL
+    )  # Suppress Tensorflow logs
 
     # Use environment variables to override options
     parse_environ_options()

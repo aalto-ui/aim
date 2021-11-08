@@ -30,7 +30,7 @@ from aim.tools import Evaluation
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-10-30"
+__date__ = "2021-11-08"
 __email__ = "markku.laine@aalto.fi"
 __title__ = "Evaluator"
 __version__ = "1.1"
@@ -101,7 +101,7 @@ def init():
     ]  # Get known options, i.e., Namespace from the tuple
 
     # Configure logger
-    utils.configure_logger()
+    utils.configure_loguru_logger()
 
     # Show title
     utils.show_header(__title__, __version__)
