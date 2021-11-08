@@ -37,6 +37,7 @@ Change log:
 
 # Standard library modules
 import base64
+import gc
 import os
 import pathlib
 import sys
@@ -64,6 +65,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 stderr = sys.stderr
 sys.stderr = open(os.devnull, "w")
 import keras  # noqa: E402
+import keras.backend as K  # noqa: E402
 
 sys.stderr = stderr
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
@@ -450,6 +452,12 @@ class Metric(AIMMetricInterface):
         umsi_prediction_heatmap_overlay: str = image_utils.to_png_image_base64(
             img_umsi_prediction_heatmap_overlay
         )
+
+        # Clean up to prevent Keras memory leaks
+        # Source: https://www.thekerneltrip.com/python/keras-memory-leak/
+        del model
+        K.clear_session()
+        _ = gc.collect()
 
         return [
             umsi_prediction_heatmap,
