@@ -18,9 +18,9 @@ from typing import List, Tuple
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-05-28"
+__date__ = "2021-10-29"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -28,8 +28,8 @@ __version__ = "1.0"
 # ----------------------------------------------------------------------------
 
 # Images
-IMAGE_QUALITY_JPEG: int = 70
-IMAGE_QUALITY_PNG: int = 6
+IMAGE_QUALITY_JPEG: int = 75
+IMAGE_COMPRESS_LEVEL_PNG: int = 6
 
 IMAGE_WIDTH_DESKTOP: int = 1280
 IMAGE_HEIGHT_DESKTOP: int = 800

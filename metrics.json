@@ -16,7 +16,7 @@
       "id": "vg",
       "name": "Visual Guidance",
       "icon": "compass",
-      "metrics": []
+      "metrics": ["m9"]
     },
     {
       "id": "ac",
@@ -503,6 +503,36 @@
               "judgment": "bad"
             }
           ]
+        }
+      ]
+    },
+    "m9": {
+      "id": "m9",
+      "name": "UMSI (Unified Model of Saliency and Importance)",
+      "description": "The predicted human attention on different design classes and natural images, visualized as a heatmap and heatmap overlay.",
+      "evidence": 5,
+      "relevance": 5,
+      "speed": 1,
+      "references": [
+        {
+          "title": "Fosco, C., Casser, V., Bedi, A.K., O'Donovan, P., Hertzmann, A., and Bylinskii, Z. (2020). Predicting Visual Importance Across Graphic Design Types. In Proceedings of the 33rd Annual ACM Symposium on User Interface Software and Technology (UIST '20), pp. 249-260. ACM. doi: https://doi.org/10.1145/3379337.3415825",
+          "url": "https://doi.org/10.1145/3379337.3415825"
+        }
+      ],
+      "results": [
+        {
+          "id": "m9_0",
+          "index": 0,
+          "type": "b64",
+          "name": "UMSI prediction heatmap",
+          "description": false
+        },
+        {
+          "id": "m9_1",
+          "index": 1,
+          "type": "b64",
+          "name": "UMSI prediction heatmap overlay",
+          "description": false
         }
       ]
     }
