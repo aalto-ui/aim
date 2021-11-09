@@ -21,9 +21,9 @@ from resizeimage import resizeimage
 
 # First-party modules
 from aim.common.constants import (
+    IMAGE_COMPRESS_LEVEL_PNG,
     IMAGE_HEIGHT_DESKTOP,
     IMAGE_QUALITY_JPEG,
-    IMAGE_QUALITY_PNG,
     IMAGE_WIDTH_DESKTOP,
 )
 from aim.exceptions import ValidationError
@@ -33,9 +33,9 @@ from aim.exceptions import ValidationError
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-10-29"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -84,7 +84,7 @@ def convert_image(
         png_image_base64: PNG image encoded in Base64
 
     Kwargs:
-        jpeg_image_quality: JPEG image quality (defaults to 70)
+        jpeg_image_quality: JPEG image quality (defaults to 75)
 
     Returns:
         JPEG image encoded in Base64
@@ -92,17 +92,15 @@ def convert_image(
     img_rgb: Image.Image = Image.open(
         BytesIO(base64.b64decode(png_image_base64))
     ).convert("RGB")
-    buffered: BytesIO = BytesIO()
-    img_rgb.save(buffered, format="JPEG", quality=jpeg_image_quality)
-    jpeg_image_base64: str = base64.b64encode(buffered.getvalue()).decode(
-        "utf-8"
+    jpeg_image_base64: str = to_jpeg_image_base64(
+        img_rgb, jpeg_image_quality=jpeg_image_quality
     )
 
     return jpeg_image_base64
 
 
 def crop_image(
-    image_base64: str, png_image_quality: int = IMAGE_QUALITY_PNG
+    image_base64: str, png_image_compress_level: int = IMAGE_COMPRESS_LEVEL_PNG
 ) -> str:
     """
     Crop an image, encoded in Base64.
@@ -111,7 +109,7 @@ def crop_image(
         image_base64: Image encoded in Base64
 
     Kwargs:
-        png_image_quality: PNG image quality (defaults to 6)
+        png_image_compress_level: PNG image compress level (defaults to 6)
 
     Returns:
         PNG image (possibly cropped) encoded in Base64
@@ -144,15 +142,62 @@ def crop_image(
             img = resizeimage.resize_width(img, IMAGE_WIDTH_DESKTOP)
 
         img = img.crop((0, 0, IMAGE_WIDTH_DESKTOP, IMAGE_HEIGHT_DESKTOP))
-        buffered = BytesIO()
-        img.save(
-            buffered, format="PNG", compress_level=png_image_quality
-        )  # [0, 9], where 0 = no compression and 9 = best compression, defaults to 6
-        cropped_image_base64 = base64.b64encode(buffered.getvalue()).decode(
-            "utf-8"
+        cropped_image_base64 = to_png_image_base64(
+            img, png_image_compress_level=png_image_compress_level
         )
     # Image dimensions are correct (use the original image)
     else:
         cropped_image_base64 = image_base64
 
     return cropped_image_base64
+
+
+def to_png_image_base64(
+    pil_image: Image.Image,
+    png_image_compress_level: int = IMAGE_COMPRESS_LEVEL_PNG,
+) -> str:
+    """
+    Convert a PIL image to a PNG image encoded in Base64.
+
+    Args:
+        pil_image: PIL image
+
+    Kwargs:
+        png_image_compress_level: PNG image compress level (defaults to 6)
+
+    Returns:
+        PNG image encoded in Base64
+    """
+    buffer: BytesIO = BytesIO()
+    pil_image.save(
+        buffer, format="PNG", compress_level=png_image_compress_level
+    )  # [0, 9], where 0 = no compression and 9 = best compression, defaults to 6
+    png_image_base64: str = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+    return png_image_base64
+
+
+def to_jpeg_image_base64(
+    pil_image: Image.Image, jpeg_image_quality: int = IMAGE_QUALITY_JPEG
+) -> str:
+    """
+    Convert a PIL image to a JPEG image encoded in Base64.
+
+    Args:
+        pil_image: PIL image
+
+    Kwargs:
+        jpeg_image_quality: JPEG image quality (defaults to 75)
+
+    Returns:
+        JPEG image encoded in Base64
+    """
+    buffer: BytesIO = BytesIO()
+    pil_image.save(
+        buffer, format="JPEG", quality=jpeg_image_quality
+    )  # [0, 100], where 0 = worst and 100 = best, defaults to 75
+    jpeg_image_base64: str = base64.b64encode(buffer.getvalue()).decode(
+        "utf-8"
+    )
+
+    return jpeg_image_base64

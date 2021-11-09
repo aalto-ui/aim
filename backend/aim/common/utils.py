@@ -27,7 +27,7 @@ from aim.common.constants import METRICS_CONFIG_FILE
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-07-11"
+__date__ = "2021-11-08"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -37,7 +37,7 @@ __version__ = "1.0"
 # ----------------------------------------------------------------------------
 
 
-def configure_logger():
+def configure_loguru_logger():
     logger.configure(handlers=get_loguru_handlers())
 
 

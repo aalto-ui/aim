@@ -12,6 +12,7 @@ Configuration manager.
 
 # Standard library modules
 import os
+import shutil
 from pathlib import Path
 from typing import Any, Callable
 
@@ -23,14 +24,38 @@ import configargparse
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-17"
+__date__ = "2021-10-31"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
 # Functions
 # ----------------------------------------------------------------------------
+
+
+def _confirm_prompt(question, default="no"):
+    if default is None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("Unknown setting '{}' for default.".format(default))
+
+    while True:
+        try:
+            resp = input(question + prompt).strip().lower()
+            if default is not None and resp == "":
+                return default == "yes"
+            else:
+                if resp.lower() in ["yes", "no", "y", "n"]:
+                    return resp.lower() in ["yes", "y"]
+                else:
+                    raise ValueError
+        except ValueError:
+            print("Prease respond with 'yes' or 'no' (or 'y' or 'n').\n")
 
 
 def readable_file(path):
@@ -44,13 +69,13 @@ def readable_file(path):
     input_path: Path = Path(path)
     if not input_path.is_file():
         raise configargparse.ArgumentTypeError(
-            "The path '{}' is not a valid file.".format(path)
+            "The path '{}' is not a valid file.".format(input_path)
         )
-    if os.access(path, os.R_OK):
-        return path
+    if os.access(input_path, os.R_OK):
+        return input_path
     else:
         raise configargparse.ArgumentTypeError(
-            "The path '{}' is not a readable file.".format(path)
+            "The path '{}' is not a readable file.".format(input_path)
         )
 
 
@@ -65,16 +90,16 @@ def readable_dir(path):
     input_path: Path = Path(path)
     if input_path.is_file():
         raise configargparse.ArgumentTypeError(
-            "The path '{}' is not a valid directory.".format(path)
+            "The path '{}' is not a valid directory.".format(input_path)
         )
     else:
         input_path.mkdir(parents=True, exist_ok=True)
 
-    if os.access(path, os.R_OK):
-        return path
+    if os.access(input_path, os.R_OK):
+        return input_path
     else:
         raise configargparse.ArgumentTypeError(
-            "The path '{}' is not a readable directory.".format(path)
+            "The path '{}' is not a readable directory.".format(input_path)
         )
 
 
@@ -89,16 +114,26 @@ def writable_dir(path):
     input_path: Path = Path(path)
     if input_path.is_file():
         raise configargparse.ArgumentTypeError(
-            "The path '{}' is not a valid directory.".format(path)
+            "The path '{}' is not a valid directory.".format(input_path)
         )
     else:
-        input_path.mkdir(parents=True, exist_ok=True)
+        try:
+            input_path.mkdir(parents=True, exist_ok=False)
+        except FileExistsError:
+            if _confirm_prompt(
+                "The directory '{}' already exists. Delete existing files before continuing?".format(
+                    input_path
+                ),
+                default="no",
+            ):
+                shutil.rmtree(input_path)
+            input_path.mkdir(parents=True, exist_ok=True)
 
-    if os.access(path, os.W_OK):
-        return path
+    if os.access(input_path, os.W_OK):
+        return input_path
     else:
         raise configargparse.ArgumentTypeError(
-            "The path '{}' is not a writable directory.".format(path)
+            "The path '{}' is not a writable directory.".format(input_path)
         )
 
 
