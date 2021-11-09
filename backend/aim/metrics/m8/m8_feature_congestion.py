@@ -49,7 +49,7 @@ References:
 
 
 Change log:
-    v1.0 (2021-08-31)
+    v1.0 (2021-11-09)
       * Initial implementation
 """
 
@@ -69,6 +69,7 @@ import pyrtools as pt
 from PIL import Image
 
 # First-party modules
+from aim.common import image_utils
 from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.common.image_visual_clutter_utils import (
     DD,
@@ -90,7 +91,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine"
-__date__ = "2021-08-31"
+__date__ = "2021-11-09"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -552,13 +553,11 @@ class Metric(AIMMetricInterface):
         )  # element wise
 
         # Normlize output image
-        array_fc: np.ndarray = normlize(clutter_map_fc)
-        im_fc = Image.fromarray(array_fc)
-        buffered = BytesIO()
-        im_fc.save(buffered, format="PNG", compress_level=6)
-        b64_fc: str = base64.b64encode(buffered.getvalue()).decode("utf-8")
+        clutter_array_fc: np.ndarray = normlize(clutter_map_fc)
+        clutter_im_fc: Image.Image = Image.fromarray(clutter_array_fc)
+        clutter_b64_fc: str = image_utils.to_png_image_base64(clutter_im_fc)
 
         return [
             clutter_scalar_fc,
-            b64_fc,
+            clutter_b64_fc,
         ]
