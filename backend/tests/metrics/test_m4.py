@@ -20,16 +20,16 @@ import pytest
 # First-party modules
 from aim.common import image_utils
 from aim.metrics.m4.m4_contour_density import Metric
-from tests.common.constants import DATA_TESTS_DIR
+from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2021-12-07"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ def test_contour_density_desktop(
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
-        pathlib.Path(DATA_TESTS_DIR) / input_value
+        pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
     )
 
     # Read GUI image (PNG)

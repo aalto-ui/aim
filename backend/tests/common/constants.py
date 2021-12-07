@@ -16,13 +16,14 @@ Constants for tests.
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-02-10"
+__date__ = "2021-12-07"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "2.0"
 
 
 # ----------------------------------------------------------------------------
 # Constants
 # ----------------------------------------------------------------------------
 
-DATA_TESTS_DIR: str = "data/tests/"
+DATA_TESTS_INPUT_VALUES_DIR: str = "data/tests/input_values/"
+DATA_TESTS_EXPECTED_RESULTS_DIR: str = "data/tests/expected_results/"
