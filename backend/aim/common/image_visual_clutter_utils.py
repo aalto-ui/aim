@@ -96,7 +96,7 @@ def normlize(arr: np.ndarray) -> np.ndarray:
     max_max = arr.max()
 
     if min_min == max_max:
-        return arr.astype("uint8")
+        return np.full_like(arr, 255 / 2).astype("uint8")
     else:
         return (
             (arr - arr.min()) * (1 / (arr.max() - arr.min()) * 255)
