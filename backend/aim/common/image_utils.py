@@ -35,7 +35,7 @@ from aim.exceptions import ValidationError
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-12-11"
+__date__ = "2021-12-13"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.2"
 
@@ -233,7 +233,7 @@ def base64_to_data(
 
 def idiff(image_a_base64: str, image_b_base64: str) -> float:
     """
-    Compute the difference between two multi-channel (color) images.
+    Compute the perceived difference between two multi-channel (color) images.
 
     Args:
         image_a_base64: Image A string encoded in Base64
