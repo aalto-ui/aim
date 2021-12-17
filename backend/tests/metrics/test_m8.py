@@ -20,15 +20,15 @@ import pytest
 # First-party modules
 from aim.common import image_utils
 from aim.metrics.m8.m8_feature_congestion import Metric
-from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
-from tests.common.utils import load_expected_result_b64
+from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR, IDIFF_TOLERANCE
+from tests.common.utils import load_expected_result
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine"
-__date__ = "2021-12-07"
+__date__ = "2021-12-11"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.1"
 
@@ -39,7 +39,7 @@ __version__ = "1.1"
 
 
 @pytest.mark.parametrize(
-    ["input_value", "expected_result"],
+    ["input_value", "expected_results"],
     [
         ("aalto.fi_website.png", [3.826612]),
         ("myhelsinki.fi_website.png", [4.667929]),
@@ -55,20 +55,20 @@ __version__ = "1.1"
             "map.png",
             [
                 3.282042,
-                load_expected_result_b64("m8_1_map.png.b64"),
+                load_expected_result("m8_1_map.png"),
             ],
         ),
     ],
 )
 def test_feature_congestion_desktop(
-    input_value: str, expected_result: List[Any]
+    input_value: str, expected_results: List[Any]
 ) -> None:
     """
     Test feature congestion (desktop GUIs).
 
     Args:
         input_value: GUI image file name
-        expected_result: Expected result (list of measures)
+        expected_results: Expected results (list of measures)
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
@@ -89,6 +89,9 @@ def test_feature_congestion_desktop(
         and isinstance(result[0], float)
         and isinstance(result[1], str)
     ):
-        assert round(result[0], 6) == expected_result[0]
-        if len(expected_result) == 2:
-            assert result[1] == expected_result[1]
+        assert round(result[0], 6) == expected_results[0]
+        if len(expected_results) == 2:
+            assert (
+                image_utils.idiff(result[1], expected_results[1])
+                <= IDIFF_TOLERANCE
+            )

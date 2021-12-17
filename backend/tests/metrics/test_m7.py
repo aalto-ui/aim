@@ -27,7 +27,7 @@ from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine"
-__date__ = "2021-12-07"
+__date__ = "2021-12-11"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.1"
 
@@ -38,7 +38,7 @@ __version__ = "1.1"
 
 
 @pytest.mark.parametrize(
-    ["input_value", "expected_result"],
+    ["input_value", "expected_results"],
     [
         ("aalto.fi_website.png", [3.143037]),
         ("myhelsinki.fi_website.png", [3.682391]),
@@ -47,14 +47,14 @@ __version__ = "1.1"
     ],
 )
 def test_subband_entropy_desktop(
-    input_value: str, expected_result: List[Any]
+    input_value: str, expected_results: List[Any]
 ) -> None:
     """
     Test subband entropy (desktop GUIs).
 
     Args:
         input_value: GUI image file name
-        expected_result: Expected result (list of measures)
+        expected_results: Expected results (list of measures)
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
@@ -71,4 +71,4 @@ def test_subband_entropy_desktop(
 
     # Test result
     if result is not None and isinstance(result[0], float):
-        assert round(result[0], 6) == expected_result[0]
+        assert round(result[0], 6) == expected_results[0]

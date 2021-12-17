@@ -12,9 +12,9 @@ Utility functions for tests.
 
 # Standard library modules
 import pathlib
-from typing import List
 
 # First-party modules
+from aim.common import image_utils
 from tests.common.constants import DATA_TESTS_EXPECTED_RESULTS_DIR
 
 # ----------------------------------------------------------------------------
@@ -22,9 +22,9 @@ from tests.common.constants import DATA_TESTS_EXPECTED_RESULTS_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-12-07"
+__date__ = "2021-12-11"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -32,31 +32,24 @@ __version__ = "1.0"
 # ----------------------------------------------------------------------------
 
 
-def load_expected_result_b64(filename: str) -> str:
+def load_expected_result(filename: str) -> str:
     """
-    Load an expected result (PNG image data encoded in Base64) from a file.
+    Load an expected result (image) from a file.
 
     Args:
-        filename: Input file name
+        filename: Input image file name
 
     Returns:
-        PNG image data encoded in Base64
-
-    Raises:
-        ValueError: If PNG image data is not encoded in Base64
+        Image encoded in Base64
     """
-    # Build input file path
-    input_filepath: pathlib.Path = (
+    # Build expected result file path
+    expected_result_filepath: pathlib.Path = (
         pathlib.Path(DATA_TESTS_EXPECTED_RESULTS_DIR) / filename
     )
 
-    # Load expected result
-    with open(input_filepath, "r") as f:
-        data: str = f.read()
-        data_parts: List[str] = data.split(",")
-        data_format: str = data_parts[0][5:]  # remove scheme 'data:'
-        if data_format != "image/png;base64":
-            raise ValueError("Data format must be 'image/png;base64'")
-        expected_result: str = data_parts[1].strip()
+    # Read expected result
+    expected_result_base64: str = image_utils.read_image(
+        expected_result_filepath
+    )
 
-    return expected_result
+    return expected_result_base64

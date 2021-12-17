@@ -27,7 +27,7 @@ from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-12-07"
+__date__ = "2021-12-11"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.1"
 
@@ -38,7 +38,7 @@ __version__ = "1.1"
 
 
 @pytest.mark.parametrize(
-    ["input_value", "expected_result"],
+    ["input_value", "expected_results"],
     [
         ("aalto.fi_website.png", [0.036322265625]),
         ("transparent.png", [0.0]),  # transparent -> white pixels
@@ -65,14 +65,14 @@ __version__ = "1.1"
     ],
 )
 def test_contour_density_desktop(
-    input_value: str, expected_result: List[Any]
+    input_value: str, expected_results: List[Any]
 ) -> None:
     """
     Test contour density (desktop GUIs).
 
     Args:
         input_value: GUI image file name
-        expected_result: Expected result (list of measures)
+        expected_results: Expected results (list of measures)
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
@@ -89,4 +89,4 @@ def test_contour_density_desktop(
 
     # Test result
     if result is not None:
-        assert result[0] == expected_result[0]
+        assert result[0] == expected_results[0]
