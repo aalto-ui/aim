@@ -39,9 +39,9 @@ from aim.handlers import AIMWebSocketHandler
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-11-08"
+__date__ = "2022-04-25"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ def make_app() -> Tuple[MotorDatabase, tornado.web.Application]:
         db,
         tornado.web.Application(
             handlers=[
-                (r"/", AIMWebSocketHandler),
+                (r"/ws", AIMWebSocketHandler),
             ],
             **settings,
         ),

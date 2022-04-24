@@ -3,7 +3,7 @@ const path = require('path')
 
 const env = {
   NODE_ENV: process.env.NODE_ENV ? `"${process.env.NODE_ENV}"` : '"development"',
-  WS_URL: process.env.WS_URL ? `"${process.env.WS_URL}"` : '"ws://localhost:8888/"',
+  WS_URL: process.env.WS_URL ? `"${process.env.WS_URL}"` : '"ws://localhost:8888/ws"',
 }
 
 module.exports = {
