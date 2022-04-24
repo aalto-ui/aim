@@ -170,7 +170,7 @@ def RRgaussfilter1D(
     """
     t = list(range(-halfsupport, halfsupport + 1))
     kernel = np.array(
-        [np.exp(-((x - center) ** 2) / (2 * sigma ** 2)) for x in t]
+        [np.exp(-((x - center) ** 2) / (2 * sigma**2)) for x in t]
     )
     kernel = kernel / sum(kernel)
 
@@ -202,9 +202,9 @@ def DoG1filter(
 
     t = range(-a, a + 1)
 
-    gi = np.array([np.exp(-(x ** 2) / (2 * sigi ** 2)) for x in t])
+    gi = np.array([np.exp(-(x**2) / (2 * sigi**2)) for x in t])
     gi = gi / np.sum(gi)
-    go = np.array([np.exp(-(x ** 2) / (2 * sigo ** 2)) for x in t])
+    go = np.array([np.exp(-(x**2) / (2 * sigo**2)) for x in t])
     go = go / np.sum(go)
 
     return gi.reshape(1, gi.shape[0]), go.reshape(1, go.shape[0])

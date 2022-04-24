@@ -213,9 +213,9 @@ class Metric(AIMMetricInterface):
         # deltaL2, deltaa2, and deltab2 to "scale" the L, a, and b axes when computing
         # the covariance matrix. Eventually these numbers should be vary according
         # to the spatial scales, mimicing our visual system's sensitivity function.
-        deltaL2: float = 0.0007 ** 2
-        deltaa2: float = 0.1 ** 2
-        deltab2: float = 0.05 ** 2
+        deltaL2: float = 0.0007**2
+        deltaa2: float = 0.1**2
+        deltab2: float = 0.05**2
 
         # Get a Gaussian filter for computing the covariance
         bigG: np.ndarray = RRgaussfilter1D(
@@ -335,7 +335,7 @@ class Metric(AIMMetricInterface):
             meanD2 = RRoverlapconv(bigG.T, meanD2)
 
             # Get variance by var(X) = E(X.^2) - E(X).^2
-            stddevD = np.sqrt(abs(meanD2 - meanD ** 2))
+            stddevD = np.sqrt(abs(meanD2 - meanD**2))
             contrast_clutter_levels[scale] = stddevD
 
         contrast_clutter_map = cls._collapse(contrast_clutter_levels)
@@ -367,7 +367,7 @@ class Metric(AIMMetricInterface):
             # Eventually make this sigma a variable that's passed to this routine.
             # hvdd[scale] is the 4 output images concatenated together,
             # in the order horizontal, vertical, up-left, and down-right.
-            hvdd[scale] = [x ** 2 for x in hvdd[scale]]  # local energy
+            hvdd[scale] = [x**2 for x in hvdd[scale]]  # local energy
             hvdd[scale] = poolnew(
                 hvdd[scale], cls._OPP_ENERGY_POOL_SCALE
             )  # Pools with a gaussian filter. Was effectively sigma=1, then 1.75 to match 1.75 above.
@@ -461,7 +461,7 @@ class Metric(AIMMetricInterface):
             # Covariance matrix elements. Compare with computations in
             # RRStatisticalSaliency. I tried to match computeColorClutter, but I
             # don't remember the meaning of some of the terms I removed.  XXX
-            covMx[(i, 0, 0)] = RRoverlapconv(bigG, cmx ** 2)
+            covMx[(i, 0, 0)] = RRoverlapconv(bigG, cmx**2)
             covMx[(i, 0, 0)] = (
                 RRoverlapconv(bigG.T, covMx[(i, 0, 0)])
                 - Dc[i] ** 2
@@ -471,7 +471,7 @@ class Metric(AIMMetricInterface):
             covMx[(i, 0, 1)] = (
                 RRoverlapconv(bigG.T, covMx[(i, 0, 1)]) - Dc[i] * Ds[i]
             )
-            covMx[(i, 1, 1)] = RRoverlapconv(bigG, smx ** 2)
+            covMx[(i, 1, 1)] = RRoverlapconv(bigG, smx**2)
             covMx[(i, 1, 1)] = (
                 RRoverlapconv(bigG.T, covMx[(i, 1, 1)])
                 - Ds[i] ** 2
@@ -548,7 +548,7 @@ class Metric(AIMMetricInterface):
 
         # Combine over space using a Minkowski mean of order "_MINKOWSKI_ORDER", then take the average
         clutter_scalar_fc: float = float(
-            np.mean(clutter_map_fc ** cls._MINKOWSKI_ORDER)
+            np.mean(clutter_map_fc**cls._MINKOWSKI_ORDER)
             ** (1 / cls._MINKOWSKI_ORDER)
         )  # element wise
 
