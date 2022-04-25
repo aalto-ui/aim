@@ -517,7 +517,7 @@
       "id": "m9",
       "name": "UMSI (Unified Model of Saliency and Importance)",
       "description": "The predicted human attention on different design classes and natural images, visualized as a heatmap and heatmap overlay.",
-      "evidence": 5,
+      "evidence": 4,
       "relevance": 5,
       "speed": 1,
       "references": [
