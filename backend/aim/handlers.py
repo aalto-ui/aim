@@ -48,9 +48,9 @@ from aim.tools import Screenshot
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-26"
+__date__ = "2022-04-25"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -237,6 +237,20 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 )
         except ValidationError as e:
             logger.error("ValidationError", e)
+
+            # Save error data
+            self._save_data(
+                "errors",
+                {
+                    "server": server_name,
+                    "session": session_id,
+                    "datetime": utils.custom_isoformat(datetime.utcnow()),
+                    "type": "ValidationError",
+                    "message": e.errors(),
+                },
+            )
+
+            # Push error
             self.write_message(
                 {
                     "type": "error",
@@ -246,6 +260,20 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
             )
         except NotImplementedError as e:
             logger.error("NotImplementedError", e)
+
+            # Save error data
+            self._save_data(
+                "errors",
+                {
+                    "server": server_name,
+                    "session": session_id,
+                    "datetime": utils.custom_isoformat(datetime.utcnow()),
+                    "type": "NotImplementedError",
+                    "message": str(e),
+                },
+            )
+
+            # Push error
             self.write_message(
                 {
                     "type": "error",
@@ -255,6 +283,20 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
             )
         except Exception as e:
             logger.error("Exception: {!r}".format(e))
+
+            # Save error data
+            self._save_data(
+                "errors",
+                {
+                    "server": server_name,
+                    "session": session_id,
+                    "datetime": utils.custom_isoformat(datetime.utcnow()),
+                    "type": "Exception",
+                    "message": str(e),
+                },
+            )
+
+            # Push error
             self.write_message(
                 {
                     "type": "error",
