@@ -30,7 +30,7 @@
             <h4 class="alert-heading">Validation Error</h4>
             <hr>
             <p>
-              <strong>Whoops!</strong> We are having some problems with your input, please try again with a different URL or image.
+              <strong>Whoops!</strong> We are having some problems with your input. Please refresh the page and try again with a different URL or image.
             </p>
           </div>
         </b-col>
@@ -65,6 +65,9 @@
             </div>
             <div v-if="fileTooLarge" class="invalid-feedback">
               File is too large (max 5 MB).
+            </div>
+            <div class="image-min-size">
+              Minimum size is 1280 x 800 pixels.
             </div>
           </b-form>
         </b-col>
@@ -747,6 +750,13 @@ header{
 }
 .input-group.is-invalid ~ .invalid-feedback {
   display: block;
+}
+.image-min-size {
+  color: #999999;
+  display: block;
+  font-size: 80%;
+  margin-top: 0.25rem;
+  width: 100%;
 }
 
 .custom-control {

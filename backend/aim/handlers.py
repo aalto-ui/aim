@@ -27,7 +27,6 @@ import tornado.ioloop
 import tornado.websocket
 from loguru import logger
 from motor.motor_tornado import MotorDatabase
-from pydantic.error_wrappers import ValidationError
 from selenium.webdriver.chrome.webdriver import WebDriver as ChromeWebDriver
 from tornado.options import options
 
@@ -40,6 +39,7 @@ from aim.common.constants import (
     METRICS_DIR,
     METRICS_FILE_PATTERN,
 )
+from aim.exceptions import ValidationError
 from aim.models import MessageBase, MessageImage, MessageInput, MessageURL
 from aim.tools import Screenshot
 
@@ -246,7 +246,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     "session": session_id,
                     "datetime": utils.custom_isoformat(datetime.utcnow()),
                     "type": "ValidationError",
-                    "message": e.errors(),
+                    "message": str(e),
                 },
             )
 
@@ -255,7 +255,30 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 {
                     "type": "error",
                     "action": "pushValidationError",
-                    "message": e.errors(),
+                    "message": str(e),
+                }
+            )
+        except ValueError as e:
+            logger.error("ValueError", e)
+
+            # Save error data
+            self._save_data(
+                "errors",
+                {
+                    "server": server_name,
+                    "session": session_id,
+                    "datetime": utils.custom_isoformat(datetime.utcnow()),
+                    "type": "ValueError",
+                    "message": e.errors()[0]["msg"],  # type: ignore
+                },
+            )
+
+            # Push error
+            self.write_message(
+                {
+                    "type": "error",
+                    "action": "pushValidationError",
+                    "message": e.errors()[0]["msg"],  # type: ignore
                 }
             )
         except NotImplementedError as e:
