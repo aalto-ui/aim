@@ -45,9 +45,9 @@ from aim.common.constants import (
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-10-30"
+__date__ = "2022-05-02"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.1"
+__version__ = "1.1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -105,6 +105,9 @@ class Screenshot:
         options.add_argument("--force-device-scale-factor")
         options.add_argument("--hide-scrollbars")
         options.add_argument("--disable-gpu")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--user-agent=Mozilla/5.0")
+        options.add_argument("--lang=en-US,en;q=0.9")
 
         plt: str = platform.system()
         executable_path: str
