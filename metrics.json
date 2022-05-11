@@ -4,7 +4,7 @@
       "id": "cp",
       "name": "Colour Perception",
       "icon": "palette",
-      "metrics": ["m1", "m3"]
+      "metrics": ["m1", "m3", "m10"]
     },
     {
       "id": "pf",
@@ -540,6 +540,52 @@
           "type": "b64",
           "name": "UMSI prediction heatmap overlay",
           "description": false
+        }
+      ]
+    },
+    "m10": {
+      "id": "m10",
+      "name": "WAVE (Weighted Affective Valence Estimates)",
+      "description": "Mean of a mapping of pixel colors to the color preference values.",
+      "evidence": 5,
+      "relevance": 5,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Palmer, S.E. and Schloss, K.B., (2010). An ecological valence theory of human color preference. Proceedings of the National Academy of Sciences, 107(19), pp.8877-8882. doi: https://doi.org/10.1073/pnas.0906172107",
+          "url": "https://doi.org/10.1073/pnas.0906172107"
+        }
+      ],
+      "results": [
+        {
+          "id": "m10_0",
+          "index": 0,
+          "type": "float",
+          "name": "Mean of a mapping of pixel colors to the color preference values.",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "TODO",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [0, 1],
+              "description": "TODO",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [null, null],
+              "description": "TODO",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
         }
       ]
     }
