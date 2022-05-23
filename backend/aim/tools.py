@@ -375,14 +375,25 @@ class Evaluation:
 
         # Save results and quantiles
         results_df.to_csv(self.output_results_csv_file, index=False)
-        quantiles_df.to_csv(self.output_quantiles_csv_file, index=True, index_label="quantile")
+        quantiles_df.to_csv(
+            self.output_quantiles_csv_file, index=True, index_label="quantile"
+        )
 
         # Save results to metric-specific json files (to be used by the frontend)
         for metric in self.metrics:
-            metric_cols: List[str] = [col for col in cols if col.startswith(metric + "_") and col != "{}_time".format(metric)]
+            metric_cols: List[str] = [
+                col
+                for col in cols
+                if col.startswith(metric + "_")
+                and col != "{}_time".format(metric)
+            ]
             metric_results_df = results_df[metric_cols]
-            output_metric_results_json_file: Path = self.output_dir / "{}_results.json".format(metric)
-            metric_results_df.to_json(output_metric_results_json_file, orient="records")
+            output_metric_results_json_file: Path = (
+                self.output_dir / "{}_results.json".format(metric)
+            )
+            metric_results_df.to_json(
+                output_metric_results_json_file, orient="records"
+            )
 
     def _reformat_large_tick_values(self, tick_val, pos):
         """
