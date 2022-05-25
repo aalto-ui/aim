@@ -47,7 +47,7 @@ __version__ = "1.0"
         ("wikipedia.org_website.png", [94, 12]),
     ],
 )
-def test_static_clusters_desktop(
+def test_dynamic_clusters_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """

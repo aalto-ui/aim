@@ -69,7 +69,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2022-05-16"
+__date__ = "2022-05-25"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -81,7 +81,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Dunamic Clusters.
+    Metric: Dynamic Clusters.
     """
 
     # Public methods
