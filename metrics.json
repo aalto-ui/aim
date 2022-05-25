@@ -542,6 +542,154 @@
           "description": false
         }
       ]
+    },
+    "m11": {
+      "id": "m11",
+      "name": "Static Clusters",
+      "description": "The number of static 32-sized color clusters.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        }
+      ],
+      "results": [
+        {
+          "id": "m11_0",
+          "index": 0,
+          "type": "int",
+          "name": "The number of static 32-sized color clusters.",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "TODO",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [null, null],
+              "description": "TODO",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [null, null],
+              "description": "TODO",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        }
+      ]
+    },
+    "m12": {
+      "id": "m12",
+      "name": "Dynamic Clusters",
+      "description": "The number of dynamic clusters and the number of colours per dynamic cluster.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 1,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        }
+      ],
+      "results": [
+        {
+          "id": "m12_0",
+          "index": 0,
+          "type": "int",
+          "name": "The Number of dynamic clusters",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [
+                null,
+                null
+              ],
+              "description": "TODO",
+              "icon": [
+                "far",
+                "check-circle"
+              ],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [
+                null,
+                null
+              ],
+              "description": "TODO",
+              "icon": [
+                null,
+                null
+              ],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [
+                null,
+                null
+              ],
+              "description": "TODO",
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
+              "judgment": "bad"
+            }
+          ]
+        },
+        {
+          "id": "m12_1",
+          "index": 0,
+          "type": "int",
+          "name": "Number of colours per dynamic cluster",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "TODO",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [null, null],
+              "description": "TODO",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [null, null],
+              "description": "TODO",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        }
+      ]
     }
   }
 }

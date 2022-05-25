@@ -39,7 +39,7 @@ Change log:
     v2.0 (2021-05-16)
       * Revised implementation
 
-    v1.0 (2021-08-28)
+    v1.0 (2017-05-29)
       * Initial implementation
 """
 
