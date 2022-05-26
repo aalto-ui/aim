@@ -67,6 +67,7 @@ from typing import Dict, List, Optional, Union
 import numpy as np
 import pyrtools as pt
 from PIL import Image
+from pydantic import HttpUrl
 
 # First-party modules
 from aim.common import image_utils
@@ -492,7 +493,10 @@ class Metric(AIMMetricInterface):
     # Public methods
     @classmethod
     def execute_metric(
-        cls, gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
+        cls,
+        gui_image: str,
+        gui_type: int = GUI_TYPE_DESKTOP,
+        gui_url: Optional[HttpUrl] = None,
     ) -> Optional[List[Union[int, float, str]]]:
         """
         Execute the metric.
@@ -502,6 +506,7 @@ class Metric(AIMMetricInterface):
 
         Kwargs:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
+            gui_url: GUI URL (defaults to None)
 
         Returns:
             Results (list of measures)

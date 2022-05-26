@@ -14,6 +14,9 @@ AIM metric interfaces.
 import abc
 from typing import Any, List, Optional, Union
 
+# Third-party modules
+from pydantic import HttpUrl
+
 # First-party modules
 from aim.common.constants import GUI_TYPE_DESKTOP
 
@@ -22,9 +25,9 @@ from aim.common.constants import GUI_TYPE_DESKTOP
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2021-03-19"
+__date__ = "2022-05-26"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -45,7 +48,10 @@ class AIMMetricInterface(metaclass=abc.ABCMeta):
     # Abstract methods
     @abc.abstractmethod
     def execute_metric(
-        self, gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
+        self,
+        gui_image: str,
+        gui_type: int = GUI_TYPE_DESKTOP,
+        gui_url: Optional[HttpUrl] = None,
     ) -> Optional[List[Union[int, float, str]]]:
         """
         Execute the metric.
@@ -55,6 +61,7 @@ class AIMMetricInterface(metaclass=abc.ABCMeta):
 
         Kwargs:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
+            gui_url: GUI URL (defaults to None)
 
         Returns:
             Results (list of measures)
