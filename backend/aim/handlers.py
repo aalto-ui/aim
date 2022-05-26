@@ -34,6 +34,7 @@ from tornado.options import options
 from aim.common import image_utils, utils
 from aim.common.constants import (
     ALLOWED_HOSTS,
+    GUI_TYPE_DESKTOP,
     IMAGE_HEIGHT_DESKTOP,
     IMAGE_WIDTH_DESKTOP,
     METRICS_DIR,
@@ -173,7 +174,9 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     # Execute metric
                     start_time: float = time.time()
                     results: Optional[List[Union[int, float, str]]] = metric_module.Metric.execute_metric(  # type: ignore
-                        png_image_base64
+                        png_image_base64,
+                        gui_type=GUI_TYPE_DESKTOP,
+                        gui_url=msg.url,
                     )
                     end_time: float = time.time()
                     execution_time: float = round(end_time - start_time, 4)
