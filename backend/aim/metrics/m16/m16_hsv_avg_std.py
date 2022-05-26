@@ -3,12 +3,14 @@
 
 """
 Metric:
-    LAB Average and Standard Derivation
+    HSV Unique
 
 
 Description:
-    LAB colour space Average and Standard Derivation.
-    Category: Colour Perception > Color Range > LAB Average and Standard Derivation.
+    Hasler & Susstrunk validated this metric in their paper. It looks at the average
+    value and standard deviation for every value in the HSV colour space.
+    Category: Colour Perception > Color Range > HSV Average and Standard Derivation.
+
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -24,13 +26,12 @@ References:
 
 
 Change log:
-    v2.0 (2022-05-25)
+    v2.0 (2022-05-26)
       * Revised implementation
 
     v1.0 (2017-05-29)
       * Initial implementation
 """
-
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -45,18 +46,18 @@ from typing import List, Optional, Union
 import numpy as np
 from PIL import Image
 from pydantic import HttpUrl
-from skimage import color
 
 # First-party modules
 from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
+from aim.metrics.m16.utils import atan2d, np_cosd, np_sind
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2022-05-25"
+__date__ = "2022-05-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -68,7 +69,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: LAB Average and Standard Derivation.
+    Metric: Hassler & Susstrunk.
     """
 
     # Public methods
@@ -91,42 +92,36 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - L average (float, [0, +inf))
-            - L std (float, [0, +inf))
-            - A average (float, [0, +inf))
-            - A std (float, [0, +inf))
-            - B average (float, [0, +inf))
-            - B std (float, [0, +inf))
+            - Average Hue  (float, [0, +inf))
+            - Average Saturation (float, [0, +inf))
+            - Standard Deviation of Saturation (float, [0, +inf))
+            - Average Value (float, [0, +inf))
+            - Standard Deviation of Value (float, [0, +inf))
         """
+
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 
-        # Convert image from ??? (e.g., RGBA) to RGB color space
-        img_rgb: Image.Image = img.convert("RGB")
+        # Convert image from ??? (e.g., RGBA) to HSV color space
+        # Note that all 3 H,S,V values are between (0, 255): https://github.com/python-pillow/Pillow/issues/3650
+        img_hsv: Image.Image = img.convert("HSV")
 
         # Get NumPy array
-        img_rgb_nparray: np.ndarray = np.array(img_rgb)
+        # Mult/Div(s) are needed to get proper values. for hue, saturation and value (0 to 359, 0 to 1, 0 to 1)
+        img_hsv_nparray: np.ndarray = np.array(img_hsv) / 255.0
+        img_hue: np.ndarray = img_hsv_nparray[:, :, 0].copy() * 359.0
+        img_saturation: np.ndarray = img_hsv_nparray[:, :, 1].copy()
+        img_value: np.ndarray = img_hsv_nparray[:, :, 2].copy()
 
-        # Convert the LAB space
-        lab: np.ndarray = color.rgb2lab(img_rgb_nparray)
+        # Hue is an angle, so cannot simple add and average it
+        # Based on: http://mkweb.bcgsc.ca/color-summarizer/?faq#averagehue
+        avg_hue_sin: float = np.mean(np_sind(img_hue))
+        avg_hue_cos: float = np.mean(np_cosd(img_hue))
+        avgHue = atan2d(avg_hue_cos, avg_hue_sin) % 360
 
-        L: np.ndarray = lab[:, :, 0]
-        A: np.ndarray = lab[:, :, 1]
-        B: np.ndarray = lab[:, :, 2]
+        avgSaturation: float = np.mean(img_saturation)
+        stdSaturation: float = np.std(img_saturation)
+        avgValue: float = np.mean(img_value)
+        stdValue: float = np.std(img_value)
 
-        # Get average and standard deviation for each value separately
-        meanL: float = np.mean(L)
-        stdL: float = np.std(L)
-        meanA: float = np.mean(A)
-        stdA: float = np.std(A)
-        meanB: float = np.mean(B)
-        stdB: float = np.std(B)
-
-        return [
-            meanL,
-            stdL,
-            meanA,
-            stdA,
-            meanB,
-            stdB,
-        ]
+        return [avgHue, avgSaturation, stdSaturation, avgValue, stdValue]

@@ -3,13 +3,17 @@
 
 """
 Metric:
-    Luminance Standard Deviation
+     Hassler & Susstrunk
 
 
 Description:
-    This is the standard deviation of luminance over all pixels. It has been proven to
-    not be statically relevant for the perceived colour variance of a webpage.
-    Category: Colour Perception > Color Range > LAB Average.
+    This metric was proposed by Hasler and Susstrunk. This metric is proven to have a very high
+    correspondence to the users perception (95%). It relies on the RGYB color spectrum and mainly
+    looks at the average standard deviation for all value. The higher the STD is, the more colourful
+    the image is perceived. The nested loop however make it more computational heavy than it was
+    originally intended. Also, it should be noted that this does not the Hue into account, which has
+    been proven to be a significant factor.
+    Category: Colour Perception > Color Range >  Hassler & Susstrunk.
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -18,21 +22,19 @@ Funding information and contact:
 
 
 References:
-    1.  Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface
-        Visual Complexity. In Proceedings of the 2014 International Working
-        Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
-        doi: https://doi.org/10.1145/2598153.2598173
-
+    1.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural
+        images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95).
+        International Society for Optics and Photonics.
+        doi: https://doi.org/10.1117/12.477378
 
 
 Change log:
-    v2.0 (2022-05-25)
+    v2.0 (2022-05-26)
       * Revised implementation
 
     v1.0 (2017-05-29)
       * Initial implementation
 """
-
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -56,8 +58,8 @@ from aim.metrics.interfaces import AIMMetricInterface
 # Metadata
 # ----------------------------------------------------------------------------
 
-__author__ = "Amir Hossein Kargaran, Markku Laine, Thomas Langerak"
-__date__ = "2022-05-25"
+__author__ = "Amir Hossein Kargaran, Markku Laine, Thomas Langerak, Yuxi Zhu"
+__date__ = "2022-05-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -69,11 +71,11 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Luminance Standard Deviation.
+    Metric: Hassler & Susstrunk.
     """
 
     # Private constants
-    _L_COEF: List[float] = [0.2126, 0.7152, 0.0722]  # luma coefficients
+    _CF_COEF: float = 0.3  # a magic coefficient for computing colorfulness
 
     # Public methods
     @classmethod
@@ -95,8 +97,15 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Luminance Standard Deviation (float, [0, +inf))
+            - Mean Distribution (Red - Green) (float, [0, +inf))
+            - Standard Deviation Distribution (Red - Green) (float, [0, +inf))
+            - Mean Distribution (Yellow - Blue) (float, [0, +inf))
+            - Standard Deviation Distribution (Yellow - Blue) (float, [0, +inf))
+            - Mean Distribution (RGYB) (float, [0, +inf))
+            - Standard Deviation Distribution (RGYB) (float, [0, +inf))
+            - Colorfulness (float, [0, +inf))
         """
+
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 
@@ -106,19 +115,22 @@ class Metric(AIMMetricInterface):
         # Get NumPy array
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
+        # GET RGB
         blue: np.ndarray = img_rgb_nparray[:, :, 0].copy()
         green: np.ndarray = img_rgb_nparray[:, :, 1].copy()
         red: np.ndarray = img_rgb_nparray[:, :, 2].copy()
 
-        # Based on: https://en.wikipedia.org/wiki/Luma_(video)
-        # Y = 0.2126 R + 0.7152 G + 0.0722 B
-        L: np.ndarray = (
-            cls._L_COEF[0] * red
-            + cls._L_COEF[1] * green
-            + cls._L_COEF[2] * blue
-        )
+        # Compute Red-Green and Yellow-Blue
+        rg: np.ndarray = abs(red - green)
+        yb: np.ndarray = abs((0.5 * (red + green)) - blue)
 
-        l_std: float = np.std(L)
-        return [
-            l_std,
-        ]
+        # Compute Metrics based on the Hassler & Susstrunk's paper.
+        meanRG: float = np.mean(rg)
+        stdRG: float = np.std(rg)
+        meanYB: float = np.mean(yb)
+        stdYB: float = np.std(yb)
+        meanRGYB: float = np.sqrt(meanRG**2 + meanYB**2)
+        stdRGYB: float = np.sqrt(stdRG**2 + stdYB**2)
+        colourfulness: float = stdRGYB + cls._CF_COEF * meanRGYB
+
+        return [meanRG, stdRG, meanYB, stdYB, meanRGYB, stdRGYB, colourfulness]

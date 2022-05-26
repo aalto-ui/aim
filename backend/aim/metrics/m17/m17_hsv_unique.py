@@ -3,12 +3,13 @@
 
 """
 Metric:
-    LAB Average and Standard Derivation
+    HSV Unique
 
 
 Description:
-    LAB colour space Average and Standard Derivation.
-    Category: Colour Perception > Color Range > LAB Average and Standard Derivation.
+    Hasler & Susstrunk validated this metric in their paper.
+    It looks at the number of unique values in the HSV colour space.
+
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -24,13 +25,12 @@ References:
 
 
 Change log:
-    v2.0 (2022-05-25)
+    v2.0 (2022-05-26)
       * Revised implementation
 
     v1.0 (2017-05-29)
       * Initial implementation
 """
-
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -39,7 +39,7 @@ Change log:
 # Standard library modules
 import base64
 from io import BytesIO
-from typing import List, Optional, Union
+from typing import List, Optional, Tuple, Union
 
 # Third-party modules
 import numpy as np
@@ -56,7 +56,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2022-05-25"
+__date__ = "2022-05-26"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -68,7 +68,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: LAB Average and Standard Derivation.
+    Metric: HSV Unique.
     """
 
     # Public methods
@@ -91,42 +91,54 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - L average (float, [0, +inf))
-            - L std (float, [0, +inf))
-            - A average (float, [0, +inf))
-            - A std (float, [0, +inf))
-            - B average (float, [0, +inf))
-            - B std (float, [0, +inf))
+            - Number of Unique HSV  (int, [0, +inf))
+            - Number of Unique Hue (int, [0, +inf))
+            - Number of Unique Saturation (int, [0, +inf))
+            - Number of Unique Value (int, [0, +inf))
         """
+
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 
-        # Convert image from ??? (e.g., RGBA) to RGB color space
-        img_rgb: Image.Image = img.convert("RGB")
+        # Convert image from ??? (e.g., RGBA) to HSV color space
+        # Note that all 3 H,S,V values are between (0, 255): https://github.com/python-pillow/Pillow/issues/3650
+        img_hsv: Image.Image = img.convert("HSV")
 
-        # Get NumPy array
-        img_rgb_nparray: np.ndarray = np.array(img_rgb)
+        # Calculate total number of image pixels
+        total_pixels: int = img_hsv.width * img_hsv.height
 
-        # Convert the LAB space
-        lab: np.ndarray = color.rgb2lab(img_rgb_nparray)
+        # Get HSV color histogram
+        hsv_color_histogram: List[Tuple[int, Tuple]] = img_hsv.getcolors(
+            maxcolors=total_pixels
+        )
 
-        L: np.ndarray = lab[:, :, 0]
-        A: np.ndarray = lab[:, :, 1]
-        B: np.ndarray = lab[:, :, 2]
+        hsv_unique: List = []
+        hsv_count: List = []
+        h_list: List = []
+        s_list: List = []
+        v_list: List = []
 
-        # Get average and standard deviation for each value separately
-        meanL: float = np.mean(L)
-        stdL: float = np.std(L)
-        meanA: float = np.mean(A)
-        stdA: float = np.std(A)
-        meanB: float = np.mean(B)
-        stdB: float = np.std(B)
+        # Create list from histogram
+        for hist in list(hsv_color_histogram):
+            hist_count, hist_value = hist
+            hsv_unique.append(hist_value)
+            hsv_count.append(hist_count)
+            h, s, v = hist_value
+            h_list.append(h)
+            s_list.append(s)
+            v_list.append(v)
 
-        return [
-            meanL,
-            stdL,
-            meanA,
-            stdA,
-            meanB,
-            stdB,
-        ]
+        # Get all unique values, still has all counts (so no minimal occurence). This probably needs some changing in
+        # the future
+        h_num_unq: int = len(np.unique(h_list))
+        s_num_unq: int = len(np.unique(s_list))
+        v_num_unq: int = len(np.unique(v_list))
+
+        new_hsv: List = []
+        # Only often enough occuring values for hsv
+        for u, c in zip(hsv_unique, hsv_count):
+            if c > 5:
+                new_hsv.append(u)
+
+        hsv_num_unq: int = len(new_hsv)
+        return [hsv_num_unq, h_num_unq, s_num_unq, v_num_unq]
