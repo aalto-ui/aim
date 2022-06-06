@@ -1,6 +1,14 @@
 import { Bar, mixins } from 'vue-chartjs'
 import metricsConfig from '../../../metrics.json'
-import recordedResults from '../assets/results.json'
+
+const req = require.context('../assets/results', false, /m\d+_results\.(json)$/)
+const recordedResultsPerMetric = new Array(req.keys().length).fill(0).map((_, i) => req(req.keys()[i]))
+const recordedResults = []
+for (let i = 0; i < recordedResultsPerMetric[0].length; i++) {
+  let o = {}
+  recordedResultsPerMetric.forEach((e) => o = {...e[i], ...o})
+  recordedResults.push(o)
+}
 
 const intl = new Intl.NumberFormat('en-US', { notation: 'compact' })
 

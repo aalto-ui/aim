@@ -10,16 +10,16 @@ Start with installing the following package globally, in order to check for
 outdated versions. Then run it in the frontend folder and a full list of
 outdated dependencies will be shown, along with the latest. **Attention**:
 Never automatically update all deps at one time, unless they all have only patch
-channges.
+changes.
 
 ```sh
 # Install globally
 npm i -g npm-check-updates
 
-# list outdated
+# List outdated
 ncu
 
-# update a specific pacakge
+# Update a specific package
 ncu -f NAME_OF_THE_PACKAGE -i
 ```
 
@@ -31,7 +31,7 @@ For **minor** or **patch** changes, it is generally easy to update automatically
 to the latest, but you might want to check the release notes on the package's
 GitHub page (which you can access directly from NPM). For **major** changes,
 always check if the peer dependencies changed, if the release notes deprecate
-an api or if they have an upgrade guide.
+an API or if they have an upgrade guide.
 
 
 ## Historical update

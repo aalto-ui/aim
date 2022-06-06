@@ -45,9 +45,9 @@ from aim.common.constants import (
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2022-05-02"
+__date__ = "2022-05-23"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.1.1"
+__version__ = "1.2"
 
 
 # ----------------------------------------------------------------------------
@@ -176,7 +176,7 @@ class Evaluation:
 
     # Public constants
     NAME: str = "Evaluation"
-    VERSION: str = "1.1"
+    VERSION: str = "1.2"
 
     # Initializer
     def __init__(
@@ -198,7 +198,6 @@ class Evaluation:
         self.n_previous_results: int = 0
         self.output_dir: Path = output_dir
         self.output_results_csv_file: Path = self.output_dir / "results.csv"
-        self.output_results_json_file: Path = self.output_dir / "results.json"
         self.output_quantiles_csv_file: Path = (
             self.output_dir / "quantiles.csv"
         )
@@ -376,10 +375,25 @@ class Evaluation:
 
         # Save results and quantiles
         results_df.to_csv(self.output_results_csv_file, index=False)
-        quantiles_df.to_csv(self.output_quantiles_csv_file, index=True)
+        quantiles_df.to_csv(
+            self.output_quantiles_csv_file, index=True, index_label="quantile"
+        )
 
-        # Save results to json for the frontend
-        results_df.to_json(self.output_results_json_file, orient="records")
+        # Save results to metric-specific json files (to be used by the frontend)
+        for metric in self.metrics:
+            metric_cols: List[str] = [
+                col
+                for col in cols
+                if col.startswith(metric + "_")
+                and col != "{}_time".format(metric)
+            ]
+            metric_results_df = results_df[metric_cols]
+            output_metric_results_json_file: Path = (
+                self.output_dir / "{}_results.json".format(metric)
+            )
+            metric_results_df.to_json(
+                output_metric_results_json_file, orient="records"
+            )
 
     def _reformat_large_tick_values(self, tick_val, pos):
         """
