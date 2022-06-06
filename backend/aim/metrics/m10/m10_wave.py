@@ -167,7 +167,7 @@ class Metric(AIMMetricInterface):
             cls._WAVE_COLOR_TO_SCORE[cls._MATCH_COLORS[i]]
             for i in match_indices
         ]
-        wave_mean: float = np.mean(wave_values)
+        wave_mean: float = float(np.mean(wave_values))
 
         return [
             wave_mean,

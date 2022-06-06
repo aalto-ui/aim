@@ -561,29 +561,29 @@
           "id": "m10_0",
           "index": 0,
           "type": "float",
-          "name": "Mean of a mapping of pixel colors to the color preference values.",
+          "name": "WAVE Mean",
           "description": false,
           "scores": [
             {
               "id": "r1",
-              "range": [null, null],
-              "description": "TODO",
-              "icon": ["far", "check-circle"],
-              "judgment": "good"
+              "range": [0.0, 0.5009],
+              "description": "Poor",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
             },
             {
               "id": "r2",
-              "range": [0, 1],
-              "description": "TODO",
+              "range": [0.5009, 0.6127],
+              "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [null, null],
-              "description": "TODO",
-              "icon": ["fas", "exclamation-triangle"],
-              "judgment": "bad"
+              "range": [0.6127, 1.0],
+              "description": "Good",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
             }
           ]
         }
