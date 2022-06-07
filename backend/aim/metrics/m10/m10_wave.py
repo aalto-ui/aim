@@ -42,7 +42,6 @@ Change log:
 
 """
 
-
 # ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
@@ -153,16 +152,18 @@ class Metric(AIMMetricInterface):
 
         ax1, ax2, _ = img_rgb_nparray.shape
 
-        # repeated values for every possible match color
-        repeated_img_nparray = np.tile(
+        # Repeated values for every possible match color (cls._MATCH_COLORS)
+        repeated_img_nparray: np.ndarray = np.tile(
             img_rgb_nparray, cls._NUM_MATCH_COLORS
         ).reshape(ax1, ax2, cls._NUM_MATCH_COLORS, 3)
 
-        l2_norms = (
+        # Find color(s) most closely matched with cls._MATCH_COLORS
+        l2_norms: np.ndarray = (
             (repeated_img_nparray - np.array(cls._MATCH_COLORS)) ** 2
         ).sum(axis=3)
-
         match_indices = l2_norms.argmin(axis=2).flatten()
+
+        # Mean over matched color(s) weight values
         wave_values: list = [
             cls._WAVE_COLOR_TO_SCORE[cls._MATCH_COLORS[i]]
             for i in match_indices

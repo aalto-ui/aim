@@ -45,6 +45,7 @@ __version__ = "1.0"
         ("wikipedia.org_website.png", [0.488411]),
         ("blue_light.png", [1.0]),
         ("olive.png", [0.0]),
+        ("olive_blue.png", [0.5]),
     ],
 )
 def test_wave_desktop(input_value: str, expected_results: List[Any]) -> None:
