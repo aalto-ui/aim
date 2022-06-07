@@ -547,8 +547,8 @@
       "id": "m10",
       "name": "WAVE (Weighted Affective Valence Estimates)",
       "description": "Mean of a mapping of pixel colors to the color preference values.",
-      "evidence": 5,
-      "relevance": 5,
+      "evidence": 4,
+      "relevance": 3,
       "speed": 2,
       "references": [
         {
@@ -573,7 +573,7 @@
             },
             {
               "id": "r2",
-              "range": [0.5009, 0.6127],
+              "range": [0.5010, 0.6126],
               "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
