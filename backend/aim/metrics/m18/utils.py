@@ -5,7 +5,7 @@
 NIMA utility functions.
 
     Source:
-        - Code adopted from: https://github.com/truskovskiyk/nima.pytorch/tree/v1
+        - Code adopted from: https://github.com/truskovskiyk/nima.pytorch/tree/v1 (see LICENSE within the distribution).
 """
 
 # ----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ class MobileNetV2(nn.Module):
     def __init__(self, n_class=1000, input_size=224, width_mult=1.0):
         super(MobileNetV2, self).__init__()
         # setting of inverted residual blocks
-        self.interverted_residual_setting = [
+        self.interverted_residual_setting: List = [
             # t, c, n, s
             [1, 16, 1, 1],
             [6, 24, 2, 2],
@@ -184,8 +184,8 @@ class NIMA(nn.Module):
 
 class Transform:
     def __init__(self):
-        IMAGE_NET_MEAN = [0.485, 0.456, 0.406]
-        IMAGE_NET_STD = [0.229, 0.224, 0.225]
+        IMAGE_NET_MEAN: List = [0.485, 0.456, 0.406]
+        IMAGE_NET_STD: List = [0.229, 0.224, 0.225]
         normalize = transforms.Normalize(
             mean=IMAGE_NET_MEAN, std=IMAGE_NET_STD
         )
@@ -213,13 +213,13 @@ class Transform:
         return self._val_transform
 
 
-def get_mean_score(score):
+def get_mean_score(score: np.ndarray) -> float:
     buckets = np.arange(1, 11)
     mu = (buckets * score).sum()
     return float(mu)
 
 
-def get_std_score(scores):
+def get_std_score(scores: np.ndarray) -> float:
     si = np.arange(1, 11)
     mean = get_mean_score(scores)
     std = np.sqrt(np.sum(((si - mean) ** 2) * scores))

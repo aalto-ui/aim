@@ -34,11 +34,12 @@ Change log:
 
 # Standard library modules
 import base64
-import os
+import pathlib
 from io import BytesIO
 from typing import List, Optional, Union
 
 # Third-party modules
+import numpy as np
 import torch
 from PIL import Image
 from pydantic import HttpUrl
@@ -71,15 +72,20 @@ __version__ = "1.0"
 class Metric(AIMMetricInterface):
     """
     Metric: NIMA (Neural IMage Assessment).
+
+    Reference:
+        Code adopted from: https://github.com/truskovskiyk/nima.pytorch/tree/v1 (see LICENSE within the distribution).
+
     """
 
     # Transform method
     _transform = Transform().val_transform
 
     # Load Model: from https://s3-us-west-1.amazonaws.com/models-nima/pretrain-model.pth
-    _MODEL_PATH = os.path.join(
-        os.path.abspath(os.path.dirname(__file__)), "pretrain-model.pth"
+    _MODEL_PATH: pathlib.Path = pathlib.Path(
+        "aim/metrics/m18/pretrain-model.pth"
     )
+
     _DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     _MODEL = NIMA()
     _STATE_DICT = torch.load(
@@ -109,7 +115,7 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - NIMA mean_score (float, [0, +inf))
+            - NIMA mean_score (float, [0, 10))
             - NIMA std_score (float, [0, +inf))
         """
         # Create PIL image
@@ -119,18 +125,17 @@ class Metric(AIMMetricInterface):
         img_rgb: Image.Image = img.convert("RGB")
 
         # Resize image to fit network input
-        img_resized = cls._transform(img_rgb)
+        img_resized: torch.Tensor = cls._transform(img_rgb)
         img_resized = img_resized.unsqueeze_(0)
         # To device (CPU or GPU)
         img_resized = img_resized.to(cls._DEVICE)
 
         # Predict
         with torch.no_grad():
-            prob = cls._MODEL(img_resized).data.cpu().numpy()[0]
+            prob: np.ndarray = cls._MODEL(img_resized).data.cpu().numpy()[0]
 
         # Compute Metrics
-        mean_score: float = get_mean_score(prob)
-        std_score: float = get_std_score(prob)
-        # scores = [float(x) for x in prob]
+        mean_score: float = float(get_mean_score(prob))
+        std_score: float = float(get_std_score(prob))
 
         return [mean_score, std_score]
