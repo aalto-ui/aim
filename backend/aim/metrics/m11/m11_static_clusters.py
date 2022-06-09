@@ -9,7 +9,7 @@ Metric:
 Description:
     The number of static 32-sized color clusters.
 
-    Category: Colour Perception.
+    Category: Visual complexity > Color variability > Dominant colors
 
     The number of static 32-sized color clusters (the sub-cube edge size of clusters is 32 values out of possible 256,
     per each RGB channel). Only clusters containing more than 5 values are counted. It is significant factor for
@@ -36,7 +36,7 @@ References:
         doi: https://doi.org/10.1145/2598153.2598173
 
 Change log:
-    v2.0 (2021-05-16)
+    v2.0 (2022-05-16)
       * Revised implementation
 
     v1.0 (2017-05-29)
@@ -55,6 +55,7 @@ from typing import List, Optional, Tuple, Union
 # Third-party modules
 import numpy as np
 from PIL import Image
+from pydantic import HttpUrl
 
 # First-party modules
 from aim.common.constants import GUI_TYPE_DESKTOP
@@ -80,10 +81,19 @@ class Metric(AIMMetricInterface):
     Metric: Static Clusters.
     """
 
+    _CUBE_SIZE = 32  # the sub-cube edge size of clusters is 32 values out of possible 256
+    _IMTOCUBE_DIV = 256 / _CUBE_SIZE  # 8
+    _CLUSTER_THRESHOLD = (
+        5  # Only clusters containing more than 5 values are counted
+    )
+
     # Public methods
     @classmethod
     def execute_metric(
-        cls, gui_image: str, gui_type: int = GUI_TYPE_DESKTOP
+        cls,
+        gui_image: str,
+        gui_type: int = GUI_TYPE_DESKTOP,
+        gui_url: Optional[HttpUrl] = None,
     ) -> Optional[List[Union[int, float, str]]]:
         """
         Execute the metric.
@@ -93,6 +103,7 @@ class Metric(AIMMetricInterface):
 
         Kwargs:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
+            gui_url: GUI URL (defaults to None)
 
         Returns:
             Results (list of measures)
@@ -112,15 +123,17 @@ class Metric(AIMMetricInterface):
             maxcolors=total_pixels
         )
 
-        # Divide rgb spectrum (0-255) to a 32x32x32 matrix
-        cluster: np.ndarray = np.zeros((32, 32, 32))
+        # Divide rgb spectrum (0-255) to a (cls._CUBE_SIZE, cls._CUBE_SIZE, cls._CUBE_SIZE) matrix
+        cluster: np.ndarray = np.zeros(
+            (cls._CUBE_SIZE, cls._CUBE_SIZE, cls._CUBE_SIZE)
+        )
         for h in list(rgb_color_histogram):
-            h_count, h_value = h
-            rc, gc, bc = tuple(int(i / 8) for i in h_value)
+            h_count, h_rgb = h
+            rc, gc, bc = tuple(int(i / cls._IMTOCUBE_DIV) for i in h_rgb)
             cluster[rc, gc, bc] += h_count
 
-        # The amount of cells that have more than 5 entries
-        num_clusters: int = int((cluster > 5).sum())
+        # The amount of cells that have more than cls._CLUSTER_THRESHOLD entries
+        num_clusters: int = int((cluster > cls._CLUSTER_THRESHOLD).sum())
 
         return [
             num_clusters,

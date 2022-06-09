@@ -3,14 +3,15 @@
 
 """
 Metric:
-    Dynamic Clusters
+    Average number of colors per dynamic cluster
 
 
 Description:
-    Number of dynamic clusters.
+    Average number of colors per dynamic cluster.
 
-    Category: Visual complexity > Color variability > Dominant colors
-    For details, see CV5 [1].
+    Category: Visual complexity > Color variability > Color range (Color depth)
+    For details, see CV3 [1].
+
 
     In the paper by Miniukovich and De Angeli suggest (among others) two factors for an indication for colourfulness
     The number of dynamic clusters and the number of colours per dynamic cluster.
@@ -18,9 +19,7 @@ Description:
     "The number of dynamic clusters of colors after color reduction (more than 5 pixels). If a difference between
     two colors in a color cube is less than or equal to 3, two colors are united in the same cluster, which continues
     recursively for all colors. Only clusters containing more than 5 values are counted."
-
     The number of clusters has not proven statistically relevant. The number of colours per clusters is.
-    Both are returned with this function.
 
 
 Funding information and contact:
@@ -83,7 +82,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Dynamic Clusters.
+    Metric: Average number of colors per dynamic cluster.
     """
 
     _CLUSTER_THRESHOLD = 5  # Colour points with enough presence
@@ -108,7 +107,7 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Number of Dynamic Clusters (int)
+            - Average number of colours per Cluster (int)
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -231,4 +230,16 @@ class Metric(AIMMetricInterface):
         # Number of clusters, not statistically relevant
         count_dynamic_cluster: int = int(len(new_center_of_clusters))
 
-        return [count_dynamic_cluster]
+        # Average number of colours per cluster
+        average_colour_dynamic_cluster: int = 0
+        for x in range(len(new_center_of_clusters)):
+            average_colour_dynamic_cluster += new_center_of_clusters[x][4]
+
+        if count_dynamic_cluster != 0:
+            average_colour_dynamic_cluster = int(
+                average_colour_dynamic_cluster / count_dynamic_cluster
+            )
+        else:
+            average_colour_dynamic_cluster = int(0)
+
+        return [average_colour_dynamic_cluster]

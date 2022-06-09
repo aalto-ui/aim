@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Dynamic Clusters' metric (m12).
+Tests for the 'Average number of colors per dynamic cluster' metric (m19).
 """
 
 # ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m12.m12_dynamic_clusters import Metric
+from aim.metrics.m19.m19_avg_num_colors_per_dynamic_cluster import Metric
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
 # ----------------------------------------------------------------------------
@@ -41,15 +41,15 @@ __version__ = "1.0"
     [
         ("white_50_black_50.png", [0]),
         ("red_with_6_yellow_pixels.png", [0]),
-        ("aalto.fi_website.png", [639]),
-        ("wikipedia.org_website.png", [92]),
+        ("aalto.fi_website.png", [18]),
+        ("wikipedia.org_website.png", [12]),
     ],
 )
-def test_dynamic_clusters_desktop(
+def test_avg_num_colors_per_dynamic_cluster_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test dynamic clusters metric (desktop GUIs).
+    Test Average number of colors per dynamic cluster metric (desktop GUIs).
     Args:
         input_value: GUI image file name
         expected_results: Expected results (list of measures)
