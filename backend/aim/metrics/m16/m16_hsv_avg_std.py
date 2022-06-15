@@ -3,12 +3,13 @@
 
 """
 Metric:
-    HSV Unique
+    HSV Average and Standard Derivation
 
 
 Description:
     Hasler & Susstrunk validated this metric in their paper. It looks at the average
     value and standard deviation for every value in the HSV colour space.
+
     Category: Colour Perception > Color Range > HSV Average and Standard Derivation.
 
 
@@ -113,12 +114,13 @@ class Metric(AIMMetricInterface):
         img_saturation: np.ndarray = img_hsv_nparray[:, :, 1].copy()
         img_value: np.ndarray = img_hsv_nparray[:, :, 2].copy()
 
-        # Hue is an angle, so cannot simple add and average it
+        # Hue is an angle, so cannot simply add and average it
         # Based on: http://mkweb.bcgsc.ca/color-summarizer/?faq#averagehue
         avg_hue_sin: float = np.mean(np_sind(img_hue))
         avg_hue_cos: float = np.mean(np_cosd(img_hue))
         avgHue = atan2d(avg_hue_cos, avg_hue_sin) % 360
 
+        # Compute avg and std for saturation and value
         avgSaturation: float = np.mean(img_saturation)
         stdSaturation: float = np.std(img_saturation)
         avgValue: float = np.mean(img_value)

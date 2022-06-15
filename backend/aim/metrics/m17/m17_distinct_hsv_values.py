@@ -3,12 +3,15 @@
 
 """
 Metric:
-    HSV Unique
+    Distinct HSV values
 
 
 Description:
-    Hasler & Susstrunk validated this metric in their paper.
-    It looks at the number of unique values in the HSV colour space.
+    The number of distinct values of Hue, Saturation and Value. Images were converted to the HSV color space.
+    Color variability was reduced: only values covering more than 0.1% of image were counted
+
+    Category: Color variability.
+    For details, see C1-C3 [2].
 
 
 Funding information and contact:
@@ -18,7 +21,17 @@ Funding information and contact:
 
 
 References:
-    1.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural
+    1.  Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile
+        App Interfaces. In Proceedings of the 8th Nordic Conference on
+        Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM.
+        doi: https://doi.org/10.1145/2639189.2641219
+
+    2.  Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface
+        Visual Complexity. In Proceedings of the 2014 International Working
+        Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
+        doi: https://doi.org/10.1145/2598153.2598173
+
+    3.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural
         images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95).
         International Society for Optics and Photonics.
         doi: https://doi.org/10.1117/12.477378
@@ -45,7 +58,6 @@ from typing import List, Optional, Tuple, Union
 import numpy as np
 from PIL import Image
 from pydantic import HttpUrl
-from skimage import color
 
 # First-party modules
 from aim.common.constants import GUI_TYPE_DESKTOP
@@ -56,7 +68,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2022-05-26"
+__date__ = "2022-06-15"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -68,8 +80,13 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: HSV Unique.
+    Metric: Distinct HSV values.
     """
+
+    # Private constants
+    _COLOR_REDUCTION_THRESHOLD_RATIO: float = (
+        0.001  # Threshold for minimum occuring of values: 0.1 %
+    )
 
     # Public methods
     @classmethod
@@ -91,10 +108,10 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Number of Unique HSV  (int, [0, +inf))
-            - Number of Unique Hue (int, [0, +inf))
-            - Number of Unique Saturation (int, [0, +inf))
-            - Number of Unique Value (int, [0, +inf))
+            - Number of Unique HSV  (int, [1, 255^3))
+            - Number of Unique Hue (int, [1, 255])
+            - Number of Unique Saturation (int, [1, 255])
+            - Number of Unique Value (int, [1, 255])
         """
 
         # Create PIL image
@@ -107,26 +124,31 @@ class Metric(AIMMetricInterface):
         # Calculate total number of image pixels
         total_pixels: int = img_hsv.width * img_hsv.height
 
+        # Set color reduction threshold
+        color_reduction_threshold: int = int(
+            total_pixels * cls._COLOR_REDUCTION_THRESHOLD_RATIO
+        )
+
         # Get HSV color histogram
         hsv_color_histogram: List[Tuple[int, Tuple]] = img_hsv.getcolors(
             maxcolors=total_pixels
         )
 
-        hsv_unique: List = []
-        hsv_count: List = []
-        h_list: List = []
-        s_list: List = []
-        v_list: List = []
+        # Create lists to store h, s and v individually and together from histogram
+        hsv_list_unq: List[Tuple] = []
+        h_list: List[int] = []
+        s_list: List[int] = []
+        v_list: List[int] = []
 
-        # Create list from histogram
+        #  Calculate number of distinct HSV values after color reduction
         for hist in list(hsv_color_histogram):
             hist_count, hist_value = hist
-            hsv_unique.append(hist_value)
-            hsv_count.append(hist_count)
-            h, s, v = hist_value
-            h_list.append(h)
-            s_list.append(s)
-            v_list.append(v)
+            if hist_count > color_reduction_threshold:
+                hsv_list_unq.append(hist_value)
+                h, s, v = hist_value
+                h_list.append(h)
+                s_list.append(s)
+                v_list.append(v)
 
         # Get all unique values, still has all counts (so no minimal occurence). This probably needs some changing in
         # the future
@@ -134,11 +156,7 @@ class Metric(AIMMetricInterface):
         s_num_unq: int = len(np.unique(s_list))
         v_num_unq: int = len(np.unique(v_list))
 
-        new_hsv: List = []
-        # Only often enough occuring values for hsv
-        for u, c in zip(hsv_unique, hsv_count):
-            if c > 5:
-                new_hsv.append(u)
+        # Compute unique number of hsv
+        hsv_num_unq: int = len(hsv_list_unq)
 
-        hsv_num_unq: int = len(new_hsv)
         return [hsv_num_unq, h_num_unq, s_num_unq, v_num_unq]

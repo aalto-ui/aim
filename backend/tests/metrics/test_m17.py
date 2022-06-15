@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'HSV Unique' metric (m17).
+Tests for the 'Distinct HSV values' metric (m17).
 """
 
 # ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m17.m17_hsv_unique import Metric
+from aim.metrics.m17.m17_distinct_hsv_values import Metric
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
 # ----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine"
-__date__ = "2022-05-26"
+__date__ = "2022-06-15"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -51,7 +51,7 @@ def test_hsv_unique_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test HSV Unique (desktop GUIs).
+    Test Distinct HSV values (desktop GUIs).
 
     Args:
         input_value: GUI image file name

@@ -3,7 +3,7 @@
 
 """
 Metric:
-     Hassler & Susstrunk
+     Colourfulness
 
 
 Description:
@@ -13,7 +13,7 @@ Description:
     the image is perceived. The nested loop however make it more computational heavy than it was
     originally intended. Also, it should be noted that this does not the Hue into account, which has
     been proven to be a significant factor.
-    Category: Colour Perception > Color Range >  Hassler & Susstrunk.
+    Category: Color variability.
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -59,7 +59,7 @@ from aim.metrics.interfaces import AIMMetricInterface
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2022-05-26"
+__date__ = "2022-06-15"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "2.0"
 
@@ -71,7 +71,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Hassler & Susstrunk.
+    Metric: Colourfulness.
     """
 
     # Private constants
@@ -97,12 +97,6 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Mean Distribution (Red - Green) (float, [0, +inf))
-            - Standard Deviation Distribution (Red - Green) (float, [0, +inf))
-            - Mean Distribution (Yellow - Blue) (float, [0, +inf))
-            - Standard Deviation Distribution (Yellow - Blue) (float, [0, +inf))
-            - Mean Distribution (RGYB) (float, [0, +inf))
-            - Standard Deviation Distribution (RGYB) (float, [0, +inf))
             - Colorfulness (float, [0, +inf))
         """
 
@@ -133,4 +127,4 @@ class Metric(AIMMetricInterface):
         stdRGYB: float = np.sqrt(stdRG**2 + stdYB**2)
         colourfulness: float = stdRGYB + cls._CF_COEF * meanRGYB
 
-        return [meanRG, stdRG, meanYB, stdYB, meanRGYB, stdRGYB, colourfulness]
+        return [colourfulness]
