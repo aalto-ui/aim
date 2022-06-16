@@ -27,9 +27,9 @@ from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine"
-__date__ = "2021-06-05"
+__date__ = "2021-06-16"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -40,10 +40,10 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("aalto.fi_website.png", [4.56929, 1.85693]),
-        ("myhelsinki.fi_website.png", [4.19161, 1.647346]),
-        ("wikipedia.org_website.png", [3.634818, 1.629401]),
-        ("black.png", [6.049461, 1.114261]),
+        ("aalto.fi_website.png", [5.256208, 1.615887]),
+        ("myhelsinki.fi_website.png", [5.702414, 1.650632]),
+        ("wikipedia.org_website.png", [4.52608, 1.9907]),
+        ("black.png", [3.789548, 2.257092]),
     ],
 )
 def test_nima_desktop(input_value: str, expected_results: List[Any]) -> None:

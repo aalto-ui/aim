@@ -9,7 +9,6 @@ Metric:
 Description:
     Technical and aesthetic qualities of the input image.
 
-    Category:
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -23,10 +22,12 @@ References:
         doi: https://doi.org/10.1109/TIP.2018.2831899
 
 Change log:
+    V2.0 (2022-06-16)
+      * Change Model
+
     v1.0 (2022-06-05)
       * Initial implementation
 """
-
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -34,34 +35,31 @@ Change log:
 
 # Standard library modules
 import base64
+import collections
+import os
 import pathlib
 from io import BytesIO
 from typing import List, Optional, Union
 
 # Third-party modules
-import numpy as np
 import torch
+import torch.nn as nn
 from PIL import Image
 from pydantic import HttpUrl
+from torchvision import models, transforms
 
 # First-party modules
 from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
-from aim.metrics.m18.utils import (
-    NIMA,
-    Transform,
-    get_mean_score,
-    get_std_score,
-)
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
 __author__ = "Amir Hossein Kargaran, Markku Laine"
-__date__ = "2022-06-05"
+__date__ = "2022-06-16"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "2.0"
 
 
 # ----------------------------------------------------------------------------
@@ -72,25 +70,36 @@ __version__ = "1.0"
 class Metric(AIMMetricInterface):
     """
     Metric: NIMA (Neural IMage Assessment).
-
-    Reference:
-        Code adopted from: https://github.com/truskovskiyk/nima.pytorch/tree/v1 (see LICENSE within the distribution).
-
     """
 
     # Transform method
-    _transform = Transform().val_transform
-
-    # Load Model: from https://s3-us-west-1.amazonaws.com/models-nima/pretrain-model.pth
-    _MODEL_PATH: pathlib.Path = pathlib.Path(
-        "aim/metrics/m18/pretrain-model.pth"
+    _transform: transforms.transforms.Compose = transforms.Compose(
+        [
+            transforms.Resize(224),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+        ]
     )
 
+    # Load Model: from https://github.com/delldu/ImageNima/tree/master/models
+    _MODEL_PATH: pathlib.Path = pathlib.Path("aim/metrics/m18/dense121_all.pt")
+
+    # Choose GPU if available
     _DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    _MODEL = NIMA()
-    _STATE_DICT = torch.load(
+
+    # Define DENS-NET121 Model
+    _NUM_CLASS: int = 10
+    _MODEL: models.densenet.DenseNet = models.densenet121(pretrained=False)
+    _NUM_FTRS: int = _MODEL.classifier.in_features
+    _MODEL.classifier = nn.Sequential(
+        nn.Linear(_NUM_FTRS, _NUM_CLASS), nn.Softmax(1)
+    )
+
+    # Load State Dict: weights
+    _STATE_DICT: collections.OrderedDict = torch.load(
         _MODEL_PATH, map_location=lambda storage, loc: storage
     )
+
     _MODEL.load_state_dict(_STATE_DICT)
     _MODEL = _MODEL.to(_DEVICE)
     _MODEL.eval()
@@ -124,18 +133,26 @@ class Metric(AIMMetricInterface):
         # Convert image from ??? (e.g., RGBA) to RGB color space
         img_rgb: Image.Image = img.convert("RGB")
 
+        # Compute votes and send to device (CPU or GPU)
+        weighted_votes: torch.Tensor = torch.arange(10, dtype=torch.float) + 1
+        weighted_votes = weighted_votes.to(cls._DEVICE)
+
         # Resize image to fit network input
         img_resized: torch.Tensor = cls._transform(img_rgb)
-        img_resized = img_resized.unsqueeze_(0)
-        # To device (CPU or GPU)
         img_resized = img_resized.to(cls._DEVICE)
 
         # Predict
         with torch.no_grad():
-            prob: np.ndarray = cls._MODEL(img_resized).data.cpu().numpy()[0]
+            scores: torch.Tensor = cls._MODEL(img_resized.view(1, 3, 224, 224))
+            mean: torch.Tensor = torch.matmul(scores, weighted_votes)
+            std: torch.Tensor = torch.sqrt(
+                (
+                    scores * torch.pow((weighted_votes - mean.view(-1, 1)), 2)
+                ).sum(dim=1)
+            )
 
         # Compute Metrics
-        mean_score: float = float(get_mean_score(prob))
-        std_score: float = float(get_std_score(prob))
+        mean_score: float = float(mean.item())
+        std_score: float = float(std.item())
 
         return [mean_score, std_score]

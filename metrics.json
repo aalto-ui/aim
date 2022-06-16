@@ -566,7 +566,7 @@
           "scores": [
             {
               "id": "r3",
-              "range": [0.0, 3.9512],
+              "range": [0.0, 4.728],
               "description": "Poor",
               "icon": [
                 "fas",
@@ -576,14 +576,14 @@
             },
             {
               "id": "r2",
-              "range": [3.9513, 4.876],
+              "range": [4.729, 5.8193],
               "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [4.877, 10.0],
+              "range": [5.8194, 10.0],
               "description": "Good",
               "icon": ["far", "check-circle"],
               "judgment": "good"
