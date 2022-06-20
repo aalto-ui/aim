@@ -115,12 +115,12 @@ class Metric(AIMMetricInterface):
         B: np.ndarray = lab[:, :, 2]
 
         # Get average and standard deviation for each value separately
-        meanL: float = np.mean(L)
-        stdL: float = np.std(L)
-        meanA: float = np.mean(A)
-        stdA: float = np.std(A)
-        meanB: float = np.mean(B)
-        stdB: float = np.std(B)
+        meanL: float = float(np.mean(L))
+        stdL: float = float(np.std(L))
+        meanA: float = float(np.mean(A))
+        stdA: float = float(np.std(A))
+        meanB: float = float(np.mean(B))
+        stdB: float = float(np.std(B))
 
         return [
             meanL,

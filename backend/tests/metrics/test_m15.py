@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Colourfulness' metric (m15).
+Tests for the 'Hasler and Susstrunk Colorfulness' metric (m15).
 """
 
 # ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m15.m15_colourfulness import Metric
+from aim.metrics.m15.m15_hassler_susstrunk_colorfulness import Metric
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
 # ----------------------------------------------------------------------------
@@ -46,11 +46,11 @@ __version__ = "1.0"
         ),
     ],
 )
-def test_hassler_susstrunk_desktop(
+def test_hassler_susstrunk_colourfulness_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test Colourfulness (desktop GUIs).
+    Test Hasler and Susstrunk Colorfulness (desktop GUIs).
 
     Args:
         input_value: GUI image file name

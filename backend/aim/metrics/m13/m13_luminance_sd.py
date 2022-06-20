@@ -118,7 +118,7 @@ class Metric(AIMMetricInterface):
             + cls._L_COEF[2] * blue
         )
 
-        l_std: float = np.std(L)
+        l_std: float = float(np.std(L))
         return [
             l_std,
         ]

@@ -3,7 +3,7 @@
 
 """
 Metric:
-     Colourfulness
+     Hasler and Susstrunk Colorfulness
 
 
 Description:
@@ -71,7 +71,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Colourfulness.
+    Metric: Hasler and Susstrunk Colorfulness.
     """
 
     # Private constants
@@ -119,12 +119,12 @@ class Metric(AIMMetricInterface):
         yb: np.ndarray = abs((0.5 * (red + green)) - blue)
 
         # Compute Metrics based on the Hassler & Susstrunk's paper.
-        meanRG: float = np.mean(rg)
-        stdRG: float = np.std(rg)
-        meanYB: float = np.mean(yb)
-        stdYB: float = np.std(yb)
-        meanRGYB: float = np.sqrt(meanRG**2 + meanYB**2)
-        stdRGYB: float = np.sqrt(stdRG**2 + stdYB**2)
-        colourfulness: float = stdRGYB + cls._CF_COEF * meanRGYB
+        meanRG: float = float(np.mean(rg))
+        stdRG: float = float(np.std(rg))
+        meanYB: float = float(np.mean(yb))
+        stdYB: float = float(np.std(yb))
+        meanRGYB: float = float(np.sqrt(meanRG**2 + meanYB**2))
+        stdRGYB: float = float(np.sqrt(stdRG**2 + stdYB**2))
+        colourfulness: float = float(stdRGYB + cls._CF_COEF * meanRGYB)
 
         return [colourfulness]

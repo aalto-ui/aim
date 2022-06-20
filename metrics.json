@@ -4,7 +4,7 @@
       "id": "cp",
       "name": "Colour Perception",
       "icon": "palette",
-      "metrics": ["m1", "m3"]
+      "metrics": ["m1", "m3", "m13", "m14", "m15", "m16", "m17"]
     },
     {
       "id": "pf",
@@ -539,6 +539,213 @@
           "index": 1,
           "type": "b64",
           "name": "UMSI prediction heatmap overlay",
+          "description": false
+        }
+      ]
+    },
+    "m13": {
+      "id": "m13",
+      "name": "Luminance Standard Deviation",
+      "description": "Standard deviation of luminance corrected for display perception",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 1,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        }
+      ],
+      "results": [
+        {
+          "id": "m13_0",
+          "index": 0,
+          "type": "float",
+          "name": "Luminance std",
+          "description": false
+        }
+      ]
+    },
+    "m14": {
+      "id": "m14",
+      "name": "LAB Average and Standard Derivation",
+      "description": "LAB colour space Average and Standard Derivation",
+      "evidence": 3,
+      "relevance": 2,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95). International Society for Optics and Photonics. doi: https://doi.org/10.1117/12.477378",
+          "url": "https://doi.org/10.1117/12.477378"
+        }
+      ],
+      "results": [
+        {
+          "id": "m14_0",
+          "index": 0,
+          "type": "float",
+          "name": "L average",
+          "description": false
+        },
+        {
+          "id": "m14_1",
+          "index": 1,
+          "type": "float",
+          "name": "L std",
+          "description": false
+        },
+        {
+          "id": "m14_2",
+          "index": 2,
+          "type": "float",
+          "name": "A average",
+          "description": false
+        },
+        {
+          "id": "m14_3",
+          "index": 3,
+          "type": "float",
+          "name": "A std",
+          "description": false
+        },
+        {
+          "id": "m14_4",
+          "index": 4,
+          "type": "float",
+          "name": "B average",
+          "description": false
+        },
+        {
+          "id": "m14_5",
+          "index": 5,
+          "type": "float",
+          "name": "B std",
+          "description": false
+        }
+      ]
+    },
+    "m15": {
+      "id": "m15",
+      "name": "Hasler and Susstrunk Colorfulness",
+      "description": "The standard deviation of pixels in the RGB color space.",
+      "evidence": 4,
+      "relevance": 3,
+      "speed": 1,
+      "references": [
+        {
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95). International Society for Optics and Photonics. doi: https://doi.org/10.1117/12.477378",
+          "url": "https://doi.org/10.1117/12.477378"
+        }
+      ],
+      "results": [
+        {
+          "id": "m15_0",
+          "index": 0,
+          "type": "float",
+          "name": "Colourfulness",
+          "description": false
+        }
+      ]
+    },
+    "m16": {
+      "id": "m16",
+      "name": "HSV Average and Standard Derivation",
+      "description": "HSV colour space Average and Standard Derivation.",
+      "evidence": 3,
+      "relevance": 2,
+      "speed": 1,
+      "references": [
+        {
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95). International Society for Optics and Photonics. doi: https://doi.org/10.1117/12.477378",
+          "url": "https://doi.org/10.1117/12.477378"
+        }
+      ],
+      "results": [
+        {
+          "id": "m16_0",
+          "index": 0,
+          "type": "float",
+          "name": "Hue average",
+          "description": false
+        },
+        {
+          "id": "m16_1",
+          "index": 1,
+          "type": "float",
+          "name": "Saturation average",
+          "description": false
+        },
+        {
+          "id": "m16_2",
+          "index": 2,
+          "type": "float",
+          "name": "Saturation std",
+          "description": false
+        },
+        {
+          "id": "m16_3",
+          "index": 3,
+          "type": "float",
+          "name": "Value average",
+          "description": false
+        },
+        {
+          "id": "m16_4",
+          "index": 4,
+          "type": "float",
+          "name": "Value std",
+          "description": false
+        }
+      ]
+    },
+    "m17": {
+      "id": "m17",
+      "name": "Distinct HSV values",
+      "description": "The number of distinct values in the HSV color space after color reduction.",
+      "evidence": 2,
+      "relevance": 2,
+      "speed": 1,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        },
+        {
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95). International Society for Optics and Photonics. doi: https://doi.org/10.1117/12.477378",
+          "url": "https://doi.org/10.1117/12.477378"
+        }
+      ],
+      "results": [
+        {
+          "id": "m17_0",
+          "index": 0,
+          "type": "int",
+          "name": "Number of distinct HSV values",
+          "description": false
+        },
+        {
+          "id": "m17_1",
+          "index": 1,
+          "type": "int",
+          "name": "Number of distinct H values",
+          "description": false
+        },
+        {
+          "id": "m17_2",
+          "index": 2,
+          "type": "int",
+          "name": "Number of distinct S values",
+          "description": false
+        },
+        {
+          "id": "m17_3",
+          "index": 3,
+          "type": "int",
+          "name": "Number of distinct V values",
           "description": false
         }
       ]

@@ -93,11 +93,11 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Average Hue  (float, [0, +inf))
-            - Average Saturation (float, [0, +inf))
-            - Standard Deviation of Saturation (float, [0, +inf))
-            - Average Value (float, [0, +inf))
-            - Standard Deviation of Value (float, [0, +inf))
+            - Hue average (float, [0, +inf))
+            - Saturation average (float, [0, +inf))
+            - Saturation std (float, [0, +inf))
+            - Value average (float, [0, +inf))
+            - Value std (float, [0, +inf))
         """
 
         # Create PIL image
@@ -116,14 +116,14 @@ class Metric(AIMMetricInterface):
 
         # Hue is an angle, so cannot simply add and average it
         # Based on: http://mkweb.bcgsc.ca/color-summarizer/?faq#averagehue
-        avg_hue_sin: float = np.mean(np_sind(img_hue))
-        avg_hue_cos: float = np.mean(np_cosd(img_hue))
-        avgHue = atan2d(avg_hue_cos, avg_hue_sin) % 360
+        avg_hue_sin: float = float(np.mean(np_sind(img_hue)))
+        avg_hue_cos: float = float(np.mean(np_cosd(img_hue)))
+        avgHue: float = float(atan2d(avg_hue_cos, avg_hue_sin))
 
         # Compute avg and std for saturation and value
-        avgSaturation: float = np.mean(img_saturation)
-        stdSaturation: float = np.std(img_saturation)
-        avgValue: float = np.mean(img_value)
-        stdValue: float = np.std(img_value)
+        avgSaturation: float = float(np.mean(img_saturation))
+        stdSaturation: float = float(np.std(img_saturation))
+        avgValue: float = float(np.mean(img_value))
+        stdValue: float = float(np.std(img_value))
 
         return [avgHue, avgSaturation, stdSaturation, avgValue, stdValue]
