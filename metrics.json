@@ -749,6 +749,66 @@
           "description": false
         }
       ]
+    },
+    "m20": {
+      "id": "m20",
+      "name": "Color Harmonization",
+      "description": "This metric return closest color scheme template and distance",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 0,
+      "references": [
+        {
+          "title": "Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T. and Xu, Y. Color harmonization. ACM Transactions on Graphics 25, 3 (2006), 624. doi: https://doi.org/10.1145/1141911.1141933",
+          "url": "https://doi.org/10.1145/1141911.1141933"
+        }
+      ],
+      "results": [
+        {
+          "id": "m20_0",
+          "index": 0,
+          "type": "float",
+          "name": "Distance to the closest color harmony template",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 50.0],
+              "description": "Good, Almost the same as the color harmony templates.",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [50.01, 100.0],
+              "description": "Fair enough, but it needs to be re-colored to fit color harmony templates.",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [100.01, null],
+              "description": "Poor, Too far away from color harmony templates. Color correction is needed.",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        },
+        {
+          "id": "m20_1",
+          "index": 1,
+          "type": "b64",
+          "name": "Color-repaired image",
+          "description": "Color-repaired image based on the closest template with minimal changes."
+        },
+        {
+          "id": "m20_2",
+          "index": 2,
+          "type": "b64",
+          "name": "Hue of source and target",
+          "description": "The hue of the source and the hue of the closest color harmony."
+        }
+      ]
     }
   }
 }
