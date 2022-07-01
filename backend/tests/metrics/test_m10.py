@@ -40,9 +40,9 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("aalto.fi_website.png", [0.532875]),
-        ("myhelsinki.fi_website.png", [0.628527]),
-        ("wikipedia.org_website.png", [0.488411]),
+        ("aalto.fi_website.png", [0.532861]),
+        ("myhelsinki.fi_website.png", [0.628493]),
+        ("wikipedia.org_website.png", [0.488065]),
         ("blue_light.png", [1.0]),
         ("olive.png", [0.0]),
         ("olive_blue.png", [0.5]),

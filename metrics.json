@@ -547,8 +547,8 @@
       "id": "m10",
       "name": "WAVE (Weighted Affective Valence Estimates)",
       "description": "Mean of a mapping of pixel colors to the color preference values.",
-      "evidence": 4,
-      "relevance": 3,
+      "evidence": 3,
+      "relevance": 2,
       "speed": 2,
       "references": [
         {
@@ -561,7 +561,7 @@
           "id": "m10_0",
           "index": 0,
           "type": "float",
-          "name": "WAVE Mean",
+          "name": "Average WAVE Score Across Pixels",
           "description": false,
           "scores": [
             {
