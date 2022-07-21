@@ -68,8 +68,5 @@ def test_avg_num_colors_per_dynamic_cluster_desktop(
     )
 
     # Test result
-    if (
-        result is not None
-        and isinstance(result[0], int)
-    ):
+    if result is not None and isinstance(result[0], int):
         assert result == expected_results

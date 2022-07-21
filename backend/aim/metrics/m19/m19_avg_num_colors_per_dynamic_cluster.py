@@ -62,8 +62,9 @@ from PIL import Image
 from pydantic import HttpUrl
 
 # First-party modules
-from aim.common.constants import GUI_TYPE_DESKTOP
+from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
 from aim.metrics.interfaces import AIMMetricInterface
+from aim.metrics.m12.m12_dynamic_clusters import Metric as M12_Metric
 
 # ----------------------------------------------------------------------------
 # Metadata
@@ -85,7 +86,8 @@ class Metric(AIMMetricInterface):
     Metric: Average number of colors per dynamic cluster.
     """
 
-    _CLUSTER_THRESHOLD = 5  # Colour points with enough presence
+    # get_dynamic_clusters is imported from the same method in metric m12.
+    _get_dynamic_clusters = M12_Metric._get_dynamic_clusters
 
     # Public methods
     @classmethod
@@ -114,126 +116,19 @@ class Metric(AIMMetricInterface):
 
         # Convert image from ??? (should be RGBA) to RGB color space
         img_rgb: Image.Image = img.convert("RGB")
-        # Calculate total number of image pixels
-        total_pixels: int = img_rgb.width * img_rgb.height
 
-        # Get RGB color histogram
-        # Get unique colours and their frequencies
-        rgb_color_histogram: List[Tuple[int, Tuple]] = img_rgb.getcolors(
-            maxcolors=total_pixels
+        # Get dynamic clusters of the input image
+        center_of_clusters = cls._get_dynamic_clusters(
+            img_rgb, GUI_TYPE_DESKTOP
         )
-        frequency: List = []
-
-        # Create list from histogram
-        for h in list(rgb_color_histogram):
-            h_count, h_rgb = h
-            rc, gc, bc = h_rgb
-            add: List = [rc, gc, bc, h_count]
-            frequency.append(add)
-
-        # Only colour points with enough presence
-        frequency = list(
-            filter(lambda e: e[3] > cls._CLUSTER_THRESHOLD, frequency)
-        )
-        # Sort the pixels on frequency. This way we can cut the while loop short
-        frequency = sorted(frequency, key=lambda e: (e[3], e[2], e[1], e[0]))
-
-        # Create first cluster
-        center_of_clusters: List = []
-        add = [
-            frequency[0][0],
-            frequency[0][1],
-            frequency[0][2],
-            frequency[0][3],
-            1,
-        ]
-        center_of_clusters.append(add)
-
-        # Find for all colour points a cluster
-        for k in range(len(frequency) - 1, -1, -1):
-            belong1cluster: bool = False
-
-            # For every colour point calculate distance to all clusters
-            for center in range(len(center_of_clusters)):
-                point_freq: np.ndarray = np.array(
-                    [frequency[k][0], frequency[k][1], frequency[k][2]]
-                )
-                point_center: np.ndarray = np.array(
-                    [
-                        center_of_clusters[center][0],
-                        center_of_clusters[center][1],
-                        center_of_clusters[center][2],
-                    ]
-                )
-
-                # If a cluster is close enough, add this colour and recalculate the cluster
-                # Now the colour goes to the first cluster fullfilling this. Maybe it should be also the closest?
-                distance: float = float(
-                    np.linalg.norm(point_freq - point_center)
-                )
-                if distance <= 3.0:
-                    new_count: int = int(
-                        center_of_clusters[center][3] + frequency[k][3]
-                    )
-                    new_center: List[int] = [
-                        int(
-                            (
-                                point_freq[0] * frequency[k][3]
-                                + point_center[0]
-                                * center_of_clusters[center][3]
-                            )
-                            / new_count
-                        ),
-                        int(
-                            (
-                                point_freq[1] * frequency[k][3]
-                                + point_center[1]
-                                * center_of_clusters[center][3]
-                            )
-                            / new_count
-                        ),
-                        int(
-                            (
-                                point_freq[2] * frequency[k][3]
-                                + point_center[2]
-                                * center_of_clusters[center][3]
-                            )
-                            / new_count
-                        ),
-                    ]
-
-                    center_of_clusters[center][0] = new_center[0]
-                    center_of_clusters[center][1] = new_center[1]
-                    center_of_clusters[center][2] = new_center[2]
-                    center_of_clusters[center][3] = new_count
-                    center_of_clusters[center][4] += 1
-                    belong1cluster = True
-                    break
-
-            # Create new cluster if the colour point is not close enough to other clusters
-            if not belong1cluster:
-                add = [
-                    frequency[k][0],
-                    frequency[k][1],
-                    frequency[k][2],
-                    frequency[k][3],
-                    1,
-                ]
-                center_of_clusters.append(add)
-
-        # Only keep clusters with more than 5 colour entries
-        new_center_of_clusters: List = []
-        for x in range(len(center_of_clusters)):
-            if center_of_clusters[x][4] > cls._CLUSTER_THRESHOLD:
-                new_center_of_clusters.append(center_of_clusters[x])
 
         # Number of clusters, not statistically relevant
-        count_dynamic_cluster: int = int(len(new_center_of_clusters))
+        count_dynamic_cluster: int = int(len(center_of_clusters))
 
         # Average number of colours per cluster
         average_colour_dynamic_cluster: int = 0
-        for x in range(len(new_center_of_clusters)):
-            average_colour_dynamic_cluster += new_center_of_clusters[x][4]
+        for x in range(len(center_of_clusters)):
+            average_colour_dynamic_cluster += center_of_clusters[x][4]
 
         if count_dynamic_cluster != 0:
             average_colour_dynamic_cluster = int(

@@ -63,7 +63,7 @@ from PIL import Image
 from pydantic import HttpUrl
 
 # First-party modules
-from aim.common.constants import GUI_TYPE_DESKTOP
+from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
@@ -86,35 +86,37 @@ class Metric(AIMMetricInterface):
     Metric: Dynamic Clusters.
     """
 
-    _CLUSTER_THRESHOLD = 5  # Colour points with enough presence
+    # Colour points with enough presence: The papers [1,2] does not indicate any difference between desktop and
+    # mobile thresholds, but for the mobile a lower number (e.g., 2) can be used if any other source recommends it.
+    _COLOR_REDUCTION_THRESHOLD_DESKTOP: int = 5
+    _COLOR_REDUCTION_THRESHOLD_MOBILE: int = 5
 
-    # Public methods
+    _DISTANCE_THRESHOLD = 3  # If the distance in all color	components is less than	3, two colors are united in
+    # the same cluster
+
     @classmethod
-    def execute_metric(
+    def _get_dynamic_clusters(
         cls,
-        gui_image: str,
+        img_rgb: Image.Image,
         gui_type: int = GUI_TYPE_DESKTOP,
-        gui_url: Optional[HttpUrl] = None,
-    ) -> Optional[List[Union[int, float, str]]]:
+    ) -> List:
         """
-        Execute the metric.
+        Get dynamic clusters of the input image.
 
         Args:
-            gui_image: GUI image (PNG) encoded in Base64
-
-        Kwargs:
-            gui_type: GUI type, desktop = 0 (default), mobile = 1
-            gui_url: GUI URL (defaults to None)
+            img_rgb: input RGB image
 
         Returns:
-            Results (list of measures)
-            - Number of Dynamic Clusters (int)
+            List of computed dynamic clusters
         """
-        # Create PIL image
-        img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 
-        # Convert image from ??? (should be RGBA) to RGB color space
-        img_rgb: Image.Image = img.convert("RGB")
+        # Determine color cluster threshold
+        _CLUSTER_THRESHOLD = (
+            cls._COLOR_REDUCTION_THRESHOLD_MOBILE
+            if gui_type == GUI_TYPE_MOBILE
+            else cls._COLOR_REDUCTION_THRESHOLD_DESKTOP
+        )
+
         # Calculate total number of image pixels
         total_pixels: int = img_rgb.width * img_rgb.height
 
@@ -134,9 +136,11 @@ class Metric(AIMMetricInterface):
 
         # Only colour points with enough presence
         frequency = list(
-            filter(lambda e: e[3] > cls._CLUSTER_THRESHOLD, frequency)
+            filter(lambda e: e[3] > _CLUSTER_THRESHOLD, frequency)
         )
         # Sort the pixels on frequency. This way we can cut the while loop short
+        # Order of proccesing the clusters may change the result
+        # The paper does not contain any recommendations, the order is fixed as follows:
         frequency = sorted(frequency, key=lambda e: (e[3], e[2], e[1], e[0]))
 
         # Create first cluster
@@ -167,12 +171,13 @@ class Metric(AIMMetricInterface):
                     ]
                 )
 
-                # If a cluster is close enough, add this colour and recalculate the cluster
-                # Now the colour goes to the first cluster fullfilling this. Maybe it should be also the closest?
+                # If a cluster is close enough, add this colour and recalculate the cluster Now the colour goes to
+                # the first cluster fullfilling this. There is no indication in the paper that it should be the first
+                # cluster meeting the requirement or the closest cluster.
                 distance: float = float(
                     np.linalg.norm(point_freq - point_center)
                 )
-                if distance <= 3.0:
+                if distance <= cls._DISTANCE_THRESHOLD:
                     new_count: int = int(
                         center_of_clusters[center][3] + frequency[k][3]
                     )
@@ -225,10 +230,45 @@ class Metric(AIMMetricInterface):
         # Only keep clusters with more than 5 colour entries
         new_center_of_clusters: List = []
         for x in range(len(center_of_clusters)):
-            if center_of_clusters[x][4] > cls._CLUSTER_THRESHOLD:
+            if center_of_clusters[x][4] > _CLUSTER_THRESHOLD:
                 new_center_of_clusters.append(center_of_clusters[x])
 
-        # Number of clusters, not statistically relevant
-        count_dynamic_cluster: int = int(len(new_center_of_clusters))
+        return new_center_of_clusters
+
+    # Public methods
+    @classmethod
+    def execute_metric(
+        cls,
+        gui_image: str,
+        gui_type: int = GUI_TYPE_DESKTOP,
+        gui_url: Optional[HttpUrl] = None,
+    ) -> Optional[List[Union[int, float, str]]]:
+        """
+        Execute the metric.
+
+        Args:
+            gui_image: GUI image (PNG) encoded in Base64
+
+        Kwargs:
+            gui_type: GUI type, desktop = 0 (default), mobile = 1
+            gui_url: GUI URL (defaults to None)
+
+        Returns:
+            Results (list of measures)
+            - Number of Dynamic Clusters (int)
+        """
+        # Create PIL image
+        img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
+
+        # Convert image from ??? (should be RGBA) to RGB color space
+        img_rgb: Image.Image = img.convert("RGB")
+
+        # Get dynamic clusters of the input image
+        center_of_clusters = cls._get_dynamic_clusters(
+            img_rgb, GUI_TYPE_DESKTOP
+        )
+
+        # Number of dynamic clusters
+        count_dynamic_cluster: int = int(len(center_of_clusters))
 
         return [count_dynamic_cluster]

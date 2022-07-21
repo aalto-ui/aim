@@ -546,9 +546,9 @@
     "m11": {
       "id": "m11",
       "name": "Static Clusters",
-      "description": "The number of static 32-sized color clusters.",
+      "description": "The number of static 32-sized color clusters. It indicates the number of dominant colours but is confounded by colour variance.",
       "evidence": 2,
-      "relevance": 2,
+      "relevance": 3,
       "speed": 2,
       "references": [
         {
@@ -571,23 +571,23 @@
             {
               "id": "r1",
               "range": [0, 810],
-              "description": "TODO",
-              "icon": ["far", "check-circle"],
-              "judgment": "good"
+              "description": "Less colourful",
+              "icon": [null, null],
+              "judgment": "normal"
             },
             {
               "id": "r2",
               "range": [811, 2550],
-              "description": "TODO",
+              "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
               "range": [2551, 32768],
-              "description": "TODO",
-              "icon": ["fas", "exclamation-triangle"],
-              "judgment": "bad"
+              "description": "Colourful",
+              "icon": [null, null],
+              "judgment": "normal"
             }
           ]
         }
@@ -596,9 +596,9 @@
     "m12": {
       "id": "m12",
       "name": "Dynamic Clusters",
-      "description": "The number of dynamic clusters.",
-      "evidence": 1,
-      "relevance": 2,
+      "description": "The number of dynamic clusters. Colours are clustered recursively, using as criteria their distance in a colour cube.",
+      "evidence": 3,
+      "relevance": 3,
       "speed": 0,
       "references": [
         {
@@ -646,9 +646,9 @@
     "m19": {
       "id": "m19",
       "name": "Average number of colors per dynamic cluster",
-      "description": "Average number of colors per dynamic cluster.",
-      "evidence": 2,
-      "relevance": 2,
+      "description": "Average number of colors per dynamic cluster. The number of colours per cluster is shown to correlate with aesthetic perception.",
+      "evidence": 3,
+      "relevance": 3,
       "speed": 0,
       "references": [
         {
@@ -671,23 +671,23 @@
             {
               "id": "r1",
               "range": [0, 12],
-              "description": "Good",
-              "icon": ["far", "check-circle"],
-              "judgment": "good"
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
             },
             {
               "id": "r2",
               "range": [13, 17],
-              "description": "Fair",
+              "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
               "range": [18, null],
-              "description": "Poor",
-              "icon": ["fas", "exclamation-triangle"],
-              "judgment": "bad"
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
             }
           ]
         }
