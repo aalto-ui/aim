@@ -547,8 +547,8 @@
       "id": "m18",
       "name": "NIMA (Neural IMage Assessment)",
       "description": "Measures technical and aesthetic qualities of the input image.",
-      "evidence": 3,
-      "relevance": 3,
+      "evidence": 2,
+      "relevance": 2,
       "speed": 2,
       "references": [
         {

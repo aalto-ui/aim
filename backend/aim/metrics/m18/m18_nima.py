@@ -10,6 +10,10 @@ Description:
     Technical and aesthetic qualities of the input image.
 
 
+Source:
+    Model is imported from here: https://github.com/delldu/ImageNima/tree/master/models
+
+
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
     project grant on self-optimizing web services. The principal investigator
@@ -72,7 +76,10 @@ class Metric(AIMMetricInterface):
     Metric: NIMA (Neural IMage Assessment).
     """
 
-    # Transform method
+    # Transform method: Since the trained model only works with square photos, we should resize the input image.
+    # _tranform can be changed to any transformer. The implemented transformer returns the center square of the
+    # resized input image (smaller edge is 224, without changing ratio), which is one of the most popular
+    # transformers for non-square images.
     _transform: transforms.transforms.Compose = transforms.Compose(
         [
             transforms.Resize(224),
