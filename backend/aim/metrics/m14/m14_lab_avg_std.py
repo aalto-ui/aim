@@ -107,7 +107,9 @@ class Metric(AIMMetricInterface):
         # Get NumPy array
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
-        # Convert the LAB space
+        # Convert the LAB space The rgb2lab function get optional parameters for type of luminance. Name of
+        # the illuminant types are: {“A”, “B”, “C”, “D50”, “D55”, “D65”, “D75”, “E”}. The default value is: 'D65' (CIE standard
+        # illuminant). Reference: https://en.wikipedia.org/wiki/Standard_illuminant
         lab: np.ndarray = color.rgb2lab(img_rgb_nparray)
 
         L: np.ndarray = lab[:, :, 0]

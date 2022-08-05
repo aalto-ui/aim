@@ -4,7 +4,7 @@
       "id": "cp",
       "name": "Colour Perception",
       "icon": "palette",
-      "metrics": ["m1", "m3", "m13", "m14", "m15", "m16", "m17"]
+      "metrics": ["m1", "m3", "m13", "m14", "m15", "m16", "m17", "m20"]
     },
     {
       "id": "pf",
@@ -549,7 +549,7 @@
       "description": "Standard deviation of luminance corrected for display perception",
       "evidence": 3,
       "relevance": 3,
-      "speed": 1,
+      "speed": 2,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
@@ -561,8 +561,31 @@
           "id": "m13_0",
           "index": 0,
           "type": "float",
-          "name": "Luminance std",
-          "description": false
+          "name": "Luminance STD",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 56.4306],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [56.4307, 85.522],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [85.523, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
         }
       ]
     },
@@ -584,53 +607,135 @@
           "id": "m14_0",
           "index": 0,
           "type": "float",
-          "name": "L average",
-          "description": false
+          "name": "Lightness Average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 61.1937],
+              "description": "Dark",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [61.1938, 85.945],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [85.946, null],
+              "description": "Light",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         },
         {
           "id": "m14_1",
           "index": 1,
           "type": "float",
-          "name": "L std",
-          "description": false
+          "name": "Lightness STD",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 21.203],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [21.204, 32.748],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [32.749, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
         },
         {
           "id": "m14_2",
           "index": 2,
           "type": "float",
-          "name": "A average",
-          "description": false
+          "name": "A (Green-Red Space) Average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         },
         {
           "id": "m14_3",
           "index": 3,
           "type": "float",
-          "name": "A std",
-          "description": false
+          "name": "A (Green-Red Space) STD",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         },
         {
           "id": "m14_4",
           "index": 4,
           "type": "float",
-          "name": "B average",
-          "description": false
+          "name": "B (Yellow-Blue Space) Average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         },
         {
           "id": "m14_5",
           "index": 5,
           "type": "float",
-          "name": "B std",
-          "description": false
+          "name": "B (Yellow-Blue Space) STD",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         }
       ]
     },
     "m15": {
       "id": "m15",
       "name": "Hasler and Susstrunk Colorfulness",
-      "description": "The standard deviation of pixels in the RGB color space.",
+      "description": "The Hassler-Susstrunk metric is computed based on the RGYB colour spectrum and mainly comprises standard deviations. The higher the deviation, the more colourful the image is perceived.",
       "evidence": 4,
       "relevance": 3,
-      "speed": 1,
+      "speed": 2,
       "references": [
         {
           "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95). International Society for Optics and Photonics. doi: https://doi.org/10.1117/12.477378",
@@ -643,7 +748,30 @@
           "index": 0,
           "type": "float",
           "name": "Colourfulness",
-          "description": false
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 100.7756],
+              "description": "Less colourful",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [100.7757, 152.531],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [152.532, null],
+              "description": "Colourful",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         }
       ]
     },
@@ -665,46 +793,147 @@
           "id": "m16_0",
           "index": 0,
           "type": "float",
-          "name": "Hue average",
-          "description": false
+          "name": "Hue Average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         },
         {
           "id": "m16_1",
           "index": 1,
           "type": "float",
-          "name": "Saturation average",
-          "description": false
+          "name": "Saturation Average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.0738],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.0739, 0.2468],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [0.2469, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
         },
         {
           "id": "m16_2",
           "index": 2,
           "type": "float",
-          "name": "Saturation std",
-          "description": false
+          "name": "Saturation STD",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.1652],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.1653, 0.2777],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [0.2778, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
         },
         {
           "id": "m16_3",
           "index": 3,
           "type": "float",
           "name": "Value average",
-          "description": false
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.6448],
+              "description": "Dark",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.6449, 0.8905],
+              "description": "Medium",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.8906, null],
+              "description": "Light",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         },
         {
           "id": "m16_4",
           "index": 4,
           "type": "float",
           "name": "Value std",
-          "description": false
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.1903],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.1902, 0.3147],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [0.3148, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
         }
       ]
     },
     "m17": {
       "id": "m17",
       "name": "Distinct HSV values",
-      "description": "The number of distinct values in the HSV color space after color reduction.",
+      "description": "The number of distinct values in the HSV (Hue, Saturation, Value) color space after color reduction.",
       "evidence": 2,
       "relevance": 2,
-      "speed": 1,
+      "speed": 2,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
@@ -725,28 +954,78 @@
           "index": 0,
           "type": "int",
           "name": "Number of distinct HSV values",
-          "description": false
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 16],
+              "description": "Good",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r1",
+              "range": [17, 47],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r1",
+              "range": [48, null],
+              "description": "Potential varied",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         },
         {
           "id": "m17_1",
           "index": 1,
           "type": "int",
           "name": "Number of distinct H values",
-          "description": false
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         },
         {
           "id": "m17_2",
           "index": 2,
           "type": "int",
           "name": "Number of distinct S values",
-          "description": false
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         },
         {
           "id": "m17_3",
           "index": 3,
           "type": "int",
           "name": "Number of distinct V values",
-          "description": false
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [null, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         }
       ]
     },
@@ -773,21 +1052,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 50.0],
+              "range": [0.0, 259.2499],
               "description": "Good, Almost the same as the color harmony templates.",
               "icon": ["far", "check-circle"],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [50.01, 100.0],
-              "description": "Fair enough, but it needs to be re-colored to fit color harmony templates.",
+              "range": [259.2500, 3113.7350],
+              "description": "Fair enough, but it needs to be re-colored to fit in color harmony templates.",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [100.01, null],
+              "range": [3113.7351, null],
               "description": "Poor, Too far away from color harmony templates. Color correction is needed.",
               "icon": ["fas", "exclamation-triangle"],
               "judgment": "bad"
