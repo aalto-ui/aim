@@ -48,7 +48,6 @@ from typing import Dict, List, Optional, Tuple, Union
 import cv2
 import matplotlib
 import numpy as np
-import pyrtools as pt
 from PIL import Image
 from pydantic import HttpUrl
 

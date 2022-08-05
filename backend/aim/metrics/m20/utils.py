@@ -12,7 +12,7 @@ Some Codes are imported and adopted from https://github.com/tartarskunk/ColorHar
 
 # Standard library modules
 from io import BytesIO
-from typing import Dict, List, Optional, Tuple, Union
+from typing import List, Union
 
 # Third-party modules
 import cv2
@@ -92,7 +92,7 @@ class HueSector:
 
     def is_in_sector(self, H: np.ndarray) -> np.ndarray:
         # True/False matrix if hue resides in the sector
-        hue_in_arr: np.array = deg_distance(H, self.center) < self.width / 2
+        hue_in_arr: np.ndarray = deg_distance(H, self.center) < self.width / 2
         return hue_in_arr
 
     def distance_to_border(self, H: np.ndarray) -> np.ndarray:
@@ -249,7 +249,7 @@ def plothis(
         hue_histo /= np.max(hue_histo)
 
     # Compute angels of shadow, template types
-    shadow_histo: np.ndaary = np.array([0.0] * N)
+    shadow_histo: np.ndarray = np.array([0.0] * N)
     for sector in harmonic_scheme.sectors:
         sector_center: Union[int, float] = sector.center
         sector_width: Union[int, float] = sector.width
