@@ -73,7 +73,11 @@ class Metric(AIMMetricInterface):
     """
 
     # Private constants
-    _L_COEF: List[float] = [0.2126, 0.7152, 0.0722]  # Rec. 709 luma coefficients
+    _L_COEF: List[float] = [
+        0.2126,
+        0.7152,
+        0.0722,
+    ]  # Rec. 709 luma coefficients
 
     # Public methods
     @classmethod
