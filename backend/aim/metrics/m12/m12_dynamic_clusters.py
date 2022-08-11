@@ -19,9 +19,6 @@ Description:
     two colors in a color cube is less than or equal to 3, two colors are united in the same cluster, which continues
     recursively for all colors. Only clusters containing more than 5 values are counted."
 
-    The number of clusters has not proven statistically relevant. The number of colours per clusters is.
-    Both are returned with this function.
-
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year

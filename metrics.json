@@ -621,9 +621,9 @@
             {
               "id": "r1",
               "range": [0, 133],
-              "description": "Good",
-              "icon": ["far", "check-circle"],
-              "judgment": "good"
+              "description": "Less colourful",
+              "icon": [null, null],
+              "judgment": "normal"
             },
             {
               "id": "r2",
@@ -635,9 +635,9 @@
             {
               "id": "r3",
               "range": [444, null],
-              "description": "Poor",
-              "icon": ["fas", "exclamation-triangle"],
-              "judgment": "bad"
+              "description": "Colourful",
+              "icon": [null, null],
+              "judgment": "normal"
             }
           ]
         }

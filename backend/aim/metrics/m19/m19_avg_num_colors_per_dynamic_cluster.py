@@ -19,7 +19,6 @@ Description:
     "The number of dynamic clusters of colors after color reduction (more than 5 pixels). If a difference between
     two colors in a color cube is less than or equal to 3, two colors are united in the same cluster, which continues
     recursively for all colors. Only clusters containing more than 5 values are counted."
-    The number of clusters has not proven statistically relevant. The number of colours per clusters is.
 
 
 Funding information and contact:
