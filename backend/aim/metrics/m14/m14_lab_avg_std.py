@@ -9,6 +9,9 @@ Metric:
 Description:
     LAB colour space Average and Standard Derivation.
     Category: Colour Perception > Color Range > LAB Average and Standard Derivation.
+    In the references, there is no specific type of luminance recommended, so the type is
+    determined based on the legacy code.
+
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -107,9 +110,11 @@ class Metric(AIMMetricInterface):
         # Get NumPy array
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
-        # Convert the LAB space The rgb2lab function get optional parameters for type of luminance. Name of
-        # the illuminant types are: {“A”, “B”, “C”, “D50”, “D55”, “D65”, “D75”, “E”}. The default value is: 'D65' (CIE standard
-        # illuminant). Reference: https://en.wikipedia.org/wiki/Standard_illuminant
+        # Convert the LAB space The color.rgb2lab function get optional parameters for type of luminance.
+        # In the references, there is no specific type of luminance recommended, so the type is
+        # determined based on the legacy code. Name of the illuminant types are: {“A”, “B”, “C”, “D50”,
+        # “D55”, “D65”, “D75”, “E”}. The default value is: 'D65' (CIE standard illuminant).
+        # Reference: https://en.wikipedia.org/wiki/Standard_illuminant
         lab: np.ndarray = color.rgb2lab(img_rgb_nparray)
 
         L: np.ndarray = lab[:, :, 0]

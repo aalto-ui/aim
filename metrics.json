@@ -1053,21 +1053,21 @@
             {
               "id": "r1",
               "range": [0.0, 259.2499],
-              "description": "Good, Almost the same as the color harmony templates.",
+              "description": "Good",
               "icon": ["far", "check-circle"],
               "judgment": "good"
             },
             {
               "id": "r2",
               "range": [259.2500, 3113.7350],
-              "description": "Fair enough, but it needs to be re-colored to fit in color harmony templates.",
+              "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
               "range": [3113.7351, null],
-              "description": "Poor, Too far away from color harmony templates. Color correction is needed.",
+              "description": "Poor",
               "icon": ["fas", "exclamation-triangle"],
               "judgment": "bad"
             }

@@ -264,6 +264,6 @@ class Metric(AIMMetricInterface):
 
         return [
             best_distance,
-            hues_b64,
             shifted_b64,
+            hues_b64,
         ]

@@ -10,6 +10,8 @@ Description:
     This is the standard deviation of luminance over all pixels. It has been proven to
     not be statically relevant for the perceived colour variance of a webpage.
     Category: Colour Perception > Color Range > LAB Average.
+    In the references, there is no specific type of luminance recommended, so the type is
+    determined based on the legacy code.
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -32,7 +34,6 @@ Change log:
     v1.0 (2017-05-29)
       * Initial implementation
 """
-
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -114,7 +115,8 @@ class Metric(AIMMetricInterface):
         green: np.ndarray = img_rgb_nparray[:, :, 1].copy()
         red: np.ndarray = img_rgb_nparray[:, :, 2].copy()
 
-        # Based on: https://en.wikipedia.org/wiki/Luma_(video)
+        # In the references, there is no specific type of luminance recommended, so the type is
+        # determined based on the legacy code. Based on: https://en.wikipedia.org/wiki/Luma_(video)
         # Y = 0.2126 R + 0.7152 G + 0.0722 B
         L: np.ndarray = (
             cls._L_COEF[0] * red

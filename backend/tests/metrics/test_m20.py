@@ -42,7 +42,14 @@ __version__ = "1.0"
     ["input_value", "expected_results"],
     [
         ("red.png", [0.0]),
-        ("aim_bad_harmony.png", [1246.757656]),
+        (
+            "aim_bad_harmony.png",
+            [
+                1246.757656,
+                load_expected_result("m20_1_aim.png"),
+                load_expected_result("m20_2_aim.png"),
+            ],
+        ),
     ],
 )
 def test_color_harmonization_desktop(
@@ -76,3 +83,13 @@ def test_color_harmonization_desktop(
         and isinstance(result[2], str)
     ):
         assert round(result[0], 6) == expected_results[0]
+
+        if len(expected_results) == 3:
+            assert (
+                image_utils.idiff(result[1], expected_results[1])
+                <= IDIFF_TOLERANCE
+            )
+            assert (
+                image_utils.idiff(result[2], expected_results[2])
+                <= IDIFF_TOLERANCE
+            )
