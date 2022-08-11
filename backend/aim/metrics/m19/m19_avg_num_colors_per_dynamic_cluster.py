@@ -118,7 +118,7 @@ class Metric(AIMMetricInterface):
 
         # Get dynamic clusters of the input image
         center_of_clusters = cls._get_dynamic_clusters(
-            img_rgb, GUI_TYPE_DESKTOP
+            img_rgb, gui_type
         )
 
         # Number of clusters, not statistically relevant
