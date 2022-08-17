@@ -3,19 +3,16 @@
 
 """
 Metric:
-    Static Clusters
+    Static clusters
 
 
 Description:
-    The number of static 32-sized color clusters.
+    The number of static 32-sized color clusters after color reduction;
+    only RGB values covering more than five pixels (for desktop) or two
+    pixels (for mobile) are counted.
 
-    Category: Visual complexity > Color variability > Dominant colors
-
-    The number of static 32-sized color clusters (the sub-cube edge size of clusters is 32 values out of possible 256,
-    per each RGB channel). Only clusters containing more than 5 values are counted. It is significant factor for
-    dominant colours and clutter, but not for colour variance. CR3 is proven to be more accurate, though also more
-    computational complex.
-
+    Category: Visual complexity > Information amount > Color variability >
+    Dominant colors. For details, see CV4 [1], A1 [2], and C6 [3].
 
 
 Funding information and contact:
@@ -30,10 +27,16 @@ References:
         Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM.
         doi: https://doi.org/10.1145/2702123.2702575
 
-    2.  Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface
+    2.  Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile
+        App Interfaces. In Proceedings of the 8th Nordic Conference on
+        Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM.
+        doi: https://doi.org/10.1145/2639189.2641219
+
+    3.  Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface
         Visual Complexity. In Proceedings of the 2014 International Working
         Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
         doi: https://doi.org/10.1145/2598153.2598173
+
 
 Change log:
     v2.0 (2022-05-16)
@@ -42,6 +45,7 @@ Change log:
     v1.0 (2017-05-29)
       * Initial implementation
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -58,7 +62,7 @@ from PIL import Image
 from pydantic import HttpUrl
 
 # First-party modules
-from aim.common.constants import GUI_TYPE_DESKTOP
+from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
@@ -78,14 +82,14 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Static Clusters.
+    Metric: Static clusters.
     """
 
-    _CUBE_SIZE = 32  # the sub-cube edge size of clusters is 32 values out of possible 256
-    _IMTOCUBE_DIV = 256 / _CUBE_SIZE  # 8
-    _CLUSTER_THRESHOLD = (
-        5  # Only clusters containing more than 5 values are counted
-    )
+    # Private constants
+    _CUBE_SIZE: int = 32  # The sub-cube edge size of clusters is 32 values out of possible 256
+    _IMTOCUBE_DIV: float = 256 / _CUBE_SIZE  # 8.0
+    _COLOR_REDUCTION_THRESHOLD_DESKTOP: int = 5
+    _COLOR_REDUCTION_THRESHOLD_MOBILE: int = 2
 
     # Public methods
     @classmethod
@@ -107,20 +111,28 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Static Clusters (int, [0, 32^3))
+            - Number of static color clusters (int, [0, 32^3))
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 
         # Convert image from ??? (should be RGBA) to RGB color space
         img_rgb: Image.Image = img.convert("RGB")
+
         # Calculate total number of image pixels
         total_pixels: int = img_rgb.width * img_rgb.height
 
         # Get RGB color histogram
-        # Get unique colours and their frequencies
         rgb_color_histogram: List[Tuple[int, Tuple]] = img_rgb.getcolors(
             maxcolors=total_pixels
+        )
+
+        # Set color reduction threshold; five (pixels) for desktop GUIs and
+        # three (pixels) for mobile GUIs
+        color_reduction_threshold: int = (
+            cls._COLOR_REDUCTION_THRESHOLD_MOBILE
+            if gui_type == GUI_TYPE_MOBILE
+            else cls._COLOR_REDUCTION_THRESHOLD_DESKTOP
         )
 
         # Divide rgb spectrum (0-255) to a (cls._CUBE_SIZE, cls._CUBE_SIZE, cls._CUBE_SIZE) matrix
@@ -132,9 +144,9 @@ class Metric(AIMMetricInterface):
             rc, gc, bc = tuple(int(i / cls._IMTOCUBE_DIV) for i in h_rgb)
             cluster[rc, gc, bc] += h_count
 
-        # The amount of cells that have more than cls._CLUSTER_THRESHOLD entries
-        num_clusters: int = int((cluster > cls._CLUSTER_THRESHOLD).sum())
+        # The amount of cells that have more than color_reduction_threshold entries
+        n_clusters: int = int((cluster > color_reduction_threshold).sum())
 
         return [
-            num_clusters,
+            n_clusters,
         ]

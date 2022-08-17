@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Static Clusters' metric (m11).
+Tests for the 'Static clusters' metric (m11).
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -50,6 +51,7 @@ def test_static_clusters_desktop(
 ) -> None:
     """
     Test static clusters metric (desktop GUIs).
+
     Args:
         input_value: GUI image file name
         expected_results: Expected results (list of measures)

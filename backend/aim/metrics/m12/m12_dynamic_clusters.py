@@ -3,21 +3,18 @@
 
 """
 Metric:
-    Dynamic Clusters
+    Dynamic clusters
 
 
 Description:
-    Number of dynamic clusters.
+    The number of dynamic color clusters after color reduction; only RGB
+    values covering more than five pixels are counted. If a difference
+    between two colors in a color cube is less than or equal to three, two
+    colors are united in the same cluster, which continues recursively for
+    all colors.
 
-    Category: Visual complexity > Color variability > Dominant colors
-    For details, see CV5 [1].
-
-    In the paper by Miniukovich and De Angeli suggest (among others) two factors for an indication for colourfulness
-    The number of dynamic clusters and the number of colours per dynamic cluster.
-
-    "The number of dynamic clusters of colors after color reduction (more than 5 pixels). If a difference between
-    two colors in a color cube is less than or equal to 3, two colors are united in the same cluster, which continues
-    recursively for all colors. Only clusters containing more than 5 values are counted."
+    Category: Visual complexity > Information amount > Color variability >
+    Dominant colors. For details, see CV5 [1], A2 [2], and C7 [3].
 
 
 Funding information and contact:
@@ -32,10 +29,16 @@ References:
         Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM.
         doi: https://doi.org/10.1145/2702123.2702575
 
-    2.  Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface
+    2.  Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile
+        App Interfaces. In Proceedings of the 8th Nordic Conference on
+        Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM.
+        doi: https://doi.org/10.1145/2639189.2641219
+
+    3.  Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface
         Visual Complexity. In Proceedings of the 2014 International Working
         Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
         doi: https://doi.org/10.1145/2598153.2598173
+
 
 Change log:
     v2.0 (2022-06-09)
@@ -44,6 +47,7 @@ Change log:
     v1.0 (2017-05-29)
       * Initial implementation
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -80,17 +84,17 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Dynamic Clusters.
+    Metric: Dynamic clusters.
     """
 
-    # Colour points with enough presence: The papers [1,2] does not indicate any difference between desktop and
-    # mobile thresholds, but for the mobile a lower number (e.g., 2) can be used if any other source recommends it.
+    # Private constants
+    # Color points with enough presence: The papers [1,2] do not indicate any difference between desktop and
+    # mobile thresholds, but for mobile a lower number (e.g., 2) can be used if another source recommends it.
     _COLOR_REDUCTION_THRESHOLD_DESKTOP: int = 5
     _COLOR_REDUCTION_THRESHOLD_MOBILE: int = 5
+    _DISTANCE_THRESHOLD: int = 3  # If the distance in all color components is less than 3, two colors are united in the same cluster
 
-    _DISTANCE_THRESHOLD = 3  # If the distance in all color	components is less than	3, two colors are united in
-    # the same cluster
-
+    # Private methods
     @classmethod
     def _get_dynamic_clusters(
         cls,
@@ -103,12 +107,14 @@ class Metric(AIMMetricInterface):
         Args:
             img_rgb: input RGB image
 
+        Kwargs:
+            gui_type: GUI type, desktop = 0 (default), mobile = 1
+
         Returns:
             List of computed dynamic clusters
         """
-
         # Determine color cluster threshold
-        _CLUSTER_THRESHOLD = (
+        _CLUSTER_THRESHOLD: int = (
             cls._COLOR_REDUCTION_THRESHOLD_MOBILE
             if gui_type == GUI_TYPE_MOBILE
             else cls._COLOR_REDUCTION_THRESHOLD_DESKTOP
@@ -118,7 +124,6 @@ class Metric(AIMMetricInterface):
         total_pixels: int = img_rgb.width * img_rgb.height
 
         # Get RGB color histogram
-        # Get unique colours and their frequencies
         rgb_color_histogram: List[Tuple[int, Tuple]] = img_rgb.getcolors(
             maxcolors=total_pixels
         )
@@ -252,7 +257,7 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Number of Dynamic Clusters (int)
+            - Number of dynamic color clusters (int, [0, +inf))
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))

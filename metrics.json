@@ -545,8 +545,8 @@
     },
     "m11": {
       "id": "m11",
-      "name": "Static Clusters",
-      "description": "The number of static 32-sized color clusters. It indicates the number of dominant colours but is confounded by colour variance.",
+      "name": "Static clusters",
+      "description": "The number of static 32-sized color clusters after color reduction; only RGB values covering more than five pixels (for desktop) and two pixels (for mobile) are counted.",
       "evidence": 2,
       "relevance": 3,
       "speed": 2,
@@ -554,6 +554,10 @@
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
           "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
         },
         {
           "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
@@ -565,13 +569,13 @@
           "id": "m11_0",
           "index": 0,
           "type": "int",
-          "name": "Number of clusters",
+          "name": "Number of static color clusters",
           "description": false,
           "scores": [
             {
               "id": "r1",
               "range": [0, 810],
-              "description": "Less colourful",
+              "description": "Colorless",
               "icon": [null, null],
               "judgment": "normal"
             },
@@ -585,7 +589,7 @@
             {
               "id": "r3",
               "range": [2551, 32768],
-              "description": "Colourful",
+              "description": "Colorful",
               "icon": [null, null],
               "judgment": "normal"
             }
@@ -595,8 +599,8 @@
     },
     "m12": {
       "id": "m12",
-      "name": "Dynamic Clusters",
-      "description": "The number of dynamic clusters. Colours are clustered recursively, using as criteria their distance in a colour cube.",
+      "name": "Dynamic clusters",
+      "description": "The number of dynamic color clusters after color reduction; only RGB values covering more than five pixels are counted. If a difference between two colors in a color cube is less than or equal to three, two colors are united in the same cluster, which continues recursively for all colors.",
       "evidence": 3,
       "relevance": 3,
       "speed": 0,
@@ -604,6 +608,10 @@
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
           "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
         },
         {
           "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
@@ -615,13 +623,13 @@
           "id": "m12_0",
           "index": 0,
           "type": "int",
-          "name": "Number of dynamic clusters",
+          "name": "Number of dynamic color clusters",
           "description": false,
           "scores": [
             {
               "id": "r1",
               "range": [0, 133],
-              "description": "Less colourful",
+              "description": "Colorless",
               "icon": [null, null],
               "judgment": "normal"
             },
@@ -635,7 +643,7 @@
             {
               "id": "r3",
               "range": [444, null],
-              "description": "Colourful",
+              "description": "Colorful",
               "icon": [null, null],
               "judgment": "normal"
             }

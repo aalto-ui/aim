@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Dynamic Clusters' metric (m12).
+Tests for the 'Dynamic clusters' metric (m12).
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -50,6 +51,7 @@ def test_dynamic_clusters_desktop(
 ) -> None:
     """
     Test dynamic clusters metric (desktop GUIs).
+
     Args:
         input_value: GUI image file name
         expected_results: Expected results (list of measures)
@@ -69,4 +71,4 @@ def test_dynamic_clusters_desktop(
 
     # Test result
     if result is not None and isinstance(result[0], int):
-        assert result == expected_results
+        assert result[0] == expected_results[0]
