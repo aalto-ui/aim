@@ -546,13 +546,13 @@
     "m10": {
       "id": "m10",
       "name": "WAVE (Weighted Affective Valence Estimates)",
-      "description": "Mean of a mapping of pixel colors to the color preference values.",
+      "description": "The mean of a mapping of pixel colors to the color preference values.",
       "evidence": 3,
       "relevance": 2,
       "speed": 2,
       "references": [
         {
-          "title": "Palmer, S.E. and Schloss, K.B., (2010). An ecological valence theory of human color preference. Proceedings of the National Academy of Sciences, 107(19), pp.8877-8882. doi: https://doi.org/10.1073/pnas.0906172107",
+          "title": "Palmer, S.E. and Schloss, K.B. (2010). An Ecological Valence Theory of Human Color Preference. Proceedings of the National Academy of Sciences, 107(19), 8877-8882. doi: https://doi.org/10.1073/pnas.0906172107",
           "url": "https://doi.org/10.1073/pnas.0906172107"
         }
       ],
@@ -561,7 +561,7 @@
           "id": "m10_0",
           "index": 0,
           "type": "float",
-          "name": "Average WAVE Score Across Pixels",
+          "name": "Average WAVE score across pixels",
           "description": false,
           "scores": [
             {

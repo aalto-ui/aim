@@ -7,21 +7,21 @@ Metric:
 
 
 Description:
-    This is the mean of a simple mapping of pixel colors to the color preference values
-    experimentally obtained by Palmer and Schloss.
+    This is the mean of a simple mapping of pixel colors to the color
+    preference values experimentally obtained by Palmer and Schloss.
 
     Category: Colour Perception.
 
-    Details: Under their hypothesis that people's color preferences reflect their dispositions
-    towards objects of those colors, they had participants grade their feelings towards
-    sets of objects of particular colors, and used those gradings to construct these
-    color preference values.
-    It should be noted that these preferences are likely significantly influenced by
-    sociocultural factors, and thus this particular set of preference values may not
-    accurately reflect all website visitors' impressions of the color scheme.
-    Examples of the cross culturual differences for the color preferences can be find here:
+    Details: Under their hypothesis that people's color preferences reflect
+    their dispositions towards objects of those colors, they had
+    participants grade their feelings towards sets of objects of particular
+    colors, and used those gradings to construct these color preference
+    values. It should be noted that these preferences are likely
+    significantly influenced by sociocultural factors, and thus this
+    particular set of preference values may not accurately reflect all
+    website visitors' impressions of the color scheme. Examples of the cross
+    culturual differences for the color preferences can be found here:
     https://palmerlab.berkeley.edu/color1.html
-
 
 
 Funding information and contact:
@@ -31,9 +31,10 @@ Funding information and contact:
 
 
 References:
-    1.  Palmer, S.E. and Schloss, K.B., (2010). An ecological valence theory of human color preference.
-        Proceedings of the National Academy of Sciences, 107(19), pp.8877-8882.
-        doi: https://doi.org/10.1073/pnas.0906172107
+    1.  Palmer, S.E. and Schloss, K.B., (2010). An Ecological Valence Theory
+    of Human Color Preference. Proceedings of the National Academy of
+    Sciences, 107(19), pp.8877-8882.
+    doi: https://doi.org/10.1073/pnas.0906172107
 
 
 Change log:
@@ -42,8 +43,8 @@ Change log:
 
     v1.0 (2018-11-23)
       * Initial implementation
-
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -85,12 +86,13 @@ class Metric(AIMMetricInterface):
 
     # Private constants
 
-    #  WAVE scores from Fig. 1 in the [1]. There are total 37 chromatic colors:
-    #  For the 32 chromatic colors, the first letter is the saturation/lightness
-    #  level (S[aturated], L[ight], M[uted], or D[ark]) and the 2nd letter is the
-    #  hue (R[ed], O[range], Y[ellow], [c]H[artreuse], G[reen], C[yan], B[lue], and P[urple])
-    # 5 achromatic colors, BK = Black, A1 = dark gray, A2 = medium gray, A3 = light gray,
-    # and WH = white are excluded for the WAVE scores.
+    # WAVE scores are from Fig. 1 in the [1]. There are a total of 37 colors:
+    # For the 32 chromatic colors, the first letter is the
+    # saturation/lightness level (S[aturated], L[ight], M[uted], or D[ark])
+    # and the 2nd letter is the hue (R[ed], O[range], Y[ellow],
+    # [c]H[artreuse], G[reen], C[yan], B[lue], and P[urple])
+    # 5 achromatic colors, BK = Black, A1 = dark gray, A2 = medium gray,
+    # A3 = light gray, and WH = white are excluded from the WAVE scores.
     # Related source: https://github.com/SchlossVRL/coloremoblues
     # Related source 2: https://github.com/SchlossVRL/ColorConceptAssociations
 
@@ -336,8 +338,9 @@ class Metric(AIMMetricInterface):
         ).sum(axis=3)
         match_indices = l2_norms.argmin(axis=2).flatten()
 
-        # Mean over matched colors (size of the image) weight values. Some colors are closer to cls._MATCH_COLORS
-        # than the others, but when we compute the average, there is no difference.
+        # Mean over matched colors (size of the image) weight values. Some
+        # colors are closer to cls._MATCH_COLORS than the others, but when we
+        # compute the average, there is no difference.
         wave_values: List = [
             cls._WAVE_COLORS[cls._MATCH_COLORS[i]]["Score"]
             for i in match_indices
