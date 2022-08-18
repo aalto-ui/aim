@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Average number of colors per dynamic cluster' metric (m19).
+Tests for the 'Distinct RGB values per dynamic clusters' metric (m19).
 """
 
 # ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m19.m19_avg_num_colors_per_dynamic_cluster import Metric
+from aim.metrics.m19.m19_distinct_rgb_dynamic_clusters import Metric
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
 # ----------------------------------------------------------------------------
@@ -41,15 +41,15 @@ __version__ = "1.0"
     [
         ("white_50_black_50.png", [0]),
         ("red_with_6_yellow_pixels.png", [0]),
-        ("aalto.fi_website.png", [18]),
-        ("wikipedia.org_website.png", [12]),
+        ("aalto.fi_website.png", [18.061033]),
+        ("wikipedia.org_website.png", [12.380435]),
     ],
 )
-def test_avg_num_colors_per_dynamic_cluster_desktop(
+def test_distinct_rgb_dynamic_clusters_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test Average number of colors per dynamic cluster metric (desktop GUIs).
+    Test Distinct RGB values per dynamic clusters metric (desktop GUIs).
     Args:
         input_value: GUI image file name
         expected_results: Expected results (list of measures)
@@ -68,5 +68,5 @@ def test_avg_num_colors_per_dynamic_cluster_desktop(
     )
 
     # Test result
-    if result is not None and isinstance(result[0], int):
-        assert result == expected_results
+    if result is not None and isinstance(result[0], float):
+        assert round(result[0], 6) == expected_results[0]

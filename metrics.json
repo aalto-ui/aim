@@ -653,8 +653,8 @@
     },
     "m19": {
       "id": "m19",
-      "name": "Average number of colors per dynamic cluster",
-      "description": "Average number of colors per dynamic cluster. The number of colours per cluster is shown to correlate with aesthetic perception.",
+      "name": "Distinct RGB values per dynamic clusters",
+      "description": "Ratio of distinct RGB values to the number of dynamic clusters. See Distinct RGB values and Dynamic clusters metrics.",
       "evidence": 3,
       "relevance": 3,
       "speed": 0,
@@ -664,35 +664,35 @@
           "url": "https://doi.org/10.1145/2702123.2702575"
         },
         {
-          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
-          "url": "https://doi.org/10.1145/2598153.2598173"
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
         }
       ],
       "results": [
         {
           "id": "m19_0",
           "index": 0,
-          "type": "int",
-          "name": "Average number of colors per cluster",
+          "type": "float",
+          "name": "Ratio of distinct RGB values per dynamic clusters",
           "description": false,
           "scores": [
             {
               "id": "r1",
-              "range": [0, 12],
+              "range": [0, 12.0],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [13, 17],
+              "range": [12.1, 17],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [18, null],
+              "range": [17.1, null],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"

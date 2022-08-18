@@ -92,6 +92,9 @@ class Metric(AIMMetricInterface):
     # mobile thresholds, but for mobile a lower number (e.g., 2) can be used if another source recommends it.
     _COLOR_REDUCTION_THRESHOLD_DESKTOP: int = 5
     _COLOR_REDUCTION_THRESHOLD_MOBILE: int = 5
+    _CLUSTER_REDUCTION_THRESHOLD: int = (
+        5  # Only clusters containing more than 5 values are counted.
+    )
     _DISTANCE_THRESHOLD: int = 3  # If the distance in all color components is less than 3, two colors are united in the same cluster
 
     # Private methods
@@ -113,8 +116,8 @@ class Metric(AIMMetricInterface):
         Returns:
             List of computed dynamic clusters
         """
-        # Determine color cluster threshold
-        _CLUSTER_THRESHOLD: int = (
+        # Set color reduction threshold
+        color_reduction_threshold: int = (
             cls._COLOR_REDUCTION_THRESHOLD_MOBILE
             if gui_type == GUI_TYPE_MOBILE
             else cls._COLOR_REDUCTION_THRESHOLD_DESKTOP
@@ -138,7 +141,7 @@ class Metric(AIMMetricInterface):
 
         # Only colour points with enough presence
         frequency = list(
-            filter(lambda e: e[3] > _CLUSTER_THRESHOLD, frequency)
+            filter(lambda e: e[3] > color_reduction_threshold, frequency)
         )
         # Sort the pixels on frequency. This way we can cut the while loop short
         # Order of proccesing the clusters may change the result
@@ -229,10 +232,10 @@ class Metric(AIMMetricInterface):
                 ]
                 center_of_clusters.append(add)
 
-        # Only keep clusters with more than 5 colour entries
+        # Only keep clusters with more than cls._CLUSTER_REDUCTION_THRESHOLD colour entries
         new_center_of_clusters: List = []
         for x in range(len(center_of_clusters)):
-            if center_of_clusters[x][4] > _CLUSTER_THRESHOLD:
+            if center_of_clusters[x][4] > cls._CLUSTER_REDUCTION_THRESHOLD:
                 new_center_of_clusters.append(center_of_clusters[x])
 
         return new_center_of_clusters

@@ -3,22 +3,19 @@
 
 """
 Metric:
-    Average number of colors per dynamic cluster
+    Distinct RGB values per dynamic clusters
 
 
 Description:
-    Average number of colors per dynamic cluster.
+    Ratio of distinct RGB values to the number of dynamic clusters.
+    The number of dynamic color clusters after color reduction; only RGB
+    values covering more than five pixels are counted. If a difference
+    between two colors in a color cube is less than or equal to three, two
+    colors are united in the same cluster, which continues recursively for
+    all colors.
 
     Category: Visual complexity > Color variability > Color range (Color depth)
-    For details, see CV3 [1].
-
-
-    In the paper by Miniukovich and De Angeli suggest (among others) two factors for an indication for colourfulness
-    The number of dynamic clusters and the number of colours per dynamic cluster.
-
-    "The number of dynamic clusters of colors after color reduction (more than 5 pixels). If a difference between
-    two colors in a color cube is less than or equal to 3, two colors are united in the same cluster, which continues
-    recursively for all colors. Only clusters containing more than 5 values are counted."
+    For details, see CV5 [1], A8 [2]
 
 
 Funding information and contact:
@@ -33,10 +30,10 @@ References:
         Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM.
         doi: https://doi.org/10.1145/2702123.2702575
 
-    2.  Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface
-        Visual Complexity. In Proceedings of the 2014 International Working
-        Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
-        doi: https://doi.org/10.1145/2598153.2598173
+    2.  Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile
+        App Interfaces. In Proceedings of the 8th Nordic Conference on
+        Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM.
+        doi: https://doi.org/10.1145/2639189.2641219
 
 Change log:
     v2.0 (2022-06-09)
@@ -82,7 +79,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Average number of colors per dynamic cluster.
+    Metric: Distinct RGB values per dynamic clusters.
     """
 
     # get_dynamic_clusters is imported from the same method in metric m12.
@@ -108,7 +105,7 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Average number of colours per Cluster (int)
+            - Ratio of distinct RGB values per dynamic clusters (float)
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -119,19 +116,19 @@ class Metric(AIMMetricInterface):
         # Get dynamic clusters of the input image
         center_of_clusters = cls._get_dynamic_clusters(img_rgb, gui_type)
 
-        # Number of clusters, not statistically relevant
+        # Number of clusters
         count_dynamic_cluster: int = int(len(center_of_clusters))
 
-        # Average number of colours per cluster
-        average_colour_dynamic_cluster: int = 0
+        # Count number of distinct RGB values in clusters
+        num_distinct_rgb: int = int(0)
         for x in range(len(center_of_clusters)):
-            average_colour_dynamic_cluster += center_of_clusters[x][4]
+            num_distinct_rgb += center_of_clusters[x][4]
 
+        # Ratio of distinct RGB values per dynamic clusters
+        ratio_unq_colors_dynamic_cluster: float = float(0)
         if count_dynamic_cluster != 0:
-            average_colour_dynamic_cluster = int(
-                average_colour_dynamic_cluster / count_dynamic_cluster
+            ratio_unq_colors_dynamic_cluster = float(
+                num_distinct_rgb / count_dynamic_cluster
             )
-        else:
-            average_colour_dynamic_cluster = int(0)
 
-        return [average_colour_dynamic_cluster]
+        return [ratio_unq_colors_dynamic_cluster]
