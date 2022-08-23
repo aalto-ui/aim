@@ -7,12 +7,15 @@ Metric:
 
 
 Description:
-    The number of static 32-sized color clusters; clusters with more than five
-    values are counted. In previous papers [2, 3], Miniukovich et al. use color
-    reduction (only RGB values covering more than five pixels (for desktop) or
-    two pixels (for mobile) are counted). However, in their most recent work [1],
-    the color reduction is not used; instead, clusters with more than five values
-    are counted. As [1] is the most recent work, this code follows this approach.
+    The number of static 32-sized color clusters; clusters with more than
+    five values are counted.
+
+    In previous papers [2, 3], Miniukovich et al. use color reduction; only
+    RGB values covering more than five pixels (for desktop) or two pixels
+    (for mobile) are counted). However, in their most recent work [1], color
+    reduction is not used; instead, clusters with more than five values are
+    counted. As [1] is their most recent work, this code follows its
+    approach.
 
     Category: Visual complexity > Information amount > Color variability >
     Dominant colors. For details, see CV4 [1], A1 [2], and C6 [3].
@@ -48,6 +51,7 @@ Change log:
     v1.0 (2017-05-29)
       * Initial implementation
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -88,10 +92,10 @@ class Metric(AIMMetricInterface):
     """
 
     # Private constants
-    _CUBE_SIZE: int = 32  # The sub-cube edge size of clusters is 32 values out of possible 256
+    _CUBE_SIZE: int = 32  # the sub-cube edge size of clusters is 32 values out of possible 256
     _IMTOCUBE_DIV: float = 256 / _CUBE_SIZE  # 8.0
     _CLUSTER_REDUCTION_THRESHOLD: int = (
-        5  # Only clusters containing more than 5 values are counted.
+        5  # only clusters containing more than 5 values are counted
     )
 
     # Public methods
@@ -130,7 +134,7 @@ class Metric(AIMMetricInterface):
             maxcolors=total_pixels
         )
 
-        # Divide rgb spectrum (0-255) to a (cls._CUBE_SIZE, cls._CUBE_SIZE, cls._CUBE_SIZE) matrix
+        # Divide RGB spectrum (0-255) to a (cls._CUBE_SIZE, cls._CUBE_SIZE, cls._CUBE_SIZE) matrix
         cluster: np.ndarray = np.zeros(
             (cls._CUBE_SIZE, cls._CUBE_SIZE, cls._CUBE_SIZE)
         )
