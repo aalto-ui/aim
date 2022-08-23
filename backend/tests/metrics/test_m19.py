@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Distinct RGB values per dynamic clusters' metric (m19).
+Tests for the 'Distinct RGB values per dynamic cluster' metric (m19).
 """
 
 # ----------------------------------------------------------------------------
@@ -18,7 +18,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m19.m19_distinct_rgb_dynamic_clusters import Metric
+from aim.metrics.m19.m19_distinct_rgb_values_per_dynamic_cluster import Metric
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
 # ----------------------------------------------------------------------------
@@ -49,7 +49,8 @@ def test_distinct_rgb_dynamic_clusters_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test Distinct RGB values per dynamic clusters metric (desktop GUIs).
+    Test Distinct RGB values per dynamic cluster metric (desktop GUIs).
+
     Args:
         input_value: GUI image file name
         expected_results: Expected results (list of measures)

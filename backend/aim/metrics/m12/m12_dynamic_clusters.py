@@ -88,18 +88,19 @@ class Metric(AIMMetricInterface):
     """
 
     # Private constants
-    # Color points with enough presence: The papers [1,2] do not indicate any difference between desktop and
-    # mobile thresholds, but for mobile a lower number (e.g., 2) can be used if another source recommends it.
+    # Color points with enough presence: The papers [1,2] do not indicate any
+    # difference between desktop and mobile thresholds, but for mobile a
+    # lower number (e.g., 2) can be used if another source recommends it.
     _COLOR_REDUCTION_THRESHOLD_DESKTOP: int = 5
     _COLOR_REDUCTION_THRESHOLD_MOBILE: int = 5
     _CLUSTER_REDUCTION_THRESHOLD: int = (
-        5  # Only clusters containing more than 5 values are counted.
+        5  # only clusters containing more than 5 values are counted
     )
-    _DISTANCE_THRESHOLD: int = 3  # If the distance in all color components is less than 3, two colors are united in the same cluster
+    _DISTANCE_THRESHOLD: int = 3  # if the distance in all color components is less than 3, two colors are united in the same cluster
 
-    # Private methods
+    # Public methods
     @classmethod
-    def _get_dynamic_clusters(
+    def get_dynamic_clusters(
         cls,
         img_rgb: Image.Image,
         gui_type: int = GUI_TYPE_DESKTOP,
@@ -139,13 +140,13 @@ class Metric(AIMMetricInterface):
             add: List = [rc, gc, bc, h_count]
             frequency.append(add)
 
-        # Only colour points with enough presence
+        # Only color points with enough presence
         frequency = list(
             filter(lambda e: e[3] > color_reduction_threshold, frequency)
         )
-        # Sort the pixels on frequency. This way we can cut the while loop short
-        # Order of proccesing the clusters may change the result
-        # The paper does not contain any recommendations, the order is fixed as follows:
+        # Sort the pixels on frequency; this way we can cut the while loop short.
+        # Note: Order of proccesing the clusters may change the result.
+        # The paper does not contain any recommendations. Here the order is fixed as follows:
         frequency = sorted(frequency, key=lambda e: (e[3], e[2], e[1], e[0]))
 
         # Create first cluster
@@ -159,11 +160,11 @@ class Metric(AIMMetricInterface):
         ]
         center_of_clusters.append(add)
 
-        # Find for all colour points a cluster
+        # Find for all color points of a cluster
         for k in range(len(frequency) - 1, -1, -1):
             belong1cluster: bool = False
 
-            # For every colour point calculate distance to all clusters
+            # For every color point calculate distance to all clusters
             for center in range(len(center_of_clusters)):
                 point_freq: np.ndarray = np.array(
                     [frequency[k][0], frequency[k][1], frequency[k][2]]
@@ -176,8 +177,8 @@ class Metric(AIMMetricInterface):
                     ]
                 )
 
-                # If a cluster is close enough, add this colour and recalculate the cluster Now the colour goes to
-                # the first cluster fullfilling this. There is no indication in the paper that it should be the first
+                # If a cluster is close enough, add this color and recalculate the cluster. Now the color goes to
+                # the first cluster fulfilling this. There is no indication in the paper that it should be the first
                 # cluster meeting the requirement or the closest cluster.
                 distance: float = float(
                     np.linalg.norm(point_freq - point_center)
@@ -221,7 +222,7 @@ class Metric(AIMMetricInterface):
                     belong1cluster = True
                     break
 
-            # Create new cluster if the colour point is not close enough to other clusters
+            # Create new cluster if the color point is not close enough to other clusters
             if not belong1cluster:
                 add = [
                     frequency[k][0],
@@ -232,7 +233,7 @@ class Metric(AIMMetricInterface):
                 ]
                 center_of_clusters.append(add)
 
-        # Only keep clusters with more than cls._CLUSTER_REDUCTION_THRESHOLD colour entries
+        # Only keep clusters with more than cls._CLUSTER_REDUCTION_THRESHOLD color entries
         new_center_of_clusters: List = []
         for x in range(len(center_of_clusters)):
             if center_of_clusters[x][4] > cls._CLUSTER_REDUCTION_THRESHOLD:
@@ -240,7 +241,6 @@ class Metric(AIMMetricInterface):
 
         return new_center_of_clusters
 
-    # Public methods
     @classmethod
     def execute_metric(
         cls,
@@ -269,11 +269,11 @@ class Metric(AIMMetricInterface):
         img_rgb: Image.Image = img.convert("RGB")
 
         # Get dynamic clusters of the input image
-        center_of_clusters = cls._get_dynamic_clusters(
-            img_rgb, GUI_TYPE_DESKTOP
-        )
+        center_of_clusters: List = cls.get_dynamic_clusters(img_rgb, gui_type)
 
         # Number of dynamic clusters
         count_dynamic_cluster: int = int(len(center_of_clusters))
 
-        return [count_dynamic_cluster]
+        return [
+            count_dynamic_cluster,
+        ]

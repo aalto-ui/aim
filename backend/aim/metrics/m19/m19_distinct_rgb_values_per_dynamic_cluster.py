@@ -3,19 +3,14 @@
 
 """
 Metric:
-    Distinct RGB values per dynamic clusters
+    Distinct RGB values per dynamic cluster
 
 
 Description:
-    Ratio of distinct RGB values to the number of dynamic clusters.
-    The number of dynamic color clusters after color reduction; only RGB
-    values covering more than five pixels are counted. If a difference
-    between two colors in a color cube is less than or equal to three, two
-    colors are united in the same cluster, which continues recursively for
-    all colors.
+    The ratio of distinct RGB values to the number of dynamic clusters.
 
-    Category: Visual complexity > Color variability > Color range (Color depth)
-    For details, see CV5 [1], A8 [2]
+    Category: Visual complexity > Information amount > Color variability >
+    Color range. For details, see CV3 [1] and A8 [2].
 
 
 Funding information and contact:
@@ -35,6 +30,7 @@ References:
         Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM.
         doi: https://doi.org/10.1145/2639189.2641219
 
+
 Change log:
     v2.0 (2022-06-09)
       * Revised implementation
@@ -43,6 +39,7 @@ Change log:
       * Initial implementation
 """
 
+
 # ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
@@ -50,17 +47,16 @@ Change log:
 # Standard library modules
 import base64
 from io import BytesIO
-from typing import List, Optional, Tuple, Union
+from typing import List, Optional, Union
 
 # Third-party modules
-import numpy as np
 from PIL import Image
 from pydantic import HttpUrl
 
 # First-party modules
-from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
+from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
-from aim.metrics.m12.m12_dynamic_clusters import Metric as M12_Metric
+from aim.metrics.m12.m12_dynamic_clusters import Metric as m12
 
 # ----------------------------------------------------------------------------
 # Metadata
@@ -79,11 +75,8 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Distinct RGB values per dynamic clusters.
+    Metric: Distinct RGB values per dynamic cluster.
     """
-
-    # get_dynamic_clusters is imported from the same method in metric m12.
-    _get_dynamic_clusters = M12_Metric._get_dynamic_clusters
 
     # Public methods
     @classmethod
@@ -105,7 +98,7 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Ratio of distinct RGB values per dynamic clusters (float)
+            - Ratio of distinct RGB values to the number of dynamic clusters (float, [0, +inf))
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -114,9 +107,9 @@ class Metric(AIMMetricInterface):
         img_rgb: Image.Image = img.convert("RGB")
 
         # Get dynamic clusters of the input image
-        center_of_clusters = cls._get_dynamic_clusters(img_rgb, gui_type)
+        center_of_clusters: List = m12.get_dynamic_clusters(img_rgb, gui_type)
 
-        # Number of clusters
+        # Number of dynamic clusters
         count_dynamic_cluster: int = int(len(center_of_clusters))
 
         # Count number of distinct RGB values in clusters
@@ -124,11 +117,13 @@ class Metric(AIMMetricInterface):
         for x in range(len(center_of_clusters)):
             num_distinct_rgb += center_of_clusters[x][4]
 
-        # Ratio of distinct RGB values per dynamic clusters
+        # Ratio of distinct RGB values to the number of dynamic clusters
         ratio_unq_colors_dynamic_cluster: float = float(0)
         if count_dynamic_cluster != 0:
             ratio_unq_colors_dynamic_cluster = float(
                 num_distinct_rgb / count_dynamic_cluster
             )
 
-        return [ratio_unq_colors_dynamic_cluster]
+        return [
+            ratio_unq_colors_dynamic_cluster,
+        ]

@@ -7,8 +7,8 @@ Metric:
 
 
 Description:
-    The number of static 32-sized color clusters; clusters with more than
-    five values are counted.
+    The number of static 32-sized color clusters; only clusters with more
+    than five values are counted.
 
     In previous papers [2, 3], Miniukovich et al. use color reduction; only
     RGB values covering more than five pixels (for desktop) or two pixels
@@ -68,7 +68,7 @@ from PIL import Image
 from pydantic import HttpUrl
 
 # First-party modules
-from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
+from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
