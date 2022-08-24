@@ -109,10 +109,13 @@ nano .env
 
 The variables of interest (with default values) are as follows:
 ```
+# General
+COMPOSE_PROJECT_NAME=aim
+
 # Frontend-specific variables
 NODE_ENV=development
 FRONTEND_PORT=8080
-WS_URL=ws://localhost:8888/
+WS_URL=ws://localhost:8888/ws
 AUTO_OPEN_BROWSER=false
 
 # Backend-specific variables
