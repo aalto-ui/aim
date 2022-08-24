@@ -546,7 +546,7 @@
     "m11": {
       "id": "m11",
       "name": "Static clusters",
-      "description": "The number of static 32-sized color clusters after color reduction; only RGB values covering more than five pixels (for desktop) and two pixels (for mobile) are counted.",
+      "description": "The number of static 32-sized color clusters; only clusters with more than five values are counted.",
       "evidence": 2,
       "relevance": 3,
       "speed": 2,
@@ -576,8 +576,8 @@
               "id": "r1",
               "range": [0, 810],
               "description": "Colorless",
-              "icon": [null, null],
-              "judgment": "normal"
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
             },
             {
               "id": "r2",
@@ -588,10 +588,10 @@
             },
             {
               "id": "r3",
-              "range": [2551, 32768],
+              "range": [2551, null],
               "description": "Colorful",
-              "icon": [null, null],
-              "judgment": "normal"
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
             }
           ]
         }
@@ -630,8 +630,8 @@
               "id": "r1",
               "range": [0, 133],
               "description": "Colorless",
-              "icon": [null, null],
-              "judgment": "normal"
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
             },
             {
               "id": "r2",
@@ -644,8 +644,8 @@
               "id": "r3",
               "range": [444, null],
               "description": "Colorful",
-              "icon": [null, null],
-              "judgment": "normal"
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
             }
           ]
         }
@@ -653,8 +653,8 @@
     },
     "m19": {
       "id": "m19",
-      "name": "Distinct RGB values per dynamic clusters",
-      "description": "Ratio of distinct RGB values to the number of dynamic clusters. See Distinct RGB values and Dynamic clusters metrics.",
+      "name": "Distinct RGB values per dynamic cluster",
+      "description": "The ratio of distinct RGB values to the number of dynamic clusters.",
       "evidence": 3,
       "relevance": 3,
       "speed": 0,
@@ -673,27 +673,27 @@
           "id": "m19_0",
           "index": 0,
           "type": "float",
-          "name": "Ratio of distinct RGB values per dynamic clusters",
+          "name": "Ratio of distinct RGB values to the number of dynamic clusters",
           "description": false,
           "scores": [
             {
               "id": "r1",
-              "range": [0, 12.0],
-              "description": "Meaningless",
+              "range": [0, 12.2146],
+              "description": "Low color depth",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [12.1, 17],
-              "description": "Meaningless",
+              "range": [12.2147, 18.5563],
+              "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [17.1, null],
-              "description": "Meaningless",
+              "range": [18.5564, null],
+              "description": "High color depth",
               "icon": [null, null],
               "judgment": "normal"
             }
