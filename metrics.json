@@ -4,7 +4,7 @@
       "id": "cp",
       "name": "Colour Perception",
       "icon": "palette",
-      "metrics": ["m1", "m3", "m10"]
+      "metrics": ["m1", "m3", "m10", "m11", "m12", "m19"]
     },
     {
       "id": "pf",
@@ -584,6 +584,164 @@
               "description": "Good",
               "icon": ["far", "check-circle"],
               "judgment": "good"
+            }
+          ]
+        }
+      ]
+    },
+    "m11": {
+      "id": "m11",
+      "name": "Static clusters",
+      "description": "The number of static 32-sized color clusters; only clusters with more than five values are counted.",
+      "evidence": 2,
+      "relevance": 3,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        }
+      ],
+      "results": [
+        {
+          "id": "m11_0",
+          "index": 0,
+          "type": "int",
+          "name": "Number of static color clusters",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 810],
+              "description": "Colorless",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [811, 2550],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [2551, null],
+              "description": "Colorful",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        }
+      ]
+    },
+    "m12": {
+      "id": "m12",
+      "name": "Dynamic clusters",
+      "description": "The number of dynamic color clusters after color reduction; only RGB values covering more than five pixels are counted. If a difference between two colors in a color cube is less than or equal to three, two colors are united in the same cluster, which continues recursively for all colors.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 0,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        }
+      ],
+      "results": [
+        {
+          "id": "m12_0",
+          "index": 0,
+          "type": "int",
+          "name": "Number of dynamic color clusters",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 133],
+              "description": "Colorless",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [134, 443],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [444, null],
+              "description": "Colorful",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        }
+      ]
+    },
+    "m19": {
+      "id": "m19",
+      "name": "Distinct RGB values per dynamic cluster",
+      "description": "The ratio of distinct RGB values to the number of dynamic clusters.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 0,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
+        }
+      ],
+      "results": [
+        {
+          "id": "m19_0",
+          "index": 0,
+          "type": "float",
+          "name": "Ratio of distinct RGB values to the number of dynamic clusters",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 12.2146],
+              "description": "Low color depth",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [12.2147, 18.5563],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [18.5564, null],
+              "description": "High color depth",
+              "icon": [null, null],
+              "judgment": "normal"
             }
           ]
         }
