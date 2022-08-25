@@ -12,7 +12,7 @@ AIM metric interfaces.
 
 # Standard library modules
 import abc
-from typing import Any, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 # Third-party modules
 from pydantic import HttpUrl
@@ -51,6 +51,7 @@ class AIMMetricInterface(metaclass=abc.ABCMeta):
         self,
         gui_image: str,
         gui_type: int = GUI_TYPE_DESKTOP,
+        gui_segments: Optional[Dict[str, Any]] = None,
         gui_url: Optional[HttpUrl] = None,
     ) -> Optional[List[Union[int, float, str]]]:
         """
@@ -61,6 +62,7 @@ class AIMMetricInterface(metaclass=abc.ABCMeta):
 
         Kwargs:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
+            gui_segments: GUI segmentation (defaults to None)
             gui_url: GUI URL (defaults to None)
 
         Returns:

@@ -33,6 +33,7 @@
       "evidence": 1,
       "relevance": 2,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -87,6 +88,7 @@
       "evidence": 2,
       "relevance": 3,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -149,6 +151,7 @@
       "evidence": 2,
       "relevance": 2,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -203,6 +206,7 @@
       "evidence": 4,
       "relevance": 3,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -261,6 +265,7 @@
       "evidence": 3,
       "relevance": 4,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -327,6 +332,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -393,6 +399,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -451,6 +458,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 0,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -520,6 +528,7 @@
       "evidence": 4,
       "relevance": 5,
       "speed": 1,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Fosco, C., Casser, V., Bedi, A.K., O'Donovan, P., Hertzmann, A., and Bylinskii, Z. (2020). Predicting Visual Importance Across Graphic Design Types. In Proceedings of the 33rd Annual ACM Symposium on User Interface Software and Technology (UIST '20), pp. 249-260. ACM. doi: https://doi.org/10.1145/3379337.3415825",
@@ -540,6 +549,454 @@
           "type": "b64",
           "name": "UMSI prediction heatmap overlay",
           "description": false
+        }
+      ]
+    },
+    "m21": {
+      "id": "m21",
+      "name": "Number of Visual Blocks",
+      "description": "The number of visual blocks of GUI, with and without considering children blocks.",
+      "evidence": 1,
+      "relevance": 1,
+      "speed": 2,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Balinsky, H. (2006). Evaluating interface aesthetics: measure of symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
+          "url": "https://doi.org/10.1117/12.642120"
+        }
+      ],
+      "results": [
+        {
+          "id": "m21_0",
+          "index": 0,
+          "type": "int",
+          "name": "Number of Visual Blocks",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 2],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [3, 6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_1",
+          "index": 1,
+          "type": "int",
+          "name": "Number of Visual Blocks (W/O Children)",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 2],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [3, 6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    "m22": {
+      "id": "m22",
+      "name": "Number of Alignment Points of Blocks",
+      "description": "The number of alignment points of GUI blocks, with and without considering children blocks.",
+      "evidence": 1,
+      "relevance": 1,
+      "speed": 2,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Balinsky, H. (2006). Evaluating interface aesthetics: measure of symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
+          "url": "https://doi.org/10.1117/12.642120"
+        }
+      ],
+      "results": [
+        {
+          "id": "m22_0",
+          "index": 0,
+          "type": "int",
+          "name": "Number of Alignment Points of Blocks",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 2],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [3, 6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m22_1",
+          "index": 1,
+          "type": "int",
+          "name": "Number of Alignment Points of Blocks (W/O Children)",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 2],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [3, 6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    "m23": {
+      "id": "m23",
+      "name": "Number of Block Sizes",
+      "description": "The number of block sizes, grid proportionality, with and without considering children blocks.",
+      "evidence": 1,
+      "relevance": 1,
+      "speed": 2,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Balinsky, H. (2006). Evaluating interface aesthetics: measure of symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
+          "url": "https://doi.org/10.1117/12.642120"
+        }
+      ],
+      "results": [
+        {
+          "id": "m23_0",
+          "index": 0,
+          "type": "int",
+          "name": "Number of Block Sizes",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 2],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [3, 6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m23_1",
+          "index": 1,
+          "type": "int",
+          "name": "Number of Block Sizes (W/O Children)",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 2],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [3, 6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    "m24": {
+      "id": "m24",
+      "name": "GUI Coverage",
+      "description": "The proportion of GUI covered by same-size blocks, with and without considering children blocks.",
+      "evidence": 1,
+      "relevance": 1,
+      "speed": 2,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Balinsky, H. (2006). Evaluating interface aesthetics: measure of symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
+          "url": "https://doi.org/10.1117/12.642120"
+        }
+      ],
+      "results": [
+        {
+          "id": "m24_0",
+          "index": 0,
+          "type": "float",
+          "name": "GUI Coverage",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 0.1],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.2, 0.6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m24_1",
+          "index": 1,
+          "type": "float",
+          "name": "GUI Coverage (W/O Children)",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 0.1],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.2, 0.6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    "m25": {
+      "id": "m25",
+      "name": "Number of Vertical Block Sizes",
+      "description": "The number of vertical block sizes, i.e., vertical grid proportionality., with and without considering children blocks.",
+      "evidence": 1,
+      "relevance": 1,
+      "speed": 2,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        }
+      ],
+      "results": [
+        {
+          "id": "m25_0",
+          "index": 0,
+          "type": "int",
+          "name": "Number of Different Blocks Height",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 2],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [3, 6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m25_1",
+          "index": 1,
+          "type": "int",
+          "name": "Number of Different Blocks Height (W/O Children)",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 2],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [3, 6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    "m26": {
+      "id": "m26",
+      "name": "White Space",
+      "description": "White Space. Non covered portion of GUI with visual blocks.",
+      "evidence": 1,
+      "relevance": 1,
+      "speed": 2,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        }
+      ],
+      "results": [
+        {
+          "id": "m26_0",
+          "index": 0,
+          "type": "float",
+          "name": "White Space",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 0.1],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.2, 0.6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.7, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         }
       ]
     }

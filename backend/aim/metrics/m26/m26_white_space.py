@@ -3,15 +3,14 @@
 
 """
 Metric:
-    PNG file size
+    White Space
 
 
 Description:
-    The file size (in bytes) of an image, saved in the PNG format
-    (24-bit per pixel).
+    White Space. Non covered portion of GUI with visual blocks.
 
-    Category: Visual complexity > Information amount > Color variability >
-    Color range. For details, see CV1 [1], A4 [2], and C5 [3].
+    Category: White Space.
+    For details, see [1].
 
 
 Funding information and contact:
@@ -26,25 +25,11 @@ References:
         Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM.
         doi: https://doi.org/10.1145/2702123.2702575
 
-    2.  Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile
-        App Interfaces. In Proceedings of the 8th Nordic Conference on
-        Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM.
-        doi: https://doi.org/10.1145/2639189.2641219
-
-    3.  Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface
-        Visual Complexity. In Proceedings of the 2014 International Working
-        Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
-        doi: https://doi.org/10.1145/2598153.2598173
-
 
 Change log:
-    v2.0 (2021-02-11)
-      * Revised implementation
-
-    v1.0 (2017-05-29)
+    v1.0 (2022-08-05)
       * Initial implementation
 """
-
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -54,20 +39,21 @@ Change log:
 from typing import Any, Dict, List, Optional, Union
 
 # Third-party modules
+import numpy as np
 from pydantic import HttpUrl
 
 # First-party modules
-from aim.common.constants import GUI_TYPE_DESKTOP
+from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
 # Metadata
 # ----------------------------------------------------------------------------
 
-__author__ = "Markku Laine, Thomas Langerak, Yuxi Zhu"
-__date__ = "2021-03-19"
+__author__ = "Amir Hossein Kargaran, Markku Laine"
+__date__ = "2022-08-05"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "2.0"
+__version__ = "1.0"
 
 
 # ----------------------------------------------------------------------------
@@ -77,12 +63,13 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: PNG file size.
+    Metric: White Space.
     """
 
     # Public methods
-    @staticmethod
+    @classmethod
     def execute_metric(
+        cls,
         gui_image: str,
         gui_type: int = GUI_TYPE_DESKTOP,
         gui_segments: Optional[Dict[str, Any]] = None,
@@ -101,14 +88,33 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - PNG file size in bytes (int, [0, +inf))
+            - White Space (int, [0, +inf))
         """
-        # Calculate PNG file size in bytes according to:
-        # https://blog.aaronlenoir.com/2017/11/10/get-original-length-from-base-64-string/
-        png_file_size_in_bytes: int = int(
-            (3 * (len(gui_image) / 4)) - (gui_image.count("=", -2))
-        )
+
+        # Based on [1] this metric should not apply for mobile GUIs.
+        if gui_type == GUI_TYPE_MOBILE:
+            raise ValueError(
+                "This Metric requires gui_type to be non mobile (e.g, desktop)"
+            )
+
+        if gui_segments is not None:
+            height, width, _ = gui_segments["img_shape"]
+            segments: List = gui_segments["segments"]
+            img_binary = np.ones((height, width), dtype=int)
+
+            for element in segments:
+                position = element["position"]
+                img_binary[
+                    position["row_min"] : position["row_max"],
+                    position["column_min"] : position["column_max"],
+                ] = 0
+
+            white_percentage: float = float(np.mean(img_binary))
+        else:
+            raise ValueError(
+                "This Metric requires gui_segments to be not None"
+            )
 
         return [
-            png_file_size_in_bytes,
+            white_percentage,
         ]
