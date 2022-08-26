@@ -7,11 +7,12 @@ Metric:
 
 
 Description:
-    Technical and aesthetic qualities of the input image.
+    The predicted technical and aesthetic qualities of images.
 
 
 Source:
-    Model is imported from here: https://github.com/delldu/ImageNima/tree/master/models
+    Model is imported from here:
+    https://github.com/delldu/ImageNima/tree/master/models
 
 
 Funding information and contact:
@@ -21,9 +22,10 @@ Funding information and contact:
 
 
 References:
-    1.  Talebi, H., & Milanfar, P. (2018). NIMA: Neural image assessment.
-        IEEE transactions on image processing, 27(8), 3998-4011.
+    1.  Talebi, H. and Milanfar, P. (2018). NIMA: Neural Image Assessment.
+        IEEE Transactions on Image Processing, 27(8), 3998-4011.
         doi: https://doi.org/10.1109/TIP.2018.2831899
+
 
 Change log:
     V2.0 (2022-06-16)
@@ -33,6 +35,7 @@ Change log:
       * Initial implementation
 """
 
+
 # ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
@@ -40,7 +43,6 @@ Change log:
 # Standard library modules
 import base64
 import collections
-import os
 import pathlib
 from io import BytesIO
 from typing import List, Optional, Union
@@ -76,10 +78,12 @@ class Metric(AIMMetricInterface):
     Metric: NIMA (Neural IMage Assessment).
     """
 
-    # Transform method: Since the trained model only works with square photos, we should resize the input image.
-    # _tranform can be changed to any transformer. The implemented transformer returns the center square of the
-    # resized input image (smaller edge is 224, without changing ratio), which is one of the most popular
-    # transformers for non-square images.
+    # Transform method: Since the trained model only works with square
+    # photos, we should resize the input image. _tranform can be changed to
+    # any transformer. The implemented transformer returns the center square
+    # of the resized input image (smaller edge is 224, without changing
+    # ratio), which is one of the most popular transformers for non-square
+    # images.
     _transform: transforms.transforms.Compose = transforms.Compose(
         [
             transforms.Resize(224),
@@ -88,7 +92,8 @@ class Metric(AIMMetricInterface):
         ]
     )
 
-    # Load Model: from https://github.com/delldu/ImageNima/tree/master/models
+    # Load Model
+    # The original model can be downloaded from here: https://github.com/delldu/ImageNima/tree/master/models
     _MODEL_PATH: pathlib.Path = pathlib.Path("aim/metrics/m18/dense121_all.pt")
 
     # Choose GPU if available
@@ -102,7 +107,7 @@ class Metric(AIMMetricInterface):
         nn.Linear(_NUM_FTRS, _NUM_CLASS), nn.Softmax(1)
     )
 
-    # Load State Dict: weights
+    # Load state dict: weights
     _STATE_DICT: collections.OrderedDict = torch.load(
         _MODEL_PATH, map_location=lambda storage, loc: storage
     )
@@ -131,8 +136,8 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - NIMA mean_score (float, [0, 10))
-            - NIMA std_score (float, [0, +inf))
+            - NIMA mean score (float, [0, 10])
+            - NIMA standard deviation score (float, [0, +inf))
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -158,8 +163,11 @@ class Metric(AIMMetricInterface):
                 ).sum(dim=1)
             )
 
-        # Compute Metrics
-        mean_score: float = float(mean.item())
-        std_score: float = float(std.item())
+        # Compute metrics
+        nima_mean_score: float = float(mean.item())
+        nima_std_score: float = float(std.item())
 
-        return [mean_score, std_score]
+        return [
+            nima_mean_score,
+            nima_std_score,
+        ]
