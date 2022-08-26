@@ -10,7 +10,7 @@
       "id": "pf",
       "name": "Perceptual Fluency",
       "icon": "brain",
-      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8"]
+      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8", "m18"]
     },
     {
       "id": "vg",
@@ -119,21 +119,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 84254],
+              "range": [0, 84198],
               "description": "Small",
               "icon": ["far", "check-circle"],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [84255, 130317],
+              "range": [84199, 129989],
               "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [130318, null],
+              "range": [129990, null],
               "description": "Large",
               "icon": ["fas", "exclamation-triangle"],
               "judgment": "bad"
@@ -692,6 +692,82 @@
               "description": "Colorful",
               "icon": ["fas", "exclamation-triangle"],
               "judgment": "bad"
+            }
+          ]
+        }
+      ]
+    },
+    "m18": {
+      "id": "m18",
+      "name": "NIMA (Neural IMage Assessment)",
+      "description": "The predicted technical and aesthetic qualities of images.",
+      "evidence": 2,
+      "relevance": 2,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Talebi, H. and Milanfar, P. (2018). NIMA: Neural Image Assessment. IEEE Transactions on Image Processing, 27(8), 3998-4011. doi: https://doi.org/10.1109/TIP.2018.2831899",
+          "url": "https://doi.org/10.1109/TIP.2018.2831899"
+        }
+      ],
+      "results": [
+        {
+          "id": "m18_0",
+          "index": 0,
+          "type": "float",
+          "name": "NIMA mean score",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 4.728],
+              "description": "Poor",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [4.729, 5.8193],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [5.8194, 10.0],
+              "description": "Good",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            }
+          ]
+        },
+        {
+          "id": "m18_1",
+          "index": 1,
+          "type": "float",
+          "name": "NIMA standard deviation score",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 1.7074],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [1.7075, 1.8683],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [1.8684, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
             }
           ]
         }
