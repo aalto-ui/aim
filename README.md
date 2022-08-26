@@ -93,7 +93,7 @@ AIM can also be installed and run without Docker. While this installation proces
 
 Make sure you have the following software already installed on your computer before proceeding!
 
-The backend dependencies include [Python 3.7](https://www.python.org/), [pip](https://pypi.org/project/pip/), [MongoDB](https://www.mongodb.com/), and [Chrome](https://www.google.com/chrome/). In addition, it is highly recommended to install [virtualenv](https://pypi.org/project/virtualenv/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment (see [instructions](#installation_backend)). Other dependencies include [Node.js 16.14.2](https://nodejs.org/) and [npm](https://www.npmjs.com/) for the frontend and [git](https://git-scm.com/) to track changes made to the codebase.
+The backend dependencies include [Python 3.7](https://www.python.org/), [pip](https://pypi.org/project/pip/), [MongoDB](https://www.mongodb.com/), and [Chrome](https://www.google.com/chrome/). In addition, it is highly recommended to install [virtualenv](https://pypi.org/project/virtualenv/) to create a dedicated Python virtual environment (see [instructions](#installation_backend)). Other dependencies include [Node.js 16.14.2](https://nodejs.org/) and [npm](https://www.npmjs.com/) for the frontend and [git](https://git-scm.com/) to track changes made to the codebase.
 
 ### Configuration
 
@@ -173,23 +173,6 @@ deactivate && source ../venv/bin/activate
 To deactivate the virtual environment, run:
 ```sh
 deactivate
-```
-
-#### Working with `Pipenv`
-
-Install all dependencies, including development packages:
-```sh
-pipenv install --dev
-```
-
-Activate your Pipenv environment:
-```sh
-pipenv shell
-```
-
-To deactivate your Pipenv environment, run:
-```sh
-exit
 ```
 
 ### Frontend
