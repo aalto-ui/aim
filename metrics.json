@@ -119,21 +119,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 84254],
+              "range": [0, 84198],
               "description": "Small",
               "icon": ["far", "check-circle"],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [84255, 130317],
+              "range": [84199, 129989],
               "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [130318, null],
+              "range": [129990, null],
               "description": "Large",
               "icon": ["fas", "exclamation-triangle"],
               "judgment": "bad"
