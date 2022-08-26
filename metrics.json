@@ -546,13 +546,13 @@
     "m18": {
       "id": "m18",
       "name": "NIMA (Neural IMage Assessment)",
-      "description": "Measures technical and aesthetic qualities of the input image.",
+      "description": "The predicted technical and aesthetic qualities of images.",
       "evidence": 2,
       "relevance": 2,
       "speed": 2,
       "references": [
         {
-          "title": "Talebi, H., & Milanfar, P. (2018). NIMA: Neural image assessment. IEEE transactions on image processing, 27(8), 3998-4011. doi: https://doi.org/10.1109/TIP.2018.2831899",
+          "title": "Talebi, H. and Milanfar, P. (2018). NIMA: Neural Image Assessment. IEEE Transactions on Image Processing, 27(8), 3998-4011. doi: https://doi.org/10.1109/TIP.2018.2831899",
           "url": "https://doi.org/10.1109/TIP.2018.2831899"
         }
       ],
@@ -568,10 +568,7 @@
               "id": "r3",
               "range": [0.0, 4.728],
               "description": "Poor",
-              "icon": [
-                "fas",
-                "exclamation-triangle"
-              ],
+              "icon": ["fas", "exclamation-triangle"],
               "judgment": "bad"
             },
             {
@@ -594,7 +591,7 @@
           "id": "m18_1",
           "index": 1,
           "type": "float",
-          "name": "NIMA standard derivation score",
+          "name": "NIMA standard deviation score",
           "description": false
         }
       ]
