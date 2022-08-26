@@ -85,7 +85,7 @@ class Metric(AIMMetricInterface):
     # Choose GPU if available
     _DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # Define DENS-NET121 Model
+    # Define DenseNet121 model
     _NUM_CLASS: int = 10
     _INPUT_SIZE: int = 224
     _MODEL: models.densenet.DenseNet = models.densenet121(pretrained=False)
