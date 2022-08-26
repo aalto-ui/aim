@@ -78,20 +78,6 @@ class Metric(AIMMetricInterface):
     Metric: NIMA (Neural IMage Assessment).
     """
 
-    # Transform method: Since the trained model only works with square
-    # photos, we should resize the input image. _tranform can be changed to
-    # any transformer. The implemented transformer returns the center square
-    # of the resized input image (smaller edge is 224, without changing
-    # ratio), which is one of the most popular transformers for non-square
-    # images.
-    _transform: transforms.transforms.Compose = transforms.Compose(
-        [
-            transforms.Resize(224),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-        ]
-    )
-
     # Load Model
     # The original model can be downloaded from here: https://github.com/delldu/ImageNima/tree/master/models
     _MODEL_PATH: pathlib.Path = pathlib.Path("aim/metrics/m18/dense121_all.pt")
@@ -101,6 +87,7 @@ class Metric(AIMMetricInterface):
 
     # Define DENS-NET121 Model
     _NUM_CLASS: int = 10
+    _INPUT_SIZE: int = 224
     _MODEL: models.densenet.DenseNet = models.densenet121(pretrained=False)
     _NUM_FTRS: int = _MODEL.classifier.in_features
     _MODEL.classifier = nn.Sequential(
@@ -115,6 +102,20 @@ class Metric(AIMMetricInterface):
     _MODEL.load_state_dict(_STATE_DICT)
     _MODEL = _MODEL.to(_DEVICE)
     _MODEL.eval()
+
+    # Transform method: Since the trained model only works with square
+    # photos, we should resize the input image. _tranform can be changed to
+    # any transformer. The implemented transformer returns the center square
+    # of the resized input image (smaller edge is 224, without changing
+    # ratio), which is one of the most popular transformers for non-square
+    # images.
+    _transform: transforms.transforms.Compose = transforms.Compose(
+        [
+            transforms.Resize(_INPUT_SIZE),
+            transforms.CenterCrop(_INPUT_SIZE),
+            transforms.ToTensor(),
+        ]
+    )
 
     # Public methods
     @classmethod
@@ -146,7 +147,9 @@ class Metric(AIMMetricInterface):
         img_rgb: Image.Image = img.convert("RGB")
 
         # Compute votes and send to device (CPU or GPU)
-        weighted_votes: torch.Tensor = torch.arange(10, dtype=torch.float) + 1
+        weighted_votes: torch.Tensor = (
+            torch.arange(cls._NUM_CLASS, dtype=torch.float) + 1
+        )
         weighted_votes = weighted_votes.to(cls._DEVICE)
 
         # Resize image to fit network input
@@ -155,7 +158,9 @@ class Metric(AIMMetricInterface):
 
         # Predict
         with torch.no_grad():
-            scores: torch.Tensor = cls._MODEL(img_resized.view(1, 3, 224, 224))
+            scores: torch.Tensor = cls._MODEL(
+                img_resized.view(1, 3, cls._INPUT_SIZE, cls._INPUT_SIZE)
+            )
             mean: torch.Tensor = torch.matmul(scores, weighted_votes)
             std: torch.Tensor = torch.sqrt(
                 (

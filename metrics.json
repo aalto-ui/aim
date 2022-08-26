@@ -10,7 +10,7 @@
       "id": "pf",
       "name": "Perceptual Fluency",
       "icon": "brain",
-      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8"]
+      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8", "m18"]
     },
     {
       "id": "vg",
@@ -565,7 +565,7 @@
           "description": false,
           "scores": [
             {
-              "id": "r3",
+              "id": "r1",
               "range": [0.0, 4.728],
               "description": "Poor",
               "icon": ["fas", "exclamation-triangle"],
@@ -592,7 +592,30 @@
           "index": 1,
           "type": "float",
           "name": "NIMA standard deviation score",
-          "description": false
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 1.7074],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [1.7075, 1.8683],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [1.8684, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
         }
       ]
     }
