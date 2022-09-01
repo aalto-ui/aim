@@ -32,9 +32,9 @@ Funding information and contact:
 
 References:
     1.  Palmer, S.E. and Schloss, K.B., (2010). An Ecological Valence Theory
-    of Human Color Preference. Proceedings of the National Academy of
-    Sciences, 107(19), pp.8877-8882.
-    doi: https://doi.org/10.1073/pnas.0906172107
+        of Human Color Preference. Proceedings of the National Academy of
+        Sciences, 107(19), pp.8877-8882.
+        doi: https://doi.org/10.1073/pnas.0906172107
 
 
 Change log:
