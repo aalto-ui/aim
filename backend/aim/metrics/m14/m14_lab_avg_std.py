@@ -3,14 +3,14 @@
 
 """
 Metric:
-    LAB Average and Standard Derivation
+    LAB average and standard deviation
 
 
 Description:
-    LAB colour space Average and Standard Derivation.
-    Category: Colour Perception > Color Range > LAB Average and Standard Derivation.
-    In the references, there is no specific type of luminance recommended, so the type is
-    determined based on the legacy code.
+    LAB color space average and standard deviation.
+
+    In the reference, there is no specific type of luminance recommended,
+    so the type is determined based on the legacy implementation.
 
 
 Funding information and contact:
@@ -20,10 +20,9 @@ Funding information and contact:
 
 
 References:
-    1.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural
-        images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95).
-        International Society for Optics and Photonics.
-        doi: https://doi.org/10.1117/12.477378
+    1.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in
+        Natural Images. In Human Vision and Electronic Imaging VIII, 5007,
+        87-95. SPIE. doi: https://doi.org/10.1117/12.477378
 
 
 Change log:
@@ -71,7 +70,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: LAB Average and Standard Derivation.
+    Metric: LAB average and standard deviation.
     """
 
     # Public methods
@@ -95,11 +94,11 @@ class Metric(AIMMetricInterface):
         Returns:
             Results (list of measures)
             - L average (float, [0, +inf))
-            - L std (float, [0, +inf))
+            - L standard deviation (float, [0, +inf))
             - A average (float, [0, +inf))
-            - A std (float, [0, +inf))
+            - A standard deviation (float, [0, +inf))
             - B average (float, [0, +inf))
-            - B std (float, [0, +inf))
+            - B standard deviation (float, [0, +inf))
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -110,30 +109,33 @@ class Metric(AIMMetricInterface):
         # Get NumPy array
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
-        # Convert the LAB space The color.rgb2lab function get optional parameters for type of luminance.
-        # In the references, there is no specific type of luminance recommended, so the type is
-        # determined based on the legacy code. Name of the illuminant types are: {“A”, “B”, “C”, “D50”,
-        # “D55”, “D65”, “D75”, “E”}. The default value is: 'D65' (CIE standard illuminant).
+        # Convert to the CIE Lab color space. The color.rgb2lab function gets
+        # optional parameters for type of luminance. In the reference, there
+        # is no specific type of luminance recommended, so the type is
+        # determined based on the legacy implementation. Name of the
+        # illuminant types are: {“A”, “B”, “C”, “D50”, “D55”, “D65”, “D75”,
+        # “E”}. The default value is: 'D65' (CIE standard illuminant).
         # Reference: https://en.wikipedia.org/wiki/Standard_illuminant
         lab: np.ndarray = color.rgb2lab(img_rgb_nparray)
 
+        # Get LAB
         L: np.ndarray = lab[:, :, 0]
         A: np.ndarray = lab[:, :, 1]
         B: np.ndarray = lab[:, :, 2]
 
-        # Get average and standard deviation for each value separately
-        meanL: float = float(np.mean(L))
-        stdL: float = float(np.std(L))
-        meanA: float = float(np.mean(A))
-        stdA: float = float(np.std(A))
-        meanB: float = float(np.mean(B))
-        stdB: float = float(np.std(B))
+        # Compute average and standard deviation for each value separately
+        L_avg: float = float(np.mean(L))
+        L_std: float = float(np.std(L))
+        A_avg: float = float(np.mean(A))
+        A_std: float = float(np.std(A))
+        B_avg: float = float(np.mean(B))
+        B_std: float = float(np.std(B))
 
         return [
-            meanL,
-            stdL,
-            meanA,
-            stdA,
-            meanB,
-            stdB,
+            L_avg,
+            L_std,
+            A_avg,
+            A_std,
+            B_avg,
+            B_std,
         ]

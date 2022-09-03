@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'LAB Average and Standard Derivation' metric (m14).
+Tests for the 'LAB average and standard deviation' metric (m14).
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -54,7 +55,7 @@ def test_lab_avg_std_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test LAB Average and Standard Derivation (desktop GUIs).
+    Test LAB average and standard deviation (desktop GUIs).
 
     Args:
         input_value: GUI image file name
