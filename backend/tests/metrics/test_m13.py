@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Luminance Standard Deviation' metric (m13).
+Tests for the 'Luminance standard deviation' metric (m13).
 """
 
 
@@ -40,16 +40,16 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("black.png", [0]),
+        ("black.png", [0.0]),
         ("white_50_black_50.png", [255 / 2]),
-        ("aalto.fi_website.png", [79.799898, 16]),
+        ("aalto.fi_website.png", [79.799898]),
     ],
 )
 def test_luminance_sd_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test Luminance Standard Deviation (desktop GUIs).
+    Test luminance standard deviation (desktop GUIs).
 
     Args:
         input_value: GUI image file name

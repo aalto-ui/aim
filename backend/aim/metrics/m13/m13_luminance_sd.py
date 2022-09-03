@@ -3,15 +3,18 @@
 
 """
 Metric:
-    Luminance Standard Deviation
+    Luminance standard deviation
 
 
 Description:
-    This is the standard deviation of luminance over all pixels. It has been proven to
-    not be statically relevant for the perceived colour variance of a webpage.
-    Category: Colour Perception > Color Range > LAB Average.
-    In the references, there is no specific type of luminance recommended, so the type is
-    determined based on the legacy code.
+    The standard deviation of pixel luminance.
+
+    Category: Visual complexity > Information amount > Color variability.
+    For details, see C9 [1].
+
+    In the reference, there is no specific type of luminance recommended,
+    so the type is determined based on the legacy implementation.
+
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -26,7 +29,6 @@ References:
         doi: https://doi.org/10.1145/2598153.2598173
 
 
-
 Change log:
     v2.0 (2022-05-25)
       * Revised implementation
@@ -34,6 +36,7 @@ Change log:
     v1.0 (2017-05-29)
       * Initial implementation
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -70,7 +73,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Luminance Standard Deviation.
+    Metric: Luminance standard deviation.
     """
 
     # Private constants
@@ -78,7 +81,7 @@ class Metric(AIMMetricInterface):
         0.2126,
         0.7152,
         0.0722,
-    ]  # Rec. 709 luma coefficients
+    ]  # Rec. 709 luma coefficients, https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.709-6-201506-I!!PDF-E.pdf
 
     # Public methods
     @classmethod
@@ -100,7 +103,7 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Luminance Standard Deviation (float, [0, +inf))
+            - Luminance standard deviation (float, [0, +inf))
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -115,8 +118,10 @@ class Metric(AIMMetricInterface):
         green: np.ndarray = img_rgb_nparray[:, :, 1].copy()
         red: np.ndarray = img_rgb_nparray[:, :, 2].copy()
 
-        # In the references, there is no specific type of luminance recommended, so the type is
-        # determined based on the legacy code. Based on: https://en.wikipedia.org/wiki/Luma_(video)
+        # In the reference, there is no specific type of luminance
+        # recommended, so the type is determined based on the legacy
+        # implementation.
+        # Based on: https://en.wikipedia.org/wiki/Luma_(video)
         # Y = 0.2126 R + 0.7152 G + 0.0722 B
         L: np.ndarray = (
             cls._L_COEF[0] * red
@@ -124,7 +129,7 @@ class Metric(AIMMetricInterface):
             + cls._L_COEF[2] * blue
         )
 
-        l_std: float = float(np.std(L))
+        luminance_sd: float = float(np.std(L))
         return [
-            l_std,
+            luminance_sd,
         ]

@@ -545,8 +545,8 @@
     },
     "m13": {
       "id": "m13",
-      "name": "Luminance Standard Deviation",
-      "description": "Standard deviation of luminance corrected for display perception",
+      "name": "Luminance standard deviation",
+      "description": "The standard deviation of pixel luminance.",
       "evidence": 3,
       "relevance": 3,
       "speed": 2,
@@ -561,7 +561,7 @@
           "id": "m13_0",
           "index": 0,
           "type": "float",
-          "name": "Luminance STD",
+          "name": "Luminance standard deviation",
           "description": false,
           "scores": [
             {
