@@ -114,6 +114,7 @@ class Metric(AIMMetricInterface):
         # Get NumPy array
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
+        # Get RGB
         blue: np.ndarray = img_rgb_nparray[:, :, 0].copy()
         green: np.ndarray = img_rgb_nparray[:, :, 1].copy()
         red: np.ndarray = img_rgb_nparray[:, :, 2].copy()
@@ -123,13 +124,15 @@ class Metric(AIMMetricInterface):
         # implementation.
         # Based on: https://en.wikipedia.org/wiki/Luma_(video)
         # Y = 0.2126 R + 0.7152 G + 0.0722 B
-        L: np.ndarray = (
+        luminance: np.ndarray = (
             cls._L_COEF[0] * red
             + cls._L_COEF[1] * green
             + cls._L_COEF[2] * blue
         )
 
-        luminance_sd: float = float(np.std(L))
+        # Compute luminance standard deviation
+        luminance_std: float = float(np.std(luminance))
+
         return [
-            luminance_sd,
+            luminance_std,
         ]

@@ -19,7 +19,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m13.m13_luminance_sd import Metric
+from aim.metrics.m13.m13_luminance_std import Metric
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
 # ----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ __version__ = "1.0"
         ("aalto.fi_website.png", [79.799898]),
     ],
 )
-def test_luminance_sd_desktop(
+def test_luminance_std_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
