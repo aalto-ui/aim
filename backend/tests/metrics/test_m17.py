@@ -5,6 +5,7 @@
 Tests for the 'Distinct HSV values' metric (m17).
 """
 
+
 # ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
@@ -47,11 +48,11 @@ __version__ = "1.0"
         ),
     ],
 )
-def test_hsv_unique_desktop(
+def test_distinct_hsv_values_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test Distinct HSV values (desktop GUIs).
+    Test distinct HSV values (desktop GUIs).
 
     Args:
         input_value: GUI image file name

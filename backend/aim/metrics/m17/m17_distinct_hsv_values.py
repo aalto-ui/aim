@@ -7,11 +7,11 @@ Metric:
 
 
 Description:
-    The number of distinct values of Hue, Saturation and Value. Images were converted to the HSV color space.
-    Color variability was reduced: only values covering more than 0.1% of image were counted
+    The number of distinct values in the HSV color space after color
+    reduction; only values covering more than 0.1% of image are counted.
 
-    Category: Color variability.
-    For details, see C1-C3 [2].
+    Category: Visual complexity > Information amount > Color variability >
+    Color range. For details, see A5-A7 [1] and C1-C3 [2].
 
 
 Funding information and contact:
@@ -31,10 +31,9 @@ References:
         Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM.
         doi: https://doi.org/10.1145/2598153.2598173
 
-    3.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural
-        images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95).
-        International Society for Optics and Photonics.
-        doi: https://doi.org/10.1117/12.477378
+    3.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in
+        Natural Images. In Human Vision and Electronic Imaging VIII, 5007,
+        87-95. SPIE. doi: https://doi.org/10.1117/12.477378
 
 
 Change log:
@@ -44,6 +43,7 @@ Change log:
     v1.0 (2017-05-29)
       * Initial implementation
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -108,17 +108,17 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Number of Unique HSV  (int, [1, 255^3))
-            - Number of Unique Hue (int, [1, 255])
-            - Number of Unique Saturation (int, [1, 255])
-            - Number of Unique Value (int, [1, 255])
+            - Number of distinct HSV values (int, [1, 255^3))
+            - Number of distinct Hue values (int, [1, 255])
+            - Number of distinct Saturation values (int, [1, 255])
+            - Number of distinct Value values (int, [1, 255])
         """
-
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 
         # Convert image from ??? (e.g., RGBA) to HSV color space
-        # Note that all 3 H,S,V values are between (0, 255): https://github.com/python-pillow/Pillow/issues/3650
+        # Note that all three values (Hue, Satuation, and Value) are between
+        # (0, 255): https://github.com/python-pillow/Pillow/issues/3650
         img_hsv: Image.Image = img.convert("HSV")
 
         # Calculate total number of image pixels
@@ -134,29 +134,31 @@ class Metric(AIMMetricInterface):
             maxcolors=total_pixels
         )
 
-        # Create lists to store h, s and v individually and together from histogram
-        hsv_list_unq: List[Tuple] = []
-        h_list: List[int] = []
-        s_list: List[int] = []
-        v_list: List[int] = []
+        # Create lists to store values of HSV, Hue, Saturation, and Value from the histogram
+        hsv_values: List[Tuple] = []
+        hue_values: List[int] = []
+        saturation_values: List[int] = []
+        value_values: List[int] = []
 
-        #  Calculate number of distinct HSV values after color reduction
+        # Collect distinct HSV values (and their associated Hue, Saturation, and Value values) after color reduction
         for hist in list(hsv_color_histogram):
             hist_count, hist_value = hist
             if hist_count > color_reduction_threshold:
-                hsv_list_unq.append(hist_value)
+                hsv_values.append(hist_value)
                 h, s, v = hist_value
-                h_list.append(h)
-                s_list.append(s)
-                v_list.append(v)
+                hue_values.append(h)
+                saturation_values.append(s)
+                value_values.append(v)
 
-        # Get all unique values, still has all counts (so no minimal occurence). This probably needs some changing in
-        # the future
-        h_num_unq: int = len(np.unique(h_list))
-        s_num_unq: int = len(np.unique(s_list))
-        v_num_unq: int = len(np.unique(v_list))
+        # Calculate number of distinct HSV, Hue, Saturation, and Value values
+        n_distinct_hsv_values: int = len(hsv_values)
+        n_distinct_hue_values: int = len(set(hue_values))
+        n_distinct_saturation_values: int = len(set(saturation_values))
+        n_distinct_value_values: int = len(set(value_values))
 
-        # Compute unique number of hsv
-        hsv_num_unq: int = len(hsv_list_unq)
-
-        return [hsv_num_unq, h_num_unq, s_num_unq, v_num_unq]
+        return [
+            n_distinct_hsv_values,
+            n_distinct_hue_values,
+            n_distinct_saturation_values,
+            n_distinct_value_values,
+        ]

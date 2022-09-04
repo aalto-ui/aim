@@ -1000,7 +1000,7 @@
     "m17": {
       "id": "m17",
       "name": "Distinct HSV values",
-      "description": "The number of distinct values in the HSV (Hue, Saturation, Value) color space after color reduction.",
+      "description": "The number of distinct values in the HSV color space after color reduction; only values covering more than 0.1% of image are counted.",
       "evidence": 2,
       "relevance": 2,
       "speed": 2,
@@ -1014,7 +1014,7 @@
           "url": "https://doi.org/10.1145/2598153.2598173"
         },
         {
-          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95). International Society for Optics and Photonics. doi: https://doi.org/10.1117/12.477378",
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
           "url": "https://doi.org/10.1117/12.477378"
         }
       ],
@@ -1028,21 +1028,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 16],
+              "range": [1, 16],
               "description": "Good",
               "icon": ["far", "check-circle"],
               "judgment": "good"
             },
             {
-              "id": "r1",
+              "id": "r2",
               "range": [17, 47],
               "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
-              "id": "r1",
-              "range": [48, null],
+              "id": "r3",
+              "range": [48, 16581375],
               "description": "Potential varied",
               "icon": [null, null],
               "judgment": "normal"
@@ -1053,12 +1053,26 @@
           "id": "m17_1",
           "index": 1,
           "type": "int",
-          "name": "Number of distinct H values",
+          "name": "Number of distinct Hue values",
           "description": false,
           "scores": [
             {
               "id": "r1",
-              "range": [null, null],
+              "range": [1, 6],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [7, 12],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [13, 255],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
@@ -1069,12 +1083,26 @@
           "id": "m17_2",
           "index": 2,
           "type": "int",
-          "name": "Number of distinct S values",
+          "name": "Number of distinct Saturation values",
           "description": false,
           "scores": [
             {
               "id": "r1",
-              "range": [null, null],
+              "range": [1, 7],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [8, 20],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [21, 255],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
@@ -1085,12 +1113,26 @@
           "id": "m17_3",
           "index": 3,
           "type": "int",
-          "name": "Number of distinct V values",
+          "name": "Number of distinct Value values",
           "description": false,
           "scores": [
             {
               "id": "r1",
-              "range": [null, null],
+              "range": [1, 13],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [14, 32],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [33, 255],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
