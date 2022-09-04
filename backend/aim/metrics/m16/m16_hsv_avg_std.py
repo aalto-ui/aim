@@ -3,14 +3,16 @@
 
 """
 Metric:
-    HSV Average and Standard Derivation
+    HSV average and standard deviation
 
 
 Description:
-    Hasler & Susstrunk validated this metric in their paper. It looks at the average
-    value and standard deviation for every value in the HSV colour space.
+    HSV color space average and standard deviation.
 
-    Category: Colour Perception > Color Range > HSV Average and Standard Derivation.
+    The HSV (Hue, Saturation, Value) color space aligns more closely with the
+    human visual system. These metrics report average and standard deviation
+    for each channel in HSV. Empirical research has shown hue and saturation
+    channels to correlated with aesthetic impression.
 
 
 Funding information and contact:
@@ -20,10 +22,9 @@ Funding information and contact:
 
 
 References:
-    1.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural
-        images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95).
-        International Society for Optics and Photonics.
-        doi: https://doi.org/10.1117/12.477378
+    1.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in
+        Natural Images. In Human Vision and Electronic Imaging VIII, 5007,
+        87-95. SPIE. doi: https://doi.org/10.1117/12.477378
 
 
 Change log:
@@ -33,6 +34,7 @@ Change log:
     v1.0 (2017-05-29)
       * Initial implementation
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -70,7 +72,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Hassler & Susstrunk.
+    Metric: HSV average and standard deviation.
     """
 
     # Public methods
@@ -95,20 +97,21 @@ class Metric(AIMMetricInterface):
             Results (list of measures)
             - Hue average (float, [0, +inf))
             - Saturation average (float, [0, +inf))
-            - Saturation std (float, [0, +inf))
+            - Saturation standard deviation (float, [0, +inf))
             - Value average (float, [0, +inf))
-            - Value std (float, [0, +inf))
+            - Value standard deviation (float, [0, +inf))
         """
-
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 
         # Convert image from ??? (e.g., RGBA) to HSV color space
-        # Note that all 3 H,S,V values are between (0, 255): https://github.com/python-pillow/Pillow/issues/3650
+        # Note that all three values (Hue, Satuation, and Value) are between
+        # (0, 255): https://github.com/python-pillow/Pillow/issues/3650
         img_hsv: Image.Image = img.convert("HSV")
 
         # Get NumPy array
-        # Mult/Div(s) are needed to get proper values. for hue, saturation and value (0 to 359, 0 to 1, 0 to 1)
+        # Multiplication / division is needed to get proper values for Hue,
+        # Saturation and Value (0 to 359, 0 to 1, 0 to 1, respectively).
         img_hsv_nparray: np.ndarray = np.array(img_hsv) / 255.0
         img_hue: np.ndarray = img_hsv_nparray[:, :, 0].copy() * 359.0
         img_saturation: np.ndarray = img_hsv_nparray[:, :, 1].copy()
@@ -116,14 +119,20 @@ class Metric(AIMMetricInterface):
 
         # Hue is an angle, so cannot simply add and average it
         # Based on: http://mkweb.bcgsc.ca/color-summarizer/?faq#averagehue
-        avg_hue_sin: float = float(np.mean(np_sind(img_hue)))
-        avg_hue_cos: float = float(np.mean(np_cosd(img_hue)))
-        avgHue: float = float(atan2d(avg_hue_cos, avg_hue_sin))
+        hue_avg_sin: float = float(np.mean(np_sind(img_hue)))
+        hue_avg_cos: float = float(np.mean(np_cosd(img_hue)))
+        hue_avg: float = float(atan2d(hue_avg_cos, hue_avg_sin))
 
-        # Compute avg and std for saturation and value
-        avgSaturation: float = float(np.mean(img_saturation))
-        stdSaturation: float = float(np.std(img_saturation))
-        avgValue: float = float(np.mean(img_value))
-        stdValue: float = float(np.std(img_value))
+        # Compute average and standard deviation for Saturation and Value
+        saturation_avg: float = float(np.mean(img_saturation))
+        saturation_std: float = float(np.std(img_saturation))
+        value_avg: float = float(np.mean(img_value))
+        value_std: float = float(np.std(img_value))
 
-        return [avgHue, avgSaturation, stdSaturation, avgValue, stdValue]
+        return [
+            hue_avg,
+            saturation_avg,
+            saturation_std,
+            value_avg,
+            value_std,
+        ]

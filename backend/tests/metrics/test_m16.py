@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'HSV Average and Standard Derivation' metric (m16).
+Tests for the 'HSV average and standard deviation' metric (m16).
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -58,7 +59,7 @@ def test_hsv_avg_std_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test HSV Average and Standard Derivation (desktop GUIs).
+    Test HSV average and standard deviation (desktop GUIs).
 
     Args:
         input_value: GUI image file name

@@ -833,14 +833,14 @@
     },
     "m16": {
       "id": "m16",
-      "name": "HSV Average and Standard Derivation",
-      "description": "HSV colour space Average and Standard Derivation.",
+      "name": "HSV average and standard deviation",
+      "description": "HSV color space average and standard deviation.",
       "evidence": 3,
       "relevance": 2,
       "speed": 1,
       "references": [
         {
-          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95). International Society for Optics and Photonics. doi: https://doi.org/10.1117/12.477378",
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
           "url": "https://doi.org/10.1117/12.477378"
         }
       ],
@@ -849,12 +849,26 @@
           "id": "m16_0",
           "index": 0,
           "type": "float",
-          "name": "Hue Average",
+          "name": "Hue average",
           "description": false,
           "scores": [
             {
               "id": "r1",
-              "range": [null, null],
+              "range": [0.0, 17.4804],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [17.4805, 352.5483],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [352.5484, null],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
@@ -865,7 +879,7 @@
           "id": "m16_1",
           "index": 1,
           "type": "float",
-          "name": "Saturation Average",
+          "name": "Saturation average",
           "description": false,
           "scores": [
             {
@@ -895,7 +909,7 @@
           "id": "m16_2",
           "index": 2,
           "type": "float",
-          "name": "Saturation STD",
+          "name": "Saturation standard deviation",
           "description": false,
           "scores": [
             {
@@ -955,7 +969,7 @@
           "id": "m16_4",
           "index": 4,
           "type": "float",
-          "name": "Value std",
+          "name": "Value standard deviation",
           "description": false,
           "scores": [
             {
@@ -967,7 +981,7 @@
             },
             {
               "id": "r2",
-              "range": [0.1902, 0.3147],
+              "range": [0.1904, 0.3147],
               "description": "Medium",
               "icon": ["far", "check-circle"],
               "judgment": "good"
