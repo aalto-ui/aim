@@ -3,17 +3,20 @@
 
 """
 Metric:
-     Hasler and Susstrunk Colorfulness
+     Colorfulness (Hasler and Süsstrunk)
 
 
 Description:
-    This metric was proposed by Hasler and Susstrunk. This metric is proven to have a very high
-    correspondence to the users perception (95%). It relies on the RGYB color spectrum and mainly
-    looks at the average standard deviation for all value. The higher the STD is, the more colourful
-    the image is perceived. The nested loop however make it more computational heavy than it was
-    originally intended. Also, it should be noted that this does not the Hue into account, which has
-    been proven to be a significant factor.
-    Category: Color variability.
+    The colorfulness in natural images.
+
+    The Hassler-Süsstrunk colorfulness metric is computed based on the RGYB
+    color spectrum and mainly comprises standard deviations. The higher the
+    deviation, the more colorful the image is perceived. This has a high
+    correlation with aesthetic impression, but has been mainly tested with
+    natural images not user interfaces. The metric is, however,
+    computationally expensive. Note that this metric does not take Hue into
+    account.
+
 
 Funding information and contact:
     This work was funded by Technology Industries of Finland in a three-year
@@ -22,10 +25,9 @@ Funding information and contact:
 
 
 References:
-    1.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural
-        images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95).
-        International Society for Optics and Photonics.
-        doi: https://doi.org/10.1117/12.477378
+    1.  Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in
+        Natural Images. In Human Vision and Electronic Imaging VIII, 5007,
+        87-95. SPIE. doi: https://doi.org/10.1117/12.477378
 
 
 Change log:
@@ -35,6 +37,7 @@ Change log:
     v1.0 (2017-05-29)
       * Initial implementation
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -71,7 +74,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Hasler and Susstrunk Colorfulness.
+    Metric: Colorfulness.
     """
 
     # Private constants
@@ -99,7 +102,6 @@ class Metric(AIMMetricInterface):
             Results (list of measures)
             - Colorfulness (float, [0, +inf))
         """
-
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 
@@ -109,7 +111,7 @@ class Metric(AIMMetricInterface):
         # Get NumPy array
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
-        # GET RGB
+        # Get RGB
         blue: np.ndarray = img_rgb_nparray[:, :, 0].copy()
         green: np.ndarray = img_rgb_nparray[:, :, 1].copy()
         red: np.ndarray = img_rgb_nparray[:, :, 2].copy()
@@ -118,13 +120,15 @@ class Metric(AIMMetricInterface):
         rg: np.ndarray = abs(red - green)
         yb: np.ndarray = abs((0.5 * (red + green)) - blue)
 
-        # Compute Metrics based on the Hassler & Susstrunk's paper.
-        meanRG: float = float(np.mean(rg))
-        stdRG: float = float(np.std(rg))
-        meanYB: float = float(np.mean(yb))
-        stdYB: float = float(np.std(yb))
-        meanRGYB: float = float(np.sqrt(meanRG**2 + meanYB**2))
-        stdRGYB: float = float(np.sqrt(stdRG**2 + stdYB**2))
-        colourfulness: float = float(stdRGYB + cls._CF_COEF * meanRGYB)
+        # Compute metrics based on Hassler and Süsstrunk's paper
+        rg_avg: float = float(np.mean(rg))
+        rg_std: float = float(np.std(rg))
+        yb_avg: float = float(np.mean(yb))
+        yb_std: float = float(np.std(yb))
+        rgyb_avg: float = float(np.sqrt(rg_avg**2 + yb_avg**2))
+        rgyb_std: float = float(np.sqrt(rg_std**2 + yb_std**2))
+        colorfulness: float = float(rgyb_std + cls._CF_COEF * rgyb_avg)
 
-        return [colourfulness]
+        return [
+            colorfulness,
+        ]

@@ -787,14 +787,14 @@
     },
     "m15": {
       "id": "m15",
-      "name": "Hasler and Susstrunk Colorfulness",
-      "description": "The Hassler-Susstrunk metric is computed based on the RGYB colour spectrum and mainly comprises standard deviations. The higher the deviation, the more colourful the image is perceived.",
+      "name": "Colorfulness (Hasler and Süsstrunk)",
+      "description": "The colorfulness in natural images.",
       "evidence": 4,
       "relevance": 3,
       "speed": 2,
       "references": [
         {
-          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring colorfulness in natural images. In Human vision and electronic imaging VIII (Vol. 5007, pp. 87-95). International Society for Optics and Photonics. doi: https://doi.org/10.1117/12.477378",
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
           "url": "https://doi.org/10.1117/12.477378"
         }
       ],
@@ -803,13 +803,13 @@
           "id": "m15_0",
           "index": 0,
           "type": "float",
-          "name": "Colourfulness",
+          "name": "Colorfulness",
           "description": false,
           "scores": [
             {
               "id": "r1",
               "range": [0.0, 100.7756],
-              "description": "Less colourful",
+              "description": "Less colorful",
               "icon": [null, null],
               "judgment": "normal"
             },
@@ -823,7 +823,7 @@
             {
               "id": "r3",
               "range": [152.532, null],
-              "description": "Colourful",
+              "description": "More colorful",
               "icon": [null, null],
               "judgment": "normal"
             }
