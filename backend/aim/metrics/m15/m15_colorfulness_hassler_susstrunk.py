@@ -109,24 +109,20 @@ class Metric(AIMMetricInterface):
         img_rgb: Image.Image = img.convert("RGB")
 
         # Get NumPy array
-        img_rgb_nparray: np.ndarray = np.array(img_rgb)
+        img_rgb_nparray: np.ndarray = np.array(img_rgb).astype(float)
 
         # Get RGB
-        blue: np.ndarray = img_rgb_nparray[:, :, 0].copy()
-        green: np.ndarray = img_rgb_nparray[:, :, 1].copy()
-        red: np.ndarray = img_rgb_nparray[:, :, 2].copy()
+        red: np.ndarray = img_rgb_nparray[:, :, 0]
+        green: np.ndarray = img_rgb_nparray[:, :, 1]
+        blue: np.ndarray = img_rgb_nparray[:, :, 2]
 
         # Compute Red-Green and Yellow-Blue
-        rg: np.ndarray = abs(red - green)
-        yb: np.ndarray = abs((0.5 * (red + green)) - blue)
+        rg: np.ndarray = red - green
+        yb: np.ndarray = 0.5 * (red + green) - blue
 
         # Compute metrics based on Hassler and Süsstrunk's paper
-        rg_avg: float = float(np.mean(rg))
-        rg_std: float = float(np.std(rg))
-        yb_avg: float = float(np.mean(yb))
-        yb_std: float = float(np.std(yb))
-        rgyb_avg: float = float(np.sqrt(rg_avg**2 + yb_avg**2))
-        rgyb_std: float = float(np.sqrt(rg_std**2 + yb_std**2))
+        rgyb_avg: float = float(np.sqrt(np.mean(rg) ** 2 + np.mean(yb) ** 2))
+        rgyb_std: float = float(np.sqrt(np.std(rg) ** 2 + np.std(yb) ** 2))
         colorfulness: float = float(rgyb_std + cls._CF_COEF * rgyb_avg)
 
         return [

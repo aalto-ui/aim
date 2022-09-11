@@ -42,7 +42,7 @@ __version__ = "1.0"
     [
         ("black.png", [0.0]),
         ("white_50_black_50.png", [255 / 2]),
-        ("aalto.fi_website.png", [79.799898]),
+        ("aalto.fi_website.png", [77.926406]),
     ],
 )
 def test_luminance_std_desktop(

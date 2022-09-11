@@ -112,12 +112,12 @@ class Metric(AIMMetricInterface):
         img_rgb: Image.Image = img.convert("RGB")
 
         # Get NumPy array
-        img_rgb_nparray: np.ndarray = np.array(img_rgb)
+        img_rgb_nparray: np.ndarray = np.array(img_rgb).astype(float)
 
         # Get RGB
-        blue: np.ndarray = img_rgb_nparray[:, :, 0].copy()
-        green: np.ndarray = img_rgb_nparray[:, :, 1].copy()
-        red: np.ndarray = img_rgb_nparray[:, :, 2].copy()
+        red: np.ndarray = img_rgb_nparray[:, :, 0]
+        green: np.ndarray = img_rgb_nparray[:, :, 1]
+        blue: np.ndarray = img_rgb_nparray[:, :, 2]
 
         # In the reference, there is no specific type of luminance
         # recommended, so the type is determined based on the legacy
