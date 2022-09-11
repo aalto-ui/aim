@@ -93,11 +93,11 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - L average (float, [0, +inf))
+            - L average (float, [0, 100])
             - L standard deviation (float, [0, +inf))
-            - A average (float, [0, +inf))
+            - A average (float, [-128, +128])
             - A standard deviation (float, [0, +inf))
-            - B average (float, [0, +inf))
+            - B average (float, [-128, +128))
             - B standard deviation (float, [0, +inf))
         """
         # Create PIL image
@@ -115,8 +115,12 @@ class Metric(AIMMetricInterface):
         # determined based on the legacy implementation. Name of the
         # illuminant types are: {“A”, “B”, “C”, “D50”, “D55”, “D65”, “D75”,
         # “E”}. The default value is: 'D65' (CIE standard illuminant).
+        # observer parameter is the aperture angle of the observer.
+        # observer types are: {“2”, “10”, “R”}, The default value is '2'.
         # Reference: https://en.wikipedia.org/wiki/Standard_illuminant
-        lab: np.ndarray = color.rgb2lab(img_rgb_nparray)
+        lab: np.ndarray = color.rgb2lab(
+            img_rgb_nparray, illuminant="D65", observer="2"
+        )
 
         # Get LAB
         L: np.ndarray = lab[:, :, 0]

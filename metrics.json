@@ -672,7 +672,7 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 0.1141],
+              "range": [null, 0.1141],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
