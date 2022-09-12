@@ -999,7 +999,7 @@
     },
     "m17": {
       "id": "m17",
-      "name": "Distinct HSV values",
+      "name": "Distinct values of Hue, Saturation, and Value",
       "description": "The number of distinct values in the HSV color space after color reduction; only values covering more than 0.1% of image are counted.",
       "evidence": 2,
       "relevance": 2,
@@ -1022,36 +1022,6 @@
         {
           "id": "m17_0",
           "index": 0,
-          "type": "int",
-          "name": "Number of distinct HSV values",
-          "description": false,
-          "scores": [
-            {
-              "id": "r1",
-              "range": [1, 16],
-              "description": "Good",
-              "icon": ["far", "check-circle"],
-              "judgment": "good"
-            },
-            {
-              "id": "r2",
-              "range": [17, 47],
-              "description": "Fair",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r3",
-              "range": [48, 16581375],
-              "description": "Potential varied",
-              "icon": [null, null],
-              "judgment": "normal"
-            }
-          ]
-        },
-        {
-          "id": "m17_1",
-          "index": 1,
           "type": "int",
           "name": "Number of distinct Hue values",
           "description": false,
@@ -1080,8 +1050,8 @@
           ]
         },
         {
-          "id": "m17_2",
-          "index": 2,
+          "id": "m17_1",
+          "index": 1,
           "type": "int",
           "name": "Number of distinct Saturation values",
           "description": false,
@@ -1110,8 +1080,8 @@
           ]
         },
         {
-          "id": "m17_3",
-          "index": 3,
+          "id": "m17_2",
+          "index": 2,
           "type": "int",
           "name": "Number of distinct Value values",
           "description": false,

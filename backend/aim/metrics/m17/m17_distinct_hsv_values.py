@@ -3,7 +3,7 @@
 
 """
 Metric:
-    Distinct HSV values
+    Distinct values of Hue, Saturation, and Value
 
 
 Description:
@@ -80,7 +80,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Distinct HSV values.
+    Metric: Distinct values of Hue, Saturation, and Value.
     """
 
     # Private constants
@@ -108,7 +108,6 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Number of distinct HSV values (int, [1, 255^3))
             - Number of distinct Hue values (int, [1, 255])
             - Number of distinct Saturation values (int, [1, 255])
             - Number of distinct Value values (int, [1, 255])
@@ -135,7 +134,6 @@ class Metric(AIMMetricInterface):
         )
 
         # Create lists to store values of HSV, Hue, Saturation, and Value from the histogram
-        hsv_values: List[Tuple] = []
         hue_values: List[int] = []
         saturation_values: List[int] = []
         value_values: List[int] = []
@@ -144,20 +142,17 @@ class Metric(AIMMetricInterface):
         for hist in list(hsv_color_histogram):
             hist_count, hist_value = hist
             if hist_count > color_reduction_threshold:
-                hsv_values.append(hist_value)
                 h, s, v = hist_value
                 hue_values.append(h)
                 saturation_values.append(s)
                 value_values.append(v)
 
-        # Calculate number of distinct HSV, Hue, Saturation, and Value values
-        n_distinct_hsv_values: int = len(hsv_values)
+        # Calculate number of distinct Hue, Saturation, and Value values
         n_distinct_hue_values: int = len(set(hue_values))
         n_distinct_saturation_values: int = len(set(saturation_values))
         n_distinct_value_values: int = len(set(value_values))
 
         return [
-            n_distinct_hsv_values,
             n_distinct_hue_values,
             n_distinct_saturation_values,
             n_distinct_value_values,

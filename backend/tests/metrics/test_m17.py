@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Distinct HSV values' metric (m17).
+Tests for the 'Distinct values of Hue, Saturation, and Value' metric (m17).
 """
 
 
@@ -40,11 +40,11 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("red.png", [1, 1, 1, 1]),
-        ("4_high-contrast_shades_of_gray.png", [4, 1, 1, 4]),
+        ("red.png", [1, 1, 1]),
+        ("4_high-contrast_shades_of_gray.png", [1, 1, 4]),
         (
             "green_50_blue_50.png",
-            [2, 2, 1, 1],
+            [2, 1, 1],
         ),
     ],
 )
@@ -52,7 +52,7 @@ def test_distinct_hsv_values_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test distinct HSV values (desktop GUIs).
+    Test Distinct values of Hue, Saturation, and Value (desktop GUIs).
 
     Args:
         input_value: GUI image file name

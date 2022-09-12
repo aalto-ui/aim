@@ -40,24 +40,66 @@ __version__ = "1.0"
     ["input_value", "expected_results"],
     [
         ("black.png", [0.0]),
-        ("gray.png", [0.0],),
-        ("4_low-contrast_shades_of_gray.png", [0.0],),
-        ("white_50_black_50.png", [0.0],),
-        ("4_high-contrast_shades_of_gray.png", [0.0],),
-        ("black_50_transparent_50.png", [0.0],),
-        ("white.png", [0.0],),
-        ("blue.png", [76.5],),
-        ("green.png", [85.5296],),
-        ("red.png", [85.5296],),
-        ("red_50_green_50.png", [293.25], ),
-        ("green_50_blue_50.png", [272.618694],),
-        ("blue_50_red_50.png", [272.618694],),
-        ("myhelsinki.fi_website.png", [63.443773],),
-        ("aalto.fi_website.png", [83.143299],),
+        (
+            "gray.png",
+            [0.0],
+        ),
+        (
+            "4_low-contrast_shades_of_gray.png",
+            [0.0],
+        ),
+        (
+            "white_50_black_50.png",
+            [0.0],
+        ),
+        (
+            "4_high-contrast_shades_of_gray.png",
+            [0.0],
+        ),
+        (
+            "black_50_transparent_50.png",
+            [0.0],
+        ),
+        (
+            "white.png",
+            [0.0],
+        ),
+        (
+            "blue.png",
+            [76.5],
+        ),
+        (
+            "green.png",
+            [85.5296],
+        ),
+        (
+            "red.png",
+            [85.5296],
+        ),
+        (
+            "red_50_green_50.png",
+            [293.25],
+        ),
+        (
+            "green_50_blue_50.png",
+            [272.618694],
+        ),
+        (
+            "blue_50_red_50.png",
+            [272.618694],
+        ),
+        (
+            "myhelsinki.fi_website.png",
+            [63.443773],
+        ),
+        (
+            "aalto.fi_website.png",
+            [83.143299],
+        ),
     ],
 )
 def test_colorfulness_hassler_susstrunk_desktop(
-        input_value: str, expected_results: List[Any]
+    input_value: str, expected_results: List[Any]
 ) -> None:
     """
     Test colorfulness (Hasler and Süsstrunk) (desktop GUIs).
@@ -68,7 +110,7 @@ def test_colorfulness_hassler_susstrunk_desktop(
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
-            pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
+        pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
     )
 
     # Read GUI image (PNG)
