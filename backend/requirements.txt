@@ -97,7 +97,7 @@ sniffio==1.2.0
 sortedcontainers==2.4.0
 starlette==0.14.2
 tensorboard==1.15.0
-tensorflow==1.15.5
+tensorflow==2.7.2
 tensorflow-estimator==1.15.1
 termcolor==1.1.0
 tifffile==2021.11.2
