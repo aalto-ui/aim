@@ -7,8 +7,9 @@ Metric:
 
 
 Description:
-    The number of distinct values in the HSV color space after color
-    reduction; only values covering more than 0.1% of image are counted.
+    The number of distinct values of Hue, Saturation, and Hue in the HSV
+    color space after color reduction; only values covering more than 0.1%
+    of image are counted.
 
     Category: Visual complexity > Information amount > Color variability >
     Color range. For details, see A5-A7 [1] and C1-C3 [2].
@@ -138,7 +139,7 @@ class Metric(AIMMetricInterface):
         saturation_values: List[int] = []
         value_values: List[int] = []
 
-        # Collect distinct HSV values (and their associated Hue, Saturation, and Value values) after color reduction
+        # Collect distinct values of Hue, Saturation, and Value after color reduction
         for hist in list(hsv_color_histogram):
             hist_count, hist_value = hist
             if hist_count > color_reduction_threshold:
@@ -147,7 +148,7 @@ class Metric(AIMMetricInterface):
                 saturation_values.append(s)
                 value_values.append(v)
 
-        # Calculate number of distinct Hue, Saturation, and Value values
+        # Calculate number of distinct values of Hue, Saturation, and Value
         n_distinct_hue_values: int = len(set(hue_values))
         n_distinct_saturation_values: int = len(set(saturation_values))
         n_distinct_value_values: int = len(set(value_values))

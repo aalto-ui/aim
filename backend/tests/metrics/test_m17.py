@@ -19,7 +19,9 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m17.m17_distinct_hsv_values import Metric
+from aim.metrics.m17.m17_distinct_values_of_hue_saturation_and_value import (
+    Metric,
+)
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
 # ----------------------------------------------------------------------------
@@ -42,10 +44,7 @@ __version__ = "1.0"
     [
         ("red.png", [1, 1, 1]),
         ("4_high-contrast_shades_of_gray.png", [1, 1, 4]),
-        (
-            "green_50_blue_50.png",
-            [2, 1, 1],
-        ),
+        ("green_50_blue_50.png", [2, 1, 1]),
     ],
 )
 def test_distinct_hsv_values_desktop(

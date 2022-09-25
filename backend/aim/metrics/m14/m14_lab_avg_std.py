@@ -114,9 +114,9 @@ class Metric(AIMMetricInterface):
         # is no specific type of luminance recommended, so the type is
         # determined based on the legacy implementation. Name of the
         # illuminant types are: {“A”, “B”, “C”, “D50”, “D55”, “D65”, “D75”,
-        # “E”}. The default value is: 'D65' (CIE standard illuminant).
-        # observer parameter is the aperture angle of the observer.
-        # observer types are: {“2”, “10”, “R”}, The default value is '2'.
+        # “E”}. The default value is: "D65" (CIE standard illuminant).
+        # The observer parameter is the aperture angle of the observer.
+        # The observer types are: {“2”, “10”, “R”}, The default value is "2".
         # Reference: https://en.wikipedia.org/wiki/Standard_illuminant
         lab: np.ndarray = color.rgb2lab(
             img_rgb_nparray, illuminant="D65", observer="2"

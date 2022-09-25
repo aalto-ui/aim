@@ -1000,7 +1000,7 @@
     "m17": {
       "id": "m17",
       "name": "Distinct values of Hue, Saturation, and Value",
-      "description": "The number of distinct values in the HSV color space after color reduction; only values covering more than 0.1% of image are counted.",
+      "description": "The number of distinct values of Hue, Saturation, and Value in the HSV color space after color reduction; only values covering more than 0.1% of image are counted.",
       "evidence": 2,
       "relevance": 2,
       "speed": 2,
