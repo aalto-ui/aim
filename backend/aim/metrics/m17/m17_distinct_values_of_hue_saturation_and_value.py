@@ -56,7 +56,6 @@ from io import BytesIO
 from typing import List, Optional, Tuple, Union
 
 # Third-party modules
-import numpy as np
 from PIL import Image
 from pydantic import HttpUrl
 
