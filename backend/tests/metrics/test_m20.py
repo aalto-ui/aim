@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Color Harmonization' metric (m20).
+Tests for the 'Color harmony' metric (m20).
 """
 
 
@@ -19,7 +19,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m20.m20_color_harmonization import Metric
+from aim.metrics.m20.m20_color_harmony import Metric
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR, IDIFF_TOLERANCE
 from tests.common.utils import load_expected_result
 
@@ -52,11 +52,11 @@ __version__ = "1.0"
         ),
     ],
 )
-def test_color_harmonization_desktop(
+def test_color_harmony_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test Color Harmonization (desktop GUIs).
+    Test Color harmony (desktop GUIs).
 
     Args:
         input_value: GUI image file name

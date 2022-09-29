@@ -3,19 +3,16 @@
 
 """
 Metric:
-    Color Harmonization
+    Color harmony
 
 
 Description:
-    Closest color scheme template and distance.
-
-    Harmonic colors are sets of colors that are aesthetically pleasing in terms of human visual perception.
-    This paper uses distance to colourschemes to "enhance" photographs. This is not proven for user interfaces.
-    For an overview of what the schemes look like, please take a look at the paper.
+    The closest harmonic color scheme and distance to it.
 
 
 Source:
-    The util module contains a few codes that are imported and adopted from  https://github.com/tartarskunk/ColorHarmonization
+    The utils module contains some code that is imported and adopted from
+    https://github.com/tartarskunk/ColorHarmonization.
 
 
 Funding information and contact:
@@ -25,8 +22,8 @@ Funding information and contact:
 
 
 References:
-    1.  Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T. and Xu, Y. Color harmonization.
-        ACM Transactions on Graphics 25, 3 (2006), 624.
+    1.  Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T. and Xu, Y.Q. (2006).
+        Color Harmonization. ACM Transactions on Graphics, 25(3), 624-630.
         doi: https://doi.org/10.1145/1141911.1141933
 
 
@@ -34,6 +31,7 @@ Change log:
     v1.0 (2022-06-29)
       * Initial implementation
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -60,7 +58,7 @@ from aim.metrics.m20.utils import (
     HueSector,
     count_hue_histogram,
     get_img_from_fig,
-    plothis,
+    plot_histogram,
 )
 
 # ----------------------------------------------------------------------------
@@ -80,11 +78,12 @@ __version__ = "1.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Color Harmonization.
+    Metric: Color harmony.
     """
 
     # Private constants
-    # HUE Templates defined by color harmonization paper. You can find details in the appendix of the paper.
+    # Harmonic templates on the hue wheel based on [1] (see the appendix)
+    # List of sectors (center, width)
     _HUE_TEMPLATES: Dict[str, List[Tuple]] = {
         "i": [(0.00, 0.05)],
         "V": [(0.00, 0.26)],
@@ -109,13 +108,13 @@ class Metric(AIMMetricInterface):
         Compute Shannon entropies of all the subbands.
 
         Args:
-            template_type: name of a template: 'i', 'V', 'L', 'mirror_L', 'I', 'T', 'Y', 'X'
-            alpha: angle of template
+            template_type: Template type (options: 'i', 'V', 'L', 'mirror_L',
+                           'I', 'T', 'Y', and 'X')
+            alpha: Angle of the template
 
         Returns:
             A list of HueSectors for the template
         """
-
         # Compute sectors
         sectors: List[HueSector] = []
         for t in cls._HUE_TEMPLATES[template_type]:
@@ -129,13 +128,13 @@ class Metric(AIMMetricInterface):
     @classmethod
     def _get_schemes(cls, X: np.ndarray) -> Tuple[str, Dict]:
         """
-        Compute colsest scheme templates
+        Compute closest scheme templates.
 
         Args:
-            X: HSV Image (np.ndarray)
+            X: HSV image (np.ndarray)
 
         Returns:
-            - best template name (str)
+            - Best-fitting harmonic template (str)
             - Template schemes (Dict)
         """
 
@@ -144,7 +143,7 @@ class Metric(AIMMetricInterface):
         num_tamplates: int = len(template_types)
         F_matrix: np.ndarray = np.zeros((num_tamplates, N))
 
-        # Compute all possible (template, alpha) score harmony scores
+        # Compute all possible (template, alpha) harmonic scores
         for i in range(num_tamplates):
             m: str = template_types[i]
             for alpha in range(N):
@@ -164,7 +163,6 @@ class Metric(AIMMetricInterface):
                 "harmonic_scheme": HarmonicScheme([]),
                 "distance": 0.0,
             }
-
         for m_idx, scheme_m in enumerate(cls._HUE_TEMPLATES.keys()):
             # best alpha
             scheme_alpha: int = int(np.argmin(F_matrix[m_idx]))
@@ -202,9 +200,9 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Distance to closest template (float, [0, +inf))
-            - Corrected Image (str, image (PNG) encoded in Base64)
-            - Target and Source Hues (str, image (PNG) encoded in Base64)
+            - Distance to the closest harmonic template (float, [0, +inf))
+            - Harmonized image (str, image (PNG) encoded in Base64)
+            - Source and target hues (str, image (PNG) encoded in Base64)
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -231,24 +229,28 @@ class Metric(AIMMetricInterface):
         shifted_img_hsv_arr: np.ndarray = best_harmomic_scheme.hue_shifted(
             img_hsv_arr, num_superpixels=cls._NUM_SUPER_PIXEL
         )
+
         # Convert shifted HSV image (array) to RGB image (array)
         shifted_img_rgb_arr: np.ndarray = cv2.cvtColor(
             shifted_img_hsv_arr, cv2.COLOR_HSV2RGB
         )
+
         # Convert shifted RGB image (array) to RGB image (pillow image)
         shifted_im: Image.Image = Image.fromarray(shifted_img_rgb_arr)
+
         # Convert shifted RGB image (pillow image) to b64 (str)
         shifted_b64: str = image_utils.to_png_image_base64(shifted_im)
 
-        # Compute Hue plots for before and after shift (source and target)
-        histo_source: np.ndarray = count_hue_histogram(img_hsv_arr)
-        histo_target: np.ndarray = count_hue_histogram(shifted_img_hsv_arr)
+        # Compute Hue plots for before (source) and after (target) shifts
+        histogram_source: np.ndarray = count_hue_histogram(img_hsv_arr)
+        histogram_target: np.ndarray = count_hue_histogram(shifted_img_hsv_arr)
+
         # Get the plots
-        fig_source: matplotlib.figure.Figure = plothis(
-            histo_source, best_harmomic_scheme, "Source Hue"
+        fig_source: matplotlib.figure.Figure = plot_histogram(
+            histogram_source, best_harmomic_scheme, "Source Hue"
         )
-        fig_target: matplotlib.figure.Figure = plothis(
-            histo_target, best_harmomic_scheme, "Target Hue"
+        fig_target: matplotlib.figure.Figure = plot_histogram(
+            histogram_target, best_harmomic_scheme, "Target Hue"
         )
 
         # Convert Matplotlib plots to arrays
@@ -257,8 +259,10 @@ class Metric(AIMMetricInterface):
 
         # Concat Source and Target hues side by side
         hues_arr: np.ndarray = np.concatenate((source_arr, target_arr), axis=1)
+
         # Convert concatenated hue plots to Pillow image format
         hues_im: Image.Image = Image.fromarray(hues_arr)
+
         # Convert concatenated hue plots to b64 (str)
         hues_b64: str = image_utils.to_png_image_base64(hues_im)
 

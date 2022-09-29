@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-Color Harmonization utility functions.
-Some Codes are imported and adopted from https://github.com/tartarskunk/ColorHarmonization
+Color harmony utility functions.
+Some codes are imported and adopted from https://github.com/tartarskunk/ColorHarmonization
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -29,27 +30,28 @@ __date__ = "2022-06-29"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
+
 # ----------------------------------------------------------------------------
-# Color Harmonization utility functions
+# Color harmony utility functions
 # ----------------------------------------------------------------------------
 
 
 def deg_distance(deg_arr: np.ndarray, deg_float: float) -> np.ndarray:
     """
-    Compute absolute minimum distance between an array elements and a float
+    Compute absolute minimum distance between an array elements and a float.
 
     Args:
-        deg_arr: array of degrees (np.ndarray)
-        deg_float: float degree (float)
+        deg_arr: Array of degrees (np.ndarray)
+        deg_float: Float degree (float)
 
     Returns:
-        minimum distance between each element of deg_arr and deg_float
+        Minimum distance between each element of deg_arr and deg_float
     """
-
     # Compute min distance between each 2 degrees
     d1: np.ndarray = np.abs(deg_arr - deg_float)
     d2: np.ndarray = np.abs(360 - d1)
     d: np.ndarray = np.minimum(d1, d2)
+
     return d
 
 
@@ -57,17 +59,16 @@ def normalized_gaussian(
     X: np.ndarray, mu: Union[int, float], S: np.ndarray
 ) -> np.ndarray:
     """
-    Compute normalized gaussian for input array
+    Compute normalized gaussian for an input array.
 
     Args:
-        X: array of inputs
-        mu: mean
-        S: sigma
+        X: Array of inputs
+        mu: Mean
+        S: Sigma
 
     Returns:
-        normalized gaussian
+        Normalized gaussian
     """
-
     # Compute exponent of Gaussian distribution formula
     # More on https://en.wikipedia.org/wiki/Normal_distribution
     X = np.asarray(X).astype(np.float64)
@@ -77,6 +78,7 @@ def normalized_gaussian(
     D2: np.ndarray = np.multiply(D, D)
     S2: np.ndarray = np.multiply(S, S)
     dist: np.ndarray = np.exp(-D2 / (2 * S2))
+
     return dist
 
 
@@ -216,7 +218,7 @@ def count_hue_histogram(X: np.ndarray) -> np.ndarray:
     return histo
 
 
-def plothis(
+def plot_histogram(
     hue_histo: np.ndarray, harmonic_scheme: HarmonicScheme, caption: str
 ) -> matplotlib.figure.Figure:
     N: int = 360
@@ -299,19 +301,18 @@ def get_img_from_fig(
     fig: matplotlib.figure.Figure, dpi: int = 100
 ) -> np.ndarray:
     """
-    Returns a matplotlib figure as a numpy array
+    Return a matplotlib figure as a numpy array.
 
     Args:
-        fig: input matplotlib figure (matplotlib.figure.Figure)
-        dpi: dots per inch (int)
+        fig: Input matplotlib figure (matplotlib.figure.Figure)
+        dpi: Dots per inch (int)
 
     Returns:
-        output array of input figure
+        Output array of an input figure
 
     Source:
         https://stackoverflow.com/questions/7821518/matplotlib-save-plot-to-numpy-array
     """
-
     buf: BytesIO = BytesIO()
     fig.savefig(buf, format="png", dpi=dpi)
     buf.seek(0)

@@ -1113,14 +1113,14 @@
     },
     "m20": {
       "id": "m20",
-      "name": "Color Harmonization",
-      "description": "This metric return closest color scheme template and distance",
+      "name": "Color harmony",
+      "description": "The closest harmonic color scheme and distance to it.",
       "evidence": 3,
       "relevance": 3,
       "speed": 0,
       "references": [
         {
-          "title": "Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T. and Xu, Y. Color harmonization. ACM Transactions on Graphics 25, 3 (2006), 624. doi: https://doi.org/10.1145/1141911.1141933",
+          "title": "Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T. and Xu, Y.Q. (2006). Color Harmonization. ACM Transactions on Graphics, 25(3), 624-630. doi: https://doi.org/10.1145/1141911.1141933",
           "url": "https://doi.org/10.1145/1141911.1141933"
         }
       ],
@@ -1129,7 +1129,7 @@
           "id": "m20_0",
           "index": 0,
           "type": "float",
-          "name": "Distance to the closest color harmony template",
+          "name": "Distance to the closest harmonic template",
           "description": false,
           "scores": [
             {
@@ -1159,15 +1159,15 @@
           "id": "m20_1",
           "index": 1,
           "type": "b64",
-          "name": "Color-repaired image",
-          "description": "Color-repaired image based on the closest template with minimal changes."
+          "name": "Harmonized image",
+          "description": "Harmonized image based on the closest harmonic template with minimal changes."
         },
         {
           "id": "m20_2",
           "index": 2,
           "type": "b64",
-          "name": "Hue of source and target",
-          "description": "The hue of the source and the hue of the closest color harmony."
+          "name": "Source and target hues",
+          "description": "The hue histogram of the image before and after harmonization."
         }
       ]
     }
