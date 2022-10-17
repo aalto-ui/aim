@@ -45,7 +45,6 @@ Change log:
       * Initial implementation
 """
 
-
 # ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
@@ -56,6 +55,7 @@ from io import BytesIO
 from typing import List, Optional, Tuple, Union
 
 # Third-party modules
+import numpy as np
 from PIL import Image
 from pydantic import HttpUrl
 
@@ -119,6 +119,7 @@ class Metric(AIMMetricInterface):
         # Note that all three values (Hue, Satuation, and Value) are between
         # (0, 255): https://github.com/python-pillow/Pillow/issues/3650
         img_hsv: Image.Image = img.convert("HSV")
+        img_hsv_arr: np.ndarray = np.array(img_hsv)
 
         # Calculate total number of image pixels
         total_pixels: int = img_hsv.width * img_hsv.height
@@ -128,29 +129,48 @@ class Metric(AIMMetricInterface):
             total_pixels * cls._COLOR_REDUCTION_THRESHOLD_RATIO
         )
 
-        # Get HSV color histogram
-        hsv_color_histogram: List[Tuple[int, Tuple]] = img_hsv.getcolors(
+        # Get Hue color histogram
+        im_h = Image.fromarray(img_hsv_arr[:, :, 0], "L")
+        h_color_histogram: List[Tuple[int, int]] = im_h.getcolors(
             maxcolors=total_pixels
         )
 
-        # Create lists to store values of HSV, Hue, Saturation, and Value from the histogram
-        hue_values: List[int] = []
-        saturation_values: List[int] = []
-        value_values: List[int] = []
+        # Get Saturation color histogram
+        im_s = Image.fromarray(img_hsv_arr[:, :, 1], "L")
+        s_color_histogram: List[Tuple[int, int]] = im_s.getcolors(
+            maxcolors=total_pixels
+        )
 
-        # Collect distinct values of Hue, Saturation, and Value after color reduction
-        for hist in list(hsv_color_histogram):
-            hist_count, hist_value = hist
-            if hist_count > color_reduction_threshold:
-                h, s, v = hist_value
-                hue_values.append(h)
-                saturation_values.append(s)
-                value_values.append(v)
+        # Get Value color histogram
+        im_v = Image.fromarray(img_hsv_arr[:, :, 2], "L")
+        v_color_histogram: List[Tuple[int, int]] = im_v.getcolors(
+            maxcolors=total_pixels
+        )
 
-        # Calculate number of distinct values of Hue, Saturation, and Value
-        n_distinct_hue_values: int = len(set(hue_values))
-        n_distinct_saturation_values: int = len(set(saturation_values))
-        n_distinct_value_values: int = len(set(value_values))
+        # Color reduction
+        hue_values: List[Tuple[int, int]] = list(
+            filter(
+                lambda hist: hist[0] > color_reduction_threshold,
+                h_color_histogram,
+            )
+        )
+        saturation_values: List[Tuple[int, int]] = list(
+            filter(
+                lambda hist: hist[0] > color_reduction_threshold,
+                s_color_histogram,
+            )
+        )
+        value_values: List[Tuple[int, int]] = list(
+            filter(
+                lambda hist: hist[0] > color_reduction_threshold,
+                v_color_histogram,
+            )
+        )
+
+        # Calculate number of distinct values of Hue, Saturation, and Value after color reduction
+        n_distinct_hue_values: int = len(hue_values)
+        n_distinct_saturation_values: int = len(saturation_values)
+        n_distinct_value_values: int = len(value_values)
 
         return [
             n_distinct_hue_values,

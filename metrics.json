@@ -1028,21 +1028,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [1, 6],
+              "range": [1, 29],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [7, 12],
+              "range": [30, 76],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [13, 255],
+              "range": [77, 255],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
@@ -1058,21 +1058,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [1, 7],
+              "range": [1, 34],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [8, 20],
+              "range": [35, 131],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [21, 255],
+              "range": [132, 255],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
@@ -1088,21 +1088,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [1, 13],
+              "range": [1, 47],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [14, 32],
+              "range": [48, 163],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [33, 255],
+              "range": [164, 255],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
