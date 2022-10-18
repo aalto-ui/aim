@@ -44,18 +44,23 @@ export const fillData = ({
         // Compute bin size
         let binSize = maxValue / noBins
         const maxF = Math.ceil(Math.log10(binSize)) + 1
-        binSize =
-          maxValue > 1 && maxF > 1
-            ? new Array(maxF)
-                .fill(0)
-                .map((_, i) => maxF - i)
-                .map((i) => Math.ceil(binSize / 10 ** i) * 10 ** i)
-                .map((i) => [
-                  i,
-                  (noBins - 1) * i < maxValue && noBins * i > maxValue,
-                ])
-                .filter((i) => i[1] === true)[0][0]
-            : maxValue / noBins;
+        if (maxValue > 1 && maxF > 1) {
+          let arr = new Array(maxF)
+          arr = arr.fill(0)
+          arr = arr.map((_, i) => maxF - i)
+          arr = arr.map((i) => Math.ceil(binSize / 10 ** i) * 10 ** i)
+          arr = arr.map((i) => [i, (noBins - 1) * i < maxValue && noBins * i > maxValue])
+          arr = arr.filter((i) => i[1] === true)
+          if (arr.length === 0) {
+            binSize = maxValue / noBins
+          }
+          else {
+            binSize = arr[0][0]
+          }
+        }
+        else {
+          binSize = maxValue / noBins
+        }
 
         // Compute data frequency bins
         const valueIndex = Math.floor(metricResult.value / binSize)

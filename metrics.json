@@ -4,7 +4,7 @@
       "id": "cp",
       "name": "Colour Perception",
       "icon": "palette",
-      "metrics": ["m1", "m3", "m10", "m11", "m12", "m19"]
+      "metrics": ["m1", "m3", "m10", "m11", "m12", "m13", "m14", "m15", "m16", "m17", "m19", "m20"]
     },
     {
       "id": "pf",
@@ -697,6 +697,574 @@
         }
       ]
     },
+    "m13": {
+      "id": "m13",
+      "name": "Luminance standard deviation",
+      "description": "The standard deviation of pixel luminance.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        }
+      ],
+      "results": [
+        {
+          "id": "m13_0",
+          "index": 0,
+          "type": "float",
+          "name": "Luminance standard deviation",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 56.4449],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [56.4450, 85.9416],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [85.9417, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        }
+      ]
+    },
+    "m14": {
+      "id": "m14",
+      "name": "LAB average and standard deviation",
+      "description": "LAB color space average and standard deviation.",
+      "evidence": 3,
+      "relevance": 2,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
+          "url": "https://doi.org/10.1117/12.477378"
+        }
+      ],
+      "results": [
+        {
+          "id": "m14_0",
+          "index": 0,
+          "type": "float",
+          "name": "Lightness average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 61.1937],
+              "description": "Dark",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [61.1938, 85.945],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [85.946, 100.0],
+              "description": "Light",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m14_1",
+          "index": 1,
+          "type": "float",
+          "name": "Lightness standard deviation",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 21.203],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [21.204, 32.748],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [32.749, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        },
+        {
+          "id": "m14_2",
+          "index": 2,
+          "type": "float",
+          "name": "A (green-red) average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [-128.0, 0.1141],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.1142, 3.7987],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [3.7988, 128.0],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m14_3",
+          "index": 3,
+          "type": "float",
+          "name": "A (green-red) standard deviation",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 5.3333],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [5.3334, 12.1716],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [12.1717, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m14_4",
+          "index": 4,
+          "type": "float",
+          "name": "B (blue-yellow) average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [-128.0, -2.4527],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [-2.4526, 2.568],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [2.569, 128.0],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m14_5",
+          "index": 5,
+          "type": "float",
+          "name": "B (blue-yellow) standard deviation",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 8.4718],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [8.4719, 17.3737],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [17.3738, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    "m15": {
+      "id": "m15",
+      "name": "Colorfulness (Hasler and Süsstrunk)",
+      "description": "The colorfulness in natural images.",
+      "evidence": 4,
+      "relevance": 3,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
+          "url": "https://doi.org/10.1117/12.477378"
+        }
+      ],
+      "results": [
+        {
+          "id": "m15_0",
+          "index": 0,
+          "type": "float",
+          "name": "Colorfulness",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 26.0989],
+              "description": "Less colorful",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [26.0990, 54.1463],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [54.1464, null],
+              "description": "More colorful",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    "m16": {
+      "id": "m16",
+      "name": "HSV average and standard deviation",
+      "description": "HSV color space average and standard deviation.",
+      "evidence": 3,
+      "relevance": 2,
+      "speed": 1,
+      "references": [
+        {
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
+          "url": "https://doi.org/10.1117/12.477378"
+        }
+      ],
+      "results": [
+        {
+          "id": "m16_0",
+          "index": 0,
+          "type": "float",
+          "name": "Hue average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 17.4804],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [17.4805, 352.5483],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [352.5484, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m16_1",
+          "index": 1,
+          "type": "float",
+          "name": "Saturation average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.0738],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.0739, 0.2468],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [0.2469, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        },
+        {
+          "id": "m16_2",
+          "index": 2,
+          "type": "float",
+          "name": "Saturation standard deviation",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.1652],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.1653, 0.2777],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [0.2778, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        },
+        {
+          "id": "m16_3",
+          "index": 3,
+          "type": "float",
+          "name": "Value average",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.6448],
+              "description": "Dark",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.6449, 0.8905],
+              "description": "Medium",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.8906, null],
+              "description": "Light",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m16_4",
+          "index": 4,
+          "type": "float",
+          "name": "Value standard deviation",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.1903],
+              "description": "Low",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.1904, 0.3147],
+              "description": "Medium",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r3",
+              "range": [0.3148, null],
+              "description": "High",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        }
+      ]
+    },
+    "m17": {
+      "id": "m17",
+      "name": "Distinct values of Hue, Saturation, and Value",
+      "description": "The number of distinct values of Hue, Saturation, and Value in the HSV color space after color reduction; only values covering more than 0.1% of image are counted.",
+      "evidence": 2,
+      "relevance": 2,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        },
+        {
+          "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
+          "url": "https://doi.org/10.1117/12.477378"
+        }
+      ],
+      "results": [
+        {
+          "id": "m17_0",
+          "index": 0,
+          "type": "int",
+          "name": "Number of distinct Hue values",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [1, 29],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [30, 76],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [77, 255],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m17_1",
+          "index": 1,
+          "type": "int",
+          "name": "Number of distinct Saturation values",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [1, 34],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [35, 131],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [132, 255],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m17_2",
+          "index": 2,
+          "type": "int",
+          "name": "Number of distinct Value values",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [1, 47],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [48, 163],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [164, 255],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
     "m18": {
       "id": "m18",
       "name": "NIMA (Neural IMage Assessment)",
@@ -820,6 +1388,66 @@
               "judgment": "normal"
             }
           ]
+        }
+      ]
+    },
+    "m20": {
+      "id": "m20",
+      "name": "Color harmony",
+      "description": "The closest harmonic color scheme and distance to it.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 0,
+      "references": [
+        {
+          "title": "Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T. and Xu, Y.Q. (2006). Color Harmonization. ACM Transactions on Graphics, 25(3), 624-630. doi: https://doi.org/10.1145/1141911.1141933",
+          "url": "https://doi.org/10.1145/1141911.1141933"
+        }
+      ],
+      "results": [
+        {
+          "id": "m20_0",
+          "index": 0,
+          "type": "float",
+          "name": "Distance to the closest harmonic template",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 259.2499],
+              "description": "Good",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [259.2500, 3113.7350],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [3113.7351, null],
+              "description": "Poor",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        },
+        {
+          "id": "m20_1",
+          "index": 1,
+          "type": "b64",
+          "name": "Harmonized image",
+          "description": "Harmonized image based on the closest harmonic template with minimal changes."
+        },
+        {
+          "id": "m20_2",
+          "index": 2,
+          "type": "b64",
+          "name": "Source and target hues",
+          "description": "The hue histogram of the image before and after harmonization."
         }
       ]
     }
