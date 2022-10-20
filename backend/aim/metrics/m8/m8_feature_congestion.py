@@ -511,6 +511,7 @@ class Metric(AIMMetricInterface):
         Returns:
             Results (list of measures)
             - Feature congestion (float, [0, +inf))
+            - Feature congestion visualization (str, image (PNG) encoded in Base64)
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))

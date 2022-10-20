@@ -450,7 +450,7 @@
       "description": "This feature congestion measure of clutter makes use of extensive modeling of what makes items in a display visually salient.",
       "evidence": 3,
       "relevance": 3,
-      "speed": 0,
+      "speed": 1,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -620,21 +620,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 810],
+              "range": [0, 809],
               "description": "Colorless",
               "icon": ["far", "check-circle"],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [811, 2550],
+              "range": [810, 2550],
               "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [2551, null],
+              "range": [2551, 32768],
               "description": "Colorful",
               "icon": ["fas", "exclamation-triangle"],
               "judgment": "bad"
@@ -649,7 +649,7 @@
       "description": "The number of dynamic color clusters after color reduction; only RGB values covering more than five pixels are counted. If a difference between two colors in a color cube is less than or equal to three, two colors are united in the same cluster, which continues recursively for all colors.",
       "evidence": 3,
       "relevance": 3,
-      "speed": 0,
+      "speed": 1,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -674,14 +674,14 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 133],
+              "range": [0, 132],
               "description": "Colorless",
               "icon": ["far", "check-circle"],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [134, 443],
+              "range": [133, 443],
               "description": "Fair",
               "icon": [null, null],
               "judgment": "normal"
@@ -991,7 +991,7 @@
       "description": "HSV color space average and standard deviation.",
       "evidence": 3,
       "relevance": 2,
-      "speed": 1,
+      "speed": 2,
       "references": [
         {
           "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
@@ -1347,7 +1347,7 @@
       "description": "The ratio of distinct RGB values to the number of dynamic clusters.",
       "evidence": 3,
       "relevance": 3,
-      "speed": 0,
+      "speed": 1,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
