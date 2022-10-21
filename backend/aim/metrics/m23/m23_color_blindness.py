@@ -41,7 +41,7 @@ Change log:
 import base64
 import math
 from io import BytesIO
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Union
 
 # Third-party modules
 import numpy as np
@@ -79,12 +79,12 @@ class Metric(AIMMetricInterface):
     Converted to numpy array by https://github.com/colour-science/colour/blob/develop/colour/blindness/datasets/machado2010.py
     The severity key goes from 0.0 to 1.0 with 0.1 steps, but here the index is multiplied by 10 to make it an integer.
     """
-    _DEFAULT_SEVERITY: Dict = {
+    _DEFAULT_SEVERITY: Dict[str, float] = {
         "protan": 0.7,
         "deutan": 0.7,
         "tritan": 1.0,
     }  # severity should be between 0.0 to 1.0.
-    _MACHADO_2009_MATRICES: Dict = {
+    _MACHADO_2009_MATRICES: Dict[str, Dict[int, np.ndarray]] = {
         "protan": {
             0: np.array(
                 [
@@ -326,8 +326,9 @@ class Metric(AIMMetricInterface):
 
     # Private methods
     @staticmethod
-    def _linearRGB_from_sRGB(im):
-        """Convert sRGB to linearRGB, removing the gamma correction.
+    def _linearRGB_from_sRGB(im: np.ndarray):
+        """
+        Convert sRGB to linearRGB, removing the gamma correction.
         Formula taken from Wikipedia https://en.wikipedia.org/wiki/SRGB
 
         Args:
@@ -336,9 +337,9 @@ class Metric(AIMMetricInterface):
         Returns:
             The output RGB image, array of shape (M,N,3) with dtype float
         """
-        out = np.zeros_like(im)
-        small_mask = im < 0.04045
-        large_mask = np.logical_not(small_mask)
+        out: np.ndarray = np.zeros_like(im)
+        small_mask: np.ndarray = im < 0.04045
+        large_mask: np.ndarray = np.logical_not(small_mask)
         out[small_mask] = im[small_mask] / 12.92
         out[large_mask] = np.power((im[large_mask] + 0.055) / 1.055, 2.4)
         return out
@@ -355,27 +356,27 @@ class Metric(AIMMetricInterface):
         Returns:
             The output sRGB image, array of shape (M,N,3) with dtype float
         """
-        out = np.zeros_like(im)
+        out: np.ndarray = np.zeros_like(im)
         # Make sure we're in range, otherwise gamma will go crazy.
-        im = np.clip(im, 0.0, 1.0)
-        small_mask = im < 0.0031308
-        large_mask = np.logical_not(small_mask)
+        im: np.ndarray = np.clip(im, 0.0, 1.0)
+        small_mask: np.ndarray = im < 0.0031308
+        large_mask: np.ndarray = np.logical_not(small_mask)
         out[small_mask] = im[small_mask] * 12.92
         out[large_mask] = np.power(im[large_mask], 1.0 / 2.4) * 1.055 - 0.055
         return out
 
     @staticmethod
-    def _as_float32(im):
+    def _as_float32(im: np.ndarray):
         """Divide by 255 and cast the uint8 image to float32"""
         return im.astype(np.float32) / 255.0
 
     @staticmethod
-    def _as_uint8(im):
+    def _as_uint8(im: np.ndarray):
         """Multiply by 255 and cast the float image to uint8"""
         return (np.clip(im, 0.0, 1.0) * 255.0).astype(np.uint8)
 
     @staticmethod
-    def _apply_color_matrix(im, m):
+    def _apply_color_matrix(im: np.ndarray, m: np.ndarray):
         """
         Transform a color array with the given 3x3 matrix.
 
