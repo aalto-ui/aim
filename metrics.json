@@ -22,7 +22,7 @@
       "id": "ac",
       "name": "Accessibility",
       "icon": "universal-access",
-      "metrics": []
+      "metrics": ["m23"]
     }
   ],
   "metrics": {
@@ -1448,6 +1448,43 @@
           "type": "b64",
           "name": "Source and target hues",
           "description": "The hue histogram of the image before and after harmonization."
+        }
+      ]
+    },
+    "m23": {
+      "id": "m23",
+      "name": "Colour blindness",
+      "description": "These metrics indicate information loss for users with color vision deficiencies.",
+      "evidence": 4,
+      "relevance": 5,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Machado, G. M., Oliveira, M. M., & Fernandes, L. A. (2009). A physiologically-based model for simulation of color vision deficiency. IEEE transactions on visualization and computer graphics, 15(6), 1291-1298. doi: https://doi.org/10.1109/TVCG.2009.113",
+          "url": "https://doi.org/10.1109/TVCG.2009.113"
+        }
+      ],
+      "results": [
+        {
+          "id": "m23_0",
+          "index": 0,
+          "type": "b64",
+          "name": "Protanopia sight",
+          "description": "Red-green color blindness. It makes viewer unable to tell the difference between red and green at all."
+        },
+        {
+          "id": "m23_1",
+          "index": 1,
+          "type": "b64",
+          "name": "Deuteranopia sight",
+          "description": "Red-green color blindness. It makes viewer unable to tell the difference between red and green at all."
+        },
+        {
+          "id": "m23_2",
+          "index": 2,
+          "type": "b64",
+          "name": "Tritanopia sight",
+          "description": "Blue-yellow color blindness. It makes viewer unable to tell the difference between blue and green, purple and red, and yellow and pink."
         }
       ]
     }
