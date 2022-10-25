@@ -10,8 +10,6 @@ Description:
     This is the mean of a simple mapping of pixel colors to the color
     preference values experimentally obtained by Palmer and Schloss.
 
-    Category: Colour Perception.
-
     Details: Under their hypothesis that people's color preferences reflect
     their dispositions towards objects of those colors, they had
     participants grade their feelings towards sets of objects of particular
