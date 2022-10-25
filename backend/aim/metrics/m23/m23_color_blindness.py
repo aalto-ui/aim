@@ -3,16 +3,21 @@
 
 """
 Metric:
-    Color blindness (protanopia, deuteranopia and tritanopia)
+    Color blindness
 
 
 Description:
-    A physiologically-based model for simulation of color vision deficiency. It consistently
-    handles normal color vision, anomalous trichromacy, and dichromacy in a unified way.
+    A physiologically-based model for simulation of color vision deficiency.
+
+    Notice: "Since there are no strong biological explanations yet to justify
+    the causes of tritanopia and tritanomaly, we simulate tritanomaly based on
+    the shift paradigm only (Eq. 19) as an approximation to the actual
+    phenomenon and restrain our model from trying to model tritanopia."
 
 
 Source:
-    The code is imported and adopted from https://github.com/DaltonLens/DaltonLens-Python.
+    The code is imported and adopted from
+    https://github.com/DaltonLens/DaltonLens-Python.
 
 
 Funding information and contact:
@@ -22,16 +27,17 @@ Funding information and contact:
 
 
 References:
-    1. Machado, G. M., Oliveira, M. M., & Fernandes, L. A. (2009).
-       A physiologically-based model for simulation of color vision deficiency.
-       IEEE transactions on visualization and computer graphics, 15(6), 1291-1298.
-       doi: https://doi.org/10.1109/TVCG.2009.113
+    1.  Machado, G.M., Oliveira, M.M., and Fernandes, L.A.F. (2009).
+        A Physiologically-based Model for Simulation of Color Vision
+        Deficiency. IEEE Transactions on Visualization and Computer Graphics,
+        15(6), 1291-1298. doi: https://doi.org/10.1109/TVCG.2009.113
 
 
 Change log:
     v1.0 (2022-10-21)
       * Initial implementation
 """
+
 
 # ----------------------------------------------------------------------------
 # Imports
@@ -74,16 +80,14 @@ class Metric(AIMMetricInterface):
     """
 
     # Private constants
-    """
-    From https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html#Reference
-    Converted to numpy array by https://github.com/colour-science/colour/blob/develop/colour/blindness/datasets/machado2010.py
-    The severity key goes from 0.0 to 1.0 with 0.1 steps, but here the index is multiplied by 10 to make it an integer.
-    """
+    # From https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html#Tutorial
+    # Converted to a NumPy array using https://github.com/colour-science/colour/blob/develop/colour/blindness/datasets/machado2010.py
+    # The severity range is [0.0, 1.0] with a step of 0.1, but here the index is multiplied by 10 to make it an integer.
     _DEFAULT_SEVERITY: Dict[str, float] = {
-        "protan": 0.7,
-        "deutan": 0.7,
+        "protan": 1.0,
+        "deutan": 1.0,
         "tritan": 1.0,
-    }  # severity should be between 0.0 to 1.0.
+    }  # severity should be between 0.0 and 1.0
     _MACHADO_2009_MATRICES: Dict[str, Dict[int, np.ndarray]] = {
         "protan": {
             0: np.array(
@@ -332,10 +336,10 @@ class Metric(AIMMetricInterface):
         Formula taken from Wikipedia https://en.wikipedia.org/wiki/SRGB
 
         Args:
-            im : The input sRGB image, normalized between [0,1]
+            im : The input sRGB image, normalized between [0, 1]
 
         Returns:
-            The output RGB image, array of shape (M,N,3) with dtype float
+            The output RGB image, array of shape (M, N, 3) with dtype float
         """
         out: np.ndarray = np.zeros_like(im)
         small_mask: np.ndarray = im < 0.04045
@@ -345,34 +349,40 @@ class Metric(AIMMetricInterface):
         return out
 
     @staticmethod
-    def _sRGB_from_linearRGB(im):
+    def _sRGB_from_linearRGB(im: np.ndarray):
         """
         Convert linearRGB to sRGB, applying the gamma correction.
         Formula taken from Wikipedia https://en.wikipedia.org/wiki/SRGB
 
         Args:
-            im : The input RGB image, normalized between [0,1]
+            im : The input RGB image, normalized between [0, 1]
 
         Returns:
-            The output sRGB image, array of shape (M,N,3) with dtype float
+            The output sRGB image, array of shape (M, N, 3) with dtype float
         """
         out: np.ndarray = np.zeros_like(im)
         # Make sure we're in range, otherwise gamma will go crazy.
-        im: np.ndarray = np.clip(im, 0.0, 1.0)
-        small_mask: np.ndarray = im < 0.0031308
+        im_clipped: np.ndarray = np.clip(im, 0.0, 1.0)
+        small_mask: np.ndarray = im_clipped < 0.0031308
         large_mask: np.ndarray = np.logical_not(small_mask)
-        out[small_mask] = im[small_mask] * 12.92
-        out[large_mask] = np.power(im[large_mask], 1.0 / 2.4) * 1.055 - 0.055
+        out[small_mask] = im_clipped[small_mask] * 12.92
+        out[large_mask] = (
+            np.power(im_clipped[large_mask], 1.0 / 2.4) * 1.055 - 0.055
+        )
         return out
 
     @staticmethod
     def _as_float32(im: np.ndarray):
-        """Divide by 255 and cast the uint8 image to float32"""
+        """
+        Divide by 255 and cast the uint8 image to float32
+        """
         return im.astype(np.float32) / 255.0
 
     @staticmethod
     def _as_uint8(im: np.ndarray):
-        """Multiply by 255 and cast the float image to uint8"""
+        """
+        Multiply by 255 and cast the float image to uint8
+        """
         return (np.clip(im, 0.0, 1.0) * 255.0).astype(np.uint8)
 
     @staticmethod
@@ -381,25 +391,26 @@ class Metric(AIMMetricInterface):
         Transform a color array with the given 3x3 matrix.
 
         Args:
-            im: Input image with array of shape (...,3)
-            m: Color matrix to apply with array of shape (3,3)
+            im: Input image with array of shape (..., 3)
+            m: Color matrix to apply with array of shape (3, 3)
 
         Returns:
-            Output array with shape of (...,3)
+            Output array with shape of (..., 3), where each input color vector was multiplied by m
         """
         # Another option is np.einsum('ij, ...j', m, im), but it can be much
-        # slower, especially on float32 types because the matrix multiplication
-        # is heavily optimized.
+        # slower, especially on float32 types because the matrix
+        # multiplication is heavily optimized.
         # So the matmul is generally (much) faster, but we need to take the
-        # transpose of m as it gets applied on the right side. Indeed, for each
-        # column color vector v we wanted $v' = m . v$ . To flip the side we can
-        # use $m . v = (v^T . m^T)^T$ . The transposes on the 1d vector are implicit
-        # and can be ignored, so we just need to compute $v . m^T$. This is what
-        # numpy matmul will do for all the vectors thanks to its broadcasting rules
-        # that pick the last 2 dimensions of each array, so it will actually compute
-        # matrix multiplications of shape (M,3) x (3,3) with M the penultimate dimension
-        # of m. That will write a matrix of shape (M,3) with each row storing the
-        # result of $v' = v . M^T$.
+        # transpose of m as it gets applied on the right side. Indeed, for
+        # each column color vector v we wanted $v' = m . v$ . To flip the
+        # side we can use $m . v = (v^T . m^T)^T$ . The transposes on the 1d
+        # vector are implicit and can be ignored, so we just need to compute
+        # $v . m^T$. This is what numpy matmul will do for all the vectors
+        # thanks to its broadcasting rules that pick the last 2 dimensions of
+        # each array, so it will actually compute matrix multiplications of
+        # shape (M, 3) x (3, 3) with M the penultimate dimension of m. That
+        # will write a matrix of shape (M,3) with each row storing the result
+        # of $v' = v . M^T$.
         return im @ m.T
 
     @classmethod
@@ -410,15 +421,16 @@ class Metric(AIMMetricInterface):
         severity: float,
     ):
         """
-        Simulate the appearance of a linear rgb image for the given color vision deficiency.
+        Simulate the appearance of a linear rgb image for the given color
+        vision deficiency.
 
         Args:
-            image_linear_rgb_float32: The input linear RGB image (np.ndarray), with values in [0,1]
+            image_linear_rgb_float32: The input linear RGB image (np.ndarray), with values in [0, 1]
             deficiency: The deficiency (str) to simulate
             severity: The severity (float) between 0 (normal vision) and 1 (complete dichromacy)
 
         Returns:
-            The simulated rgb image (np.ndarray) with values in [0,1]
+            The simulated rgb image (np.ndarray) with values in [0, 1]
         """
         severity_lower: int = int(math.floor(severity * 10.0))
         severity_higher: int = min(severity_lower + 1, 10)
@@ -441,12 +453,12 @@ class Metric(AIMMetricInterface):
         Simulate the appearance of an image for the given color vision deficiency.
 
         Args:
-            img_rgb: The input sRGB image (Image.Image), with values in [0,255]
+            img_rgb: The input RGB image (Image.Image), with values in [0, 255]
             deficiency: The deficiency (str) to simulate
             severity: The severity (float) between 0 (normal vision) and 1 (complete dichromacy)
 
         Returns:
-            The simulated sRGB image (Image.Image) with values in [0,255]
+            The simulated sRGB image (Image.Image) with values in [0, 255]
         """
         # Get NumPy linear rgb image of input image
         img_srgb_norm: np.ndarray = cls._as_float32(np.array(img_rgb))
@@ -458,10 +470,10 @@ class Metric(AIMMetricInterface):
         )
         im_cvd_float: np.ndarray = cls._sRGB_from_linearRGB(im_cvd_linear_rgb)
 
-        # Convert numpy array to Image.Image format
+        # Convert NumPy array to Image.Image format
         im_cvd_unit8: np.ndarray = cls._as_uint8(im_cvd_float)
-        img_cvd_rgb: Image.Image = Image.fromarray(im_cvd_unit8, mode="RGB")
-        return img_cvd_rgb
+        img_cvd_srgb: Image.Image = Image.fromarray(im_cvd_unit8, mode="RGB")
+        return img_cvd_srgb
 
     # Public methods
     @classmethod
@@ -483,9 +495,9 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Protanopia sight output (str, image (PNG) encoded in Base64)
-            - Deuteranopia sight output (str, image (PNG) encoded in Base64)
-            - Tritanopia sight output (str, image (PNG) encoded in Base64)
+            - Protanopia (str, image (PNG) encoded in Base64)
+            - Deuteranopia (str, image (PNG) encoded in Base64)
+            - Tritanopia (str, image (PNG) encoded in Base64)
         """
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
@@ -493,19 +505,25 @@ class Metric(AIMMetricInterface):
         # Convert image from ??? (e.g., RGBA) to RGB color space
         img_rgb: Image.Image = img.convert("RGB")
 
-        # Compute Protanope
+        # Compute protanope
+        # Definition: A protan or a protanope is a person suffering from
+        # protanopia ("strong" protan) or protanomaly ("mild" protan).
         protan_im: Image.Image = cls._simulate_cvd(
             img_rgb, "protan", cls._DEFAULT_SEVERITY["protan"]
         )
         protan_b64: str = image_utils.to_png_image_base64(protan_im)
 
-        # Compute Deuteranope
+        # Compute deuteranope
+        # Definition: A deutan or a deuteranope is a person suffering from
+        # deuteranopia ("strong" deutan) or deuteranomaly ("mild" deutan).
         deutan_im: Image.Image = cls._simulate_cvd(
             img_rgb, "deutan", cls._DEFAULT_SEVERITY["deutan"]
         )
         deutan_b64: str = image_utils.to_png_image_base64(deutan_im)
 
-        # Compute Tratanope
+        # Compute tritanope
+        # Definition: A tritan or a tritanope is a person suffering from
+        # tritanopia ("strong" tritan) or tritanomaly ("mild" tritan).
         tritan_im: Image.Image = cls._simulate_cvd(
             img_rgb, "tritan", cls._DEFAULT_SEVERITY["tritan"]
         )

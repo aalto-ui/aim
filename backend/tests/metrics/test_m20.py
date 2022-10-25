@@ -46,8 +46,8 @@ __version__ = "1.0"
             "aim_bad_harmony.png",
             [
                 1246.757656,
-                load_expected_result("m20_1_aim.png"),
-                load_expected_result("m20_2_aim.png"),
+                load_expected_result("m20_1_aim_bad_harmony.png"),
+                load_expected_result("m20_2_aim_bad_harmony.png"),
             ],
         ),
     ],

@@ -22,7 +22,7 @@ Funding information and contact:
 
 
 References:
-    1.  Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T. and Xu, Y.Q. (2006).
+    1.  Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T., and Xu, Y.Q. (2006).
         Color Harmonization. ACM Transactions on Graphics, 25(3), 624-630.
         doi: https://doi.org/10.1145/1141911.1141933
 

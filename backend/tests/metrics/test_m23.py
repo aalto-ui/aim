@@ -5,6 +5,7 @@
 Tests for the 'Color blindness' metric (m23).
 """
 
+
 # ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
@@ -43,11 +44,27 @@ __version__ = "1.0"
         (
             "myhelsinki.fi_website.png",
             [
-                load_expected_result("m23_1_aim.png"),
-                load_expected_result("m23_2_aim.png"),
-                load_expected_result("m23_3_aim.png"),
+                load_expected_result("m23_0_myhelsinki.fi_website.png"),
+                load_expected_result("m23_1_myhelsinki.fi_website.png"),
+                load_expected_result("m23_2_myhelsinki.fi_website.png"),
             ],
-        )
+        ),
+        (
+            "colored_crayons.png",
+            [
+                load_expected_result("m23_0_colored_crayons.png"),
+                load_expected_result("m23_1_colored_crayons.png"),
+                load_expected_result("m23_2_colored_crayons.png"),
+            ],
+        ),
+        (
+            "rgbspan.png",
+            [
+                load_expected_result("m23_0_rgbspan.png"),
+                load_expected_result("m23_1_rgbspan.png"),
+                load_expected_result("m23_2_rgbspan.png"),
+            ],
+        ),
     ],
 )
 def test_color_blindness_desktop(
