@@ -23,7 +23,6 @@ First, the metric must be listed in a suitable category under the `categories` k
 
 | Key     | Description |
 |:--------|:------------|
-| id      | Category ID |
 | name    | Category name |
 | icon    | Category icon |
 | metrics | List of metric IDs belonging to this category |
