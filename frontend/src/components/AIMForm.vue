@@ -74,7 +74,7 @@
       </b-row>
       <b-form v-if="display.metrics" id="aim-form" @submit="onSubmit">
         <div class="tablist" role="tablist">
-          <b-card no-body active class="mb-4">
+          <b-card v-if="metricConfig.categories[0].metrics.length > 0" no-body active class="mb-4">
             <b-card-header header-tag="header" role="tab" class="p-0">
               <div v-b-toggle.cat-one-accordion variant="cat-one" class="rounded" block href="#">
                 <span class="fa">
@@ -152,7 +152,7 @@
               </b-card-body>
             </b-collapse>
           </b-card>
-          <b-card no-body class="mb-4">
+          <b-card v-if="metricConfig.categories[1].metrics.length > 0" no-body class="mb-4">
             <b-card-header header-tag="header" role="tab" class="p-0">
               <div v-b-toggle.cat-two-accordion variant="cat-two" class="rounded" block href="#">
                 <span class="fa">
@@ -230,7 +230,7 @@
               </b-card-body>
             </b-collapse>
           </b-card>
-          <b-card no-body class="mb-4">
+          <b-card v-if="metricConfig.categories[2].metrics.length > 0" no-body class="mb-4">
             <b-card-header header-tag="header" role="tab" class="p-0">
               <div v-b-toggle.cat-three-accordion variant="cat-three" block class="rounded" href="#">
                 <span class="fa">
@@ -308,7 +308,7 @@
               </b-card-body>
             </b-collapse>
           </b-card>
-          <b-card no-body class="mb-4">
+          <b-card v-if="metricConfig.categories[3].metrics.length > 0" no-body class="mb-4">
             <b-card-header header-tag="header" role="tab" class="p-0">
               <div v-b-toggle.cat-four-accordion variant="cat-four" block class="rounded" href="#">
                 <span class="fa">

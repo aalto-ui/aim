@@ -64,7 +64,7 @@
                         <template #cell(evaluation)="data">
                           <template v-if="data.item.result.type!=='b64'">
                             <div v-if="metrics[metric].results[data.index].scores && metrics[metric].results[data.index].scores.length > 1" :id="data.item.id" class="scores">
-                              <div v-for="score in metrics[metric].results[data.index].scores" :key="score.description">
+                              <div v-for="score in metrics[metric].results[data.index].scores" :key="score.id">
                                 <div v-show="getJudgment(score, data.item.value)" :class="score.judgment" class="score">
                                   {{ score.description }}
                                   <template v-if="(score.icon[0]!=null)">
