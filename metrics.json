@@ -3,7 +3,7 @@
     {
       "name": "Accessibility",
       "icon": "universal-access",
-      "metrics": []
+      "metrics": ["m23"]
     },
     {
       "name": "Aesthetics",
@@ -1396,7 +1396,7 @@
       "speed": 0,
       "references": [
         {
-          "title": "Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T. and Xu, Y.Q. (2006). Color Harmonization. ACM Transactions on Graphics, 25(3), 624-630. doi: https://doi.org/10.1145/1141911.1141933",
+          "title": "Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T., and Xu, Y.Q. (2006). Color Harmonization. ACM Transactions on Graphics, 25(3), 624-630. doi: https://doi.org/10.1145/1141911.1141933",
           "url": "https://doi.org/10.1145/1141911.1141933"
         }
       ],
@@ -1444,6 +1444,43 @@
           "type": "b64",
           "name": "Source and target hues",
           "description": "The hue histogram of the image before and after harmonization."
+        }
+      ]
+    },
+    "m23": {
+      "id": "m23",
+      "name": "Color blindness",
+      "description": "A physiologically-based model for simulation of color vision deficiency.",
+      "evidence": 4,
+      "relevance": 5,
+      "speed": 2,
+      "references": [
+        {
+          "title": "Machado, G.M., Oliveira, M.M., and Fernandes, L.A.F. (2009). A Physiologically-based Model for Simulation of Color Vision Deficiency. IEEE Transactions on Visualization and Computer Graphics, 15(6), 1291-1298. doi: https://doi.org/10.1109/TVCG.2009.113",
+          "url": "https://doi.org/10.1109/TVCG.2009.113"
+        }
+      ],
+      "results": [
+        {
+          "id": "m23_0",
+          "index": 0,
+          "type": "b64",
+          "name": "Protanopia",
+          "description": "Red-green color blindness, lack of Long-wavelength (L, ~red) cone cells in the retina"
+        },
+        {
+          "id": "m23_1",
+          "index": 1,
+          "type": "b64",
+          "name": "Deuteranopia",
+          "description": "Red-green color blindness, lack of Medium-wavelength (M, ~green) cone cells in the retina"
+        },
+        {
+          "id": "m23_2",
+          "index": 2,
+          "type": "b64",
+          "name": "Tritanopia",
+          "description": "Blue-yellow color blindness, lack of Short-wavelength (S, ~blue) cone cells in the retina"
         }
       ]
     }
