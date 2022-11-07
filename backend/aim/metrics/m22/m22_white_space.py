@@ -3,16 +3,11 @@
 
 """
 Metric:
-    Number of Vertical Block Sizes
+    White Space
 
 
 Description:
-    The number of vertical block sizes, i.e., vertical grid
-    proportionality. This code computes the number of different
-    heights for blocks in the GUI.
-
-    Category: Grid Quality > Number of Vertical Block Sizes.
-    For details, see G5 [1].
+    White Space. Non-covered portion of GUI with visual blocks.
 
 
 Funding information and contact:
@@ -65,34 +60,8 @@ __version__ = "1.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Number of Vertical Block Sizes.
+    Metric: White Space.
     """
-
-    _PIXEL_TOLERANCE_VERTICAL: int = 0  # 0 or positive
-
-    @classmethod
-    def count_vertical_sizes(cls, vertical_sizes: List[int]) -> int:
-        """
-        Count number of vertical sizes with tolerance distance from each other.
-
-        Args:
-            vertical_sizes: List of Alignment points
-
-        Returns:
-            number of vertical sizes with tolerance
-        """
-
-        # Sort vertical sizes
-        vertical_sizes = sorted(vertical_sizes)
-        # Vertical sizes with at least tolerance + 1 distance are added
-        vertical_sizes_tol: List[int] = [vertical_sizes[0]]
-        for p in vertical_sizes:
-            if p - vertical_sizes_tol[-1] > cls._PIXEL_TOLERANCE_VERTICAL:
-                vertical_sizes_tol.append(p)
-
-        # Count number of vertical sizes
-        n_vertical_sizes: int = len(vertical_sizes_tol)
-        return n_vertical_sizes
 
     # Public methods
     @classmethod
@@ -116,36 +85,38 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - Number of Vertical Block Sizes (int, [0, +inf))
+            - White Space (int, [0, +inf))
         """
 
-        # Get all elements
+        # Based on [1] this metric should not apply for mobile GUIs.
+        if gui_type == GUI_TYPE_MOBILE:
+            raise ValueError(
+                "This Metric requires gui_type to be non mobile (e.g, desktop)"
+            )
+
         if gui_segments is not None:
+
+            # Create a binary array (default = 1) with the same size of image
+            height, width, _ = gui_segments["img_shape"]
             segments: List = gui_segments["segments"]
+            img_binary = np.ones((height, width), dtype=int)
+
+            # Fill the binary array with 0 for the elements
+            for element in segments:
+                position = element["position"]
+                img_binary[
+                    position["row_min"] : position["row_max"],
+                    position["column_min"] : position["column_max"],
+                ] = 0
+
+            # Compute white area percentage
+            white_percentage: float = float(np.mean(img_binary))
+
         else:
             raise ValueError(
                 "This Metric requires gui_segments to be not None"
             )
 
-        # Number of Unique vertical sizes
-        num_vertical_sizes: int = 0
-        num_vertical_sizes_without_children: int = 0
-
-        # Compute vertical sizes (height of elements)
-        if len(segments) != 0:
-            vertical_sizes: List[int] = []
-            vertical_sizes_without_children: List[int] = []
-            for element in segments:
-                height = element["height"]
-                vertical_sizes.append(height)
-                # W/O considering children
-                if not element.get("parent", None):
-                    vertical_sizes_without_children.append(height)
-
-            # Compute unique vertical sizes
-            num_vertical_sizes = cls.count_vertical_sizes(vertical_sizes)
-            num_vertical_sizes_without_children = cls.count_vertical_sizes(
-                vertical_sizes_without_children
-            )
-
-        return [num_vertical_sizes, num_vertical_sizes_without_children]
+        return [
+            white_percentage,
+        ]

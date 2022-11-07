@@ -93,7 +93,7 @@ def text2json(texts, img_shape):
 
 def text_cvt_orc_format_paddle(paddle_result):
     texts = []
-    for i, line in enumerate(paddle_result):
+    for i, line in enumerate(paddle_result[0]):
         points = np.array(line[0])
         location = {
             "left": int(min(points[:, 0])),

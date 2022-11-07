@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Number of Visual Blocks' metric (m21).
+Tests for the 'Grid Quality' metric (m21).
 """
 
 
@@ -20,7 +20,7 @@ import pytest
 # First-party modules
 from aim.common import image_utils
 from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
-from aim.metrics.m21.m21_num_visual_blocks import Metric
+from aim.metrics.m21.m21_grid_quality import Metric
 from aim.segmentation.model import Segmentation
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
@@ -42,15 +42,21 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("interfacemetrics_aalto.png", [27, 21]),
-        ("white.png", [0, 0]),
+        ("seg1.png", [12, 8, 26, 18, 5, 4, 0.2555, 0.2555, 5, 4]),
+        ("seg2.png", [2, 2, 8, 8, 2, 2, 0.0, 0.0, 2, 2]),
+        ("seg3.png", [4, 2, 16, 8, 3, 2, 0.0211, 0.0, 3, 2]),
+        ("seg4.png", [2, 2, 6, 6, 1, 1, 0.5608, 0.5608, 1, 1]),
+        (
+            "interfacemetrics_aalto.png",
+            [27, 21, 80, 62, 22, 17, 0.2086, 0.2086, 11, 9],
+        ),
     ],
 )
-def test_num_visual_blocks_desktop(
+def test_grid_quality_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test Number of Visual Blocks (desktop GUIs).
+    Test Grid Quality (desktop GUIs).
 
     Args:
         input_value: GUI image file name
@@ -78,5 +84,5 @@ def test_num_visual_blocks_desktop(
     )
 
     # Test result
-    if result is not None and all(isinstance(res, int) for res in result):
-        assert result == expected_results
+    if result is not None and all(isinstance(i, (float, int)) for i in result):
+        assert [round(float(i), 4) for i in result] == expected_results

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Number of Alignment Points of Blocks' metric (m22).
+Tests for the 'White Space' metric (m22).
 """
 
 
@@ -20,7 +20,7 @@ import pytest
 # First-party modules
 from aim.common import image_utils
 from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
-from aim.metrics.m22.m22_num_alignment_points import Metric
+from aim.metrics.m22.m22_white_space import Metric
 from aim.segmentation.model import Segmentation
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
 
@@ -41,13 +41,18 @@ __version__ = "1.0"
 
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
-    [("interfacemetrics_aalto.png", [91, 71])],
+    [
+        ("aalto.fi_website.png", [0.2663]),
+        ("myhelsinki.fi_website.png", [0.884]),
+        ("wikipedia.org_website.png", [0.3033]),
+        ("black.png", [1.0]),
+    ],
 )
-def test_num_alignment_points_desktop(
+def test_white_space_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test Number of Alignment Points of Blocks (desktop GUIs).
+    Test White Space (desktop GUIs).
 
     Args:
         input_value: GUI image file name
@@ -75,5 +80,5 @@ def test_num_alignment_points_desktop(
     )
 
     # Test result
-    if result is not None and all(isinstance(res, int) for res in result):
-        assert result == expected_results
+    if result is not None and isinstance(result[0], float):
+        assert round(result[0], 4) == expected_results[0]
