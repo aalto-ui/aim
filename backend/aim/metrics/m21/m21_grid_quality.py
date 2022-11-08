@@ -546,6 +546,14 @@ class Metric(AIMMetricInterface):
             Results (list of measures)
             - number of visual GUI blocks (int, [0, +inf))
             - number of visual GUI blocks - without children (int, [0, +inf))
+            - number of alignment points (int, [0, +inf))
+            - number of alignment points - without children (int, [0, +inf))
+            - number of block sizes (int, [0, +inf))
+            - number of block sizes - without children (int, [0, +inf))
+            - GUI Coverage (float, [0, 1])
+            - GUI Coverage - without children (float, [0, 1])
+            - number of vertical block sizes (int, [0, +inf))
+            - number of vertical block sizes - without children (int, [0, +inf))
         """
 
         # Get all elements

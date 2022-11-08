@@ -40,18 +40,18 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("interfacemetrics_aalto.png", ["", {}]),
+        ("interfacemetrics_aalto.png", {}),
     ],
 )
 def test_segmentation_desktop(
-    input_value: str, expected_results: List[Any]
+    input_value: str, expected_results: Dict[str, Any]
 ) -> None:
     """
     Test Segmentation (desktop GUIs).
 
     Args:
         input_value: GUI image file name
-        expected_results: Expected results (List of Segmentation results (str and Dict))
+        expected_results: Segmentation result (Dict)
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
@@ -61,35 +61,31 @@ def test_segmentation_desktop(
     # Read GUI image (PNG)
     gui_image_png_base64: str = image_utils.read_image(gui_image_filepath)
 
-    # Execute metric
-    result: Tuple[str, Dict[str, Any]] = Segmentation.execute(
+    # Execute segmentation
+    result: Dict[str, Any] = Segmentation.execute(
         gui_image=gui_image_png_base64, gui_type=GUI_TYPE_DESKTOP
     )
 
     # Test result
-    if (
-        result is not None
-        and isinstance(result[0], str)
-        and isinstance(result[1], Dict)
-    ):
+    if result is not None and isinstance(result, Dict):
         assert True
 
 
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("uied_mobile.png", ["", {}]),
+        ("uied_mobile.png", {}),
     ],
 )
 def test_segmentation_mobile(
-    input_value: str, expected_results: List[Any]
+    input_value: str, expected_results: Dict[str, Any]
 ) -> None:
     """
     Test Segmentation (desktop GUIs).
 
     Args:
         input_value: GUI image file name
-        expected_results: Expected results (List of Segmentation results (str and Dict))
+        expected_results: Segmentation result (Dict)
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
@@ -99,15 +95,11 @@ def test_segmentation_mobile(
     # Read GUI image (PNG)
     gui_image_png_base64: str = image_utils.read_image(gui_image_filepath)
 
-    # Execute metric
-    result: Tuple[str, Dict[str, Any]] = Segmentation.execute(
+    # Execute segmentation
+    result: Dict[str, Any] = Segmentation.execute(
         gui_image=gui_image_png_base64, gui_type=GUI_TYPE_MOBILE
     )
 
     # Test result
-    if (
-        result is not None
-        and isinstance(result[0], str)
-        and isinstance(result[1], Dict)
-    ):
+    if result is not None and isinstance(result, Dict):
         assert True

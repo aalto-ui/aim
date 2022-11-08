@@ -39,6 +39,7 @@ from aim.common.constants import (
     METRICS_DIR,
     METRICS_FILE_PATTERN,
 )
+from aim.segmentation.model import Segmentation
 
 # ----------------------------------------------------------------------------
 # Metadata
@@ -298,12 +299,28 @@ class Evaluation:
                             )
                         )
 
+                        # Execute segmentation
+                        if self.metrics_configurations["metrics"][metric][
+                            "segmentation_required"
+                        ]:
+                            start_time: float = time.time()
+                            result_segments: Dict[
+                                str, Any
+                            ] = Segmentation.execute(image_png_base64)
+                            end_time: float = time.time()
+                            results_row["segmentation_time"] = round(
+                                end_time - start_time, 4
+                            )
+                        else:
+                            result_segments = None
+
                         # Execute metric
                         start_time: float = time.time()
                         metric_results: Optional[
                             List[Union[int, float, str]]
                         ] = metric_module.Metric.execute_metric(
-                            image_png_base64
+                            gui_image=image_png_base64,
+                            gui_segments=result_segments,
                         )
                         end_time: float = time.time()
                         results_row[metric + "_time"] = round(

@@ -383,7 +383,7 @@ class Segmentation:
         gui_image: str,
         gui_type: int = GUI_TYPE_DESKTOP,
         gui_url: Optional[HttpUrl] = None,
-    ) -> Tuple[str, Dict[str, Any]]:
+    ) -> Dict[str, Any]:
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 
@@ -440,5 +440,7 @@ class Segmentation:
         board_im: Image.Image = Image.fromarray(board_rgb)
         # Convert board to b64 (str)
         board_b64: str = image_utils.to_png_image_base64(board_im)
+        # Save in component dictionary
+        components["img_b64"] = board_b64
 
-        return board_b64, components
+        return components

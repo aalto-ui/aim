@@ -554,10 +554,10 @@
     },
     "m21": {
       "id": "m21",
-      "name": "Number of Visual Blocks",
-      "description": "The number of visual blocks of GUI, with and without considering children blocks.",
-      "evidence": 1,
-      "relevance": 1,
+      "name": "Grid Quality",
+      "description": "Grid quality measures describe the quality of GUI layout.",
+      "evidence": 4,
+      "relevance": 4,
       "speed": 2,
       "segmentation_required": true,
       "references": [
@@ -580,21 +580,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 2],
+              "range": [0, 18],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [3, 6],
+              "range": [19, 34],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [7, null],
+              "range": [35, null],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
@@ -610,21 +610,261 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 2],
+              "range": [0, 14],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [3, 6],
+              "range": [15, 28],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [7, null],
+              "range": [29, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_2",
+          "index": 2,
+          "type": "int",
+          "name": "Number of Alignment Points of Blocks",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 52],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [53, 87],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [88, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_3",
+          "index": 3,
+          "type": "int",
+          "name": "Number of Alignment Points of Blocks (W/O Children)",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 43],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [44, 77],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [78, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_4",
+          "index": 4,
+          "type": "int",
+          "name": "Number of Block Sizes",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 14],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [15, 22],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [23, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_5",
+          "index": 5,
+          "type": "int",
+          "name": "Number of Block Sizes (W/O Children)",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 12],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [13, 19],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [20, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_6",
+          "index": 6,
+          "type": "float",
+          "name": "GUI Coverage",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 0.0084],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.0085, 0.1366],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.1367, 1],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_7",
+          "index": 7,
+          "type": "float",
+          "name": "GUI Coverage (W/O Children)",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 0.0044],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.0045, 0.1155],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.1156, 1],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_8",
+          "index": 8,
+          "type": "int",
+          "name": "Number of Different Blocks Height",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 9],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [10, 14],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [15, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_9",
+          "index": 9,
+          "type": "int",
+          "name": "Number of Different Blocks Height (W/O Children)",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 7],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [8, 11],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [12, null],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
@@ -635,341 +875,21 @@
     },
     "m22": {
       "id": "m22",
-      "name": "Number of Alignment Points of Blocks",
-      "description": "The number of alignment points of GUI blocks, with and without considering children blocks.",
-      "evidence": 1,
-      "relevance": 1,
+      "name": "White Space",
+      "description": "White Space. Non-covered portion of GUI with visual blocks.",
+      "evidence": 2,
+      "relevance": 4,
       "speed": 2,
       "segmentation_required": true,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
           "url": "https://doi.org/10.1145/2702123.2702575"
-        },
-        {
-          "title": "Balinsky, H. (2006). Evaluating interface aesthetics: measure of symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
-          "url": "https://doi.org/10.1117/12.642120"
         }
       ],
       "results": [
         {
           "id": "m22_0",
-          "index": 0,
-          "type": "int",
-          "name": "Number of Alignment Points of Blocks",
-          "description": false,
-          "scores": [
-            {
-              "id": "r1",
-              "range": [0, 2],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r2",
-              "range": [3, 6],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r3",
-              "range": [7, null],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            }
-          ]
-        },
-        {
-          "id": "m22_1",
-          "index": 1,
-          "type": "int",
-          "name": "Number of Alignment Points of Blocks (W/O Children)",
-          "description": false,
-          "scores": [
-            {
-              "id": "r1",
-              "range": [0, 2],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r2",
-              "range": [3, 6],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r3",
-              "range": [7, null],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            }
-          ]
-        }
-      ]
-    },
-    "m23": {
-      "id": "m23",
-      "name": "Number of Block Sizes",
-      "description": "The number of block sizes, grid proportionality, with and without considering children blocks.",
-      "evidence": 1,
-      "relevance": 1,
-      "speed": 2,
-      "segmentation_required": true,
-      "references": [
-        {
-          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
-          "url": "https://doi.org/10.1145/2702123.2702575"
-        },
-        {
-          "title": "Balinsky, H. (2006). Evaluating interface aesthetics: measure of symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
-          "url": "https://doi.org/10.1117/12.642120"
-        }
-      ],
-      "results": [
-        {
-          "id": "m23_0",
-          "index": 0,
-          "type": "int",
-          "name": "Number of Block Sizes",
-          "description": false,
-          "scores": [
-            {
-              "id": "r1",
-              "range": [0, 2],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r2",
-              "range": [3, 6],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r3",
-              "range": [7, null],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            }
-          ]
-        },
-        {
-          "id": "m23_1",
-          "index": 1,
-          "type": "int",
-          "name": "Number of Block Sizes (W/O Children)",
-          "description": false,
-          "scores": [
-            {
-              "id": "r1",
-              "range": [0, 2],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r2",
-              "range": [3, 6],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r3",
-              "range": [7, null],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            }
-          ]
-        }
-      ]
-    },
-    "m24": {
-      "id": "m24",
-      "name": "GUI Coverage",
-      "description": "The proportion of GUI covered by same-size blocks, with and without considering children blocks.",
-      "evidence": 1,
-      "relevance": 1,
-      "speed": 2,
-      "segmentation_required": true,
-      "references": [
-        {
-          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
-          "url": "https://doi.org/10.1145/2702123.2702575"
-        },
-        {
-          "title": "Balinsky, H. (2006). Evaluating interface aesthetics: measure of symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
-          "url": "https://doi.org/10.1117/12.642120"
-        }
-      ],
-      "results": [
-        {
-          "id": "m24_0",
-          "index": 0,
-          "type": "float",
-          "name": "GUI Coverage",
-          "description": false,
-          "scores": [
-            {
-              "id": "r1",
-              "range": [0, 0.1],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r2",
-              "range": [0.2, 0.6],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r3",
-              "range": [0.7, null],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            }
-          ]
-        },
-        {
-          "id": "m24_1",
-          "index": 1,
-          "type": "float",
-          "name": "GUI Coverage (W/O Children)",
-          "description": false,
-          "scores": [
-            {
-              "id": "r1",
-              "range": [0, 0.1],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r2",
-              "range": [0.2, 0.6],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r3",
-              "range": [0.7, null],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            }
-          ]
-        }
-      ]
-    },
-    "m25": {
-      "id": "m25",
-      "name": "Number of Vertical Block Sizes",
-      "description": "The number of vertical block sizes, i.e., vertical grid proportionality., with and without considering children blocks.",
-      "evidence": 1,
-      "relevance": 1,
-      "speed": 2,
-      "segmentation_required": true,
-      "references": [
-        {
-          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
-          "url": "https://doi.org/10.1145/2702123.2702575"
-        }
-      ],
-      "results": [
-        {
-          "id": "m25_0",
-          "index": 0,
-          "type": "int",
-          "name": "Number of Different Blocks Height",
-          "description": false,
-          "scores": [
-            {
-              "id": "r1",
-              "range": [0, 2],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r2",
-              "range": [3, 6],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r3",
-              "range": [7, null],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            }
-          ]
-        },
-        {
-          "id": "m25_1",
-          "index": 1,
-          "type": "int",
-          "name": "Number of Different Blocks Height (W/O Children)",
-          "description": false,
-          "scores": [
-            {
-              "id": "r1",
-              "range": [0, 2],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r2",
-              "range": [3, 6],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            },
-            {
-              "id": "r3",
-              "range": [7, null],
-              "description": "Meaningless",
-              "icon": [null, null],
-              "judgment": "normal"
-            }
-          ]
-        }
-      ]
-    },
-    "m26": {
-      "id": "m26",
-      "name": "White Space",
-      "description": "White Space. Non covered portion of GUI with visual blocks.",
-      "evidence": 1,
-      "relevance": 1,
-      "speed": 2,
-      "segmentation_required": true,
-      "references": [
-        {
-          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
-          "url": "https://doi.org/10.1145/2702123.2702575"
-        }
-      ],
-      "results": [
-        {
-          "id": "m26_0",
           "index": 0,
           "type": "float",
           "name": "White Space",
@@ -977,21 +897,21 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 0.1],
+              "range": [0, 0.3402],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [0.2, 0.6],
+              "range": [0.3403, 0.6366],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [0.7, null],
+              "range": [0.6367, 1],
               "description": "Meaningless",
               "icon": [null, null],
               "judgment": "normal"

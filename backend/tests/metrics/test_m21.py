@@ -71,8 +71,7 @@ def test_grid_quality_desktop(
     gui_image_png_base64: str = image_utils.read_image(gui_image_filepath)
 
     # Execute segmentation
-    result_segments: Dict[str, Any]
-    _, result_segments = Segmentation.execute(
+    result_segments: Dict[str, Any] = Segmentation.execute(
         gui_image=gui_image_png_base64, gui_type=GUI_TYPE_DESKTOP
     )
 
