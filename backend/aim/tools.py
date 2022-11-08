@@ -277,6 +277,26 @@ class Evaluation:
                     end_time - start_time, 4
                 )
 
+                # Execute segmentation
+                # Check if segmnetation is needed
+                metrics_conf_segmnetation: List = [
+                    self.metrics_configurations["metrics"][metric][
+                        "segmentation_required"
+                    ]
+                    for metric in self.metrics
+                ]
+                if any(item is True for item in metrics_conf_segmnetation):
+                    start_time: float = time.time()
+                    result_segments: Optional[
+                        Dict[str, Any]
+                    ] = Segmentation.execute(image_png_base64)
+                    end_time: float = time.time()
+                    results_row["segmentation_time"] = round(
+                        end_time - start_time, 4
+                    )
+                else:
+                    result_segments = None
+
                 # Iterate over selected metrics
                 for metric in self.metrics:
                     # Locate metric implementation
@@ -298,21 +318,6 @@ class Evaluation:
                                 metric_files[0].stem,
                             )
                         )
-
-                        # Execute segmentation
-                        if self.metrics_configurations["metrics"][metric][
-                            "segmentation_required"
-                        ]:
-                            start_time: float = time.time()
-                            result_segments: Dict[
-                                str, Any
-                            ] = Segmentation.execute(image_png_base64)
-                            end_time: float = time.time()
-                            results_row["segmentation_time"] = round(
-                                end_time - start_time, 4
-                            )
-                        else:
-                            result_segments = None
 
                         # Execute metric
                         start_time: float = time.time()

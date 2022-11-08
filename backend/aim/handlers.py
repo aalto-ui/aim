@@ -42,6 +42,7 @@ from aim.common.constants import (
 )
 from aim.exceptions import ValidationError
 from aim.models import MessageBase, MessageImage, MessageInput, MessageURL
+from aim.segmentation.model import Segmentation
 from aim.tools import Screenshot
 
 # ----------------------------------------------------------------------------
@@ -147,6 +148,24 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 }
             )
 
+            # Execute segmentation
+            # Check if segmnetation is needed
+            metrics_configurations: Dict[
+                str, Any
+            ] = utils.load_metrics_configurations()
+            metrics_conf_segmnetation: List = [
+                metrics_configurations["metrics"][metric][
+                    "segmentation_required"
+                ]
+                for metric in msg.metrics.keys()
+            ]
+            if any(item is True for item in metrics_conf_segmnetation):
+                result_segments: Optional[
+                    Dict[str, Any]
+                ] = Segmentation.execute(png_image_base64)
+            else:
+                result_segments = None
+
             # Iterate over selected metrics and execute them one by one
             for metric in {k: v for k, v in msg.metrics.items()}:
                 logger.debug("Executing metric {}...".format(metric))
@@ -176,6 +195,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     results: Optional[List[Union[int, float, str]]] = metric_module.Metric.execute_metric(  # type: ignore
                         png_image_base64,
                         gui_type=GUI_TYPE_DESKTOP,
+                        gui_segments=result_segments,
                         gui_url=msg.url,
                     )
                     end_time: float = time.time()
