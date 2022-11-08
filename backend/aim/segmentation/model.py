@@ -51,7 +51,6 @@ import numpy as np
 from paddleocr import PaddleOCR
 from PIL import Image
 from pydantic import HttpUrl
-from tensorflow.keras.models import load_model
 
 # First-party modules
 from aim.common import image_utils
@@ -180,6 +179,9 @@ class Segmentation:
         "TextView",
     ]
     if _IS_CLF:
+        # Third-party modules
+        from tensorflow.keras.models import load_model
+
         _CNN_MODEL = load_model(_CNN_MODEL_PATH)
 
     # Private methods
