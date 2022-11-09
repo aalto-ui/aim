@@ -41,7 +41,7 @@ __version__ = "1.0"
     ["input_value"],
     [
         (["interfacemetrics_aalto.png"]),
-         (["black.png"]),
+        (["black.png"]),
     ],
 )
 def test_segmentation_desktop(input_value: str) -> None:
@@ -53,7 +53,7 @@ def test_segmentation_desktop(input_value: str) -> None:
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
-            pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
+        pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
     )
 
     # Read GUI image (PNG)
@@ -66,9 +66,9 @@ def test_segmentation_desktop(input_value: str) -> None:
 
     # Test result
     if result is not None and isinstance(result, Dict):
-        assert ('segments' in result) == True
-        assert ('img_shape' in result) == True
-        assert ('img_b64' in result) == True
+        assert "segments" in result
+        assert "img_shape" in result
+        assert "img_b64" in result
 
 
 @pytest.mark.parametrize(
@@ -86,7 +86,7 @@ def test_segmentation_mobile(input_value: str) -> None:
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
-            pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
+        pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
     )
 
     # Read GUI image (PNG)
@@ -99,6 +99,6 @@ def test_segmentation_mobile(input_value: str) -> None:
 
     # Test result
     if result is not None and isinstance(result, Dict):
-        assert ('segments' in result) == True
-        assert ('img_shape' in result) == True
-        assert ('img_b64' in result) == True
+        assert "segments" in result
+        assert "img_shape" in result
+        assert "img_b64" in result

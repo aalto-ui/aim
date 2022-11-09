@@ -42,11 +42,14 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("interfacemetrics_aalto.png", [load_expected_result("m23_0_interfacemetrics_aalto.png")]),
+        (
+            "interfacemetrics_aalto.png",
+            [load_expected_result("m23_0_interfacemetrics_aalto.png")],
+        ),
     ],
 )
 def test_uied_segmentation_desktop(
-        input_value: str, expected_results: List[Any]
+    input_value: str, expected_results: List[Any]
 ) -> None:
     """
     Test UIED Segmentation (desktop GUIs).
@@ -57,7 +60,7 @@ def test_uied_segmentation_desktop(
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
-            pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
+        pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
     )
 
     # Read GUI image (PNG)
@@ -76,13 +79,10 @@ def test_uied_segmentation_desktop(
     )
 
     # Test result
-    if (
-            result is not None
-            and isinstance(result[0], str)
-    ):
+    if result is not None and isinstance(result[0], str):
         assert (
-                image_utils.idiff(result[0], expected_results[0])
-                <= IDIFF_TOLERANCE
+            image_utils.idiff(result[0], expected_results[0])
+            <= IDIFF_TOLERANCE
         )
 
 
@@ -93,7 +93,7 @@ def test_uied_segmentation_desktop(
     ],
 )
 def test_uied_segmentation_mobile(
-        input_value: str, expected_results: List[Any]
+    input_value: str, expected_results: List[Any]
 ) -> None:
     """
     Test UIED Segmentation (mobile GUIs).
@@ -104,7 +104,7 @@ def test_uied_segmentation_mobile(
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
-            pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
+        pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
     )
 
     # Read GUI image (PNG)
@@ -123,11 +123,8 @@ def test_uied_segmentation_mobile(
     )
 
     # Test result
-    if (
-            result is not None
-            and isinstance(result[0], str)
-    ):
+    if result is not None and isinstance(result[0], str):
         assert (
-                image_utils.idiff(result[0], expected_results[0])
-                <= IDIFF_TOLERANCE
+            image_utils.idiff(result[0], expected_results[0])
+            <= IDIFF_TOLERANCE
         )
