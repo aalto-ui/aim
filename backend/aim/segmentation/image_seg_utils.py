@@ -79,7 +79,7 @@ def draw_bounding_box(
     org,
     components,
     color=(0, 255, 0),
-    line=2,
+    line=1,
     show=False,
     write_path=None,
     name="board",

@@ -947,6 +947,30 @@
           "description": false
         }
       ]
+    },
+    "m24": {
+      "id": "m24",
+      "name": "AIM Legacy Segmentation",
+      "description": "Tool for segmentation of images.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 2,
+      "segmentation_required": false,
+      "references": [
+        {
+          "title": "Oulasvirta, A., De Pascale, S., Koch, J., ... & Weinkauf, T. (2018). Aalto Interface Metrics (AIM) A Service and Codebase for Computational GUI Evaluation. In The 31st Annual ACM Symposium on User Interface Software and Technology Adjunct Proceedings, pp. 16-19. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        }
+      ],
+      "results": [
+        {
+          "id": "m24_0",
+          "index": 0,
+          "type": "b64",
+          "name": "AIM Legacy segmented image",
+          "description": false
+        }
+      ]
     }
   }
 }

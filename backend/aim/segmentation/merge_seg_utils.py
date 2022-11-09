@@ -159,7 +159,7 @@ class Element:
 
 
 def show_elements(
-    org_img, eles, show=False, win_name="Element", line=2, write_path=None
+    org_img, eles, show=False, win_name="Element", line=1, write_path=None
 ):
     color_map = {
         "Text": (0, 0, 255),

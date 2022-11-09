@@ -284,7 +284,7 @@ class Segmentation:
         texts: List[Text] = text_cvt_orc_format_paddle(paddle_result)
 
         visualize_texts(
-            img, texts, color=(0, 0, 255), line=2, write_path=None, show=show
+            img, texts, color=(0, 0, 255), line=1, write_path=None, show=show
         )
         text_json: Dict = text2json(texts, img.shape)
         return text_json
