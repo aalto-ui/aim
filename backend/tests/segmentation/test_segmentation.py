@@ -38,24 +38,22 @@ __version__ = "1.0"
 
 
 @pytest.mark.parametrize(
-    ["input_value", "expected_results"],
+    ["input_value"],
     [
-        ("interfacemetrics_aalto.png", {}),
+        (["interfacemetrics_aalto.png"]),
+         (["black.png"]),
     ],
 )
-def test_segmentation_desktop(
-    input_value: str, expected_results: Dict[str, Any]
-) -> None:
+def test_segmentation_desktop(input_value: str) -> None:
     """
     Test Segmentation (desktop GUIs).
 
     Args:
         input_value: GUI image file name
-        expected_results: Segmentation result (Dict)
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
-        pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
+            pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
     )
 
     # Read GUI image (PNG)
@@ -68,28 +66,27 @@ def test_segmentation_desktop(
 
     # Test result
     if result is not None and isinstance(result, Dict):
-        assert True
+        assert ('segments' in result) == True
+        assert ('img_shape' in result) == True
+        assert ('img_b64' in result) == True
 
 
 @pytest.mark.parametrize(
-    ["input_value", "expected_results"],
+    ["input_value"],
     [
-        ("uied_mobile.png", {}),
+        (["uied_mobile.png"]),
     ],
 )
-def test_segmentation_mobile(
-    input_value: str, expected_results: Dict[str, Any]
-) -> None:
+def test_segmentation_mobile(input_value: str) -> None:
     """
     Test Segmentation (desktop GUIs).
 
     Args:
         input_value: GUI image file name
-        expected_results: Segmentation result (Dict)
     """
     # Build GUI image file path
     gui_image_filepath: pathlib.Path = (
-        pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
+            pathlib.Path(DATA_TESTS_INPUT_VALUES_DIR) / input_value
     )
 
     # Read GUI image (PNG)
@@ -102,4 +99,6 @@ def test_segmentation_mobile(
 
     # Test result
     if result is not None and isinstance(result, Dict):
-        assert True
+        assert ('segments' in result) == True
+        assert ('img_shape' in result) == True
+        assert ('img_b64' in result) == True

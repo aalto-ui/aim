@@ -919,6 +919,34 @@
           ]
         }
       ]
+    },
+    "m23": {
+      "id": "m23",
+      "name": "UIED segmentation",
+      "description": "This UI Segmentation is method mostly based on old-fashioned computer vision approaches to detect UI components and texts.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 1,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Xie, M., Feng, S., Xing, Z., Chen, J., & Chen, C. (2020).UIED: a hybrid tool for GUI element detection. In Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering, pp. 1655-1659. ACM. doi: https://doi.org/10.1145/3368089.3417940",
+          "url": "https://doi.org/10.1145/3368089.3417940"
+        },
+        {
+          "title": "Chen, J., Xie, M., Xing, Z., Chen, C., Xu, X., Zhu, L., & Li, G. (2020). Object detection for graphical user interface: Old fashioned or deep learning or a combination?. In proceedings of the 28th ACM joint meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering pp. 1202-1214. ACM. doi: https://doi.org/10.1145/3368089.3409691",
+          "url": "https://doi.org/10.1145/3368089.3409691"
+        }
+      ],
+      "results": [
+        {
+          "id": "m23_0",
+          "index": 0,
+          "type": "b64",
+          "name": "UIED segmented image",
+          "description": false
+        }
+      ]
     }
   }
 }

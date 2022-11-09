@@ -7,7 +7,7 @@ Model:
 
 
 Description:
-    The UI Segmentation is mostly based on old-fashioned computer vision approaches to detect UI components and texts.
+    This UI Segmentation is mostly based on old-fashioned computer vision approaches to detect UI components and texts.
     Most part of this code is imported from https://github.com/MulongXie/UIED.
 
 
