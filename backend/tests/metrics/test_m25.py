@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'UIED Segmentation' metric (m23).
+Tests for the 'UIED Segmentation' metric (m25).
 """
 
 # ----------------------------------------------------------------------------
@@ -19,7 +19,7 @@ import pytest
 # First-party modules
 from aim.common import image_utils
 from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
-from aim.metrics.m23.m23_uied_segmentation import Metric
+from aim.metrics.m25.m25_uied_segmentation import Metric
 from aim.segmentation.model import Segmentation
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR, IDIFF_TOLERANCE
 from tests.common.utils import load_expected_result
@@ -44,7 +44,7 @@ __version__ = "1.0"
     [
         (
             "interfacemetrics_aalto.png",
-            [load_expected_result("m23_0_interfacemetrics_aalto.png")],
+            [load_expected_result("m25_0_interfacemetrics_aalto.png")],
         ),
     ],
 )
@@ -89,7 +89,7 @@ def test_uied_segmentation_desktop(
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("uied_mobile.png", [load_expected_result("m23_0_uied_mobile.png")]),
+        ("uied_mobile.png", [load_expected_result("m25_0_uied_mobile.png")]),
     ],
 )
 def test_uied_segmentation_mobile(
