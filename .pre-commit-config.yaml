@@ -21,7 +21,7 @@ repos:
     pass_filenames: false
     args: ['--config-file=backend/mypy.ini', 'backend/']
 - repo: https://github.com/PyCQA/flake8
-  rev: 3.9.2
+  rev: 5.0.4
   hooks:
   - id: flake8
     args: ['--config=backend/.flake8', 'backend/']
