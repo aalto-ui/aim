@@ -2,16 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-AIM Legacy Segmentation functions.
+AIM legacy segmentation utility functions.
 """
 
 
 # ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
-
-# Standard library modules
-import base64
 
 # Third-party modules
 import cv2
@@ -29,7 +26,7 @@ __version__ = "2.0"
 
 
 # ----------------------------------------------------------------------------
-# Image utility functions
+# AIM legacy segmentation utility functions
 # ----------------------------------------------------------------------------
 
 

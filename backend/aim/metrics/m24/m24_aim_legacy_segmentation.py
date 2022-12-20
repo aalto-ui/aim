@@ -3,11 +3,11 @@
 
 """
 Metric:
-    AIM Legacy Segmentation
+    AIM legacy segmentation
 
 
 Description:
-    AIM Legacy Segmentation. Tool for segmentation of images.
+    A GUI element detection tool based on computer vision.
 
 
 Funding information and contact:
@@ -17,10 +17,12 @@ Funding information and contact:
 
 
 References:
-    1.  Oulasvirta, A., De Pascale, S., Koch, J., ... & Weinkauf, T. (2018).
-        Aalto Interface Metrics (AIM) A Service and Codebase for Computational
-        GUI Evaluation. In The 31st Annual ACM Symposium on User Interface Software
-        and Technology Adjunct Proceedings, pp. 16-19.
+    1.  Oulasvirta, A., De Pascale, S., Koch, J., Langerak, T.,
+        Jokinen, J.P.P., Todi, K., Laine, M., Kristhombuge, M., Zhu, Y.,
+        Miniukovich, A., Palmas, G., and Weinkauf, T. (2018). Aalto Interface
+        Metrics (AIM): A Service and Codebase for Computational GUI
+        Evaluation. In Proceedings of the 31st Annual ACM Symposium on User
+        Interface Software and Technology (UIST'18 Adjunct), pp. 16-19. ACM.
         doi: https://doi.org/10.1145/2702123.2702575
 
 
@@ -53,7 +55,7 @@ from skimage.morphology import disk
 
 # First-party modules
 from aim.common import image_utils
-from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
+from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
 from aim.metrics.m24 import utils
 
@@ -74,7 +76,7 @@ __version__ = "2.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: AIM Legacy Segmentation.
+    Metric: AIM legacy segmentation.
     """
 
     # Private constants
@@ -201,9 +203,8 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - AIM Legacy segmented image (str, image (PNG) encoded in Base64)
+            - AIM legacy segmented image (str, image (PNG) encoded in Base64)
         """
-
         # Create PIL image
         img: Image.Image = Image.open(BytesIO(base64.b64decode(gui_image)))
 

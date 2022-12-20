@@ -922,15 +922,15 @@
     },
     "m24": {
       "id": "m24",
-      "name": "AIM Legacy Segmentation",
-      "description": "Tool for segmentation of images.",
+      "name": "AIM legacy segmentation",
+      "description": "A GUI element detection tool based on computer vision.",
       "evidence": 3,
       "relevance": 3,
       "speed": 2,
       "segmentation_required": false,
       "references": [
         {
-          "title": "Oulasvirta, A., De Pascale, S., Koch, J., ... & Weinkauf, T. (2018). Aalto Interface Metrics (AIM) A Service and Codebase for Computational GUI Evaluation. In The 31st Annual ACM Symposium on User Interface Software and Technology Adjunct Proceedings, pp. 16-19. doi: https://doi.org/10.1145/2702123.2702575",
+          "title": "Oulasvirta, A., De Pascale, S., Koch, J., Langerak, T., Jokinen, J.P.P., Todi, K., Laine, M., Kristhombuge, M., Zhu, Y., Miniukovich, A., Palmas, G., and Weinkauf, T. (2018). Aalto Interface Metrics (AIM): A Service and Codebase for Computational GUI Evaluation. In Proceedings of the 31st Annual ACM Symposium on User Interface Software and Technology (UIST'18 Adjunct), pp. 16-19. ACM. doi: https://doi.org/10.1145/2702123.2702575",
           "url": "https://doi.org/10.1145/2702123.2702575"
         }
       ],
@@ -939,7 +939,7 @@
           "id": "m24_0",
           "index": 0,
           "type": "b64",
-          "name": "AIM Legacy segmented image",
+          "name": "AIM legacy segmented image",
           "description": false
         }
       ]
@@ -947,18 +947,18 @@
     "m25": {
       "id": "m25",
       "name": "UIED segmentation",
-      "description": "This UI Segmentation is method mostly based on old-fashioned computer vision approaches to detect UI components and texts.",
+      "description": "A GUI element detection toolkit that leverages old-fashioned computer vision algorithms for non-text region extraction, and deep learning models to perform classifications and text detection.",
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
       "segmentation_required": true,
       "references": [
         {
-          "title": "Xie, M., Feng, S., Xing, Z., Chen, J., & Chen, C. (2020).UIED: a hybrid tool for GUI element detection. In Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering, pp. 1655-1659. ACM. doi: https://doi.org/10.1145/3368089.3417940",
+          "title": "Xie, M., Feng, S., Xing, Z., Chen, J., and Chen, C. (2020). UIED: A Hybrid Tool for GUI Element Detection. In Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE '20), pp. 1655-1659. ACM. doi: https://doi.org/10.1145/3368089.3417940",
           "url": "https://doi.org/10.1145/3368089.3417940"
         },
         {
-          "title": "Chen, J., Xie, M., Xing, Z., Chen, C., Xu, X., Zhu, L., & Li, G. (2020). Object detection for graphical user interface: Old fashioned or deep learning or a combination?. In proceedings of the 28th ACM joint meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering pp. 1202-1214. ACM. doi: https://doi.org/10.1145/3368089.3409691",
+          "title": "Chen, J., Xie, M., Xing, Z., Chen, C., Xu, X., Zhu, L., and Li, G. (2020). Object Detection for Graphical User Interface: Old Fashioned or Deep Learning or a Combination? In Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE '20), pp. 1202-1214. ACM. doi: https://doi.org/10.1145/3368089.3409691",
           "url": "https://doi.org/10.1145/3368089.3409691"
         }
       ],

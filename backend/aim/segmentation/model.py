@@ -7,9 +7,9 @@ Model:
 
 
 Description:
-    This UI segmentation is mostly based on old-fashioned computer vision
-    approaches to detect UI components and texts. Most part of this code is
-    imported from https://github.com/MulongXie/UIED.
+    A GUI element detection toolkit that leverages old-fashioned computer
+    vision algorithms for non-text region extraction, and deep learning
+    models to perform classifications and text detection.
 
 
 Funding information and contact:
@@ -112,8 +112,9 @@ class Segmentation:
     """
     UI segmentation and element detection.
 
-    Reference: Based on Xie et al.'s Python implementation available at
-    https://github.com/MulongXie/UIED (see LICENSE within the distribution).
+    Reference:
+        Based on Xie et al.'s Python implementation available at
+        https://github.com/MulongXie/UIED (see LICENSE).
     """
 
     # Private constants

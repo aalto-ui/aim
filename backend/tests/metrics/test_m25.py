@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'UIED Segmentation' metric (m25).
+Tests for the 'UIED segmentation' metric (m25).
 """
 
 # ----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ Tests for the 'UIED Segmentation' metric (m25).
 
 # Standard library modules
 import pathlib
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Union
 
 # Third-party modules
 import pytest
@@ -52,7 +52,7 @@ def test_uied_segmentation_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test UIED Segmentation (desktop GUIs).
+    Test UIED segmentation (desktop GUIs).
 
     Args:
         input_value: GUI image file name
@@ -67,14 +67,14 @@ def test_uied_segmentation_desktop(
     gui_image_png_base64: str = image_utils.read_image(gui_image_filepath)
 
     # Execute segmentation
-    result_segments: Dict[str, Any] = Segmentation.execute(
+    gui_segments: Dict[str, Any] = Segmentation.execute(
         gui_image=gui_image_png_base64, gui_type=GUI_TYPE_DESKTOP
     )
 
     # Execute metric
     result: Optional[List[Union[int, float, str]]] = Metric.execute_metric(
         gui_image_png_base64,
-        gui_segments=result_segments,
+        gui_segments=gui_segments,
         gui_type=GUI_TYPE_DESKTOP,
     )
 
@@ -96,7 +96,7 @@ def test_uied_segmentation_mobile(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test UIED Segmentation (mobile GUIs).
+    Test UIED segmentation (mobile GUIs).
 
     Args:
         input_value: GUI image file name
@@ -111,14 +111,14 @@ def test_uied_segmentation_mobile(
     gui_image_png_base64: str = image_utils.read_image(gui_image_filepath)
 
     # Execute segmentation
-    result_segments: Dict[str, Any] = Segmentation.execute(
+    gui_segments: Dict[str, Any] = Segmentation.execute(
         gui_image=gui_image_png_base64, gui_type=GUI_TYPE_MOBILE
     )
 
     # Execute metric
     result: Optional[List[Union[int, float, str]]] = Metric.execute_metric(
         gui_image_png_base64,
-        gui_segments=result_segments,
+        gui_segments=gui_segments,
         gui_type=GUI_TYPE_MOBILE,
     )
 

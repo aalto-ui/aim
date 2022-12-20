@@ -11,7 +11,7 @@ Tests for the 'Segmentation'.
 
 # Standard library modules
 import pathlib
-from typing import Any, Dict, List, Tuple, Union
+from typing import Any, Dict
 
 # Third-party modules
 import pytest

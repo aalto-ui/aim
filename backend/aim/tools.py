@@ -278,24 +278,21 @@ class Evaluation:
                 )
 
                 # Execute segmentation
-                # Check if segmnetation is needed
-                metrics_conf_segmnetation: List = [
+                # Check if segmentation is needed
+                metrics_conf_segmentation: List = [
                     self.metrics_configurations["metrics"][metric][
                         "segmentation_required"
                     ]
                     for metric in self.metrics
                 ]
-                if any(item is True for item in metrics_conf_segmnetation):
+                gui_segments: Optional[Dict[str, Any]] = None
+                if any(metrics_conf_segmentation):
                     start_time: float = time.time()
-                    result_segments: Optional[
-                        Dict[str, Any]
-                    ] = Segmentation.execute(image_png_base64)
+                    gui_segments = Segmentation.execute(image_png_base64)
                     end_time: float = time.time()
                     results_row["segmentation_time"] = round(
                         end_time - start_time, 4
                     )
-                else:
-                    result_segments = None
 
                 # Iterate over selected metrics
                 for metric in self.metrics:
@@ -325,7 +322,7 @@ class Evaluation:
                             List[Union[int, float, str]]
                         ] = metric_module.Metric.execute_metric(
                             gui_image=image_png_base64,
-                            gui_segments=result_segments,
+                            gui_segments=gui_segments,
                         )
                         end_time: float = time.time()
                         results_row[metric + "_time"] = round(

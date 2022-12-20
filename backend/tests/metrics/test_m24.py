@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'AIM Legacy Segmentation' metric (m24).
+Tests for the 'AIM legacy segmentation' metric (m24).
 """
 
 # ----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ Tests for the 'AIM Legacy Segmentation' metric (m24).
 
 # Standard library modules
 import pathlib
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, List, Optional, Union
 
 # Third-party modules
 import pytest
@@ -47,11 +47,11 @@ __version__ = "1.0"
         ),
     ],
 )
-def test_uied_segmentation_desktop(
+def test_aim_legacy_segmentation_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test AIM Legacy Segmentation (desktop GUIs).
+    Test AIM legacy segmentation (desktop GUIs).
 
     Args:
         input_value: GUI image file name
@@ -85,11 +85,11 @@ def test_uied_segmentation_desktop(
         ("uied_mobile.png", [load_expected_result("m24_0_uied_mobile.png")]),
     ],
 )
-def test_uied_segmentation_mobile(
+def test_aim_legacy_segmentation_mobile(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test AIM Legacy Segmentation (mobile GUIs).
+    Test AIM legacy segmentation (mobile GUIs).
 
     Args:
         input_value: GUI image file name

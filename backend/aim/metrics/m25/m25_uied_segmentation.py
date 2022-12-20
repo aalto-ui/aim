@@ -3,12 +3,13 @@
 
 """
 Metric:
-    UIED Segmentation
+    UIED segmentation
 
 
 Description:
-    This UI Segmentation is method mostly based on old-fashioned computer vision approaches to detect UI components
-    and texts. Model code is imported from https://github.com/MulongXie/UIED.
+    A GUI element detection toolkit that leverages old-fashioned computer
+    vision algorithms for non-text region extraction, and deep learning
+    models to perform classifications and text detection.
 
 
 Funding information and contact:
@@ -18,17 +19,18 @@ Funding information and contact:
 
 
 References:
-    1.  Xie, M., Feng, S., Xing, Z., Chen, J., & Chen, C. (2020).UIED: a hybrid tool for GUI element detection.
-        In Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium
-        on the Foundations of Software Engineering, pp. 1655-1659. ACM.
-        doi: https://doi.org/10.1145/3368089.3417940
+    1.  Xie, M., Feng, S., Xing, Z., Chen, J., and Chen, C. (2020). UIED: A
+        Hybrid Tool for GUI Element Detection. In Proceedings of the 28th ACM
+        Joint Meeting on European Software Engineering Conference and
+        Symposium on the Foundations of Software Engineering (ESEC/FSE '20),
+        pp. 1655-1659. ACM. doi: https://doi.org/10.1145/3368089.3417940
 
-    2.  Chen, J., Xie, M., Xing, Z., Chen, C., Xu, X., Zhu, L., & Li, G. (2020). Object detection for graphical user
-        interface: Old fashioned or deep learning or a combination?. In proceedings of the 28th ACM joint meeting on
-        European Software Engineering Conference and Symposium on the Foundations of Software Engineering pp. 1202-1214.
-        ACM.
-        doi: https://doi.org/10.1145/3368089.3409691
-
+    2.  Chen, J., Xie, M., Xing, Z., Chen, C., Xu, X., Zhu, L., and Li, G.
+        (2020). Object Detection for Graphical User Interface: Old Fashioned
+        or Deep Learning or a Combination? In Proceedings of the 28th ACM
+        Joint Meeting on European Software Engineering Conference and
+        Symposium on the Foundations of Software Engineering (ESEC/FSE '20),
+        pp. 1202-1214. ACM. doi: https://doi.org/10.1145/3368089.3409691
 
 
 Change log:
@@ -41,16 +43,13 @@ Change log:
 # ----------------------------------------------------------------------------
 
 # Standard library modules
-import base64
-from io import BytesIO
 from typing import Any, Dict, List, Optional, Union
 
 # Third-party modules
-from PIL import Image
 from pydantic import HttpUrl
 
 # First-party modules
-from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
+from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
 
 # ----------------------------------------------------------------------------
@@ -70,7 +69,10 @@ __version__ = "1.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: UIED Segmentation.
+    Metric: UIED segmentation.
+
+    Reference:
+        Based on Xie et al.'s Python implementation available at https://github.com/MulongXie/UIED.
     """
 
     # Public methods
@@ -97,14 +99,11 @@ class Metric(AIMMetricInterface):
             Results (list of measures)
             - UIED segmented image (str, image (PNG) encoded in Base64)
         """
-
         # Get all elements
         if gui_segments is not None:
             segmented_im_b64: str = gui_segments["img_b64"]
         else:
-            raise ValueError(
-                "This Metric requires gui_segments to be not None"
-            )
+            raise ValueError("The value of 'gui_segments' cannot be 'None'.")
 
         return [
             segmented_im_b64,
