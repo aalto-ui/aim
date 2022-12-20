@@ -3,11 +3,14 @@
 
 """
 Metric:
-    White Space
+    White space
 
 
 Description:
-    White Space. Non-covered portion of GUI with visual blocks.
+    The proportion of white space.
+
+    Category: Visual complexity > Layout quality.
+    For details, see 'White space' [1].
 
 
 Funding information and contact:
@@ -60,7 +63,7 @@ __version__ = "1.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: White Space.
+    Metric: White space.
     """
 
     # Public methods
@@ -85,17 +88,13 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - White Space (int, [0, +inf))
+            - White space (float, [0, 1])
         """
-
         # Based on [1] this metric should not apply for mobile GUIs.
         if gui_type == GUI_TYPE_MOBILE:
-            raise ValueError(
-                "This Metric requires gui_type to be non mobile (e.g, desktop)"
-            )
+            raise ValueError("The value of 'gui_type' cannot be 1 (mobile).")
 
         if gui_segments is not None:
-
             # Create a binary array (default = 1) with the same size of image
             height, width, _ = gui_segments["img_shape"]
             segments: List = gui_segments["segments"]
@@ -109,14 +108,11 @@ class Metric(AIMMetricInterface):
                     position["column_min"] : position["column_max"],
                 ] = 0
 
-            # Compute white area percentage
-            white_percentage: float = float(np.mean(img_binary))
-
+            # Compute white space (percentage)
+            white_space: float = float(np.mean(img_binary))
         else:
-            raise ValueError(
-                "This Metric requires gui_segments to be not None"
-            )
+            raise ValueError("The value of 'gui_segments' cannot be 'None'.")
 
         return [
-            white_percentage,
+            white_space,
         ]

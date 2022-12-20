@@ -875,8 +875,8 @@
     },
     "m22": {
       "id": "m22",
-      "name": "White Space",
-      "description": "White Space. Non-covered portion of GUI with visual blocks.",
+      "name": "White space",
+      "description": "The proportion of white space.",
       "evidence": 2,
       "relevance": 4,
       "speed": 2,
@@ -892,7 +892,7 @@
           "id": "m22_0",
           "index": 0,
           "type": "float",
-          "name": "White Space",
+          "name": "White space",
           "description": false,
           "scores": [
             {
