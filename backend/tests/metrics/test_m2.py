@@ -40,9 +40,9 @@ __version__ = "1.1"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("aalto.fi_website.png", [97782]),
-        ("myhelsinki.fi_website.png", [133876]),
-        ("wikipedia.org_website.png", [168254]),
+        ("aalto.fi_website.png", [97427]),
+        ("myhelsinki.fi_website.png", [133626]),
+        ("wikipedia.org_website.png", [168125]),
     ],
 )
 def test_jpeg_file_size_desktop(

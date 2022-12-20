@@ -264,7 +264,11 @@ class Metric(AIMMetricInterface):
         img_b64: str = image_utils.to_png_image_base64(img_out)
 
         # Result
-        result: Dict[str, Any] = {"segments": elements, "img_shape": list(img_out_rgb_nparray.shape), "img_b64": img_b64}
+        result: Dict[str, Any] = {
+            "segments": elements,
+            "img_shape": list(img_out_rgb_nparray.shape),
+            "img_b64": img_b64,
+        }
 
         return [
             result["img_b64"],
