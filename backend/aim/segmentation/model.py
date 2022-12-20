@@ -3,12 +3,13 @@
 
 """
 Model:
-    UI Segmentation and Element Detection
+    UI segmentation and element detection
 
 
 Description:
-    This UI Segmentation is mostly based on old-fashioned computer vision approaches to detect UI components and texts.
-    Most part of this code is imported from https://github.com/MulongXie/UIED.
+    This UI segmentation is mostly based on old-fashioned computer vision
+    approaches to detect UI components and texts. Most part of this code is
+    imported from https://github.com/MulongXie/UIED.
 
 
 Funding information and contact:
@@ -18,16 +19,18 @@ Funding information and contact:
 
 
 References:
-    1.  Xie, M., Feng, S., Xing, Z., Chen, J., & Chen, C. (2020).UIED: a hybrid tool for GUI element detection.
-        In Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium
-        on the Foundations of Software Engineering, pp. 1655-1659. ACM.
-        doi: https://doi.org/10.1145/3368089.3417940
+    1.  Xie, M., Feng, S., Xing, Z., Chen, J., and Chen, C. (2020). UIED: A
+        Hybrid Tool for GUI Element Detection. In Proceedings of the 28th ACM
+        Joint Meeting on European Software Engineering Conference and
+        Symposium on the Foundations of Software Engineering (ESEC/FSE '20),
+        pp. 1655-1659. ACM. doi: https://doi.org/10.1145/3368089.3417940
 
-    2.  Chen, J., Xie, M., Xing, Z., Chen, C., Xu, X., Zhu, L., & Li, G. (2020). Object detection for graphical user
-        interface: Old fashioned or deep learning or a combination?. In proceedings of the 28th ACM joint meeting on
-        European Software Engineering Conference and Symposium on the Foundations of Software Engineering pp. 1202-1214.
-        ACM.
-        doi: https://doi.org/10.1145/3368089.3409691
+    2.  Chen, J., Xie, M., Xing, Z., Chen, C., Xu, X., Zhu, L., and Li, G.
+        (2020). Object Detection for Graphical User Interface: Old Fashioned
+        or Deep Learning or a Combination? In Proceedings of the 28th ACM
+        Joint Meeting on European Software Engineering Conference and
+        Symposium on the Foundations of Software Engineering (ESEC/FSE '20),
+        pp. 1202-1214. ACM. doi: https://doi.org/10.1145/3368089.3409691
 
 
 Change log:
@@ -43,7 +46,7 @@ Change log:
 import base64
 import os
 from io import BytesIO
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple
 
 # Third-party modules
 import cv2
@@ -107,10 +110,10 @@ __version__ = "1.0"
 
 class Segmentation:
     """
-    UI Segmentation and Element Detection.
+    UI segmentation and element detection.
 
-    Reference: Based on Xie et al.'s Python implementation available at https://github.com/MulongXie/UIED (see
-    LICENSE within the distribution).
+    Reference: Based on Xie et al.'s Python implementation available at
+    https://github.com/MulongXie/UIED (see LICENSE within the distribution).
     """
 
     # Private constants
@@ -194,13 +197,13 @@ class Segmentation:
         classifier: bool = False,
         show: bool = False,
     ):
-        # *** Step 1 *** pre-processing: img -> get binary map
+        # Step 1: Pre-processing: img -> get binary map
         grey: np.ndarray = cv2.cvtColor(img_resized, cv2.COLOR_BGR2GRAY)
         binary: np.ndarray = binarization(
             img_resized, grad_min=int(key_params["min-grad"]), show=False
         )
 
-        # *** Step 2 *** element detection
+        # Step 2: Element detection
         binary = rm_line(
             binary,
             max_line_thickness=key_params["threshold-line-thickness"],
@@ -214,7 +217,7 @@ class Segmentation:
             max_dent_ratio=key_params["threshold-rec-max-dent-ratio"],
         )
 
-        # *** Step 3 *** results refinement
+        # Step 3: Results refinement
         uicompos = compo_filter(
             uicompos,
             min_area=int(key_params["min-ele-area"]),
@@ -227,7 +230,7 @@ class Segmentation:
         uicompos = compos_update(uicompos, img_resized.shape)
         uicompos = compos_containment(uicompos)
 
-        # *** Step 4 ** nesting inspection: check if big compos have nesting element
+        # Step 4: Nesting inspection (check if big compos have nesting element)
         uicompos += nesting_inspection(
             grey,
             uicompos,
@@ -238,7 +241,7 @@ class Segmentation:
         )
         uicompos = compos_update(uicompos, img_resized.shape)
 
-        # *** Step 5 *** element classification: all category classification
+        # Step 5: Element classification (all category classification)
         if classifier:
             for compo in uicompos:
                 im = compo.compo_clipping(img_resized)
@@ -249,13 +252,13 @@ class Segmentation:
                     np.argmax(cls._CNN_MODEL.predict(im_transformed))
                 ]
 
-        # *** Step 6 *** save detection result
+        # Step 6: Save detection result
         uicompos = compos_update(uicompos, img_resized.shape)
-        # resize to default
+        # Resize to default
         uicompos = [
             uic.resize(img.shape[0] / img_resized.shape[0]) for uic in uicompos
         ]
-        # save json
+        # Save JSON
         compo_json: Dict = corners2json(uicompos, img.shape)
         draw_bounding_box(
             img, uicompos, name="Components", show=show, write_path=None
@@ -298,7 +301,7 @@ class Segmentation:
         key_params: Dict,
         show: bool = False,
     ):
-        # load text and non-text compo
+        # Load text and non-text compo
         ele_id: int = 0
         compos: List[Element] = []
         for compo in compo_json["segments"]:
@@ -331,12 +334,12 @@ class Segmentation:
             texts.append(element)
             ele_id += 1
 
-        # show resized detected elements
+        # Show resized detected elements
         show_elements(
             img, texts + compos, show=show, win_name="Elements Before Merging"
         )
 
-        # refine elements
+        # Refine elements
         texts = refine_texts(
             texts,
             img.shape,
@@ -368,7 +371,7 @@ class Segmentation:
             ),
         )
 
-        # save all merged elements, clips and blank background
+        # Save all merged elements, clips and blank background
         components: Dict = save_elements(elements, img.shape)
         board: np.ndarray = show_elements(
             img,
@@ -440,8 +443,10 @@ class Segmentation:
         # Convert board to Pillow image format
         board_rgb: np.ndarray = cv2.cvtColor(board_bgr, cv2.COLOR_BGR2RGB)
         board_im: Image.Image = Image.fromarray(board_rgb)
+
         # Convert board to b64 (str)
         board_b64: str = image_utils.to_png_image_base64(board_im)
+
         # Save in component dictionary
         components["img_b64"] = board_b64
 

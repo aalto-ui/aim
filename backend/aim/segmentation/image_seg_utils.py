@@ -2,16 +2,13 @@
 # -*- coding: utf-8 -*-
 
 """
-Image Segmentation utility functions.
+Image segmentation utility functions.
 """
 
 
 # ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
-
-# Standard library modules
-from typing import Dict, List, Optional, Tuple, Union
 
 # Third-party modules
 import cv2
@@ -28,7 +25,7 @@ __version__ = "1.0"
 
 
 # ----------------------------------------------------------------------------
-# Image Segmentation utility functions.
+# Image segmentation utility functions
 # ----------------------------------------------------------------------------
 
 

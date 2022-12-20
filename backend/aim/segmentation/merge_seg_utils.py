@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Merge (Image and Text) Segmentation utility functions.
+Merge (Image and Text) segmentation utility functions.
 """
 
 
@@ -11,7 +11,7 @@ Merge (Image and Text) Segmentation utility functions.
 # ----------------------------------------------------------------------------
 
 # Standard library modules
-from typing import Dict, List, Optional, Tuple, Union
+from typing import List
 
 # Third-party modules
 import cv2
@@ -28,7 +28,7 @@ __version__ = "1.0"
 
 
 # ----------------------------------------------------------------------------
-# Merge (Image and Text) Segmentation utility functions.
+# Merge (Image and Text) segmentation utility functions
 # ----------------------------------------------------------------------------
 
 

@@ -25,9 +25,9 @@ from aim.common.constants import GUI_TYPE_DESKTOP
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2022-05-26"
+__date__ = "2022-12-20"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.1"
+__version__ = "1.2"
 
 
 # ----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ class AIMMetricInterface(metaclass=abc.ABCMeta):
 
         Kwargs:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
-            gui_segments: GUI segmentation (defaults to None)
+            gui_segments: GUI segments (defaults to None)
             gui_url: GUI URL (defaults to None)
 
         Returns:

@@ -96,7 +96,7 @@ class Metric(AIMMetricInterface):
 
         Kwargs:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
-            gui_segments: GUI segmentation (defaults to None)
+            gui_segments: GUI segments (defaults to None)
             gui_url: GUI URL (defaults to None)
 
         Returns:
