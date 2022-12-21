@@ -554,8 +554,8 @@
     },
     "m21": {
       "id": "m21",
-      "name": "Grid Quality",
-      "description": "Grid quality measures describe the quality of GUI layout.",
+      "name": "Grid quality",
+      "description": "Grid quality indicates the internal alignment of the various components or identifiable regions of the GUI with respect to each other.",
       "evidence": 4,
       "relevance": 4,
       "speed": 2,
@@ -566,7 +566,7 @@
           "url": "https://doi.org/10.1145/2702123.2702575"
         },
         {
-          "title": "Balinsky, H. (2006). Evaluating interface aesthetics: measure of symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
+          "title": "Balinsky, H. (2006). Evaluating Interface Aesthetics: Measure of Symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
           "url": "https://doi.org/10.1117/12.642120"
         }
       ],
@@ -575,7 +575,7 @@
           "id": "m21_0",
           "index": 0,
           "type": "int",
-          "name": "Number of Visual Blocks",
+          "name": "Number of visual GUI blocks",
           "description": false,
           "scores": [
             {
@@ -605,7 +605,7 @@
           "id": "m21_1",
           "index": 1,
           "type": "int",
-          "name": "Number of Visual Blocks (W/O Children)",
+          "name": "Number of visual GUI blocks - without children",
           "description": false,
           "scores": [
             {
@@ -635,7 +635,7 @@
           "id": "m21_2",
           "index": 2,
           "type": "int",
-          "name": "Number of Alignment Points of Blocks",
+          "name": "Number of alignment points",
           "description": false,
           "scores": [
             {
@@ -665,7 +665,7 @@
           "id": "m21_3",
           "index": 3,
           "type": "int",
-          "name": "Number of Alignment Points of Blocks (W/O Children)",
+          "name": "Number of alignment points - without children",
           "description": false,
           "scores": [
             {
@@ -695,7 +695,7 @@
           "id": "m21_4",
           "index": 4,
           "type": "int",
-          "name": "Number of Block Sizes",
+          "name": "Number of block sizes",
           "description": false,
           "scores": [
             {
@@ -725,7 +725,7 @@
           "id": "m21_5",
           "index": 5,
           "type": "int",
-          "name": "Number of Block Sizes (W/O Children)",
+          "name": "Number of block sizes - without children",
           "description": false,
           "scores": [
             {
@@ -755,7 +755,7 @@
           "id": "m21_6",
           "index": 6,
           "type": "float",
-          "name": "GUI Coverage",
+          "name": "GUI coverage",
           "description": false,
           "scores": [
             {
@@ -785,7 +785,7 @@
           "id": "m21_7",
           "index": 7,
           "type": "float",
-          "name": "GUI Coverage (W/O Children)",
+          "name": "GUI coverage - without children",
           "description": false,
           "scores": [
             {
@@ -815,7 +815,7 @@
           "id": "m21_8",
           "index": 8,
           "type": "int",
-          "name": "Number of Different Blocks Height",
+          "name": "Number of vertical block sizes",
           "description": false,
           "scores": [
             {
@@ -845,7 +845,7 @@
           "id": "m21_9",
           "index": 9,
           "type": "int",
-          "name": "Number of Different Blocks Height (W/O Children)",
+          "name": "Number of vertical block sizes - without children",
           "description": false,
           "scores": [
             {

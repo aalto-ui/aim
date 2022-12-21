@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'Grid Quality' metric (m21).
+Tests for the 'Grid quality' metric (m21).
 """
 
 
@@ -12,14 +12,14 @@ Tests for the 'Grid Quality' metric (m21).
 
 # Standard library modules
 import pathlib
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Union
 
 # Third-party modules
 import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.common.constants import GUI_TYPE_DESKTOP, GUI_TYPE_MOBILE
+from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.m21.m21_grid_quality import Metric
 from aim.segmentation.model import Segmentation
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR
@@ -56,7 +56,7 @@ def test_grid_quality_desktop(
     input_value: str, expected_results: List[Any]
 ) -> None:
     """
-    Test Grid Quality (desktop GUIs).
+    Test Grid quality (desktop GUIs).
 
     Args:
         input_value: GUI image file name
@@ -71,14 +71,14 @@ def test_grid_quality_desktop(
     gui_image_png_base64: str = image_utils.read_image(gui_image_filepath)
 
     # Execute segmentation
-    result_segments: Dict[str, Any] = Segmentation.execute(
+    gui_segments: Dict[str, Any] = Segmentation.execute(
         gui_image=gui_image_png_base64, gui_type=GUI_TYPE_DESKTOP
     )
 
     # Execute metric
     result: Optional[List[Union[int, float, str]]] = Metric.execute_metric(
         gui_image_png_base64,
-        gui_segments=result_segments,
+        gui_segments=gui_segments,
         gui_type=GUI_TYPE_DESKTOP,
     )
 

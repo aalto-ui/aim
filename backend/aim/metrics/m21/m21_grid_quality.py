@@ -3,14 +3,20 @@
 
 """
 Metric:
-    Grid Quality
+    Grid quality
 
 
 Description:
-    Grid quality measures describe the quality of GUI layout. The code considers
-    each GUI element as a visual block. This metric is calculated in two ways,
-    by considering all blocks or only parent blocks. Parent blocks are those whose
-    area is on top of another block area (child).
+    Grid quality indicates the internal alignment of the various components
+    or identifiable regions of the GUI with respect to each other.
+
+    The code considers each GUI element as a visual block. This metric is
+    calculated in two ways, by considering all blocks or only parent blocks.
+    Parent blocks are those whose area is on top of another block area
+    (child).
+
+    Category: Visual complexity > Information organization > Layout quality.
+    For details, see 'Grid quality' [1].
 
 
 Funding information and contact:
@@ -25,8 +31,8 @@ References:
        Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM.
        doi: https://doi.org/10.1145/2702123.2702575
 
-    2. Balinsky, H. (2006). Evaluating interface aesthetics: measure of symmetry.
-       In Digital publishing (Vol. 6076, pp. 52-63). SPIE.
+    2. Balinsky, H. (2006). Evaluating Interface Aesthetics: Measure of
+       Symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE.
        doi: https://doi.org/10.1117/12.642120
 
 
@@ -68,9 +74,10 @@ __version__ = "1.0"
 
 class Metric(AIMMetricInterface):
     """
-    Metric: Grid Quality.
+    Metric: Grid quality.
     """
 
+    # Private constants
     _G2_PIXEL_TOLERANCE_ROW: int = 2  # 0 or positive
     _G2_PIXEL_TOLERANCE_COLUMN: int = 2  # 0 or positive
 
@@ -85,27 +92,24 @@ class Metric(AIMMetricInterface):
     @classmethod
     def g1_num_visual_blocks(cls, gui_type, segments: List) -> Tuple[int, int]:
         """
-        Count number of visual GUI blocks. For details, see G1 [1].
+        Count the number of visual GUI blocks. For details, see G1 [1].
 
         Args:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
             segments: List of GUI elements
 
         Returns:
-            - number of visual GUI blocks (int, [0, +inf))
-            - number of visual GUI blocks - without children (int, [0, +inf))
+            - Number of visual GUI blocks (int, [0, +inf))
+            - Number of visual GUI blocks - without children (int, [0, +inf))
         """
-
-        # Based on [1] this metric should not apply for mobile GUIs.
+        # Based on [1], this metric should not apply for mobile GUIs
         if gui_type == GUI_TYPE_MOBILE:
-            raise ValueError(
-                "This Metric requires gui_type to be non mobile (e.g, desktop)"
-            )
+            raise ValueError("The value of 'gui_type' cannot be 1 (mobile).")
 
-        # Count number of all elements
+        # Count the number of all elements
         num_blocks: int = int(len(segments))
 
-        # Count number of elements - without children (filter elements that do not have 'parent' as a key)
+        # Count the number of elements - without children (filter elements that do not have 'parent' as a key)
         num_blocks_woch: int = len(
             list(filter(lambda element: "parent" not in element, segments))
         )
@@ -115,16 +119,15 @@ class Metric(AIMMetricInterface):
     @staticmethod
     def count_points(points: List[int], tolerance: int) -> int:
         """
-        Count number of points with tolerance distance from each other.
+        Count the number of points with tolerance distance from each other.
 
         Args:
-            points: List of Alignment points
-            tolerance: tolerance distance
+            points: List of alignment points
+            tolerance: Tolerance distance
 
         Returns:
-            - number of points with tolerance
+            - Number of points with tolerance
         """
-
         points_tol: List[int]
 
         if len(points) == 0:
@@ -139,7 +142,7 @@ class Metric(AIMMetricInterface):
                 if p - points_tol[-1] > tolerance:
                     points_tol.append(p)
 
-        # Count number of points
+        # Count the number of points
         n_points: int = len(points_tol)
         return n_points
 
@@ -148,26 +151,23 @@ class Metric(AIMMetricInterface):
         cls, gui_type, segments: List
     ) -> Tuple[int, int]:
         """
-        Count number of alignment points of GUI blocks. Due to segmentation errors,
-        this code considers only points with tolerance distances from each other.
-        For details, see G2 [1].
+        Count the number of alignment points of GUI blocks. Due to
+        segmentation errors, this code considers only points with tolerance
+        distances from each other. For details, see G2 [1].
 
         Args:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
             segments: List of GUI elements
 
         Returns:
-            - number of alignment points (int, [0, +inf))
-            - number of alignment points - without children (int, [0, +inf))
+            - Number of alignment points (int, [0, +inf))
+            - Number of alignment points - without children (int, [0, +inf))
         """
-
-        # Based on [1] this metric should not apply for mobile GUIs.
+        # Based on [1], this metric should not apply for mobile GUIs
         if gui_type == GUI_TYPE_MOBILE:
-            raise ValueError(
-                "This Metric requires gui_type to be non mobile (e.g, desktop)"
-            )
+            raise ValueError("The value of 'gui_type' cannot be 1 (mobile).")
 
-        # Compute alignment points based on column and rows
+        # Compute the alignment points based on columns and rows
         columns: List = []
         rows: List = []
         columns_woch: List = []
@@ -190,14 +190,14 @@ class Metric(AIMMetricInterface):
                     position["row_max"],
                 ]
 
-        # Compute number of all alignment points
+        # Compute the number of all alignment points
         num_align_points: int = cls.count_points(
             points=rows, tolerance=cls._G2_PIXEL_TOLERANCE_ROW
         ) + cls.count_points(
             points=columns, tolerance=cls._G2_PIXEL_TOLERANCE_COLUMN
         )
 
-        # Count number of elements - without children (filter elements that do not have 'parent' as a key)
+        # Compute the number of all alignment points - without children (filter elements that do not have 'parent' as a key)
         num_align_points_woch = cls.count_points(
             points=rows_woch, tolerance=cls._G2_PIXEL_TOLERANCE_ROW
         ) + cls.count_points(
@@ -244,36 +244,35 @@ class Metric(AIMMetricInterface):
         cls, segments: List, pixel_tolerance_width, pixel_tolerance_height
     ) -> Tuple[np.ndarray, np.ndarray, List[int], List[int]]:
         """
-        Compute relation of elements in terms of shape (considering the tolerance).
+        Compute the relation of elements in terms of shape (considering the
+        tolerance).
 
         Args:
             segments: List of GUI elements
-            pixel_tolerance_width: width pixel tolerance threshold
-            pixel_tolerance_height: height pixel tolerance threshold
+            pixel_tolerance_width: Width pixel tolerance threshold
+            pixel_tolerance_height: Height pixel tolerance threshold
 
         Returns:
             - Relation of elements (blocks) shapes (np.ndarray)
-            - Relation of elements (blocks) shapes - W/O children (np.ndarray)
+            - Relation of elements (blocks) shapes - without children (np.ndarray)
             - List of ids of elements in relation matrix (blocks) (List)
-            - List of ids of elements in relation matrix - W/O children (List)
+            - List of ids of elements in relation matrix - without children (List)
         """
-
         # Compute blocks shapes
         blocks_shapes: List[List[Tuple[int, int]]] = []
         blocks_shapes_woch: List[List[Tuple[int, int]]] = []
         blocks_ids: List[int] = []
         blocks_ids_woch: List[int] = []
 
-        # For each of element we also add the shape with tolerances.
+        # For each element we also add the shape with tolerances
         for element in segments:
-
             # Store different shapes with tolerances of each shape
             temp_shapes: List[Tuple[int, int]] = []
             temp_shapes_woch: List[Tuple[int, int]] = []
 
-            # Save order of id of elements
+            # Save the order of ids of elements
             blocks_ids.append(element["id"])
-            # Save order of id of elements - W/O considering children
+            # Save the order of ids of elements - without considering children
             if "parent" not in element:
                 blocks_ids_woch.append(element["id"])
 
@@ -292,16 +291,16 @@ class Metric(AIMMetricInterface):
                         element["height"] + h_tol,
                     )
                     temp_shapes.append(shape)
-                    # W/O considering children
+                    # Without considering children
                     if "parent" not in element:
                         temp_shapes_woch.append(shape)
 
             blocks_shapes.append(temp_shapes)
-            # if element is not a child
+            # If element is not a child
             if len(temp_shapes_woch) > 0:
                 blocks_shapes_woch.append(temp_shapes_woch)
 
-        # Find relation between shapes, if they are the same.
+        # Find relation between shapes, if they are the same
         blocks_relation = cls.intersection_list(blocks_shapes)
         blocks_relation_woch = cls.intersection_list(blocks_shapes_woch)
 
@@ -315,18 +314,18 @@ class Metric(AIMMetricInterface):
     @classmethod
     def g3_num_block_sizes(cls, segments: List) -> Tuple[int, int]:
         """
-        Count number of block sizes, grid proportionality. This code also supports
-        tolerance because of segmentation errors. For details, see G3 [1].
+        Count the number of block sizes, grid proportionality. This code also
+        supports tolerance because of segmentation errors. For details,
+        see G3 [1].
 
         Args:
             segments: List of GUI elements
 
         Returns:
-            - number of block sizes (int, [0, +inf))
-            - number of block sizes - without children (int, [0, +inf))
+            - Number of block sizes (int, [0, +inf))
+            - Number of block sizes - without children (int, [0, +inf))
         """
-
-        # Number of Unique block sizes
+        # Number of unique block sizes
         num_block_size: int = 0
         num_block_size_woch: int = 0
 
@@ -345,7 +344,7 @@ class Metric(AIMMetricInterface):
                 pixel_tolerance_height=cls._G3_PIXEL_TOLERANCE_HEIGHT,
             )
 
-            # Compute number of different block sizes the GUI have
+            # Compute the number of different block sizes the GUI has
             num_block_size = connected_components(blocks_relation)[0]
             num_block_size_woch = connected_components(blocks_relation_woch)[0]
 
@@ -360,25 +359,25 @@ class Metric(AIMMetricInterface):
         width: int,
     ) -> float:
         """
-        Compute gui coverage of same size elements.
+        Compute the GUI coverage of same size elements.
 
         Args:
             segments: List of GUI elements
             blocks_ids: List of GUI elements (blocks) ids
-            mask_blocks_zeroes: mask blocks with no same size pair
-            height: height of input GUI
-            width: width of input GUI
+            mask_blocks_zeroes: Mask blocks with no same size pair
+            height: Height of input GUI
+            width: Width of input GUI
 
         Returns:
             - Relation of elements (blocks) shapes (np.ndarray)
-            - Relation of elements (blocks) shapes - W/O children (np.ndarray)
+            - Relation of elements (blocks) shapes - without children (np.ndarray)
             - List of ids of elements in relation matrix (blocks) (List)
-            - List of ids of elements in relation matrix - W/O children (List)
+            - List of ids of elements in relation matrix - without children (List)
         """
         coverage_array = np.zeros((height, width), dtype=int)
 
         for mask_index in range(0, len(mask_blocks_zeroes)):
-            # if it has a same size pair, then:
+            # If it has a same size pair, then:
             if not mask_blocks_zeroes[mask_index]:
                 ele = list(
                     filter(
@@ -403,20 +402,20 @@ class Metric(AIMMetricInterface):
         cls, segments: List, height, width
     ) -> Tuple[float, float]:
         """
-        The proportion of GUI covered by same-size blocks (the cell coverage computation from [2]).
-        This code computes the percentage coverage of gui blocks with same size. In other words, It does
-        not consider blocks with just one size appearance. For details, see G4 [1].
+        The proportion of GUI covered by same-size blocks (the cell coverage
+        computation from [2]). This code computes the percentage coverage of
+        GUI blocks with same size. In other words, it does not consider blocks
+        with just one size appearance. For details, see G4 [1].
 
         Args:
             segments: List of GUI elements
-            height: height of input GUI
-            width: width of input GUI
+            height: Height of input GUI
+            width: Width of input GUI
 
         Returns:
-            - GUI Coverage (float, [0, 1])
-            - GUI Coverage - without children (float, [0, 1])
+            - GUI coverage (float, [0, 1])
+            - GUI coverage - without children (float, [0, 1])
         """
-
         if len(segments) != 0:
             # Compute block size relation
             blocks_relation: np.ndarray
@@ -436,7 +435,7 @@ class Metric(AIMMetricInterface):
             mask_blocks_zeroes = np.all(blocks_relation == 0, axis=1)
             mask_block_woch_zeroes = np.all(blocks_relation_woch == 0, axis=1)
 
-            # Compute GUI coverage percentage with the same size blocks
+            # Compute the GUI coverage percentage with the same size blocks
             gui_coverage: float = cls.coverage_mask(
                 segments, blocks_ids, mask_blocks_zeroes, height, width
             )
@@ -453,15 +452,15 @@ class Metric(AIMMetricInterface):
     @classmethod
     def count_vertical_sizes(cls, vertical_sizes: List[int]) -> int:
         """
-        Count number of vertical sizes with tolerance distance from each other.
+        Count the number of vertical sizes with tolerance distance from each
+        other.
 
         Args:
-            vertical_sizes: List of Alignment points
+            vertical_sizes: List of alignment points
 
         Returns:
-            number of vertical sizes with tolerance
+            Number of vertical sizes with tolerance
         """
-
         vertical_sizes_tol: List[int]
 
         if len(vertical_sizes) == 0:
@@ -479,7 +478,7 @@ class Metric(AIMMetricInterface):
                 ):
                     vertical_sizes_tol.append(p)
 
-        # Count number of vertical sizes
+        # Count the number of vertical sizes
         n_vertical_sizes: int = len(vertical_sizes_tol)
         return n_vertical_sizes
 
@@ -487,19 +486,17 @@ class Metric(AIMMetricInterface):
     def g5_num_vertical_block_sizes(cls, segments: List) -> Tuple[int, int]:
         """
         The number of vertical block sizes, i.e., vertical grid
-        proportionality. This code computes the number of different
-        heights for blocks in the GUI. For details, see G5 [1].
+        proportionality. This code computes the number of different heights
+        for blocks in the GUI. For details, see G5 [1].
 
         Args:
             segments: List of GUI elements
 
         Returns:
-            - number of vertical block sizes (int, [0, +inf))
-            - number of vertical block sizes - without children (int, [0, +inf))
-
+            - Number of vertical block sizes (int, [0, +inf))
+            - Number of vertical block sizes - without children (int, [0, +inf))
         """
-
-        # Number of Unique vertical sizes
+        # Number of unique vertical sizes
         num_vertical_sizes: int = 0
         num_vertical_sizes_woch: int = 0
 
@@ -510,7 +507,7 @@ class Metric(AIMMetricInterface):
             for element in segments:
                 height = element["height"]
                 vertical_sizes.append(height)
-                # W/O considering children
+                # Without considering children
                 if "parent" not in element:
                     vertical_sizes_woch.append(height)
 
@@ -544,33 +541,30 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - number of visual GUI blocks (int, [0, +inf))
-            - number of visual GUI blocks - without children (int, [0, +inf))
-            - number of alignment points (int, [0, +inf))
-            - number of alignment points - without children (int, [0, +inf))
-            - number of block sizes (int, [0, +inf))
-            - number of block sizes - without children (int, [0, +inf))
-            - GUI Coverage (float, [0, 1])
-            - GUI Coverage - without children (float, [0, 1])
-            - number of vertical block sizes (int, [0, +inf))
-            - number of vertical block sizes - without children (int, [0, +inf))
+            - Number of visual GUI blocks (int, [0, +inf))
+            - Number of visual GUI blocks - without children (int, [0, +inf))
+            - Number of alignment points (int, [0, +inf))
+            - Number of alignment points - without children (int, [0, +inf))
+            - Number of block sizes (int, [0, +inf))
+            - Number of block sizes - without children (int, [0, +inf))
+            - GUI coverage (float, [0, 1])
+            - GUI coverage - without children (float, [0, 1])
+            - Number of vertical block sizes (int, [0, +inf))
+            - Number of vertical block sizes - without children (int, [0, +inf))
         """
-
         # Get all elements
         if gui_segments is not None:
             segments: List = gui_segments["segments"]
             height, width, _ = gui_segments["img_shape"]
         else:
-            raise ValueError(
-                "This Metric requires gui_segments to be not None"
-            )
+            raise ValueError("The value of 'gui_segments' cannot be 'None'.")
 
         # Based on [1], G1 and G2 metrics should not apply for mobile GUIs.
         # Compute (non-mobile) grid quality metrics
         g1: Tuple[int, int] = cls.g1_num_visual_blocks(gui_type, segments)
         g2: Tuple[int, int] = cls.g2_num_alignment_points(gui_type, segments)
 
-        # Comptute rest of grid quality metrics
+        # Comptute the rest of grid quality metrics
         g3: Tuple[int, int] = cls.g3_num_block_sizes(segments)
         g4: Tuple[float, float] = cls.g4_gui_coverage(segments, height, width)
         g5: Tuple[int, int] = cls.g5_num_vertical_block_sizes(segments)
