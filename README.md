@@ -93,7 +93,7 @@ AIM can also be installed and run without Docker. While this installation proces
 
 Make sure you have the following software already installed on your computer before proceeding!
 
-The backend dependencies include [Python 3.7](https://www.python.org/), [pip](https://pypi.org/project/pip/), [MongoDB](https://www.mongodb.com/), and [Chrome](https://www.google.com/chrome/). In addition, it is highly recommended to install [virtualenv](https://pypi.org/project/virtualenv/) or [Pipenv](https://pypi.org/project/pipenv/) to create a dedicated Python virtual environment (see [instructions](#installation_backend)). Other dependencies include [Node.js 16.14.2](https://nodejs.org/) and [npm](https://www.npmjs.com/) for the frontend and [git](https://git-scm.com/) to track changes made to the codebase.
+The backend dependencies include [Python 3.7](https://www.python.org/), [pip](https://pypi.org/project/pip/), [MongoDB](https://www.mongodb.com/), and [Chrome](https://www.google.com/chrome/). In addition, it is highly recommended to install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) to create a dedicated Python virtual environment (see [instructions](#installation_backend)). Other dependencies include [Node.js 16.14.2](https://nodejs.org/) and [npm](https://www.npmjs.com/) for the frontend and [git](https://git-scm.com/) to track changes made to the codebase.
 
 ### Configuration
 
@@ -109,10 +109,13 @@ nano .env
 
 The variables of interest (with default values) are as follows:
 ```
+# General
+COMPOSE_PROJECT_NAME=aim
+
 # Frontend-specific variables
 NODE_ENV=development
 FRONTEND_PORT=8080
-WS_URL=ws://localhost:8888/
+WS_URL=ws://localhost:8888/ws
 AUTO_OPEN_BROWSER=false
 
 # Backend-specific variables
@@ -145,16 +148,16 @@ Alternatively, on Windows, you need to manually download a *matching* version of
 
 In the next step, we will create a new Python virtual environment (recommended) for the backend. Before proceeding, go to the [backend](./backend/) directory.
 
-#### Working with `virtualenv`
+#### Working with `Miniconda`
 
 Create a new virtual environment:
 ```sh
-virtualenv ../venv
+conda create -n aim2 python=3.7
 ```
 
 Activate the virtual environment:
 ```sh
-source ../venv/bin/activate
+conda activate aim2
 ```
 
 Install all dependencies, including development packages:
@@ -162,31 +165,9 @@ Install all dependencies, including development packages:
 pip install -r requirements.txt
 ```
 
-Re-activate the virtual environment to update paths (see [Stack Overflow](https://stackoverflow.com/questions/35045038/how-do-i-use-pytest-with-virtualenv) for details):
-```sh
-deactivate && source ../venv/bin/activate
-```
-
 To deactivate the virtual environment, run:
 ```sh
-deactivate
-```
-
-#### Working with `Pipenv`
-
-Install all dependencies, including development packages:
-```sh
-pipenv install --dev
-```
-
-Activate your Pipenv environment:
-```sh
-pipenv shell
-```
-
-To deactivate your Pipenv environment, run:
-```sh
-exit
+conda deactivate
 ```
 
 ### Frontend
@@ -273,7 +254,7 @@ python screenshoter.py -i data/screenshots/ALEXA_500/urls.csv -sw 1280 -sh 800 -
 
 ## Evaluator App <a name="evaluator"></a>
 
-AIM backend also provides a utility app for evaluating GUI designs (i.e., web page screenshots) against selected metrics. The app generates three files: `results.csv`, `results.json`, and `quantiles.csv`. Two former files contain evaluation results, while the latter file contains statistics. Optionally, it also generates histogram figures for each metric. To configure and run the app, go to the [backend](./backend/) directory and follow the instructions below.
+AIM backend also provides a utility app for evaluating GUI designs (i.e., web page screenshots) against selected metrics. The app generates two files: `results.csv` and `quantiles.csv`. Tthe former file contains evaluation results, while the latter file contains statistics. In addition, it also generates `<YOUR_METRIC_ID>_results.json` files and optional histogram figures for each metric. To configure and run the app, go to the [backend](./backend/) directory and follow the instructions below.
 
 ### Configuration
 
