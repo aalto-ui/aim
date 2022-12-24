@@ -42,6 +42,7 @@ from aim.common.constants import (
 )
 from aim.exceptions import ValidationError
 from aim.models import MessageBase, MessageImage, MessageInput, MessageURL
+from aim.segmentation.model import Segmentation
 from aim.tools import Screenshot
 
 # ----------------------------------------------------------------------------
@@ -49,9 +50,9 @@ from aim.tools import Screenshot
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine"
-__date__ = "2022-04-25"
+__date__ = "2022-12-20"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.1"
+__version__ = "1.2"
 
 
 # ----------------------------------------------------------------------------
@@ -147,6 +148,21 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                 }
             )
 
+            # Execute segmentation
+            # Check if segmentation is needed
+            metrics_configurations: Dict[
+                str, Any
+            ] = utils.load_metrics_configurations()
+            metrics_conf_segmentation: List = [
+                metrics_configurations["metrics"][metric][
+                    "segmentation_required"
+                ]
+                for metric in msg.metrics.keys()
+            ]
+            gui_segments: Optional[Dict[str, Any]] = None
+            if any(metrics_conf_segmentation):
+                gui_segments = Segmentation.execute(png_image_base64)
+
             # Iterate over selected metrics and execute them one by one
             for metric in {k: v for k, v in msg.metrics.items()}:
                 logger.debug("Executing metric {}...".format(metric))
@@ -176,6 +192,7 @@ class AIMWebSocketHandler(tornado.websocket.WebSocketHandler):
                     results: Optional[List[Union[int, float, str]]] = metric_module.Metric.execute_metric(  # type: ignore
                         png_image_base64,
                         gui_type=GUI_TYPE_DESKTOP,
+                        gui_segments=gui_segments,
                         gui_url=msg.url,
                     )
                     end_time: float = time.time()

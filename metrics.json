@@ -18,7 +18,7 @@
     {
       "name": "Perceptual Fluency",
       "icon": "brain",
-      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8", "m9"]
+      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8", "m9", "m21", "m22", "m24", "m25"]
     }
   ],
   "metrics": {
@@ -29,6 +29,7 @@
       "evidence": 1,
       "relevance": 2,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -83,6 +84,7 @@
       "evidence": 2,
       "relevance": 3,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -145,6 +147,7 @@
       "evidence": 2,
       "relevance": 2,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -199,6 +202,7 @@
       "evidence": 4,
       "relevance": 3,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -257,6 +261,7 @@
       "evidence": 3,
       "relevance": 4,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -323,6 +328,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -389,6 +395,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -447,6 +454,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -516,6 +524,7 @@
       "evidence": 4,
       "relevance": 5,
       "speed": 1,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Fosco, C., Casser, V., Bedi, A.K., O'Donovan, P., Hertzmann, A., and Bylinskii, Z. (2020). Predicting Visual Importance Across Graphic Design Types. In Proceedings of the 33rd Annual ACM Symposium on User Interface Software and Technology (UIST '20), pp. 249-260. ACM. doi: https://doi.org/10.1145/3379337.3415825",
@@ -546,6 +555,7 @@
       "evidence": 3,
       "relevance": 2,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Palmer, S.E. and Schloss, K.B. (2010). An Ecological Valence Theory of Human Color Preference. Proceedings of the National Academy of Sciences, 107(19), 8877-8882. doi: https://doi.org/10.1073/pnas.0906172107",
@@ -592,6 +602,7 @@
       "evidence": 2,
       "relevance": 3,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -646,6 +657,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -700,6 +712,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
@@ -746,6 +759,7 @@
       "evidence": 3,
       "relevance": 2,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
@@ -942,6 +956,7 @@
       "evidence": 4,
       "relevance": 3,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
@@ -988,6 +1003,7 @@
       "evidence": 3,
       "relevance": 2,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Hasler, D. and Suesstrunk, S.E. (2003). Measuring Colorfulness in Natural Images. In Human Vision and Electronic Imaging VIII, 5007, 87-95. SPIE. doi: https://doi.org/10.1117/12.477378",
@@ -1154,6 +1170,7 @@
       "evidence": 2,
       "relevance": 2,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
@@ -1268,6 +1285,7 @@
       "evidence": 2,
       "relevance": 2,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Talebi, H. and Milanfar, P. (2018). NIMA: Neural Image Assessment. IEEE Transactions on Image Processing, 27(8), 3998-4011. doi: https://doi.org/10.1109/TIP.2018.2831899",
@@ -1344,6 +1362,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 1,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
@@ -1394,6 +1413,7 @@
       "evidence": 3,
       "relevance": 3,
       "speed": 0,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Cohen-Or, D., Sorkine, O., Gal, R., Leyvand, T., and Xu, Y.Q. (2006). Color Harmonization. ACM Transactions on Graphics, 25(3), 624-630. doi: https://doi.org/10.1145/1141911.1141933",
@@ -1447,6 +1467,374 @@
         }
       ]
     },
+    "m21": {
+      "id": "m21",
+      "name": "Grid quality",
+      "description": "Grid quality indicates the internal alignment of the various components or identifiable regions of the GUI with respect to each other.",
+      "evidence": 4,
+      "relevance": 4,
+      "speed": 2,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        },
+        {
+          "title": "Balinsky, H. (2006). Evaluating Interface Aesthetics: Measure of Symmetry. In Digital publishing (Vol. 6076, pp. 52-63). SPIE. doi: https://doi.org/10.1117/12.642120",
+          "url": "https://doi.org/10.1117/12.642120"
+        }
+      ],
+      "results": [
+        {
+          "id": "m21_0",
+          "index": 0,
+          "type": "int",
+          "name": "Number of visual GUI blocks",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 18],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [19, 34],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [35, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_1",
+          "index": 1,
+          "type": "int",
+          "name": "Number of visual GUI blocks - without children",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 14],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [15, 28],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [29, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_2",
+          "index": 2,
+          "type": "int",
+          "name": "Number of alignment points",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 52],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [53, 87],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [88, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_3",
+          "index": 3,
+          "type": "int",
+          "name": "Number of alignment points - without children",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 43],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [44, 77],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [78, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_4",
+          "index": 4,
+          "type": "int",
+          "name": "Number of block sizes",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 14],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [15, 22],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [23, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_5",
+          "index": 5,
+          "type": "int",
+          "name": "Number of block sizes - without children",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 12],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [13, 19],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [20, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_6",
+          "index": 6,
+          "type": "float",
+          "name": "GUI coverage",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 0.0084],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.0085, 0.1366],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.1367, 1],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_7",
+          "index": 7,
+          "type": "float",
+          "name": "GUI coverage - without children",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 0.0044],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.0045, 0.1155],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.1156, 1],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_8",
+          "index": 8,
+          "type": "int",
+          "name": "Number of vertical block sizes",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 9],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [10, 14],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [15, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        },
+        {
+          "id": "m21_9",
+          "index": 9,
+          "type": "int",
+          "name": "Number of vertical block sizes - without children",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 7],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [8, 11],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [12, null],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    "m22": {
+      "id": "m22",
+      "name": "White space",
+      "description": "The proportion of white space.",
+      "evidence": 2,
+      "relevance": 4,
+      "speed": 2,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2015). Computation of Interface Aesthetics. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15), pp. 1163-1172. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        }
+      ],
+      "results": [
+        {
+          "id": "m22_0",
+          "index": 0,
+          "type": "float",
+          "name": "White space",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 0.3402],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r2",
+              "range": [0.3403, 0.6366],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.6367, 1],
+              "description": "Meaningless",
+              "icon": [null, null],
+              "judgment": "normal"
+            }
+          ]
+        }
+      ]
+    },
     "m23": {
       "id": "m23",
       "name": "Color blindness",
@@ -1454,6 +1842,7 @@
       "evidence": 4,
       "relevance": 5,
       "speed": 2,
+      "segmentation_required": false,
       "references": [
         {
           "title": "Machado, G.M., Oliveira, M.M., and Fernandes, L.A.F. (2009). A Physiologically-based Model for Simulation of Color Vision Deficiency. IEEE Transactions on Visualization and Computer Graphics, 15(6), 1291-1298. doi: https://doi.org/10.1109/TVCG.2009.113",
@@ -1481,6 +1870,58 @@
           "type": "b64",
           "name": "Tritanopia",
           "description": "Blue-yellow color blindness, lack of Short-wavelength (S, ~blue) cone cells in the retina"
+        }
+      ]
+    },
+    "m24": {
+      "id": "m24",
+      "name": "AIM legacy segmentation",
+      "description": "A GUI element detection tool based on computer vision.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 2,
+      "segmentation_required": false,
+      "references": [
+        {
+          "title": "Oulasvirta, A., De Pascale, S., Koch, J., Langerak, T., Jokinen, J.P.P., Todi, K., Laine, M., Kristhombuge, M., Zhu, Y., Miniukovich, A., Palmas, G., and Weinkauf, T. (2018). Aalto Interface Metrics (AIM): A Service and Codebase for Computational GUI Evaluation. In Proceedings of the 31st Annual ACM Symposium on User Interface Software and Technology (UIST'18 Adjunct), pp. 16-19. ACM. doi: https://doi.org/10.1145/2702123.2702575",
+          "url": "https://doi.org/10.1145/2702123.2702575"
+        }
+      ],
+      "results": [
+        {
+          "id": "m24_0",
+          "index": 0,
+          "type": "b64",
+          "name": "AIM legacy segmented image",
+          "description": false
+        }
+      ]
+    },
+    "m25": {
+      "id": "m25",
+      "name": "UIED segmentation",
+      "description": "A GUI element detection toolkit that leverages old-fashioned computer vision algorithms for non-text region extraction, and deep learning models to perform classifications and text detection.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 2,
+      "segmentation_required": true,
+      "references": [
+        {
+          "title": "Xie, M., Feng, S., Xing, Z., Chen, J., and Chen, C. (2020). UIED: A Hybrid Tool for GUI Element Detection. In Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE '20), pp. 1655-1659. ACM. doi: https://doi.org/10.1145/3368089.3417940",
+          "url": "https://doi.org/10.1145/3368089.3417940"
+        },
+        {
+          "title": "Chen, J., Xie, M., Xing, Z., Chen, C., Xu, X., Zhu, L., and Li, G. (2020). Object Detection for Graphical User Interface: Old Fashioned or Deep Learning or a Combination? In Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE '20), pp. 1202-1214. ACM. doi: https://doi.org/10.1145/3368089.3409691",
+          "url": "https://doi.org/10.1145/3368089.3409691"
+        }
+      ],
+      "results": [
+        {
+          "id": "m25_0",
+          "index": 0,
+          "type": "b64",
+          "name": "UIED segmented image",
+          "description": false
         }
       ]
     }

@@ -43,7 +43,7 @@ Change log:
 # Standard library modules
 import base64
 from io import BytesIO
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 # Third-party modules
 import numpy as np
@@ -81,6 +81,7 @@ class Metric(AIMMetricInterface):
         cls,
         gui_image: str,
         gui_type: int = GUI_TYPE_DESKTOP,
+        gui_segments: Optional[Dict[str, Any]] = None,
         gui_url: Optional[HttpUrl] = None,
     ) -> Optional[List[Union[int, float, str]]]:
         """
@@ -91,6 +92,7 @@ class Metric(AIMMetricInterface):
 
         Kwargs:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
+            gui_segments: GUI segments (defaults to None)
             gui_url: GUI URL (defaults to None)
 
         Returns:

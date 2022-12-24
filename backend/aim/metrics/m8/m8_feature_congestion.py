@@ -53,7 +53,6 @@ Change log:
       * Initial implementation
 """
 
-
 # ----------------------------------------------------------------------------
 # Imports
 # ----------------------------------------------------------------------------
@@ -61,7 +60,7 @@ Change log:
 # Standard library modules
 import base64
 from io import BytesIO
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 # Third-party modules
 import numpy as np
@@ -123,7 +122,7 @@ class Metric(AIMMetricInterface):
     )
     _ORIENT_NOISE: float = 0.001  # Was eps, but that gave too much orientation noise in the saliency maps. Then changed to 0.000001 and then changed to 0.001.
 
-    ## OPP_ENERGY constants:
+    # OPP_ENERGY constants:
     # These probably seem like arbitrary numbers, but it's just trying to get
     # three very different feature extraction methods to operate at basically
     # the same scales.
@@ -131,7 +130,7 @@ class Metric(AIMMetricInterface):
     _OPP_ENERGY_FILTER_SCALE: float = 16 / 14 * 1.75
     _OPP_ENERGY_POOL_SCALE: float = 1.75
 
-    # Clutter coeficients to compute final feature congestion map
+    # Clutter coefficients to compute final feature congestion map
     _COLOR_COEF: float = 0.2088
     _CONTRAST_COEF: float = 0.0660
     _ORIENT_COEF: float = 0.0269
@@ -496,6 +495,7 @@ class Metric(AIMMetricInterface):
         cls,
         gui_image: str,
         gui_type: int = GUI_TYPE_DESKTOP,
+        gui_segments: Optional[Dict[str, Any]] = None,
         gui_url: Optional[HttpUrl] = None,
     ) -> Optional[List[Union[int, float, str]]]:
         """
@@ -506,6 +506,7 @@ class Metric(AIMMetricInterface):
 
         Kwargs:
             gui_type: GUI type, desktop = 0 (default), mobile = 1
+            gui_segments: GUI segments (defaults to None)
             gui_url: GUI URL (defaults to None)
 
         Returns:
@@ -558,7 +559,7 @@ class Metric(AIMMetricInterface):
             ** (1 / cls._MINKOWSKI_ORDER)
         )  # element wise
 
-        # Normlize output image
+        # Normalize output image
         clutter_array_fc: np.ndarray = normlize(clutter_map_fc)
         clutter_im_fc: Image.Image = Image.fromarray(clutter_array_fc)
         clutter_b64_fc: str = image_utils.to_png_image_base64(clutter_im_fc)
