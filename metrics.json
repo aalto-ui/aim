@@ -1903,7 +1903,7 @@
       "description": "A GUI element detection toolkit that leverages old-fashioned computer vision algorithms for non-text region extraction, and deep learning models to perform classifications and text detection.",
       "evidence": 3,
       "relevance": 3,
-      "speed": 1,
+      "speed": 2,
       "segmentation_required": true,
       "references": [
         {
