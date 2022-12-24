@@ -22,7 +22,7 @@ matplotlib==2.1.0
 mccabe==0.6.1
 motor==2.0.0
 networkx==2.0
-numpy==1.13.3
+numpy==1.22.0
 olefile==0.44
 opencv-python==3.4.2.17
 pandas==0.23.4
