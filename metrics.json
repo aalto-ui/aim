@@ -1883,8 +1883,8 @@
       "segmentation_required": false,
       "references": [
         {
-          "title": "Oulasvirta, A., De Pascale, S., Koch, J., Langerak, T., Jokinen, J.P.P., Todi, K., Laine, M., Kristhombuge, M., Zhu, Y., Miniukovich, A., Palmas, G., and Weinkauf, T. (2018). Aalto Interface Metrics (AIM): A Service and Codebase for Computational GUI Evaluation. In Proceedings of the 31st Annual ACM Symposium on User Interface Software and Technology (UIST'18 Adjunct), pp. 16-19. ACM. doi: https://doi.org/10.1145/2702123.2702575",
-          "url": "https://doi.org/10.1145/2702123.2702575"
+          "title": "Oulasvirta, A., De Pascale, S., Koch, J., Langerak, T., Jokinen, J.P.P., Todi, K., Laine, M., Kristhombuge, M., Zhu, Y., Miniukovich, A., Palmas, G., and Weinkauf, T. (2018). Aalto Interface Metrics (AIM): A Service and Codebase for Computational GUI Evaluation. In Proceedings of the 31st Annual ACM Symposium on User Interface Software and Technology (UIST'18 Adjunct), pp. 16-19. ACM. doi: https://doi.org/10.1145/3266037.3266087",
+          "url": "https://doi.org/10.1145/3266037.3266087"
         }
       ],
       "results": [

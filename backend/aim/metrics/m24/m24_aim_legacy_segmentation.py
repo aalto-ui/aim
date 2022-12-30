@@ -23,7 +23,7 @@ References:
         Metrics (AIM): A Service and Codebase for Computational GUI
         Evaluation. In Proceedings of the 31st Annual ACM Symposium on User
         Interface Software and Technology (UIST'18 Adjunct), pp. 16-19. ACM.
-        doi: https://doi.org/10.1145/2702123.2702575
+        doi: https://doi.org/10.1145/3266037.3266087
 
 
 Change log:
