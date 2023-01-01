@@ -18,7 +18,7 @@
     {
       "name": "Perceptual Fluency",
       "icon": "brain",
-      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8", "m9", "m21", "m22", "m24", "m25"]
+      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8", "m9", "m21", "m22", "m24", "m25", "m26"]
     }
   ],
   "metrics": {
@@ -1922,6 +1922,57 @@
           "type": "b64",
           "name": "UIED segmented image",
           "description": false
+        }
+      ]
+    },
+    "m26": {
+      "id": "m26",
+      "name": "Mirror symmetry - contour pixel",
+      "description": "The similarity of an object reflection across a straight axis. The measure considered contour pixels of image.",
+      "evidence": 4,
+      "relevance": 2,
+      "speed": 2,
+      "segmentation_required": false,
+      "references": [
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Quantification of Interface Visual Complexity. In Proceedings of the 2014 International Working Conference on Advanced Visual Interfaces (AVI '14), pp. 153-160. ACM. doi: https://doi.org/10.1145/2598153.2598173",
+          "url": "https://doi.org/10.1145/2598153.2598173"
+        },
+        {
+          "title": "Miniukovich, A. and De Angeli, A. (2014). Visual Impressions of Mobile App Interfaces. In Proceedings of the 8th Nordic Conference on Human-Computer Interaction (NordiCHI '14), pp. 31-40. ACM. doi: https://doi.org/10.1145/2639189.2641219",
+          "url": "https://doi.org/10.1145/2639189.2641219"
+        }
+      ],
+      "results": [
+        {
+          "id": "m26_0",
+          "index": 0,
+          "type": "float",
+          "name": "Normalized pixel symmetry",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.5344],
+              "description": "Non-Symmetric",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.5345, 0.9498],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.9499, null],
+              "description": "Symmetric",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            }
+          ]
         }
       ]
     }
