@@ -76,7 +76,7 @@
                   </p>
                   <h6>Contributors</h6>
                   <p>
-                    Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, Tino Weinkauf, Ai Nakajima, Valentin Ionita, Morteza Shiripour, Amir Hossein Kargaran, and Chuhan Jiao.
+                    Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, Tino Weinkauf, Ai Nakajima, Valentin Ionita, Morteza Shiripour, Amir Hossein Kargaran, Chuhan Jiao, and Nafiseh Nikeghbal.
                   </p>
                 </b-col>
               </b-row>
