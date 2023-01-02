@@ -41,14 +41,14 @@ __version__ = "1.0"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("blue.png", [0.333333, 0.56664, 0.959375, 16]),
+        ("blue.png", [0.333333, 0.388862, 0.959375, 16]),
         (
             "duckduckgo.com.png",
             [
-                0.372068,
-                0.473168,
-                0.997173,
-                230,
+                0.413586,
+                0.477775,
+                0.996961,
+                214.0,
                 load_expected_result("m27_1_duckduckgo.com.png"),
                 load_expected_result("m27_2_duckduckgo.com.png"),
             ],
@@ -91,12 +91,12 @@ def test_duadtree_decomposition_desktop(
 
         assert [round(float(r), 6) for r in result[:4]] == expected_results[:4]
 
-        if len(expected_results) == 5:
+        if len(expected_results) == 6:
             assert (
-                image_utils.idiff(result[4], expected_results[3])
+                image_utils.idiff(result[4], expected_results[4])
                 <= IDIFF_TOLERANCE
             )
             assert (
-                image_utils.idiff(result[5], expected_results[4])
+                image_utils.idiff(result[5], expected_results[5])
                 <= IDIFF_TOLERANCE
             )

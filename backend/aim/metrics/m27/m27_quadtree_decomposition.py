@@ -74,6 +74,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 # Third-party modules
 import cv2
+import matplotlib
 import matplotlib.figure
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
@@ -134,7 +135,7 @@ class Metric(AIMMetricInterface):
     )
     _MIN_BLOCK_SIZE_GRAY: int = 25  # minimum size threshold of each block for subsequent splitting in pixel
 
-    # Lists to save quadtree leaves
+    # Lists to save quadtree leaves, don't forget to empty them on the new image
     _RES_LEAF_GRAY: List[Tuple[int, int, int, int]] = []
     _RES_LEAF_COLOR: List[Tuple[int, int, int, int]] = []
 
@@ -143,7 +144,17 @@ class Metric(AIMMetricInterface):
     def _balance(
         leaves: List[Tuple[int, int, int, int]], width: int, height: int
     ) -> float:
-        """ """
+        """
+        Compute balance based on quadtree decomposition.
+
+        Args:
+            leaves: quadtree decomposition leaves  (List[Tuple[int, int, int, int]])
+            width: width of image (int)
+            height: height of image (int)
+
+        Return:
+            - balance dim (float)
+        """
         top: List[Tuple[int, int, int, int]] = []
         right: List[Tuple[int, int, int, int]] = []
         left: List[Tuple[int, int, int, int]] = []
@@ -220,7 +231,17 @@ class Metric(AIMMetricInterface):
     def _symmetry(
         leaves: List[Tuple[int, int, int, int]], width: int, height: int
     ) -> float:
-        """ """
+        """
+        Compute symmetry based on quadtree decomposition.
+
+        Args:
+            leaves: quadtree decomposition leaves  (List[Tuple[int, int, int, int]])
+            width: width of image (int)
+            height: height of image (int)
+
+        Return:
+            - symmetry dim (float)
+        """
         UL_leaves: List[Tuple[int, int, int, int]] = []
         UR_leaves: List[Tuple[int, int, int, int]] = []
         LL_leaves: List[Tuple[int, int, int, int]] = []
@@ -256,11 +277,11 @@ class Metric(AIMMetricInterface):
             R_score: float = 0.0
             for leaf in j:
                 x_leaf: int = leaf[0] + int(leaf[2] / 2)
-                X_score += int(abs(x_leaf - x_center))
+                X_score += abs(x_leaf - x_center)
                 y_leaf: int = leaf[1] + int(leaf[3] / 2)
-                Y_score += int(abs(y_leaf - y_center))
-                H_score += int(leaf[3])
-                B_score += int(leaf[2])
+                Y_score += abs(y_leaf - y_center)
+                H_score += leaf[3]
+                B_score += leaf[2]
                 T_score += int(abs(y_leaf - y_center) / abs(x_leaf - x_center))
                 R_score += float(
                     (((x_leaf - x_center) ** 2) + ((y_leaf - y_center) ** 2))
@@ -275,12 +296,12 @@ class Metric(AIMMetricInterface):
             R_j.append(R_score)
 
         # Normalize
-        X_j = [x / max(X_j) for x in X_j]
-        Y_j = [y / max(Y_j) for y in Y_j]
-        H_j = [h / max(H_j) for h in H_j]
-        B_j = [b / max(B_j) for b in B_j]
-        T_j = [t / max(T_j) for t in T_j]
-        R_j = [r / max(R_j) for r in R_j]
+        X_j = [int(x / max(X_j)) for x in X_j]
+        Y_j = [int(y / max(Y_j)) for y in Y_j]
+        H_j = [int(h / max(H_j)) for h in H_j]
+        B_j = [int(b / max(B_j)) for b in B_j]
+        T_j = [int(t / max(T_j)) for t in T_j]
+        R_j = [float(r / max(R_j)) for r in R_j]
 
         SYM_ver: float = (
             abs(X_j[0] - X_j[1])
@@ -336,7 +357,18 @@ class Metric(AIMMetricInterface):
         leaves: List[Tuple[int, int, int, int]], width: int, height: int
     ) -> float:
         """
-        This implementation seems unreasonably high. However, this is the case in the paper as well.
+        Compute equilibrium based on quadtree decomposition.
+
+        Args:
+            leaves: quadtree decomposition leaves  (List[Tuple[int, int, int, int]])
+            width: width of image (int)
+            height: height of image (int)
+
+        Return:
+            - equilibrium dim (float)
+
+        Note:
+            This implementation seems unreasonably high. However, this is the case in the paper as well.
         """
         area: List[float] = []
         dx: List[float] = []
@@ -364,10 +396,13 @@ class Metric(AIMMetricInterface):
     @classmethod
     def _intensity_entropy(cls, inp: np.ndarray) -> float:
         """
-        Currently RGB entropy is calculated and intensity.
-        The papers also refer to textons. This is not implemented as of yet:
-        Representing and Recognizing the Visual Appearance of Materials using Three-dimensional Textons
-        THOMAS LEUNG AND JITENDRA MALIK, International Journal of Computer Vision 43(1), 29-44, 2001
+        Compute intensity entropy based on luminance (l in lab color space)
+
+        Args:
+            inp: rgb image  (np.ndarray)
+
+        Return:
+            - intensity entropy value (float)
         """
         inp_lab: np.ndarray = color.rgb2lab(inp)
         L_list: List[float] = list(inp_lab[:, :, 0].flatten())
@@ -387,7 +422,15 @@ class Metric(AIMMetricInterface):
 
     @classmethod
     def _color_entropy(cls, inp: np.ndarray) -> float:
-        """ """
+        """
+        Compute color entropy based on hue and saturation (h and s in hsv color space)
+
+        Args:
+            inp: rgb image  (np.ndarray)
+
+        Return:
+            - color entropy value (float)
+        """
         inp = inp / 255.0
         inp_hsv: np.ndarray = color.rgb2hsv(inp)
         H_list: List[float] = list(inp_hsv[:, :, 0].flatten() * 360.0)
@@ -420,8 +463,22 @@ class Metric(AIMMetricInterface):
     @classmethod
     def _quadtree_color(cls, leaf, cor_size, i) -> None:
         """
-        The uncertainty of colour in a leaf, given the leaf. Based on the shannon entropy
+        Compute quadtree decomposition over colored image by considering the uncertainty
+        of color in a leaf, given the leaf. It decides whether to continue the recursion
+        based on the shannon entropy of image with the thresholds.
+
+        Args:
+            leaf: gray img (np.ndarray)
+            cor_size: cordination (Tuple[int, int, int, int])
+            i: number of recursion (int)
+
+        Return:
+            None
         """
+        # Currently, RGB entropy is calculated and intensity.
+        # The papers also refer to textons. This is not implemented yet:
+        # Representing and Recognizing the Visual Appearance of Materials using Three-dimensional Textons
+        # THOMAS LEUNG AND JITENDRA MALIK, International Journal of Computer Vision 43(1), 29-44, 2001
         ent_color: float = cls._color_entropy(leaf)
         ent_int: float = cls._intensity_entropy(leaf)
 
@@ -536,6 +593,10 @@ class Metric(AIMMetricInterface):
         """
 
         # create a new figure with inv_dpi of original image size
+
+        if not cls._SHOW:
+            matplotlib.use("Agg")
+
         fig_size_w: float = float(org_img.shape[1] * inv_dpi)
         fig_size_h: float = float(org_img.shape[0] * inv_dpi)
         plt.figure(figsize=(fig_size_w, fig_size_h))
@@ -555,11 +616,9 @@ class Metric(AIMMetricInterface):
             )
             fig.axes.add_patch(rect)
 
-        # show the results
         if cls._SHOW:
             plt.show()
 
-        plt.close()
         return fig.figure
 
     def _get_img_from_fig(
@@ -610,9 +669,9 @@ class Metric(AIMMetricInterface):
 
         Returns:
             Results (list of measures)
-            - balance dimension (float, [0, +inf))
-            - symmetry dimension (float, [0, +inf))
-            - equilibrium (int, [float, +inf))
+            - balance dimension (float, [0, 1])
+            - symmetry dimension (float, [0, 1])
+            - equilibrium (int, [float, [0, 1]))
             - number of leaves (float, [0, +inf))
             - Quadtree blocks - color entropy based (str, image (PNG) encoded in Base64)
             - Quadtree blocks - gray std based (str, image (PNG) encoded in Base64)
@@ -625,12 +684,17 @@ class Metric(AIMMetricInterface):
         img_rgb_nparray: np.ndarray = np.array(img_rgb)
 
         # Image Height and Width
-        _HEIGHT = img_rgb_nparray.shape[1]
-        _WIDTH = img_rgb_nparray.shape[0]
+        _HEIGHT = img_rgb_nparray.shape[0]
+        _WIDTH = img_rgb_nparray.shape[1]
+
+        # EMPTY Lists to save quadtree leaves
+        cls._RES_LEAF_GRAY = []
+        cls._RES_LEAF_COLOR = []
 
         # COLOR: Compute quadtree color
-        cor_size = (0, 0, _HEIGHT, _WIDTH)
-        cls._quadtree_color(leaf=img_rgb_nparray, cor_size=cor_size, i=0)
+        cls._quadtree_color(
+            leaf=img_rgb_nparray, cor_size=(0, 0, _WIDTH, _HEIGHT), i=0
+        )
         # Compute quadtree image
         fig_quadtree_color = cls.plot(
             org_img=img_rgb_nparray, res_leaf=cls._RES_LEAF_COLOR
@@ -660,12 +724,12 @@ class Metric(AIMMetricInterface):
         )
 
         # Compute metrics for quadtree color: balance, symmetry, and equilibrium
-        balance_dim: float = cls._balance(cls._RES_LEAF_COLOR, _HEIGHT, _WIDTH)
+        balance_dim: float = cls._balance(cls._RES_LEAF_COLOR, _WIDTH, _HEIGHT)
         symmetry_dim: float = cls._symmetry(
-            cls._RES_LEAF_COLOR, _HEIGHT, _WIDTH
+            cls._RES_LEAF_COLOR, _WIDTH, _HEIGHT
         )
         equilibrium_dim: float = cls._equilibrium(
-            cls._RES_LEAF_COLOR, _HEIGHT, _WIDTH
+            cls._RES_LEAF_COLOR, _WIDTH, _HEIGHT
         )
         num_leaves: int = len(cls._RES_LEAF_COLOR)
 

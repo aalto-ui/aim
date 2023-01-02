@@ -1924,6 +1924,166 @@
           "description": false
         }
       ]
+    },
+    "m27": {
+      "id": "m27",
+      "name": "Quadtree decomposition",
+      "description": "Quadtree decomposition for 3 aesthetic dimensions including balance, symmetry, and equilibrium.",
+      "evidence": 3,
+      "relevance": 3,
+      "speed": 2,
+      "segmentation_required": false,
+      "references": [
+        {
+          "title": "Ngo, D., Teo, L. and Byrne, J. (2003). Modelling interface aesthetics. Information Sciences 152, pp. 25-46. doi: https://doi.org/10.1016/S0020-0255(02)00404-8",
+          "url": "https://doi.org/10.1016/S0020-0255(02)00404-8"
+        },
+        {
+          "title": "Zheng, X., Chakraborty, I., Lin, J. and Rauschenberger, R. (2009) Correlating Low-Level Image Statistics with Users' Rapid Aesthetic and Affective Judgments of Web Pages. In Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI'09 ~ Understanding Information), pp. 1-10. ACM. doi: https://doi.org/10.1145/1518701.1518703",
+          "url": "https://doi.org/10.1145/1518701.1518703"
+        },
+        {
+          "title": "Reinecke, K., Yeh, T., Miratrix, L., Mardiko, R., Zhao, Y., Liu, J., and Gajos, K. Z. (2013) Predicting Users' First Impressions of Website Aesthetics With a Quantification of Perceived Visual Complexity and Colorfulness. In Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI'13), pp. 2049-2058, ACM. doi: https://doi.org/10.1145/2470654.2481281",
+          "url": "https://doi.org/10.1145/2470654.2481281"
+        }
+      ],
+      "results": [
+        {
+          "id": "m27_0",
+          "index": 0,
+          "type": "float",
+          "name": "Balance",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.5871],
+              "description": "Unbalanced",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.5872, 0.8425],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.8426, 1.0],
+              "description": "Balanced",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            }
+          ]
+        },
+        {
+          "id": "m27_1",
+          "index": 1,
+          "type": "float",
+          "name": "Symmetry",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.5006],
+              "description": "Non-Symmetric",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.5007, 0.5429],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.5430, 1.0],
+              "description": "Symmetric",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            }
+          ]
+        },
+        {
+          "id": "m27_2",
+          "index": 2,
+          "type": "float",
+          "name": "Equilibrium",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0.0, 0.9994],
+              "description": "Not centralized",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            },
+            {
+              "id": "r2",
+              "range": [0.9995, 0.9996],
+              "description": "Fair",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+            {
+              "id": "r3",
+              "range": [0.9997, 1.0],
+              "description": "Centralized",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            }
+          ]
+        },
+        {
+          "id": "m27_3",
+          "index": 3,
+          "type": "int",
+          "name": "Number of leaves",
+          "description": false,
+          "scores": [
+            {
+              "id": "r1",
+              "range": [0, 1061],
+              "description": "Low visual complexity",
+              "icon": ["far", "check-circle"],
+              "judgment": "good"
+            },
+            {
+              "id": "r2",
+              "range": [1062, 2347],
+              "description": "Fair visual complexity",
+              "icon": [null, null],
+              "judgment": "normal"
+            },
+
+            {
+              "id": "r1",
+              "range": [2348, null],
+              "description": "High visual complexity",
+              "icon": ["fas", "exclamation-triangle"],
+              "judgment": "bad"
+            }
+          ]
+        },
+        {
+          "id": "m27_4",
+          "index": 4,
+          "type": "b64",
+          "name": "Quadtree blocks - color entropy based",
+          "description": "Quadtree blocks of the image based on the shannon entropy comparison over colored image."
+        },
+        {
+          "id": "m27_5",
+          "index": 5,
+          "type": "b64",
+          "name": "Quadtree blocks - gray std based",
+          "description": "Quadtree blocks of the image based on standard deviation comparison over grayscale image."
+        }
+      ]
     }
   }
 }
