@@ -49,7 +49,7 @@ imageio==2.13.3
 imgaug==0.4.0
 importlib-metadata==4.2.0
 iniconfig==1.1.1
-ipython==7.27.0
+ipython==8.10.0
 isort==5.9.3
 itsdangerous==2.1.2
 jedi==0.18.1
