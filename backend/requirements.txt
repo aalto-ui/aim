@@ -151,7 +151,7 @@ urllib3==1.26.7
 virtualenv==20.10.0
 visualdl==2.4.1
 wcwidth==0.2.5
-Werkzeug==2.0.2
+Werkzeug==2.2.3
 wrapt==1.13.3
 wsproto==1.0.0
 zipp==3.6.0
