@@ -18,7 +18,7 @@
     {
       "name": "Perceptual Fluency",
       "icon": "brain",
-      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8", "m9", "m21", "m22", "m24", "m25"]
+      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8", "m9", "m21", "m22", "m24", "m25", "m30"]
     }
   ],
   "metrics": {
@@ -1921,6 +1921,44 @@
           "index": 0,
           "type": "b64",
           "name": "UIED segmented image",
+          "description": false
+        }
+      ]
+    },
+    "m30": {
+      "id": "m30",
+      "name": "MDEAM (Multi-duration Element Attention Model)",
+      "description": "The predicted human attention under three viewing durations, visualized as heatmaps of three durations (0.5, 3, and 5 seconds).",
+      "evidence": 4,
+      "relevance": 5,
+      "speed": 1,
+      "segmentation_required": false,
+      "references": [
+        {
+          "title": "Y. Wang, M. Bâce and A. Bulling, Scanpath Prediction on Information Visualisations, in IEEE Transactions on Visualization and Computer Graphics. doi: 10.1109/TVCG.2023.3242293",
+          "url": "https://doi.org/10.1109/TVCG.2023.3242293"
+        }
+      ],
+      "results": [
+        {
+          "id": "m30_0",
+          "index": 0,
+          "type": "b64",
+          "name": "MDEAM heatmap (0.5-second duration)",
+          "description": false
+        },
+        {
+          "id": "m30_1",
+          "index": 0,
+          "type": "b64",
+          "name": "MDEAM heatmap (3-second duration)",
+          "description": false
+        },
+        {
+          "id": "m30_2",
+          "index": 0,
+          "type": "b64",
+          "name": "MDEAM heatmap (5-second duration)",
           "description": false
         }
       ]
