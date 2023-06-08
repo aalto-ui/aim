@@ -1944,21 +1944,42 @@
           "id": "m30_0",
           "index": 0,
           "type": "b64",
-          "name": "MDEAM heatmap (0.5-second duration)",
+          "name": "MDEAM 0.5s prediction heatmap overlay",
           "description": false
         },
         {
           "id": "m30_1",
-          "index": 0,
+          "index": 1,
           "type": "b64",
-          "name": "MDEAM heatmap (3-second duration)",
+          "name": "MDEAM 0.5s prediction heatmap",
           "description": false
         },
         {
           "id": "m30_2",
-          "index": 0,
+          "index": 2,
           "type": "b64",
-          "name": "MDEAM heatmap (5-second duration)",
+          "name": "MDEAM prediction 3s heatmap overlay",
+          "description": false
+        },
+        {
+          "id": "m30_3",
+          "index": 3,
+          "type": "b64",
+          "name": "MDEAM prediction 3s heatmap",
+          "description": false
+        },
+        {
+          "id": "m30_4",
+          "index": 4,
+          "type": "b64",
+          "name": "MDEAM prediction 5s heatmap overlay",
+          "description": false
+        },
+        {
+          "id": "m30_5",
+          "index": 5,
+          "type": "b64",
+          "name": "MDEAM prediction 5s heatmap",
           "description": false
         }
       ]

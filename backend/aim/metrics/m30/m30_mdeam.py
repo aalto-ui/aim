@@ -235,6 +235,7 @@ class Metric(AIMMetricInterface):
         cls,
         original_images: List[Image.Image],
         predictions: List[np.ndarray],
+        n_time: int = 0,
         blur: bool = False,
         normalize: bool = False,
     ) -> List[np.ndarray]:
@@ -244,6 +245,7 @@ class Metric(AIMMetricInterface):
         Args:
             original_images: List of original images
             predictions: Heatmaps predicted by the model
+            n_times: Number of time slices, can be 0, 1, or 2
             blur: True, if prediction heatmaps must be blurred.
                   Otherwise, False
             normalize: True, if prediction heatmaps must be normalized from
@@ -253,54 +255,36 @@ class Metric(AIMMetricInterface):
             Postprocessed prediction heatmaps
         """
         heatmap_batch: List[np.ndarray] = []
+
+        assert n_time == 0 or n_time == 1 or n_time == 2
+
         for i, original_image in enumerate(original_images):
             width: int
             height: int
             width, height = original_image.size
-            prediction0: np.ndarray = predictions[0][i, 0, :, :, 0]
-            prediction1: np.ndarray = predictions[0][i, 1, :, :, 0]
-            prediction2: np.ndarray = predictions[0][i, 2, :, :, 0]
-            prediction_shape: Tuple[int, ...] = prediction0.shape
+            prediction: np.ndarray = predictions[0][i, n_time, :, :, 0]
+            prediction_shape: Tuple[int, ...] = prediction.shape
             rows_rate: float = height / prediction_shape[0]
             cols_rate: float = width / prediction_shape[1]
 
             if blur:
                 sigma: bool = blur
-                prediction0 = scipy.ndimage.filters.gaussian_filter(
-                    prediction0, sigma=sigma
+                prediction = scipy.ndimage.filters.gaussian_filter(
+                    prediction, sigma=sigma
                 )
-                prediction1 = scipy.ndimage.filters.gaussian_filter(
-                    prediction1, sigma=sigma
-                )
-                prediction2 = scipy.ndimage.filters.gaussian_filter(
-                    prediction2, sigma=sigma
-                )
-
             img: np.ndarray
             if rows_rate > cols_rate:
                 new_cols: int = (
                     prediction_shape[1] * height
                 ) // prediction_shape[0]
                 if cls._USE_CV2:
-                    prediction1 = cv2.resize(prediction1, (new_cols, height))
+                    prediction = cv2.resize(prediction, (new_cols, height))
                 else:
-                    prediction1 = skit.resize(prediction1, (height, new_cols))
-                img0 = prediction0[
+                    prediction = skit.resize(prediction, (height, new_cols))
+                img = prediction[
                     :,
-                    ((prediction0.shape[1] - width) // 2) : (
-                        (prediction0.shape[1] - width) // 2 + width
-                    ),
-                ]
-                img1 = prediction1[
-                    :,
-                    ((prediction1.shape[1] - width) // 2) : (
-                        (prediction1.shape[1] - width) // 2 + width
-                    ),
-                ]
-                img2 = prediction2[
-                    :,
-                    ((prediction2.shape[1] - width) // 2) : (
-                        (prediction2.shape[1] - width) // 2 + width
+                    ((prediction.shape[1] - width) // 2) : (
+                        (prediction.shape[1] - width) // 2 + width
                     ),
                 ]
             else:
@@ -308,35 +292,19 @@ class Metric(AIMMetricInterface):
                     prediction_shape[0] * width
                 ) // prediction_shape[1]
                 if cls._USE_CV2:
-                    prediction1 = cv2.resize(prediction1, (width, new_rows))
+                    prediction = cv2.resize(prediction, (width, new_rows))
                 else:
-                    prediction1 = skit.resize(prediction1, (new_rows, width))
-                img0 = prediction0[
-                    ((prediction0.shape[0] - height) // 2) : (
-                        (prediction0.shape[0] - height) // 2 + height
-                    ),
-                    :,
-                ]
-                img1 = prediction1[
-                    ((prediction1.shape[0] - height) // 2) : (
-                        (prediction1.shape[0] - height) // 2 + height
-                    ),
-                    :,
-                ]
-                img2 = prediction2[
-                    ((prediction2.shape[0] - height) // 2) : (
-                        (prediction2.shape[0] - height) // 2 + height
+                    prediction = skit.resize(prediction, (new_rows, width))
+                img = prediction[
+                    ((prediction.shape[0] - height) // 2) : (
+                        (prediction.shape[0] - height) // 2 + height
                     ),
                     :,
                 ]
 
             if normalize:
-                img0 = img0 / np.max(img0) * 255
-                img1 = img1 / np.max(img1) * 255
-                img2 = img2 / np.max(img2) * 255
-            heatmap_batch.append(img0)
-            heatmap_batch.append(img1)
-            heatmap_batch.append(img2)
+                img = img / np.max(img) * 255
+            heatmap_batch.append(img)
 
         return heatmap_batch
 
@@ -462,49 +430,80 @@ class Metric(AIMMetricInterface):
         predictions: List[np.ndarray] = loaded_model.predict(img_batch)
 
         # Postprocess predictions
-        heatmap_batch: List[np.ndarray] = cls._postprocess_predictions(
-            original_images, predictions
+        heatmap_batch0: List[np.ndarray] = cls._postprocess_predictions(
+            original_images, predictions, n_time = 0
+        )
+        heatmap_batch1: List[np.ndarray] = cls._postprocess_predictions(
+            original_images, predictions, n_time = 1
+        )
+        heatmap_batch2: List[np.ndarray] = cls._postprocess_predictions(
+            original_images, predictions, n_time = 2
         )
 
         # Create prediction heatmap overlays
-        heatmap_overlay_batch: List[np.ndarray] = cls._heatmap_overlays(
-            original_images, heatmap_batch, colmap=cls._HEATMAP_STYLE
+        heatmap_overlay_batch0: List[np.ndarray] = cls._heatmap_overlays(
+            original_images, heatmap_batch0, colmap=cls._HEATMAP_STYLE
+        )
+        heatmap_overlay_batch1: List[np.ndarray] = cls._heatmap_overlays(
+            original_images, heatmap_batch1, colmap=cls._HEATMAP_STYLE
+        )
+        heatmap_overlay_batch2: List[np.ndarray] = cls._heatmap_overlays(
+            original_images, heatmap_batch2, colmap=cls._HEATMAP_STYLE
         )
 
         # Show results
         if cls._SHOW:
             cls._show_results(
-                original_images, heatmap_batch, heatmap_overlay_batch
+                original_images, heatmap_batch0, heatmap_overlay_batch0
+            )
+            cls._show_results(
+                original_images, heatmap_batch1, heatmap_overlay_batch1
+            )
+            cls._show_results(
+                original_images, heatmap_batch2, heatmap_overlay_batch2
             )
 
         # Prepare final results
         # Apply the color map, rescale to the 0-255 range, convert to
         # 8-bit unsigned integers. Note: Slight loss of accuracy due
         # the float32 to uint8 conversion.
-        img_umsi_prediction_heatmap0: Image.Image = Image.fromarray(
-            (cm.get_cmap("viridis")(heatmap_batch[0]) * 255).astype("uint8")
+        img_prediction_heatmap0: Image.Image = Image.fromarray(
+            (cm.get_cmap("viridis")(heatmap_batch0[0]) * 255).astype("uint8")
         ).convert("RGB")
-        img_umsi_prediction_heatmap1: Image.Image = Image.fromarray(
-            (cm.get_cmap("viridis")(heatmap_batch[1]) * 255).astype("uint8")
+        img_prediction_heatmap1: Image.Image = Image.fromarray(
+            (cm.get_cmap("viridis")(heatmap_batch1[0]) * 255).astype("uint8")
         ).convert("RGB")
-        img_umsi_prediction_heatmap2: Image.Image = Image.fromarray(
-            (cm.get_cmap("viridis")(heatmap_batch[2]) * 255).astype("uint8")
+        img_prediction_heatmap2: Image.Image = Image.fromarray(
+            (cm.get_cmap("viridis")(heatmap_batch2[0]) * 255).astype("uint8")
         ).convert("RGB")
-        img_umsi_prediction_heatmap_overlay: Image.Image = Image.fromarray(
-            heatmap_overlay_batch[0]
+        img_prediction_heatmap0_overlay: Image.Image = Image.fromarray(
+            heatmap_overlay_batch0[0]
         ).convert("RGB")
-        umsi_prediction_heatmap0: str = image_utils.to_png_image_base64(
-            img_umsi_prediction_heatmap0
+        img_prediction_heatmap1_overlay: Image.Image = Image.fromarray(
+            heatmap_overlay_batch1[0]
+        ).convert("RGB")
+        img_prediction_heatmap2_overlay: Image.Image = Image.fromarray(
+            heatmap_overlay_batch2[0]
+        ).convert("RGB")
+        mdeam_prediction_heatmap0: str = image_utils.to_png_image_base64(
+            img_prediction_heatmap0
         )
-        umsi_prediction_heatmap1: str = image_utils.to_png_image_base64(
-            img_umsi_prediction_heatmap1
+        mdeam_prediction_heatmap1: str = image_utils.to_png_image_base64(
+            img_prediction_heatmap1
         )
-        umsi_prediction_heatmap2: str = image_utils.to_png_image_base64(
-            img_umsi_prediction_heatmap2
+        mdeam_prediction_heatmap2: str = image_utils.to_png_image_base64(
+            img_prediction_heatmap2
         )
-        umsi_prediction_heatmap_overlay: str = image_utils.to_png_image_base64(
-            img_umsi_prediction_heatmap_overlay
+        mdeam_prediction_heatmap0_overlay: str = image_utils.to_png_image_base64(
+            img_prediction_heatmap0_overlay
         )
+        mdeam_prediction_heatmap1_overlay: str = image_utils.to_png_image_base64(
+            img_prediction_heatmap1_overlay
+        )
+        mdeam_prediction_heatmap2_overlay: str = image_utils.to_png_image_base64(
+            img_prediction_heatmap2_overlay
+        )
+
 
         # Clean up to prevent Keras memory leaks
         # Source: https://www.thekerneltrip.com/python/keras-memory-leak/
@@ -513,8 +512,10 @@ class Metric(AIMMetricInterface):
         _ = gc.collect()
 
         return [
-            umsi_prediction_heatmap0,
-            umsi_prediction_heatmap1,
-            umsi_prediction_heatmap2,
-            umsi_prediction_heatmap_overlay,
+            mdeam_prediction_heatmap0_overlay,
+            mdeam_prediction_heatmap0,
+            mdeam_prediction_heatmap1_overlay,
+            mdeam_prediction_heatmap1,
+            mdeam_prediction_heatmap2_overlay,
+            mdeam_prediction_heatmap2,
         ]
