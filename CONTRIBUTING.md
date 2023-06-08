@@ -81,4 +81,4 @@ Finally, append your name to the list of contributors below and in [Header.vue](
 
 Big thank you to all the people who have already contributed to AIM!
 
-Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, Tino Weinkauf, Ai Nakajima, Valentin Ionita, Morteza Shiripour, Amir Hossein Kargaran, and Chuhan Jiao.
+Antti Oulasvirta, Samuli De Pascale, Janin Koch, Thomas Langerak, Jussi Jokinen, Kashyap Todi, Markku Laine, Manoj Kristhombuge, Yuxi Zhu, Aliaksei Miniukovich, Gregorio Palmas, Tino Weinkauf, Ai Nakajima, Valentin Ionita, Morteza Shiripour, Amir Hossein Kargaran, Chuhan Jiao, and Yao Wang.

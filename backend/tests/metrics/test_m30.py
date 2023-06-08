@@ -19,7 +19,7 @@ import pytest
 
 # First-party modules
 from aim.common import image_utils
-from aim.metrics.m3.m30_mdeam import Metric
+from aim.metrics.m30.m30_mdeam import Metric
 from tests.common.constants import DATA_TESTS_INPUT_VALUES_DIR, IDIFF_TOLERANCE
 from tests.common.utils import load_expected_result
 
@@ -27,10 +27,10 @@ from tests.common.utils import load_expected_result
 # Metadata
 # ----------------------------------------------------------------------------
 
-__author__ = "Markku Laine"
-__date__ = "2021-12-11"
+__author__ = "Markku Laine, Yao Wang"
+__date__ = "2023-06-08"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.1"
+__version__ = "1.0"
 
 
 # ----------------------------------------------------------------------------
@@ -42,24 +42,32 @@ __version__ = "1.1"
     ["input_value", "expected_results"],
     [
         (
-            "50.png",
+            "aalto.fi_website.png",
             [
-                load_expected_result("m9_0_50.png"),
-                load_expected_result("m9_1_50.png"),
+                load_expected_result("m30_0_aalto.fi_website.png"),
+                load_expected_result("m30_1_aalto.fi_website.png"),
+                load_expected_result("m30_2_aalto.fi_website.png"),
+                load_expected_result("m30_3_aalto.fi_website.png"),
+                load_expected_result("m30_4_aalto.fi_website.png"),
+                load_expected_result("m30_5_aalto.fi_website.png")
             ],
         ),
         (
-            "COCO_val2014_000000001700.png",
+            "myhelsinki.fi_website.png",
             [
-                load_expected_result("m9_0_COCO_val2014_000000001700.png"),
-                load_expected_result("m9_1_COCO_val2014_000000001700.png"),
+                load_expected_result("m30_0_myhelsinki.fi_website.png"),
+                load_expected_result("m30_1_myhelsinki.fi_website.png"),
+                load_expected_result("m30_2_myhelsinki.fi_website.png"),
+                load_expected_result("m30_3_myhelsinki.fi_website.png"),
+                load_expected_result("m30_4_myhelsinki.fi_website.png"),
+                load_expected_result("m30_5_myhelsinki.fi_website.png")
             ],
-        ),
+        )
     ],
 )
-def test_umsi_desktop(input_value: str, expected_results: List[Any]) -> None:
+def test_mdeam_desktop(input_value: str, expected_results: List[Any]) -> None:
     """
-    Test UMSI (desktop GUIs).
+    Test MDEAM (desktop GUIs).
 
     Args:
         input_value: GUI image file name
@@ -83,6 +91,10 @@ def test_umsi_desktop(input_value: str, expected_results: List[Any]) -> None:
         result is not None
         and isinstance(result[0], str)
         and isinstance(result[1], str)
+        and isinstance(result[2], str)
+        and isinstance(result[3], str)
+        and isinstance(result[4], str)
+        and isinstance(result[5], str)
     ):
         assert (
             image_utils.idiff(result[0], expected_results[0])
@@ -90,5 +102,21 @@ def test_umsi_desktop(input_value: str, expected_results: List[Any]) -> None:
         )
         assert (
             image_utils.idiff(result[1], expected_results[1])
+            <= IDIFF_TOLERANCE
+        )
+        assert (
+            image_utils.idiff(result[2], expected_results[2])
+            <= IDIFF_TOLERANCE
+        )
+        assert (
+            image_utils.idiff(result[3], expected_results[3])
+            <= IDIFF_TOLERANCE
+        )
+        assert (
+            image_utils.idiff(result[4], expected_results[4])
+            <= IDIFF_TOLERANCE
+        )
+        assert (
+            image_utils.idiff(result[5], expected_results[5])
             <= IDIFF_TOLERANCE
         )
