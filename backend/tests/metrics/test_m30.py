@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for the 'UMSI' metric (m9).
+Tests for the 'MD-EAM' metric (m30).
 """
 
 
@@ -49,7 +49,7 @@ __version__ = "1.0"
                 load_expected_result("m30_2_aalto.fi_website.png"),
                 load_expected_result("m30_3_aalto.fi_website.png"),
                 load_expected_result("m30_4_aalto.fi_website.png"),
-                load_expected_result("m30_5_aalto.fi_website.png")
+                load_expected_result("m30_5_aalto.fi_website.png"),
             ],
         ),
         (
@@ -60,14 +60,14 @@ __version__ = "1.0"
                 load_expected_result("m30_2_myhelsinki.fi_website.png"),
                 load_expected_result("m30_3_myhelsinki.fi_website.png"),
                 load_expected_result("m30_4_myhelsinki.fi_website.png"),
-                load_expected_result("m30_5_myhelsinki.fi_website.png")
+                load_expected_result("m30_5_myhelsinki.fi_website.png"),
             ],
-        )
+        ),
     ],
 )
 def test_mdeam_desktop(input_value: str, expected_results: List[Any]) -> None:
     """
-    Test MDEAM (desktop GUIs).
+    Test MD-EAM (desktop GUIs).
 
     Args:
         input_value: GUI image file name
