@@ -143,7 +143,9 @@ wheels/
 
 # Application-specific files
 aim_backend/configs/*.json
-aim_backend/data/results/*.png
+backend/data/webapp/inputs/*
+backend/data/webapp/results/
+aim_backend/data/results/*
 aim_backend/data/screenshots/*.png
 aim_backend/inputs/*.txt
 aim_backend/outputs/*.csv
