@@ -3,11 +3,12 @@
 
 """
 Metric:
-    MDEAM (Multi-duration Element Attention Model)
+    MD-EAM (Multi-Duration Element Attention Model)
 
 
 Description:
-    The predicted human attention under three viewing durations, visualized as heatmaps of three durations (0.5, 3, and 5 seconds).
+    The predicted human attention at three viewing durations (0.5, 3, and
+    5 seconds), visualized as heatmaps and heatmap overlays.
 
 
 Funding information and contact:
@@ -17,8 +18,10 @@ Funding information and contact:
 
 
 References:
-    1.  Y. Wang, M. Bâce and A. Bulling, "Scanpath Prediction on Information Visualisations,"
-        in IEEE Transactions on Visualization and Computer Graphics. doi: 10.1109/TVCG.2023.3242293
+    1.  Wang, Y., Bâce, M., and Bulling, A. (2023). Scanpath Prediction on
+        Information Visualisations. IEEE Transactions on Visualization and
+        Computer Graphics, 1-15.
+        doi: https://doi.org/10.1109/TVCG.2023.3242293
 
 
 Change log:
@@ -56,6 +59,7 @@ from pydantic import HttpUrl
 from aim.common import image_utils
 from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
+from aim.metrics.m30.multiduration_models import xception_se_lstm
 
 # isort: off
 # Third-party modules - Ignore Keras outputs and logs
@@ -63,8 +67,6 @@ stderr = sys.stderr
 sys.stderr = open(os.devnull, "w")
 import keras  # noqa: E402
 import keras.backend as K  # noqa: E402
-
-from aim.metrics.m30.multiduration_models import xception_se_lstm
 
 sys.stderr = stderr
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
@@ -78,7 +80,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module="keras.*")
 # ----------------------------------------------------------------------------
 
 __author__ = "Markku Laine, Yao Wang"
-__date__ = "2023-06-07"
+__date__ = "2023-06-09"
 __email__ = "markku.laine@aalto.fi"
 __version__ = "1.0"
 
@@ -422,7 +424,9 @@ class Metric(AIMMetricInterface):
             "aim/metrics/m30/massvis_bucket_500_2000_5000_kl10cc-5nss-1ccmatch3_ep06_valloss1.1899.hdf5"
         )
 
-        loaded_model = xception_se_lstm(input_shape = (240,320,3), n_outs = 3, ups=16, verbose=False)
+        loaded_model = xception_se_lstm(
+            input_shape=(240, 320, 3), n_outs=3, ups=16, verbose=False
+        )
 
         loaded_model.load_weights(model_filepath)
 
@@ -431,13 +435,13 @@ class Metric(AIMMetricInterface):
 
         # Postprocess predictions
         heatmap_batch0: List[np.ndarray] = cls._postprocess_predictions(
-            original_images, predictions, n_time = 0
+            original_images, predictions, n_time=0
         )
         heatmap_batch1: List[np.ndarray] = cls._postprocess_predictions(
-            original_images, predictions, n_time = 1
+            original_images, predictions, n_time=1
         )
         heatmap_batch2: List[np.ndarray] = cls._postprocess_predictions(
-            original_images, predictions, n_time = 2
+            original_images, predictions, n_time=2
         )
 
         # Create prediction heatmap overlays
@@ -494,16 +498,15 @@ class Metric(AIMMetricInterface):
         mdeam_prediction_heatmap2: str = image_utils.to_png_image_base64(
             img_prediction_heatmap2
         )
-        mdeam_prediction_heatmap0_overlay: str = image_utils.to_png_image_base64(
-            img_prediction_heatmap0_overlay
+        mdeam_prediction_heatmap0_overlay: str = (
+            image_utils.to_png_image_base64(img_prediction_heatmap0_overlay)
         )
-        mdeam_prediction_heatmap1_overlay: str = image_utils.to_png_image_base64(
-            img_prediction_heatmap1_overlay
+        mdeam_prediction_heatmap1_overlay: str = (
+            image_utils.to_png_image_base64(img_prediction_heatmap1_overlay)
         )
-        mdeam_prediction_heatmap2_overlay: str = image_utils.to_png_image_base64(
-            img_prediction_heatmap2_overlay
+        mdeam_prediction_heatmap2_overlay: str = (
+            image_utils.to_png_image_base64(img_prediction_heatmap2_overlay)
         )
-
 
         # Clean up to prevent Keras memory leaks
         # Source: https://www.thekerneltrip.com/python/keras-memory-leak/
@@ -512,10 +515,10 @@ class Metric(AIMMetricInterface):
         _ = gc.collect()
 
         return [
-            mdeam_prediction_heatmap0_overlay,
-            mdeam_prediction_heatmap0,
-            mdeam_prediction_heatmap1_overlay,
-            mdeam_prediction_heatmap1,
-            mdeam_prediction_heatmap2_overlay,
-            mdeam_prediction_heatmap2,
+            mdeam_prediction_heatmap0,  # at 0.5s
+            mdeam_prediction_heatmap1,  # at 3s
+            mdeam_prediction_heatmap2,  # at 5s
+            mdeam_prediction_heatmap0_overlay,  # at 0.5s
+            mdeam_prediction_heatmap1_overlay,  # at 3s
+            mdeam_prediction_heatmap2_overlay,  # at 5s
         ]
