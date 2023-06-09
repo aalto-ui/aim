@@ -41,6 +41,15 @@ The most important files and folders in the AIM codebase are:
 ```
 
 
+## Download Large Models
+
+Some AIM metrics (e.g., `m9`) include models that are large in size and cloning the repository will *not* download them correctly. To download the models, install [Git Large File Storage](https://github.com/git-lfs/git-lfs) and run the following commands.
+```sh
+git lfs install
+git lfs pull
+```
+
+
 ## Quick Start with Docker
 
 The easiest and fastest way to get AIM up and running on your computer is by using [Docker](https://docs.docker.com/get-docker/) and following the instructions below.
