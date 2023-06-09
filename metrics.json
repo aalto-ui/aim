@@ -3,22 +3,52 @@
     {
       "name": "Accessibility",
       "icon": "universal-access",
-      "metrics": ["m23"]
+      "metrics": [
+        "m23"
+      ]
     },
     {
       "name": "Aesthetics",
       "icon": "gem",
-      "metrics": ["m18"]
+      "metrics": [
+        "m18"
+      ]
     },
     {
       "name": "Color Perception",
       "icon": "palette",
-      "metrics": ["m1", "m3", "m10", "m11", "m12", "m13", "m14", "m15", "m16", "m17", "m19", "m20"]
+      "metrics": [
+        "m1",
+        "m3",
+        "m10",
+        "m11",
+        "m12",
+        "m13",
+        "m14",
+        "m15",
+        "m16",
+        "m17",
+        "m19",
+        "m20"
+      ]
     },
     {
       "name": "Perceptual Fluency",
       "icon": "brain",
-      "metrics": ["m2", "m4", "m5", "m6", "m7", "m8", "m9", "m21", "m22", "m24", "m25", "m30"]
+      "metrics": [
+        "m2",
+        "m4",
+        "m5",
+        "m6",
+        "m7",
+        "m8",
+        "m9",
+        "m21",
+        "m22",
+        "m24",
+        "m25",
+        "m30"
+      ]
     }
   ],
   "metrics": {
@@ -54,23 +84,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 355148],
+              "range": [
+                0,
+                355148
+              ],
               "description": "Small",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [355149, 855811],
+              "range": [
+                355149,
+                855811
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [855812, null],
+              "range": [
+                855812,
+                null
+              ],
               "description": "Large",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -117,23 +165,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 84198],
+              "range": [
+                0,
+                84198
+              ],
               "description": "Small",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [84199, 129989],
+              "range": [
+                84199,
+                129989
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [129990, null],
+              "range": [
+                129990,
+                null
+              ],
               "description": "Large",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -172,23 +238,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 2713],
+              "range": [
+                0,
+                2713
+              ],
               "description": "Colorless",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [2714, 9763],
+              "range": [
+                2714,
+                9763
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [9764, null],
+              "range": [
+                9764,
+                null
+              ],
               "description": "Colorful",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -231,23 +315,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 0.0296],
+              "range": [
+                0.0,
+                0.0296
+              ],
               "description": "Sparse",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [0.0297, 0.0494],
+              "range": [
+                0.0297,
+                0.0494
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [0.0495, 1.0],
+              "range": [
+                0.0495,
+                1.0
+              ],
               "description": "Dense",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -298,23 +400,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 0.5786],
+              "range": [
+                0.0,
+                0.5786
+              ],
               "description": "Low",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             },
             {
               "id": "r2",
-              "range": [0.5787, 0.6855],
+              "range": [
+                0.5787,
+                0.6855
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [0.6856, 1.0],
+              "range": [
+                0.6856,
+                1.0
+              ],
               "description": "High",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             }
           ]
@@ -365,23 +485,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 0.6033],
+              "range": [
+                0.0,
+                0.6033
+              ],
               "description": "Sparse",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [0.6034, 0.7112],
+              "range": [
+                0.6034,
+                0.7112
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [0.7113, 1.0],
+              "range": [
+                0.7113,
+                1.0
+              ],
               "description": "Congested",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -424,23 +562,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 2.7153],
+              "range": [
+                0,
+                2.7153
+              ],
               "description": "Good",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [2.7154, 3.4693],
+              "range": [
+                2.7154,
+                3.4693
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [3.4694, null],
+              "range": [
+                3.4694,
+                null
+              ],
               "description": "Poor",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -487,23 +643,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 3.771],
+              "range": [
+                0,
+                3.771
+              ],
               "description": "Good",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [3.772, 5.5113],
+              "range": [
+                3.772,
+                5.5113
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [5.5114, null],
+              "range": [
+                5.5114,
+                null
+              ],
               "description": "Poor",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -572,23 +746,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 0.5009],
+              "range": [
+                0.0,
+                0.5009
+              ],
               "description": "Poor",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             },
             {
               "id": "r2",
-              "range": [0.5010, 0.6126],
+              "range": [
+                0.5010,
+                0.6126
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [0.6127, 1.0],
+              "range": [
+                0.6127,
+                1.0
+              ],
               "description": "Good",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             }
           ]
@@ -627,23 +819,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 809],
+              "range": [
+                0,
+                809
+              ],
               "description": "Colorless",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [810, 2550],
+              "range": [
+                810,
+                2550
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [2551, 32768],
+              "range": [
+                2551,
+                32768
+              ],
               "description": "Colorful",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -682,23 +892,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 132],
+              "range": [
+                0,
+                132
+              ],
               "description": "Colorless",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [133, 443],
+              "range": [
+                133,
+                443
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [444, null],
+              "range": [
+                444,
+                null
+              ],
               "description": "Colorful",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -729,23 +957,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 56.4449],
+              "range": [
+                0.0,
+                56.4449
+              ],
               "description": "Low",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             },
             {
               "id": "r2",
-              "range": [56.4450, 85.9416],
+              "range": [
+                56.4450,
+                85.9416
+              ],
               "description": "Medium",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r3",
-              "range": [85.9417, null],
+              "range": [
+                85.9417,
+                null
+              ],
               "description": "High",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -776,23 +1022,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 61.1937],
+              "range": [
+                0.0,
+                61.1937
+              ],
               "description": "Dark",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [61.1938, 85.945],
+              "range": [
+                61.1938,
+                85.945
+              ],
               "description": "Medium",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r3",
-              "range": [85.946, 100.0],
+              "range": [
+                85.946,
+                100.0
+              ],
               "description": "Light",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -806,23 +1070,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 21.203],
+              "range": [
+                0.0,
+                21.203
+              ],
               "description": "Low",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             },
             {
               "id": "r2",
-              "range": [21.204, 32.748],
+              "range": [
+                21.204,
+                32.748
+              ],
               "description": "Medium",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r3",
-              "range": [32.749, null],
+              "range": [
+                32.749,
+                null
+              ],
               "description": "High",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -836,23 +1118,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [-128.0, 0.1141],
+              "range": [
+                -128.0,
+                0.1141
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [0.1142, 3.7987],
+              "range": [
+                0.1142,
+                3.7987
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [3.7988, 128.0],
+              "range": [
+                3.7988,
+                128.0
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -866,23 +1166,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 5.3333],
+              "range": [
+                0.0,
+                5.3333
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [5.3334, 12.1716],
+              "range": [
+                5.3334,
+                12.1716
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [12.1717, null],
+              "range": [
+                12.1717,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -896,23 +1214,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [-128.0, -2.4527],
+              "range": [
+                -128.0,
+                -2.4527
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [-2.4526, 2.568],
+              "range": [
+                -2.4526,
+                2.568
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [2.569, 128.0],
+              "range": [
+                2.569,
+                128.0
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -926,23 +1262,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 8.4718],
+              "range": [
+                0.0,
+                8.4718
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [8.4719, 17.3737],
+              "range": [
+                8.4719,
+                17.3737
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [17.3738, null],
+              "range": [
+                17.3738,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -973,23 +1327,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 26.0989],
+              "range": [
+                0.0,
+                26.0989
+              ],
               "description": "Less colorful",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [26.0990, 54.1463],
+              "range": [
+                26.0990,
+                54.1463
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [54.1464, null],
+              "range": [
+                54.1464,
+                null
+              ],
               "description": "More colorful",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1020,23 +1392,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 17.4804],
+              "range": [
+                0.0,
+                17.4804
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [17.4805, 352.5483],
+              "range": [
+                17.4805,
+                352.5483
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [352.5484, null],
+              "range": [
+                352.5484,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1050,23 +1440,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 0.0738],
+              "range": [
+                0.0,
+                0.0738
+              ],
               "description": "Low",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             },
             {
               "id": "r2",
-              "range": [0.0739, 0.2468],
+              "range": [
+                0.0739,
+                0.2468
+              ],
               "description": "Medium",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r3",
-              "range": [0.2469, null],
+              "range": [
+                0.2469,
+                null
+              ],
               "description": "High",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -1080,23 +1488,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 0.1652],
+              "range": [
+                0.0,
+                0.1652
+              ],
               "description": "Low",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             },
             {
               "id": "r2",
-              "range": [0.1653, 0.2777],
+              "range": [
+                0.1653,
+                0.2777
+              ],
               "description": "Medium",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r3",
-              "range": [0.2778, null],
+              "range": [
+                0.2778,
+                null
+              ],
               "description": "High",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -1110,23 +1536,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 0.6448],
+              "range": [
+                0.0,
+                0.6448
+              ],
               "description": "Dark",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [0.6449, 0.8905],
+              "range": [
+                0.6449,
+                0.8905
+              ],
               "description": "Medium",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [0.8906, null],
+              "range": [
+                0.8906,
+                null
+              ],
               "description": "Light",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1140,23 +1584,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 0.1903],
+              "range": [
+                0.0,
+                0.1903
+              ],
               "description": "Low",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             },
             {
               "id": "r2",
-              "range": [0.1904, 0.3147],
+              "range": [
+                0.1904,
+                0.3147
+              ],
               "description": "Medium",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r3",
-              "range": [0.3148, null],
+              "range": [
+                0.3148,
+                null
+              ],
               "description": "High",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -1195,23 +1657,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [1, 29],
+              "range": [
+                1,
+                29
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [30, 76],
+              "range": [
+                30,
+                76
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [77, 255],
+              "range": [
+                77,
+                255
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1225,23 +1705,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [1, 34],
+              "range": [
+                1,
+                34
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [35, 131],
+              "range": [
+                35,
+                131
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [132, 255],
+              "range": [
+                132,
+                255
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1255,23 +1753,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [1, 47],
+              "range": [
+                1,
+                47
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [48, 163],
+              "range": [
+                48,
+                163
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [164, 255],
+              "range": [
+                164,
+                255
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1302,23 +1818,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 4.728],
+              "range": [
+                0.0,
+                4.728
+              ],
               "description": "Poor",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             },
             {
               "id": "r2",
-              "range": [4.729, 5.8193],
+              "range": [
+                4.729,
+                5.8193
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [5.8194, 10.0],
+              "range": [
+                5.8194,
+                10.0
+              ],
               "description": "Good",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             }
           ]
@@ -1332,23 +1866,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 1.7074],
+              "range": [
+                0.0,
+                1.7074
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [1.7075, 1.8683],
+              "range": [
+                1.7075,
+                1.8683
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [1.8684, null],
+              "range": [
+                1.8684,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1383,23 +1935,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 12.2146],
+              "range": [
+                0,
+                12.2146
+              ],
               "description": "Low color depth",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [12.2147, 18.5563],
+              "range": [
+                12.2147,
+                18.5563
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [18.5564, null],
+              "range": [
+                18.5564,
+                null
+              ],
               "description": "High color depth",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1430,23 +2000,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0.0, 259.2499],
+              "range": [
+                0.0,
+                259.2499
+              ],
               "description": "Good",
-              "icon": ["far", "check-circle"],
+              "icon": [
+                "far",
+                "check-circle"
+              ],
               "judgment": "good"
             },
             {
               "id": "r2",
-              "range": [259.2500, 3113.7350],
+              "range": [
+                259.2500,
+                3113.7350
+              ],
               "description": "Fair",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [3113.7351, null],
+              "range": [
+                3113.7351,
+                null
+              ],
               "description": "Poor",
-              "icon": ["fas", "exclamation-triangle"],
+              "icon": [
+                "fas",
+                "exclamation-triangle"
+              ],
               "judgment": "bad"
             }
           ]
@@ -1495,23 +2083,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 18],
+              "range": [
+                0,
+                18
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [19, 34],
+              "range": [
+                19,
+                34
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [35, null],
+              "range": [
+                35,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1525,23 +2131,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 14],
+              "range": [
+                0,
+                14
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [15, 28],
+              "range": [
+                15,
+                28
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [29, null],
+              "range": [
+                29,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1555,23 +2179,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 52],
+              "range": [
+                0,
+                52
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [53, 87],
+              "range": [
+                53,
+                87
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [88, null],
+              "range": [
+                88,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1585,23 +2227,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 43],
+              "range": [
+                0,
+                43
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [44, 77],
+              "range": [
+                44,
+                77
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [78, null],
+              "range": [
+                78,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1615,23 +2275,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 14],
+              "range": [
+                0,
+                14
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [15, 22],
+              "range": [
+                15,
+                22
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [23, null],
+              "range": [
+                23,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1645,23 +2323,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 12],
+              "range": [
+                0,
+                12
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [13, 19],
+              "range": [
+                13,
+                19
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [20, null],
+              "range": [
+                20,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1675,23 +2371,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 0.0084],
+              "range": [
+                0,
+                0.0084
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [0.0085, 0.1366],
+              "range": [
+                0.0085,
+                0.1366
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [0.1367, 1],
+              "range": [
+                0.1367,
+                1
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1705,23 +2419,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 0.0044],
+              "range": [
+                0,
+                0.0044
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [0.0045, 0.1155],
+              "range": [
+                0.0045,
+                0.1155
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [0.1156, 1],
+              "range": [
+                0.1156,
+                1
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1735,23 +2467,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 9],
+              "range": [
+                0,
+                9
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [10, 14],
+              "range": [
+                10,
+                14
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [15, null],
+              "range": [
+                15,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1765,23 +2515,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 7],
+              "range": [
+                0,
+                7
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [8, 11],
+              "range": [
+                8,
+                11
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [12, null],
+              "range": [
+                12,
+                null
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1812,23 +2580,41 @@
           "scores": [
             {
               "id": "r1",
-              "range": [0, 0.3402],
+              "range": [
+                0,
+                0.3402
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r2",
-              "range": [0.3403, 0.6366],
+              "range": [
+                0.3403,
+                0.6366
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             },
             {
               "id": "r3",
-              "range": [0.6367, 1],
+              "range": [
+                0.6367,
+                1
+              ],
               "description": "Meaningless",
-              "icon": [null, null],
+              "icon": [
+                null,
+                null
+              ],
               "judgment": "normal"
             }
           ]
@@ -1927,15 +2713,15 @@
     },
     "m30": {
       "id": "m30",
-      "name": "MDEAM (Multi-duration Element Attention Model)",
-      "description": "The predicted human attention under three viewing durations, visualized as heatmaps of three durations (0.5, 3, and 5 seconds).",
+      "name": "MD-EAM (Multi-Duration Element Attention Model)",
+      "description": "The predicted human attention at three viewing durations (0.5, 3, and 5 seconds), visualized as heatmaps and heatmap overlays.",
       "evidence": 4,
       "relevance": 5,
       "speed": 1,
       "segmentation_required": false,
       "references": [
         {
-          "title": "Y. Wang, M. Bâce and A. Bulling, Scanpath Prediction on Information Visualisations, in IEEE Transactions on Visualization and Computer Graphics. doi: 10.1109/TVCG.2023.3242293",
+          "title": "Wang, Y., Bâce, M., and Bulling, A. (2023). Scanpath Prediction on Information Visualisations. IEEE Transactions on Visualization and Computer Graphics, 1-15. doi: https://doi.org/10.1109/TVCG.2023.3242293",
           "url": "https://doi.org/10.1109/TVCG.2023.3242293"
         }
       ],
@@ -1944,42 +2730,42 @@
           "id": "m30_0",
           "index": 0,
           "type": "b64",
-          "name": "MDEAM 0.5s prediction heatmap overlay",
-          "description": false
-        },
-        {
-          "id": "m30_1",
-          "index": 1,
-          "type": "b64",
-          "name": "MDEAM 0.5s prediction heatmap",
+          "name": "MD-EAM prediction heatmap at 0.5 seconds",
           "description": false
         },
         {
           "id": "m30_2",
-          "index": 2,
+          "index": 1,
           "type": "b64",
-          "name": "MDEAM prediction 3s heatmap overlay",
+          "name": "MD-EAM prediction heatmap at 3 seconds",
           "description": false
         },
         {
           "id": "m30_3",
-          "index": 3,
+          "index": 2,
           "type": "b64",
-          "name": "MDEAM prediction 3s heatmap",
+          "name": "MD-EAM prediction heatmap at 5 seconds",
           "description": false
         },
         {
           "id": "m30_4",
-          "index": 4,
+          "index": 3,
           "type": "b64",
-          "name": "MDEAM prediction 5s heatmap overlay",
+          "name": "MD-EAM prediction heatmap overlay at 0.5 seconds",
           "description": false
         },
         {
           "id": "m30_5",
+          "index": 4,
+          "type": "b64",
+          "name": "MD-EAM prediction heatmap overlay at 3 seconds",
+          "description": false
+        },
+        {
+          "id": "m30_6",
           "index": 5,
           "type": "b64",
-          "name": "MDEAM prediction 5s heatmap",
+          "name": "MD-EAM prediction heatmap overlay at 5 seconds",
           "description": false
         }
       ]
