@@ -23,7 +23,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   # Upgrade pip
   && python -m pip install --no-cache-dir --upgrade pip \
   # Install requirements
-  && pip install --no-cache-dir -r requirements.txt \
+  && pip --timeout=1000 install --no-cache-dir -r requirements.txt \
   # Install chromedriver for Selenium
   && VERSION=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
   && wget -q "https://chromedriver.storage.googleapis.com/${VERSION}/chromedriver_linux64.zip" -O driver.zip \
