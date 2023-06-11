@@ -142,12 +142,9 @@ wheels/
 *.egg
 
 # Application-specific files
-aim_backend/configs/*.json
-aim_backend/data/results/*.png
-aim_backend/data/screenshots/*.png
-aim_backend/inputs/*.txt
-aim_backend/outputs/*.csv
-aim_backend/screenshots/*.png
+backend/data/webapp/inputs/*.png
+backend/data/webapp/results/*.png
+LICENSE.chromedriver
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
