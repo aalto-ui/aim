@@ -1,4 +1,5 @@
-"""Xception V1 model for Keras.
+"""
+Xception V1 model for Keras.
 On ImageNet, this model gets to a top-1 validation accuracy of 0.790
 and a top-5 validation accuracy of 0.945.
 Do note that the input image format for this model is different than for
