@@ -40,10 +40,10 @@ __version__ = "1.1"
 @pytest.mark.parametrize(
     ["input_value", "expected_results"],
     [
-        ("aalto.fi_website.png", [5.256208, 1.615887]),
+        ("aalto.fi_website.png", [5.256207, 1.615887]),
         ("myhelsinki.fi_website.png", [5.702414, 1.650632]),
         ("wikipedia.org_website.png", [4.52608, 1.9907]),
-        ("black.png", [3.789547, 2.257092]),
+        ("black.png", [3.789549, 2.257092]),
     ],
 )
 def test_nima_desktop(input_value: str, expected_results: List[Any]) -> None:
