@@ -130,7 +130,7 @@ six==1.16.0
 sniffio==1.2.0
 sortedcontainers==2.4.0
 soupsieve==2.3.2.post1
-starlette==0.14.2
+starlette==0.25.0
 tensorboard==1.15.0
 tensorflow==1.15.5
 tensorflow-estimator==1.15.1
