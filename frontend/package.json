@@ -54,7 +54,7 @@
     "eslint-plugin-vue": "^7.11.0",
     "eslint-webpack-plugin": "^2.5.4",
     "eventsource-polyfill": "^0.9.6",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "file-loader": "^6.2.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^4.5.2",
