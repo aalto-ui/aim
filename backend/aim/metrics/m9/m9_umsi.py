@@ -26,6 +26,10 @@ References:
 
 
 Change log:
+    v1.1 (2022-06-14)
+      * Upgrade TF to 2.x.x
+      * Support Crop
+
     v1.0 (2021-10-30)
       * Initial implementation
 """
@@ -60,13 +64,14 @@ from pydantic import HttpUrl
 from aim.common import image_utils
 from aim.common.constants import GUI_TYPE_DESKTOP
 from aim.metrics.interfaces import AIMMetricInterface
+from aim.metrics.m9.utils import compute_crops_height
 
 # isort: off
 # Third-party modules - Ignore Keras outputs and logs
 stderr = sys.stderr
 sys.stderr = open(os.devnull, "w")
-import keras  # noqa: E402
-import keras.backend as K  # noqa: E402
+from tensorflow import keras  # noqa: E402
+from tensorflow.keras import backend as K  # noqa: E402
 
 sys.stderr = stderr
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
@@ -79,10 +84,10 @@ warnings.filterwarnings("ignore", category=UserWarning, module="keras.*")
 # Metadata
 # ----------------------------------------------------------------------------
 
-__author__ = "Markku Laine, Chuhan Jiao"
-__date__ = "2021-11-05"
+__author__ = "Markku Laine, Chuhan Jiao, Amir Hossein Kargaran"
+__date__ = "2022-06-14"
 __email__ = "markku.laine@aalto.fi"
-__version__ = "1.0"
+__version__ = "1.1"
 
 
 # ----------------------------------------------------------------------------
@@ -345,6 +350,39 @@ class Metric(AIMMetricInterface):
         return heatmap_overlay_batch
 
     @classmethod
+    def _crop_h(
+        cls,
+        img: Image.Image,
+        h_levels: List[int],
+    ) -> List[Image.Image]:
+        """
+        Crop the input image by the height levels.
+
+        Args:
+            img: Input image
+            h_levels: Height levels
+
+        Returns:
+            List of cropped images
+        """
+        # Convert to np array
+        img_arr = np.array(img)
+
+        # Loop over the h_levels
+        cropped_images: List[Image.Image] = []
+        for idx in range(0, len(h_levels) - 1):
+
+            # Crop the input based on h_levels
+            start_crop: int = h_levels[idx]
+            end_crop: int = h_levels[idx + 1]
+            cropped_arr: np.ndarray = img_arr[start_crop:end_crop, :]
+            cropped_im: Image.Image = Image.fromarray(cropped_arr)
+
+            # Store cropped images
+            cropped_images.append(cropped_im)
+        return cropped_images
+
+    @classmethod
     def _show_results(
         cls,
         original_images: List[Image.Image],
@@ -406,9 +444,13 @@ class Metric(AIMMetricInterface):
         # Convert image from ??? (e.g., RGBA) to RGB color space
         img_rgb: Image.Image = img.convert("RGB")
 
-        # Original images to be predicted
+        # Compute height levels for the crop
+        width, height = img_rgb.size
+        h_levels = compute_crops_height(width, height)
+
+        # Original images to be predicted: here is the cropped_images
         original_images: List[Image.Image] = []
-        original_images.append(img_rgb)
+        original_images = cls._crop_h(img_rgb, h_levels)
 
         # Preprocess images
         img_batch: np.ndarray = cls._preprocess_images(
@@ -421,7 +463,7 @@ class Metric(AIMMetricInterface):
             "aim/metrics/m9/xception_cl_fus_aspp_imp1k_10kl-3cc0.1mse-5nss5bc_bs4_ep30_valloss-2.5774_full.h5"
         )
         model: keras.engine.training.Model = keras.models.load_model(
-            model_filepath
+            model_filepath, compile=False, custom_objects={"K": K}
         )
 
         # Predict maps
@@ -443,15 +485,21 @@ class Metric(AIMMetricInterface):
                 original_images, heatmap_batch, heatmap_overlay_batch
             )
 
+        # Concatenate all batch cropped images
+        heatmap_batch_stack: np.ndarray = np.concatenate(heatmap_batch, axis=0)
+        heatmap_overlay_batch_stack: np.ndarray = np.concatenate(
+            heatmap_overlay_batch, axis=0
+        )
+
         # Prepare final results
         img_umsi_prediction_heatmap: Image.Image = Image.fromarray(
             # Apply the color map, rescale to the 0-255 range, convert to
             # 8-bit unsigned integers. Note: Slight loss of accuracy due
             # the float32 to uint8 conversion.
-            (cm.get_cmap("viridis")(heatmap_batch[0]) * 255).astype("uint8")
+            (cm.get_cmap("viridis")(heatmap_batch_stack) * 255).astype("uint8")
         ).convert("RGB")
         img_umsi_prediction_heatmap_overlay: Image.Image = Image.fromarray(
-            heatmap_overlay_batch[0]
+            heatmap_overlay_batch_stack
         ).convert("RGB")
         umsi_prediction_heatmap: str = image_utils.to_png_image_base64(
             img_umsi_prediction_heatmap
