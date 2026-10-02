@@ -8,6 +8,9 @@ COPY ./backend ./
 COPY ./metrics.json ../
 
 RUN export DEBIAN_FRONTEND=noninteractive \
+  # Replace outdated mirror to archive mirror
+  && sed -i 's/security.debian.org/archive.debian.org/g' /etc/apt/sources.list \
+  && sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list \
   && apt-get update \
   && apt-get install -y --no-install-recommends wget unzip gnupg2 \
   libglib2.0-0 libnss3 libgconf-2-4 libxcb1 libfontconfig1 xvfb libc6-dev gcc \
@@ -15,19 +18,15 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   && useradd --system -s /sbin/nologin aim \
   && mkdir -p /home/aim \
   # Install Chrome for Selenium
-  && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
   && apt-get update -qqy \
-  && apt-get -qqy install ${CHROME_VERSION:-google-chrome-stable} \
-  && rm /etc/apt/sources.list.d/google-chrome.list \
+  && apt-get install -qqy /usr/src/app/vendor/deb/*.deb \
   # Upgrade pip
   && python -m pip install --no-cache-dir --upgrade pip \
   # Install requirements
+  && pip install --no-cache-dir /usr/src/app/vendor/whl/*.whl \
   && pip --timeout=1000 install --no-cache-dir -r requirements.txt \
   # Install chromedriver for Selenium
-  && VERSION=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE) \
-  && wget -q "https://chromedriver.storage.googleapis.com/${VERSION}/chromedriver_linux64.zip" -O driver.zip \
-  && unzip driver.zip \
+  && unzip /usr/src/app/vendor/chromedriver/chromedriver_linux64.zip -d . \
   && chmod +x chromedriver \
   && mkdir -p webdrivers \
   && mv chromedriver ./webdrivers/chromedriver_linux \
@@ -38,9 +37,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
   # change user permissions
   && chown -R aim . \
   && chown -R aim ../metrics.json \
-  && chown -R aim /home/aim \
-  # delete unnecessary sources
-  && rm -rf driver.zip /etc/apt/sources.list.d/google-chrome.list /var/lib/apt/lists/* /var/cache/apt/*
+  && chown -R aim /home/aim
 
 USER aim
 
